@@ -8,7 +8,7 @@ const Header = () => {
           <h1>로고</h1>
         </div>
         <div className="flex">
-          <p>서치</p>
+          <p>검색</p>
           <p>장바구니</p>
         </div>
       </header>

@@ -1,5 +1,6 @@
 'use client';
 
+import { userSignUp } from '@/services/users/users.service';
 import { useRef } from 'react';
 
 export default function Home() {
@@ -18,15 +19,13 @@ export default function Home() {
       return;
     }
 
-    const response = await fetch('api/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password, nickname })
-    });
-
-    console.log(response);
+    if (email && password && nickname) {
+      try {
+        await userSignUp({ email, password, nickname });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (

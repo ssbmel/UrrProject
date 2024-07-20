@@ -12,12 +12,12 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase.auth.signUp({
     email,
-    password
-    // options: {
-    //   data: {
-    //     nickname
-    //   }
-    // }
+    password,
+    options: {
+      data: {
+        nickname
+      }
+    }
   });
   if (data) {
     console.log(data);

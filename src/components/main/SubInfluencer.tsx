@@ -34,10 +34,6 @@ function SubInfluencer() {
             <div className="bg-gray-100 rounded-md w-[80px] h-[80px]">이미지</div>
             <p>우르르</p>
           </div>
-          <div className="gird w-[80px] text-center">
-            <div className="bg-gray-100 rounded-md w-[80px] h-[80px]">이미지</div>
-            <p>우르르</p>
-          </div>
         </div>
       </div>
     </>

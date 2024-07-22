@@ -1,11 +1,13 @@
 'use client';
 import { userLogin } from '@/services/users/users.service';
+import { useLoginStore } from '@/zustand/store';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const { login } = useLoginStore();
   const router = useRouter();
 
   const onLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,6 +23,7 @@ export default function Login() {
     if (email && password) {
       try {
         await userLogin({ email, password });
+        login();
         router.push('/');
       } catch (error) {
         console.log(error);

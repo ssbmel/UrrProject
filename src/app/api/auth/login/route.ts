@@ -1,0 +1,20 @@
+import supabase from '../../../../../supabase/client';
+import { FormState } from '../../../../../types/auth.type';
+
+export async function POST(request: Request) {
+  const { email, password } = (await request.json()) as FormState;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    console.log('error message:', error.message);
+    return Response.json({ errorMsg: error.message }, { status: 400 });
+  }
+
+  const user = data.user;
+
+  return Response.json({ user }, { status: 200 });
+}

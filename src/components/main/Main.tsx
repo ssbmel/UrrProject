@@ -7,13 +7,13 @@ import ReviewList from './ReviewList';
 
 function Main() {
   return (
-    <>
+    <div className="p-5 max-w-[1200px] mx-auto">
       <Banner />
       <SubInfluencer/>
       <BestProductsList/>
       <BestInfluencerList/>
       <ReviewList/>
-    </>
+    </div>
   );
 }
 

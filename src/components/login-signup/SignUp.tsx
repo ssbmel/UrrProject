@@ -3,12 +3,14 @@
 import { userSignUp } from '@/services/users/users.service';
 import { useRef } from 'react';
 
-export default function Home() {
+export default function SignUp() {
+  const stInput = 'border border-black';
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const nicknameRef = useRef<HTMLInputElement>(null);
 
-  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSignUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
@@ -30,27 +32,27 @@ export default function Home() {
 
   return (
     <>
-      <form onSubmit={onSubmitHandler} className="flex flex-col gap-1 w-[300px] border border-red-400 p-5">
+      <form onSubmit={onSignUpHandler} className="flex flex-col gap-1 border border-red-400 p-5">
         <input
           type="text"
           placeholder="이메일을 입력하세요
       "
           ref={emailRef}
-          className="border border-black"
+          className={stInput}
         />
         <input
           type="password"
           placeholder="비밀번호를 입력하세요
       "
           ref={passwordRef}
-          className="border border-black"
+          className={stInput}
         />
         <input
           type="text"
           placeholder="닉네임을 입력하세요
       "
           ref={nicknameRef}
-          className="border border-black"
+          className={stInput}
         />
         <button>회원가입</button>
       </form>

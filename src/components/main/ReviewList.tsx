@@ -2,9 +2,9 @@ import React from 'react';
 
 function ReviewList() {
   return (
-    <div className="border w-full max-h-[400px] mx-auto p-2">
+    <div className="w-full max-h-[400px] mx-auto p-2">
       <div className="flex">
-        <h2 className="font-bold my-2 text-xl">후기</h2>
+        <h2 className="font-bold my-5 text-xl">후기</h2>
         <button className="ml-auto">더보기</button>
       </div>
       <div className="w-full h-[300px] overflow-y-auto flex flex-col gap-y-4">

@@ -1,9 +1,9 @@
 import React from 'react';
-import Banner from './Banner';
 import BestProductsList from './BestProductsList';
 import SubInfluencer from './SubInfluencer';
 import BestInfluencerList from './BestInfluencerList';
 import ReviewList from './ReviewList';
+import Banner from './swiper/Banner';
 
 function Main() {
   return (

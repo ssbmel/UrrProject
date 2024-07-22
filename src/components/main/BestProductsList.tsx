@@ -2,9 +2,9 @@ function BestProductsList() {
   return (
     <>
       <div className="w-full h-auto mx-auto p-2">
-        <div className="flex">
-          <h2 className="font-bold my-5 text-xl">인기상품</h2>
-          <button className="ml-auto">더보기</button>
+        <div className="flex mb-5">
+          <h2 className="font-bold text-xl">인기상품</h2>
+          <button className="ml-auto text-xs">더보기</button>
         </div>
         <div className="w-full h-[90%] p-2 overflow-y-auto flex gap-10">
           <div className="w-[200px] flex flex-col gap-y-2">

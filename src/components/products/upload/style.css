@@ -1,0 +1,28 @@
+summary::-webkit-details-marker {
+  display: none;
+}
+summary {
+  display: block;
+  padding: 2rem 3rem 2rem 0;
+  cursor: pointer;
+  position: relative;
+}
+summary::before,
+summary::after {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 2px;
+  background-color: #222;
+  right: 1rem;
+  top: 2.5rem;
+}
+summary::after {
+  transform: rotateZ(90deg);
+}
+details p {
+  padding-bottom: 2rem;
+}
+details[open] summary::after {
+  display: none;
+}

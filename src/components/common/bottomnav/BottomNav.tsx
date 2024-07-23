@@ -1,14 +1,16 @@
 import Link from 'next/link';
 
 export default function BottomNav() {
-  const liStyle = 'flex items-center';
+  const liStyle = 'flex justify-center w-16 h-7 text-sm';
 
   return (
     <>
-      <div className="bg-[#FAFAFF] px-3 h-[80px] w-full fixed bottom-0">
+      <div className="bg-[#FAFAFF] h-[80px] w-full fixed bottom-0">
         <ul className="flex justify-between items-center pt-2">
-          <li className={liStyle}>홈</li>
-          <Link href={'/login'}>
+          <Link href={'/'}>
+            <li className={liStyle}>홈</li>
+          </Link>
+          <Link href={'/mypage/1'}>
             <li className={liStyle}>마이페이지</li>
           </Link>
           <li className={liStyle}>스토어</li>

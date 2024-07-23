@@ -7,15 +7,8 @@ type LoginState = {
   logout: () => void;
 };
 
-export const useLoginStore = create(
-  persist<LoginState>(
-    (set) => ({
-      isLogin: false,
-      login: () => set({ isLogin: true }),
-      logout: () => set({ isLogin: false })
-    }),
-    {
-      name: 'userInfoStorage'
-    }
-  )
-);
+export const useLoginStore = create<LoginState>((set) => ({
+  isLogin: false,
+  login: () => set({ isLogin: true }),
+  logout: () => set({ isLogin: false })
+}));

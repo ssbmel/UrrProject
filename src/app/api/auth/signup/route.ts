@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import supabase from '../../../../../supabase/client';
 import { FormState } from '../../../../../types/auth.type';
+import { createClient } from '../../../../../supabase/server';
 
 export async function POST(request: Request) {
   try {
     const { email, password, nickname } = (await request.json()) as FormState;
 
+    const supabase = createClient();
     const { data: userData, error } = await supabase.auth.signUp({
       email,
       password,

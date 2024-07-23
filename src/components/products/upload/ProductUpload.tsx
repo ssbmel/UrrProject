@@ -1,13 +1,17 @@
-import React from 'react'
-import Category from './Category'
-import Price from './Price'
+import React from "react"
+import Category from "./Category"
+import PricePeriod from "./PricePeriod"
+import Contents from "./Contents"
+import "./style.css";
 
 function ProductUpload() {
   return (
-    <>
+    <form>
       <Category/>
-      <Price/>
-    </>
+      <PricePeriod/>
+      <Contents/>
+      <button className="bg-blue-700 text-white p-2 rounded-md">등록하기</button>
+    </form>
   )
 }
 

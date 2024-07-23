@@ -1,14 +1,20 @@
 import { create } from 'zustand';
+import { User } from '../../types/common';
 import { persist } from 'zustand/middleware';
 
-type LoginState = {
-  isLogin: boolean;
-  login: () => void;
-  logout: () => void;
-};
+interface userState {
+  userInfo: User | null;
+  setUserInfo: (info: User | null) => void;
+}
 
-export const useLoginStore = create<LoginState>((set) => ({
-  isLogin: false,
-  login: () => set({ isLogin: true }),
-  logout: () => set({ isLogin: false })
-}));
+export const userDataStore = create(
+  persist<userState>(
+    (set) => ({
+      userInfo: null,
+      setUserInfo: (info) => set({ userInfo: info })
+    }),
+    {
+      name: 'userStorage'
+    }
+  )
+);

@@ -18,9 +18,11 @@ export type Database = {
           id: number
           img_url: string | null
           price: number | null
+          product_count: number | null
           start: string | null
           text: string | null
           title: string | null
+          user_id: string
         }
         Insert: {
           category?: string | null
@@ -30,9 +32,11 @@ export type Database = {
           id?: number
           img_url?: string | null
           price?: number | null
+          product_count?: number | null
           start?: string | null
           text?: string | null
           title?: string | null
+          user_id: string
         }
         Update: {
           category?: string | null
@@ -42,11 +46,21 @@ export type Database = {
           id?: number
           img_url?: string | null
           price?: number | null
+          product_count?: number | null
           start?: string | null
           text?: string | null
           title?: string | null
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "products_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {

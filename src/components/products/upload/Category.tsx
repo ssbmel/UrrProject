@@ -1,6 +1,11 @@
 "use client";
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+
+type CategoryProps = {
+  radioCheckedValue: string;
+  setRadioCheckedValue: (value: string) => void;
+};
 
 const category = [
   { id: 0, title: '패션/잡화', name: 'fashion' },
@@ -13,10 +18,10 @@ const category = [
   { id: 7, title: '헬스/건강', name: 'health' }
 ];
 
-function Category({radioCheckedList, setRadioCheckedList}) {
+function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {
 
   const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setRadioCheckedList(e.target.value);
+    setRadioCheckedValue(e.target.value);
   }
   
   return (

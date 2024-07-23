@@ -1,8 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import { RefObject } from "react";
 
-function Contents({titleRef, textRef}) {
+interface ContentsProps {
+  titleRef: RefObject<HTMLInputElement>;
+  textRef: RefObject<HTMLTextAreaElement>;
+}
+
+const Contents: React.FC<ContentsProps> = ({ titleRef, textRef }) => {
 
   return (
     <div className="border w-full h-[500px] p-5">

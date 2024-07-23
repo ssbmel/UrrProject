@@ -1,11 +1,12 @@
 import { create } from 'zustand';
+import { User } from '../../types/common';
 
 interface userState {
-  userInfo: users | null;
-  setUserInfo: (info: users) => void;
+  userInfo: User | null;
+  setUserInfo: (info: User | null) => void;
 }
 
-export const userDataStore = create((set) => ({
-  userInfo: {},
+export const userDataStore = create<userState>((set) => ({
+  userInfo: null,
   setUserInfo: (info) => set({ userInfo: info })
 }));

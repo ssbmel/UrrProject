@@ -9,7 +9,7 @@ export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { setUserInfo } = userDataStore();
+  const { setUserInfo, userInfo } = userDataStore();
 
   const onLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export default function Login() {
 
     if (email && password) {
       try {
-        const { data } = await userLogin({ email, password });
+        const data = await userLogin({ email, password });
         setUserInfo(data);
         router.push('/mypage/1');
       } catch (error) {
@@ -31,6 +31,7 @@ export default function Login() {
       }
     }
   };
+
   return (
     <>
       <div>

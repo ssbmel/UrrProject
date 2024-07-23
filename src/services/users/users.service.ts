@@ -38,7 +38,6 @@ export const userLogin = async ({ email, password }: { email: string; password: 
 
     const data = await response.json();
 
-    console.log(data);
     if (!data.errorMsg) {
       alert('로그인 성공!');
     } else {

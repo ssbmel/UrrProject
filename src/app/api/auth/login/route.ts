@@ -1,9 +1,10 @@
-import supabase from '../../../../../supabase/client';
+import { createClient } from '../../../../../supabase/server';
 import { FormState } from '../../../../../types/auth.type';
 
 export async function POST(request: Request) {
   const { email, password } = (await request.json()) as FormState;
 
+  const supabase = createClient();
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password

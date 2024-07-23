@@ -3,11 +3,11 @@ import React from 'react';
 const Header = () => {
   return (
     <>
-      <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto bg-red-200">
+      <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto">
         <div>
           <h1>로고</h1>
         </div>
-        <div className="flex">
+        <div className="flex gap-2">
           <p>검색</p>
           <p>장바구니</p>
         </div>

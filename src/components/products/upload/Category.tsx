@@ -13,15 +13,12 @@ const category = [
   { id: 7, title: '헬스/건강', name: 'health' }
 ];
 
-function Category() {
-  const [radioCheckedList, setRadioCheckedList] = useState<string>('');
+function Category({radioCheckedList, setRadioCheckedList}) {
 
   const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRadioCheckedList(e.target.value);
   }
-  console.log(radioCheckedList);
   
-
   return (
       <details open className="border w-full px-5">
         <summary className="font-bold text-lg">카테고리</summary>

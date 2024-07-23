@@ -11,18 +11,6 @@ import { userDataStore } from '@/zustand/store';
 
 const supabase = createClient();
 
-// type ProductInsert = {
-//   category: string | null;
-//   start: string | null;
-//   end: string | null;
-//   cost: number | null;
-//   price: number | null;
-//   product_count: number | null;
-//   title: string | null;
-//   text: string | null;
-//   img_url: string | null;
-// };
-
 function ProductUpload() {
   const [radioCheckedValue, setRadioCheckedValue] = useState<string>('');
 
@@ -38,6 +26,9 @@ function ProductUpload() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!userInfo) {
+      return
+    }
     const productData: Product = {
       category: radioCheckedValue,
       start: startDateRef.current?.value || null,
@@ -48,7 +39,9 @@ function ProductUpload() {
       title: titleRef.current?.value || null,
       text: textRef.current?.value || null,
       img_url: null,
-      // user_id: user.userInfo?.id
+      user_id: userInfo.id,
+      created_at: new Date().toISOString(),
+      id: new Date().getTime()
     };
     
     const { data, error } = await supabase.from('products').insert([productData]).select();
@@ -59,8 +52,6 @@ function ProductUpload() {
       console.log('Data inserted:', data);
     }
   };
-
-  console.log(userInfo);
 
   return (
     <form onSubmit={onSubmit}>

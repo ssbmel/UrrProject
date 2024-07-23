@@ -24,7 +24,7 @@ export default function Login() {
     if (email && password) {
       try {
         const data = await userLogin({ email, password });
-        setUserInfo(data);
+        setUserInfo(data.user);
         router.push('/mypage/1');
       } catch (error) {
         console.log(error);

@@ -8,5 +8,6 @@ interface userState {
 
 export const userDataStore = create<userState>((set) => ({
   userInfo: null,
-  setUserInfo: (info) => set({ userInfo: info })
+  setUserInfo: (info) => { console.log(info);
+   set({ userInfo: info })}
 }));

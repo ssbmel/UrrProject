@@ -7,6 +7,7 @@ import Contents from './Contents';
 import './style.css';
 import { createClient } from '../../../../supabase/client';
 import { Product } from '../../../../types/common';
+import { userDataStore } from '@/zustand/store';
 
 const supabase = createClient();
 
@@ -33,10 +34,10 @@ function ProductUpload() {
 
   const titleRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const { userInfo } = userDataStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const productData: Product = {
       category: radioCheckedValue,
       start: startDateRef.current?.value || null,
@@ -47,10 +48,8 @@ function ProductUpload() {
       title: titleRef.current?.value || null,
       text: textRef.current?.value || null,
       img_url: null,
-      user_id:
+      // user_id: user.userInfo?.id
     };
-    
-    console.log(productData);
     
     const { data, error } = await supabase.from('products').insert([productData]).select();
 
@@ -61,9 +60,13 @@ function ProductUpload() {
     }
   };
 
+  console.log(userInfo);
+
   return (
     <form onSubmit={onSubmit}>
-      <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
+      <Category 
+        radioCheckedValue={radioCheckedValue} 
+        setRadioCheckedValue={setRadioCheckedValue} />
       <PricePeriod
         startDateRef={startDateRef}
         endDateRef={endDateRef}

@@ -1,11 +1,14 @@
+import { getUserFromUserId } from '@/services/users/account/account.service';
 import React from 'react';
 
-const UserCard = () => {
+const UserCard = async () => {
   return (
-    <div className="flex h-[100px] w-[400px] gap-3 p-2 border justify-between">
+    <div className="flex h-[100px] w-full gap-3 p-2 border justify-between">
       <img
         className="object-cover w-[30%]"
-        src="https://miro.medium.com/v2/resize:fit:1400/1*lWaZtVU68iEnua9JgVt1GQ.jpeg"
+        src={
+          'https://static.vecteezy.com/system/resources/thumbnails/010/260/479/small/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg'
+        }
         alt="샘플이미지"
       />
       <div className="w-[30%]">

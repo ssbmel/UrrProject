@@ -7,8 +7,10 @@ const Section = () => {
     <div>
       <div>
         <Tabs />
-        <h1>섹션 이름</h1>
-        <span>더보기 😊</span>
+        <div className="flex justify-between items-center">
+          <h1>섹션 이름</h1>
+          <span>더보기 😊</span>
+        </div>
         <SectionCard />
       </div>
     </div>

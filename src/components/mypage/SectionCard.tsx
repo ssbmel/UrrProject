@@ -2,7 +2,7 @@ import React from 'react';
 
 const SectionCard = () => {
   return (
-    <div className="flex h-[100px] w-[400px] gap-3 p-2 border">
+    <div className="flex h-[100px] w-full gap-3 p-2 border">
       <img
         className="object-cover w-[30%]"
         src="https://miro.medium.com/v2/resize:fit:1400/1*lWaZtVU68iEnua9JgVt1GQ.jpeg"

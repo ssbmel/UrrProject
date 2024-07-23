@@ -32,6 +32,8 @@ export default function Login() {
     }
   };
 
+  console.log(userInfo);
+
   return (
     <>
       <div>

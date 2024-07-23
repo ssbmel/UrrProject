@@ -44,6 +44,7 @@ export const userLogin = async ({ email, password }: { email: string; password: 
     } else {
       alert(`로그인 에러: ${data.errorMsg}`);
     }
+    return data;
   } catch (error) {
     console.log(error);
   }

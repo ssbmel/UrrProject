@@ -25,10 +25,6 @@ export async function POST(request: Request) {
       .from('users')
       .insert([{ id: userData?.user?.id, email, nickname }]);
 
-    if (insertError) {
-      return NextResponse.json({ error: '왜 안됨 ㅠ', message: error }, { status: 500 });
-    }
-
     return NextResponse.json({ message: '회원가입 성공' }, { status: 200 });
   } catch (error) {
     console.log(error);

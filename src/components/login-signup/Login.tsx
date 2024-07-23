@@ -1,17 +1,17 @@
 'use client';
 import { userLogin } from '@/services/users/users.service';
-import { useLoginStore } from '@/zustand/store';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import Button from '../common/button/Button';
+import { userDataStore } from '@/zustand/store';
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const { login } = useLoginStore();
   const router = useRouter();
+  const { setUserInfo } = userDataStore();
 
-  const onLoginHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
@@ -23,9 +23,9 @@ export default function Login() {
 
     if (email && password) {
       try {
-        await userLogin({ email, password });
-        login();
-        router.push('/');
+        const { data } = await userLogin({ email, password });
+        setUserInfo(data);
+        router.push('/mypage/1');
       } catch (error) {
         console.log(error);
       }
@@ -34,7 +34,7 @@ export default function Login() {
   return (
     <>
       <div>
-        <form className="flex flex-col border border-red-400 p-5">
+        <form onSubmit={onLoginHandler} className="flex flex-col border border-red-400 p-5">
           <input type="text" placeholder="아이디를 입력하세요" className="border border-black mb-1" ref={emailRef} />
           <input
             type="password"
@@ -43,7 +43,8 @@ export default function Login() {
             ref={passwordRef}
           />
           <button className="flex justify-end">비밀번호 찾기</button>
-          <Button label="로그인" onClick={onLoginHandler} styleClass="bg-[#D9D9D9]" />
+
+          <Button type="submit" label="로그인" styleClass="bg-[#D9D9D9]" />
         </form>
       </div>
     </>

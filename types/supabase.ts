@@ -15,7 +15,7 @@ export type Database = {
           cost: number | null
           created_at: string
           end: string | null
-          id: number
+          id: number | null
           img_url: string | null
           price: number | null
           product_count: number | null
@@ -29,7 +29,7 @@ export type Database = {
           cost?: number | null
           created_at?: string
           end?: string | null
-          id?: number
+          id?: number | null
           img_url?: string | null
           price?: number | null
           product_count?: number | null
@@ -43,7 +43,7 @@ export type Database = {
           cost?: number | null
           created_at?: string
           end?: string | null
-          id?: number
+          id?: number | null
           img_url?: string | null
           price?: number | null
           product_count?: number | null

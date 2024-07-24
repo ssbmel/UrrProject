@@ -14,4 +14,4 @@ export const getUserFromUserId = async (id: string) => {
   }
 };
 
-export const patchUserFromUserId = async () => {};
+/* export const patchUserFromUserId = async () => {}; */

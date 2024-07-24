@@ -1,6 +1,5 @@
-import InfoOnEdit from '@/components/mypage/edit-profile-info/InfoOnEdit';
-import InfoOnEditTitle from '@/components/mypage/edit-profile-info/InfoOnEditTitle';
-import Link from 'next/link';
+import InfoOnEdit from '@/components/mypage/edit/InfoOnEdit';
+import InfoOnEditTitle from '@/components/mypage/edit/InfoOnEditTitle';
 import React from 'react';
 
 const EditProfileInfoPage = () => {

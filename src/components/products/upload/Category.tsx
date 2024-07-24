@@ -31,7 +31,7 @@ function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {
         <div className="grid grid-cols-3 gap-3 my-5">
           {category.map((c) => {
             return (
-              <label key={c.id} className="flex items-center">
+              <label key={c.id} className="flex items-center whitespace-nowrap">
                 <input
                   type="radio"
                   name="radioCheckedList"

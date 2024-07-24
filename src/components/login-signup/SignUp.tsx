@@ -1,9 +1,10 @@
 'use client';
 
+import { StepType } from '@/app/(provider)/(root)/signup/page';
 import { userSignUp } from '@/services/users/users.service';
-import { useRef } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 
-export default function SignUp() {
+export default function SignUp({ setStep }: { setStep: Dispatch<SetStateAction<StepType>> }) {
   const stInput = 'border border-black';
 
   const emailRef = useRef<HTMLInputElement>(null);
@@ -30,9 +31,20 @@ export default function SignUp() {
     }
   };
 
+  const nextSignUpPage = () => {
+    setStep('완료');
+  };
+
   return (
     <>
       <form onSubmit={onSignUpHandler} className="flex flex-col gap-1 border border-red-400 p-5">
+        <input
+          type="text"
+          placeholder="닉네임을 입력하세요
+      "
+          ref={nicknameRef}
+          className={stInput}
+        />
         <input
           type="text"
           placeholder="이메일을 입력하세요
@@ -47,15 +59,13 @@ export default function SignUp() {
           ref={passwordRef}
           className={stInput}
         />
-        <input
-          type="text"
-          placeholder="닉네임을 입력하세요
-      "
-          ref={nicknameRef}
-          className={stInput}
-        />
         <button>회원가입</button>
       </form>
+      <div className="flex">
+        <button onClick={nextSignUpPage} className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium">
+          다음
+        </button>
+      </div>
     </>
   );
 }

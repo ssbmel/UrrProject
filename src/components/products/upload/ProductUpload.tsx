@@ -19,9 +19,10 @@ function ProductUpload() {
   const costRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const productCountRef = useRef<HTMLInputElement>(null);
-
   const titleRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const productMainImgRef = useRef<HTMLImageElement>(null);
   const { userInfo } = userDataStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,7 +39,7 @@ function ProductUpload() {
       product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,
       title: titleRef.current?.value || null,
       text: textRef.current?.value || null,
-      img_url: null,
+      img_url: fileInputRef.current?.value || null,
       user_id: userInfo.id,
       created_at: new Date().toISOString(),
       id: new Date().getTime()
@@ -51,10 +52,20 @@ function ProductUpload() {
     } else {
       console.log('Data inserted:', data);
     }
+
+    // const uploadImgFiles = async (file) => {
+    //   const { data, error } = await supabase.from("products").upload("file_path", file) 
+    // }
+    // if (error) {
+    //   console.error('Error inserting data:', error);
+    // } else {
+    //   console.log('Data inserted:', data);
+    // }
   };
 
   return (
     <form onSubmit={onSubmit}>
+      <div className="p-5 max-w-[1200px] mx-auto">
       <Category 
         radioCheckedValue={radioCheckedValue} 
         setRadioCheckedValue={setRadioCheckedValue} />
@@ -65,8 +76,11 @@ function ProductUpload() {
         priceRef={priceRef}
         productCountRef={productCountRef}
       />
-      <Contents titleRef={titleRef} textRef={textRef} />
-      <button className="bg-blue-700 text-white p-2 rounded-md">등록하기</button>
+      <Contents titleRef={titleRef} textRef={textRef} fileInputRef={fileInputRef} productMainImgRef={productMainImgRef}/>
+      <div className="flex justify-end">
+        <button className="bg-blue-500 text-white p-2 rounded-sm my-5">등록하기</button>
+      </div>
+      </div>
     </form>
   );
 }

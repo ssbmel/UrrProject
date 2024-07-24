@@ -9,6 +9,59 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      products: {
+        Row: {
+          category: string | null
+          cost: number | null
+          created_at: string
+          end: string | null
+          id: number
+          img_url: string | null
+          price: number | null
+          product_count: number | null
+          start: string | null
+          text: string | null
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          cost?: number | null
+          created_at?: string
+          end?: string | null
+          id?: number
+          img_url?: string | null
+          price?: number | null
+          product_count?: number | null
+          start?: string | null
+          text?: string | null
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          cost?: number | null
+          created_at?: string
+          end?: string | null
+          id?: number
+          img_url?: string | null
+          price?: number | null
+          product_count?: number | null
+          start?: string | null
+          text?: string | null
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           account_link: string | null
@@ -25,7 +78,7 @@ export type Database = {
           approve?: boolean | null
           created_at?: string
           email?: string | null
-          id?: string
+          id: string
           nickname?: string | null
           profile_url?: string | null
           role?: string | null
@@ -40,7 +93,15 @@ export type Database = {
           profile_url?: string | null
           role?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

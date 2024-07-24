@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen": "npx supabase gen types typescript --project-id \"fikdisavtipodbzfiafd\" --schema public > types/supabase.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
@@ -16,7 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "slick-carousel": "^1.8.1",
-    "supabase": ">=1.8.1",
+    "supabase": "^1.187.3",
     "swiper": "^11.1.5",
     "zustand": "^4.5.4"
   },

@@ -68,11 +68,13 @@ export default function ProductsList() {
                 </div>
               </Link>
             </div>
-            <h2 className="text-sm text-gray-400">[{product.influencer}]의</h2>
-            <p className="text-sm text-gray-600">{product.name}</p>
-            <div className="flex items-center">
-              <p className="text-sm text-red-500">{product.discount}</p>
-              <p className="text-md font-bold ml-1">{product.price}</p>
+            <div className="ml-2">
+              <h2 className="text-sm text-gray-400">[{product.influencer}]의</h2>
+              <p className="text-sm text-gray-600">{product.name}</p>
+              <div className="flex items-center">
+                <p className="text-sm text-red-500">{product.discount}</p>
+                <p className="text-md font-bold ml-1">{product.price}</p>
+              </div>
             </div>
           </div>
         ))}

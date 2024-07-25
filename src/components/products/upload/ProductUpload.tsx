@@ -7,9 +7,9 @@ import Contents from './Contents';
 import './style.css';
 import { createClient } from '../../../../supabase/client';
 import { Product } from '../../../../types/common';
-import { userDataStore } from '@/zustand/store';
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from 'next/navigation';
+import { useUserData } from '@/hooks/useUserData';
 
 const supabase = createClient();
 
@@ -25,7 +25,7 @@ function ProductUpload() {
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [detailImg, setDetailImg] = useState<File[]>([]);
   const [mainImg, setMainImg] = useState<File | null>(null);
-  const { userInfo } = userDataStore();
+  const { data:user } = useUserData();
   const router = useRouter();
 
   const uploadImg = async (): Promise<string | null> => {
@@ -63,7 +63,7 @@ function ProductUpload() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!userInfo) {
+    if (!user) {
       return;
     }
     const mainImgId = (await uploadImg()) || '';
@@ -79,7 +79,7 @@ function ProductUpload() {
       text: textRef.current?.value || null,
       detail_img: JSON.stringify(detailImgId),
       main_img: mainImgId,
-      user_id: userInfo.id,
+      user_id: user?.id,
       created_at: new Date().toISOString(),
       id: new Date().getTime()
     };
@@ -93,6 +93,7 @@ function ProductUpload() {
       router.push("/products/list")
     }
   };
+
   return (
     <form onSubmit={onSubmit}>
       <div className="p-5 max-w-[1200px] mx-auto">

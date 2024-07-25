@@ -9,14 +9,96 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      chat_channels: {
+        Row: {
+          channel_id: number
+          channel_name: string | null
+          created_at: string
+          owner_id: string
+        }
+        Insert: {
+          channel_id?: number
+          channel_name?: string | null
+          created_at?: string
+          owner_id: string
+        }
+        Update: {
+          channel_id?: number
+          channel_name?: string | null
+          created_at?: string
+          owner_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          channel_id: number
+          content: Json | null
+          created_at: string
+          message_id: number
+          user_id: string
+        }
+        Insert: {
+          channel_id: number
+          content?: Json | null
+          created_at?: string
+          message_id?: number
+          user_id: string
+        }
+        Update: {
+          channel_id?: number
+          content?: Json | null
+          created_at?: string
+          message_id?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_subscribe: {
+        Row: {
+          channel_id: number
+          chat_subscribe_id: number
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          channel_id: number
+          chat_subscribe_id?: number
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          channel_id?: number
+          chat_subscribe_id?: number
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      order: {
+        Row: {
+          created_at: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string | null
           cost: number | null
           created_at: string
+          detail_img: string | null
           end: string | null
           id: number | null
-          img_url: string | null
+          main_img: string | null
           price: number | null
           product_count: number | null
           start: string | null
@@ -28,9 +110,10 @@ export type Database = {
           category?: string | null
           cost?: number | null
           created_at?: string
+          detail_img?: string | null
           end?: string | null
           id?: number | null
-          img_url?: string | null
+          main_img?: string | null
           price?: number | null
           product_count?: number | null
           start?: string | null
@@ -42,9 +125,10 @@ export type Database = {
           category?: string | null
           cost?: number | null
           created_at?: string
+          detail_img?: string | null
           end?: string | null
           id?: number | null
-          img_url?: string | null
+          main_img?: string | null
           price?: number | null
           product_count?: number | null
           start?: string | null

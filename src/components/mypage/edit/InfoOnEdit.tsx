@@ -1,4 +1,5 @@
 import React from 'react';
+import InfoOnEditAddress from './InfoOnEditAddress';
 
 const InfoOnEdit = () => {
   return (
@@ -39,16 +40,7 @@ const InfoOnEdit = () => {
             <input type="text" id="name" />
           </label>
         </div>
-        <div>
-          <label htmlFor="postNum">
-            <div>
-              <input type="number" id="postNum" />
-              <button>주소 검색</button>
-            </div>
-            <input type="text" />
-            <input type="text" />
-          </label>
-        </div>
+        <InfoOnEditAddress />
       </section>
     </form>
   );

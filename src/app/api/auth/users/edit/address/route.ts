@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest) => {
   try {
+    const { keyword, currentPage } = req.json();
+
     const res = await fetch(
-      `https://business.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=10&confmKey=${process.env
-        .NEXT_PUBLIC_ADDRESS_API_KEY!}&resultType=json`
+      `https://business.juso.go.kr/addrlink/addrLinkApi.do?countPerPage=10&currentPage=${+currentPage}&keyword=${keyword}&confmKey=${process
+        .env.NEXT_PUBLIC_ADDRESS_API_KEY!}&resultType=json`
     );
 
     if (!res.ok) {

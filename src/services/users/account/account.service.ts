@@ -15,3 +15,9 @@ export const getUserFromUserId = async (id: string) => {
 };
 
 /* export const patchUserFromUserId = async () => {}; */
+
+export const getAddress = async (addressProps: { keyword: string; currentPage: string }) => {
+  const params = new URLSearchParams(addressProps);
+
+  const res = await fetch(`/api/auth/users/edit/address`);
+};

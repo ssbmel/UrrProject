@@ -8,7 +8,8 @@ import './style.css';
 import { createClient } from '../../../../supabase/client';
 import { Product } from '../../../../types/common';
 import { userDataStore } from '@/zustand/store';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from 'next/navigation';
 
 const supabase = createClient();
 
@@ -25,6 +26,7 @@ function ProductUpload() {
   const [detailImg, setDetailImg] = useState<File[]>([]);
   const [mainImg, setMainImg] = useState<File | null>(null);
   const { userInfo } = userDataStore();
+  const router = useRouter();
 
   const uploadImg = async (): Promise<string | null> => {
     if (!mainImg) {
@@ -32,7 +34,7 @@ function ProductUpload() {
     }
     const supabase = createClient();
     const ext = mainImg?.name.split('.').pop();
-    const newFileName = `${uuid()}.${ext}`;
+    const newFileName = `${uuidv4()}.${ext}`;
     const { data, error } = await supabase.storage.from('products').upload(`mainImg/${newFileName}`, mainImg);
     if (error) {
       console.log(`파일이 업로드 되지 않습니다.${error}`);
@@ -43,14 +45,10 @@ function ProductUpload() {
   };
 
   const uploadImages = async (): Promise<(string | null)[]> => {
-    // if (!file) {
-    //   return mainImg;
-    // }
-
     const supabase = createClient();
     const uploads = detailImg.map( async (detail) => {
      const ext = detail.name.split('.').pop();
-      const newFileName = `${uuid()}.${ext}`;
+      const newFileName = `${uuidv4()}.${ext}`;
       const { data, error } = await supabase.storage.from('products').upload(`detailImg/${newFileName}`, detail);
       if (error) {
         console.log(`파일이 업로드 되지 않습니다.${error}`);
@@ -92,6 +90,7 @@ function ProductUpload() {
       console.error('Error inserting data:', error);
     } else {
       console.log('Data inserted:', data);
+      router.push("/products/list")
     }
   };
   return (

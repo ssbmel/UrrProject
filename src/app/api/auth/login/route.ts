@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     return Response.json({ errorMsg: error.message }, { status: 400 });
   }
 
-  const user = data.user;
+  const user = data.user.id;
 
   return Response.json({ user }, { status: 200 });
 }

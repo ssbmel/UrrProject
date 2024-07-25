@@ -1,19 +1,30 @@
 'use client';
 
 import { StepType } from '@/app/(provider)/(root)/signup/page';
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { Dispatch, RefObject, SetStateAction } from 'react';
 import SignUpHeader from './SignUpHeader';
 
 interface SelectMemberProps {
   setStep: Dispatch<SetStateAction<StepType>>;
+  confirmRef: RefObject<HTMLInputElement>;
+  setSelectUser: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SelectMember({ setStep }: SelectMemberProps) {
+export default function SelectMember({ setStep, confirmRef, setSelectUser }: SelectMemberProps) {
   const stSelectButton = 'w-[166px] h-[88px] bg-[#D9D9D9] rounded-xl font-medium';
 
-  const confirmRef = useRef<HTMLInputElement>(null);
+  const infnextSignUpPage = () => {
+    if (!confirmRef.current?.value) {
+      alert('정보를 입력하세요!');
+    }
+
+    if (confirmRef.current?.value) {
+      setStep('회원가입');
+    }
+  };
 
   const nextSignUpPage = () => {
+    setSelectUser(true);
     setStep('회원가입');
   };
 
@@ -39,12 +50,13 @@ export default function SelectMember({ setStep }: SelectMemberProps) {
 
         <div className="flex gap-4 mb-3">
           <button className={stSelectButton}>인플루언서</button>
-
-          <button className={stSelectButton}>일반</button>
+          <button onClick={nextSignUpPage} className={stSelectButton}>
+            일반
+          </button>
         </div>
 
         <div className="flex">
-          <button onClick={nextSignUpPage} className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium">
+          <button onClick={infnextSignUpPage} className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium">
             다음
           </button>
         </div>

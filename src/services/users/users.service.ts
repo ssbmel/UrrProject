@@ -1,11 +1,13 @@
 export const userSignUp = async ({
   email,
   password,
-  nickname
+  nickname,
+  confirm = null
 }: {
   email: string;
   password: string;
   nickname: string;
+  confirm?: string | null;
 }) => {
   try {
     const response = await fetch('/api/auth/signup', {
@@ -13,8 +15,9 @@ export const userSignUp = async ({
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, password, nickname })
+      body: JSON.stringify({ email, password, nickname, confirm })
     });
+
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server response error:', errorData);

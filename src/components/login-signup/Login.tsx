@@ -3,8 +3,6 @@
 import { userLogin } from '@/services/users/users.service';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
-import Button from '../common/button/Button';
-import { userDataStore } from '@/zustand/store';
 import Image from 'next/image';
 import logo from '../../../public/logo/URR_logo.png';
 import Link from 'next/link';
@@ -15,7 +13,6 @@ export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { setUserInfo, userInfo } = userDataStore();
 
   const onLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,9 +26,8 @@ export default function Login() {
 
     if (email && password) {
       try {
-        const data = await userLogin({ email, password });
-        setUserInfo(data.user);
-        router.push('/mypage/1');
+        await userLogin({ email, password });
+        router.push('/mypage/1'); // 녕수님 push하면 바꾸기
       } catch (error) {
         console.log(error);
       }

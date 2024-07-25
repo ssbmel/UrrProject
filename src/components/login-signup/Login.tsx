@@ -36,7 +36,7 @@ export default function Login() {
   };
 
   const { data } = useUserData();
-  console.log(data);
+  console.log(data?.id);
 
   return (
     <>

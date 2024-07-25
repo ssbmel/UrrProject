@@ -18,6 +18,7 @@
     "react-dom": "^18",
     "supabase": "^1.187.3",
     "swiper": "^11.1.5",
+    "uuidv4": "^6.2.13",
     "zustand": "^4.5.4"
   },
   "devDependencies": {

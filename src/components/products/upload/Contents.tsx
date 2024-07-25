@@ -6,11 +6,13 @@ import ProductImgUpload from "./ProductImgUpload";
 interface ContentsProps {
   titleRef: RefObject<HTMLInputElement>;
   textRef: RefObject<HTMLTextAreaElement>;
-  fileInputRef: RefObject<HTMLInputElement>;
-  productMainImgRef: RefObject<HTMLImageElement>;
+  detailImg: File[];
+  setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
+  mainImg: File | null;
+  setMainImg: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, fileInputRef, productMainImgRef}) => {
+const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDetailImg, mainImg, setMainImg}) => {
 
   return (
     <div className="border w-full h-[auto] p-5">
@@ -26,7 +28,11 @@ const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, fileInputRef, pr
         placeholder="내용을 입력하세요."
         ref={textRef} 
         ></textarea>
-      <ProductImgUpload fileInputRef={fileInputRef} productMainImgRef={productMainImgRef}/>
+      <ProductImgUpload 
+      detailImg={detailImg}
+      setDetailImg={setDetailImg}
+      mainImg={mainImg}
+      setMainImg={setMainImg}/>
     </div>
   );
 }

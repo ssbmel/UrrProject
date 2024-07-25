@@ -48,7 +48,7 @@ export default function ProductsList() {
   ];
   return (
     <>
-      <div className="flex justify-between p-4">
+      <div className="flex justify-between p-6">
         <p>총 00개</p>
         <p>추천순</p>
       </div>

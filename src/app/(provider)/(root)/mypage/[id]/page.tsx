@@ -1,7 +1,10 @@
+'use client';
+
+import { useUserData } from '@/hooks/useUserData';
 import React from 'react';
 
-const page = () => {
+const MyPage = () => {
   return <div>mypage</div>;
 };
 
-export default page;
+export default MyPage;

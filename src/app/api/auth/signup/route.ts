@@ -4,26 +4,29 @@ import { createClient } from '../../../../../supabase/server';
 
 export async function POST(request: Request) {
   try {
-    const { email, password, nickname } = (await request.json()) as FormState;
+    const { email, password, nickname, confirm } = (await request.json()) as FormState;
 
     const supabase = createClient();
     const { data: userData, error } = await supabase.auth.signUp({
       email,
-      password,
-      options: {
-        data: {
-          nickname
-        }
-      }
+      password
     });
 
     if (error) {
       return NextResponse.json({ error: '회원가입 실패', message: error }, { status: 500 });
     }
 
-    const { data, error: insertError } = await supabase
-      .from('users')
-      .insert([{ id: userData?.user?.id, email, nickname }]);
+    if (userData?.user?.id) {
+      if (confirm) {
+        const { data, error: insertError } = await supabase
+          .from('users')
+          .insert({ id: userData?.user?.id, email, nickname, account_link: confirm });
+      } else {
+        const { data, error: insertError } = await supabase
+          .from('users')
+          .insert({ id: userData?.user?.id, email, nickname });
+      }
+    }
 
     return NextResponse.json({ message: '회원가입 성공' }, { status: 200 });
   } catch (error) {

@@ -3,6 +3,6 @@ export type FormState = {
   password: string;
   nickname: string;
   confirm: string;
-  selectUser: boolean;
+  selectUser: string;
   approve: boolean;
 };

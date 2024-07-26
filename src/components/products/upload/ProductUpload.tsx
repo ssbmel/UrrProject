@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import React, { useRef, useState } from 'react';
-import Category from './Category';
-import PricePeriod from './PricePeriod';
-import Contents from './Contents';
-import './style.css';
-import { createClient } from '../../../../supabase/client';
-import { Product } from '../../../../types/common';
+import React, { useEffect, useRef, useState } from "react";
+import Category from "./Category";
+import PricePeriod from "./PricePeriod";
+import Contents from "./Contents";
+import "./style.css";
+import { createClient } from "../../../../supabase/client";
+import { Product } from "../../../../types/common";
 import { v4 as uuidv4 } from "uuid";
-import { useRouter } from 'next/navigation';
-import { useUserData } from '@/hooks/useUserData';
+import { useRouter } from "next/navigation";
+import { useUserData } from "@/hooks/useUserData";
 
 const supabase = createClient();
 
 function ProductUpload() {
-  const [radioCheckedValue, setRadioCheckedValue] = useState<string>('');
-
+  const [radioCheckedValue, setRadioCheckedValue] = useState<string>("");
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
   const costRef = useRef<HTMLInputElement>(null);
@@ -25,39 +24,37 @@ function ProductUpload() {
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [detailImg, setDetailImg] = useState<File[]>([]);
   const [mainImg, setMainImg] = useState<File | null>(null);
-  const { data:user } = useUserData();
-  const router = useRouter();
+  const { data: user } = useUserData();
+  const router = useRouter(); 
 
-  const uploadImg = async (): Promise<string | null> => {
+  const uploadMainImg = async (postId : string ): Promise<string | null> => {
     if (!mainImg) {
       return null;
     }
-    const supabase = createClient();
-    const ext = mainImg?.name.split('.').pop();
+    const ext = mainImg?.name.split(".").pop();
     const newFileName = `${uuidv4()}.${ext}`;
-    const { data, error } = await supabase.storage.from('products').upload(`mainImg/${newFileName}`, mainImg);
+    const { data, error } = await supabase.storage.from("products").upload(`${postId}/mainImg/${newFileName}`, mainImg);
     if (error) {
       console.log(`파일이 업로드 되지 않습니다.${error}`);
       return null;
     }
-    const res = await supabase.storage.from('products').getPublicUrl(data.path);
+    const res = await supabase.storage.from("products").getPublicUrl(data.path);
     return res.data.publicUrl;
   };
 
-  const uploadImages = async (): Promise<(string | null)[]> => {
-    const supabase = createClient();
-    const uploads = detailImg.map( async (detail) => {
-     const ext = detail.name.split('.').pop();
+  const uploadDetailImages = async (postId: string): Promise<(string | null)[]> => {
+    const uploads = detailImg.map(async (detail) => {
+      const ext = detail.name.split(".").pop();
       const newFileName = `${uuidv4()}.${ext}`;
-      const { data, error } = await supabase.storage.from('products').upload(`detailImg/${newFileName}`, detail);
+      const { data, error } = await supabase.storage.from("products").upload(`${postId}/detailImages/${newFileName}`, detail);
       if (error) {
         console.log(`파일이 업로드 되지 않습니다.${error}`);
         return null;
       }
-      const res = await supabase.storage.from('products').getPublicUrl(data.path);
+      const res = await supabase.storage.from("products").getPublicUrl(data.path);
       return res.data.publicUrl;
     });
-    const resList = await Promise.all(uploads)
+    const resList = await Promise.all(uploads);
     return resList;
   };
 
@@ -66,8 +63,9 @@ function ProductUpload() {
     if (!user) {
       return;
     }
-    const mainImgId = (await uploadImg()) || '';
-    const detailImgId = (await uploadImages()) || "";
+    const postId = uuidv4();
+    const mainImgId = (await uploadMainImg(postId)) || "";
+    const detailImgId = (await uploadDetailImages(postId)) || "";
     const productData: Product = {
       category: radioCheckedValue,
       start: startDateRef.current?.value || null,
@@ -81,16 +79,15 @@ function ProductUpload() {
       main_img: mainImgId,
       user_id: user?.id,
       created_at: new Date().toISOString(),
-      id: new Date().getTime()
+      id: postId
     };
 
-    const { data, error } = await supabase.from('products').insert([productData]).select();
-
+    const { data, error } = await supabase.from("products").insert([productData]).select();
     if (error) {
-      console.error('Error inserting data:', error);
+      console.error("Error inserting data:", error);
     } else {
-      console.log('Data inserted:', data);
-      router.push("/products/list")
+      console.log("Data inserted:", data);
+      router.push("/products/list");
     }
   };
 

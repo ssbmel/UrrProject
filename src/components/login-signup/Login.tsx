@@ -6,7 +6,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
 import Link from "next/link";
-import { useUserData } from "@/hooks/useUserData";
 
 export default function Login() {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";

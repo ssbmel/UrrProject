@@ -14,7 +14,7 @@ interface SelectMemberProps {
 export default function SelectMember({ setStep, confirmRef, setSelectUser, selectUser }: SelectMemberProps) {
   const stSelectButton = "w-[166px] h-[88px] bg-[#D9D9D9] rounded-xl font-medium";
 
-  const infnextSignUpPage = () => {
+  const infNextSignUpPage = () => {
     if (!confirmRef.current?.value) {
       alert("정보를 입력하세요!");
     }
@@ -67,7 +67,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
         </div>
 
         <div className="flex">
-          <button onClick={infnextSignUpPage} className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium">
+          <button onClick={infNextSignUpPage} className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium">
             다음
           </button>
         </div>

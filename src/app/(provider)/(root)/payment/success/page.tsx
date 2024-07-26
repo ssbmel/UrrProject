@@ -1,13 +1,7 @@
 "use client";
-import Success from "@/components/payment/Success";
-import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      <Success />
-    </div>
-  );
+  return <div>page</div>;
 };
 
 export default page;

@@ -97,7 +97,7 @@ export type Database = {
           created_at: string
           detail_img: string | null
           end: string | null
-          id: number | null
+          id: string
           main_img: string | null
           price: number | null
           product_count: number | null
@@ -112,7 +112,7 @@ export type Database = {
           created_at?: string
           detail_img?: string | null
           end?: string | null
-          id?: number | null
+          id: string
           main_img?: string | null
           price?: number | null
           product_count?: number | null
@@ -127,7 +127,7 @@ export type Database = {
           created_at?: string
           detail_img?: string | null
           end?: string | null
-          id?: number | null
+          id?: string
           main_img?: string | null
           price?: number | null
           product_count?: number | null
@@ -149,6 +149,7 @@ export type Database = {
       users: {
         Row: {
           account_link: string | null
+          address: string | null
           approve: boolean | null
           created_at: string
           email: string | null
@@ -159,6 +160,7 @@ export type Database = {
         }
         Insert: {
           account_link?: string | null
+          address?: string | null
           approve?: boolean | null
           created_at?: string
           email?: string | null
@@ -169,6 +171,7 @@ export type Database = {
         }
         Update: {
           account_link?: string | null
+          address?: string | null
           approve?: boolean | null
           created_at?: string
           email?: string | null

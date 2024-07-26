@@ -1,8 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
-
-/* eslint-disable @next/next/no-img-element */
 interface ContentsProps {
   detailImg: File[];
   setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
@@ -24,7 +23,6 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ detailImg, setDetailImg, ma
     if (!e.target.files?.length) return;
     const files = Array.from(e.target.files);
     setDetailImg(files)
-    const newImageURLs: string[] = [];
     setDetailImgUrl(files.map((f)=>URL.createObjectURL(f)))
   };
 

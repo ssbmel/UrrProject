@@ -1,7 +1,13 @@
-import React from "react";
+import InfluencerList from "@/components/influencer/InfluencerList";
+import Banner from "@/components/main/swiper/Banner";
 
 const page = () => {
-  return <div>influencer list</div>;
+  return (
+    <>
+      <Banner />
+      <InfluencerList />
+    </>
+  );
 };
 
 export default page;

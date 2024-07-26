@@ -1,7 +1,8 @@
-import { createClient } from '../../../../../supabase/server';
-import { FormState } from '../../../../../types/auth.type';
+import { NextRequest } from "next/server";
+import { createClient } from "../../../../../supabase/server";
+import { FormState } from "../../../../../types/auth.type";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { email, password } = (await request.json()) as FormState;
 
   const supabase = createClient();
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    console.log('error message:', error.message);
+    console.log("error message:", error.message);
     return Response.json({ errorMsg: error.message }, { status: 400 });
   }
 

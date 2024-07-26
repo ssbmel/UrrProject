@@ -1,13 +1,12 @@
-import Link from 'next/link';
-import Button from '../common/button/Button';
+import Link from "next/link";
 
 export default function InfluencerSignUp() {
-  const stSelectButton = 'w-[166px] h-[88px] bg-[#D9D9D9] rounded-xl font-medium';
+  const stSelectButton = "w-[166px] h-[88px] bg-[#D9D9D9] rounded-xl font-medium";
   return (
     <>
       <div className="p-5 h-[700px]">
         <div className="flex justify-between">
-          <Link href={'/login'}>
+          <Link href={"/login"}>
             <p>뒤로가기</p>
           </Link>
           <p>X</p>
@@ -19,13 +18,13 @@ export default function InfluencerSignUp() {
         </div>
 
         <div className="flex gap-4 mb-3">
-          <Button label="인플루언서" styleClass="w-[166px] h-[88px] bg-[#1a82ff] rounded-xl font-medium text-white" />
-          <Button label="일반" styleClass={stSelectButton} />
+          <button className="w-[166px] h-[88px] bg-[#1a82ff] rounded-xl font-medium text-white">인플루언서</button>
+          <button className={stSelectButton}>일반</button>
         </div>
 
         <div className="flex">
-          <Link href={'/signup'}>
-            <Button label="다음" styleClass="bg-[#D9D9D9] h-[47px] rounded-xl font-medium" />
+          <Link href={"/signup"}>
+            <button className="bg-[#D9D9D9] h-[47px] rounded-xl font-medium">다음</button>
           </Link>
         </div>
       </div>

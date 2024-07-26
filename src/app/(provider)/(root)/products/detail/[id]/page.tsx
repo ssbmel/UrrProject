@@ -1,8 +1,15 @@
-'use client';
-import React from 'react';
+"use client";
+import Detail from "@/components/products/detail/Detail";
+import React from "react";
 
-const ProductsDetail = () => {
-  return <div>ProductsDetail</div>;
+type ParamsType = { postId: string };
+
+const ProductsDetail = ({ params }: { params: ParamsType }) => {
+  return (
+    <div>
+      <Detail params={params} />
+    </div>
+  );
 };
 
 export default ProductsDetail;

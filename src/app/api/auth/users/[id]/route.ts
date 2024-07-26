@@ -1,32 +1,15 @@
-import { createClient } from '@supabase/supabase-js';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "../../../../../../supabase/client";
 
-export async function GET(req: NextRequest) {
-  /* const supabase = createClient(); */
-  /* console.log(id); */
-  /* id를 받아온다. */
-  /* let { data: users, error } = await supabase.from('users').select('*').eq('id', id);
+export async function PATCH(req: NextRequest) {
+  const supabase = createClient();
+  const { id, nickname, profile_url, address } = await req.json();
+
+  const { data, error } = await supabase.from("users").update({ nickname, profile_url, address }).eq("id", id).select();
 
   if (error) {
     console.log(error.message);
   }
 
-  return NextResponse.json(users, { status: 200 }); */
-}
-
-export async function PATCH(req: NextRequest) {
-  /* const supabase = createClient(); */
-  /* const {nickname, profile_url} = req.json()
-
-  const { data, error } = await supabase
-  .from('users')
-  .update({nickname, profile_url})
-  .eq('some_column', 'someValue')
-  .select()
-
-  if(error) {
-    console.log(error.message)
-  }
-
-  return NextResponse.json(data, {status: 200}); */
+  return NextResponse.json(data, { status: 200 });
 }

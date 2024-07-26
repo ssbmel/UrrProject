@@ -1,23 +1,16 @@
-export const getUserFromUserId = async (id: string) => {
-  try {
-    const res = await fetch(`/api/auth/users/${id}`);
-    console.log(res);
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.error('Server response error:', errorData);
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+import { createClient } from "../../../../supabase/client";
+import { AddressProps } from "../../../../types/addr.type";
+
+export const patchUserFromUserId = async () => {};
+
+export const getAddress = async (addressProps: AddressProps) => {
+  const { keyword, currentPage } = addressProps;
+  const res = await fetch(`/api/auth/users/edit/address?keyword=${keyword}&currentPage=${currentPage}`);
+  const data = await res.json();
+  return data;
 };
 
-/* export const patchUserFromUserId = async () => {}; */
-
-export const getAddress = async (addressProps: { keyword: string; currentPage: string }) => {
-  const params = new URLSearchParams(addressProps);
-
-  const res = await fetch(`/api/auth/users/edit/address`);
+export const sendResetPasswordEmail = async (email: string) => {
+  const supabase = createClient();
+  await supabase.auth.resetPasswordForEmail(email);
 };

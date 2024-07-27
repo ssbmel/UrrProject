@@ -41,6 +41,14 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // if (request.nextUrl.pathname.startsWith("/admin")) {
+  //   if (user?.role !== "관리자") {
+  //     const url = request.nextUrl.clone();
+  //     url.pathname = "/";
+  //     return NextResponse.redirect(url);
+  //   }
+  // } // 왜 관리자도 못들어가게하니 .....
+
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
   // 1. Pass the request in it, like so:

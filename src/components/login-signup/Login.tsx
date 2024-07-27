@@ -27,7 +27,7 @@ export default function Login() {
     if (email && password) {
       try {
         await userLogin({ email, password });
-        router.push("/mypage/1"); // 녕수님 push하면 바꾸기
+        router.push("/mypage");
       } catch (error) {
         console.log(error);
       }

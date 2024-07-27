@@ -1,5 +1,6 @@
 "use client";
 
+import { InfWaitList } from "@/hooks/useInfWaitList";
 import { infUserApprove, updateUserApprove } from "@/services/users/users.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 

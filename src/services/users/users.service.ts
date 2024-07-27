@@ -67,7 +67,6 @@ export const infUserApprove = async () => {
 };
 
 export const updateUserApprove = async (userId: string) => {
-  console.log(userId);
   try {
     const response = await fetch("/api/auth/users/infuser", {
       method: "POST",

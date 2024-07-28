@@ -4,37 +4,48 @@
 import { useState, useEffect } from "react";
 
 interface ContentsProps {
-  detailImg: File[];
   setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
-  mainImg: File | null;
   setMainImg: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-const ProductImgUpload: React.FC<ContentsProps> = ({ detailImg, setDetailImg, mainImg, setMainImg }) => {
+const ProductImgUpload: React.FC<ContentsProps> = ({ setDetailImg, setMainImg }) => {
   const [mainImgUrl, setMainImgUrl] = useState<string | undefined>(undefined);
-  const [detailImgUrl, setDetailImgUrl] = useState<string[]>([]);
+  const [detailImgUrls, setDetailImgUrls] = useState<{ file: File, url: string }[]>([]);
 
   useEffect(() => {
     return () => {
       if (mainImgUrl) URL.revokeObjectURL(mainImgUrl);
-      detailImgUrl.forEach((url) => URL.revokeObjectURL(url));
+      detailImgUrls.forEach((item) => URL.revokeObjectURL(item.url));
     };
-  }, [mainImgUrl, detailImgUrl]);
+  }, [mainImgUrl, detailImgUrls]);
 
   const readMainImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
     const imageFile = e.target.files[0];
     setMainImg(imageFile);
     const newMainImgUrl = URL.createObjectURL(imageFile);
+    if (mainImgUrl) URL.revokeObjectURL(mainImgUrl);
     setMainImgUrl(newMainImgUrl);
   };
 
   const readDetailImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
     const files = Array.from(e.target.files);
+    const newDetailImgUrls = files.map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+    }));
     setDetailImg((prevFiles) => [...prevFiles, ...files]);
-    const newDetailImgUrls = files.map((f) => URL.createObjectURL(f));
-    setDetailImgUrl((prevUrls) => [...prevUrls, ...newDetailImgUrls]);
+    setDetailImgUrls((prevUrls) => [...prevUrls, ...newDetailImgUrls]);
+  };
+
+  const handleDeleteImage = (file: File) => {
+    const itemToDelete = detailImgUrls.find(item => item.file === file);
+    if (itemToDelete) {
+      URL.revokeObjectURL(itemToDelete.url);
+      setDetailImgUrls((prevUrls) => prevUrls.filter((item) => item.file !== file));
+      setDetailImg((prevFiles) => prevFiles.filter((prevFile) => prevFile !== file));
+    }
   };
 
   return (
@@ -53,8 +64,11 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ detailImg, setDetailImg, ma
         <p className="font-bold mb-3 text-md">상세설명 첨부</p>
         <input type="file" multiple accept="image/*" onChange={readDetailImages} />
         <div>
-          {detailImgUrl.map((url, index) => (
-            <img key={index} src={url} alt={`preview-${index}`} width="auto" height="auto" className="mb-5" />
+          {detailImgUrls.map((item) => (
+            <div key={item.url}>
+              <img src={item.url} alt="img" width="auto" height="auto" className="mb-5" />
+              <button type="button" onClick={() => handleDeleteImage(item.file)}>x</button>
+            </div>
           ))}
         </div>
       </div>

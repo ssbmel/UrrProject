@@ -111,7 +111,7 @@ function ProductUpload() {
           setMainImg={setMainImg}
         />
         <div className="flex justify-end">
-          <button className="bg-blue-500 text-white p-2 rounded-sm my-5">등록하기</button>
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-5">등록하기</button>
         </div>
       </div>
     </form>

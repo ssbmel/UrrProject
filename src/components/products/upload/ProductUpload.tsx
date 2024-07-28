@@ -82,6 +82,22 @@ function ProductUpload() {
       id: postId
     };
 
+    if(
+      !productData.category ||
+      !productData.start ||
+      !productData.end ||
+      !productData.cost ||
+      !productData.price ||
+      !productData.product_count ||
+      !productData.title ||
+      !productData.text ||
+      !productData.detail_img ||
+      !productData.main_img
+    ) {
+      alert("상품 정보를 입력해주세요.")
+      return;
+    }
+
     const { data, error } = await supabase.from("products").insert([productData]).select();
     if (error) {
       console.error("Error inserting data:", error);
@@ -93,7 +109,7 @@ function ProductUpload() {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="p-5 max-w-[1200px] mx-auto">
+      <div className="p-5 max-w-[1200px] mx-auto grid gap-5">
         <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
           startDateRef={startDateRef}

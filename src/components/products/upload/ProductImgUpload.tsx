@@ -63,12 +63,15 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ setDetailImg, setMainImg })
       <div className="my-5">
         <label htmlFor="files" className="btn-upload">상세설명 파일 첨부하기</label>
         <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
-        <p className="text-sm text-yellow-500 text-center">*사진은 최대 5장까지 업로드 가능합니다.</p>
+        <p className="text-sm text-yellow-500">*사진은 최대 5장까지 업로드 가능합니다.</p>
         <div>
           {detailImgUrls.map((item) => (
-            <div key={item.url}>
+            <div key={item.url} className="static">
+              <button 
+                type="button" 
+                onClick={() => handleDeleteImage(item.file)}
+                className="border w-7 rounded-md absolute bg-black text-white">✖︎</button>
               <img src={item.url} alt="img" width="auto" height="auto" className="mb-5" />
-              <button type="button" onClick={() => handleDeleteImage(item.file)}>x</button>
             </div>
           ))}
         </div>

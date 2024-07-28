@@ -6,7 +6,7 @@ function ReviewList() {
     <div className="w-full max-h-[400px] mx-auto p-2">
         <h2 className="font-bold mb-5 text-xl">후기</h2>
 
-      <div className="w-full h-[300px] overflow-y-auto flex flex-col gap-y-4">
+      <div className="w-full h-[300px] overflow-y-auto flex flex-col gap-y-4 scrollbar">
         <div className="flex gap-3">
           <Image src={defaultImg} alt="" width={130} />
           <div className="flex flex-col w-1/2">

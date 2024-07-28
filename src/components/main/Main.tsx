@@ -4,6 +4,7 @@ import SubInfluencer from './SubInfluencer';
 import BestInfluencerList from './BestInfluencerList';
 import ReviewList from './ReviewList';
 import Banner from './swiper/Banner';
+import "./style.css"
 
 function Main() {
   return (

@@ -11,25 +11,28 @@ interface PricePeriodProps {
 }
 
 const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, costRef, priceRef, productCountRef }) => {
+  
+  const today = new Date();
+
   return (
     <details open className="border w-full px-5">
       <summary className="font-bold text-lg">기간 및 가격 설정</summary>
       <hr />
       <div className="space-x-4 my-5">
         <span>기간</span>
-        <input type="date" ref={startDateRef} className="w-[120px] border" />
+        <input type="date" min={today.toISOString().substring(0,10)} ref={startDateRef} className="w-[120px] border" />
         <span>-</span>
-        <input type="date" ref={endDateRef} className="w-[120px] border" />
+        <input type="date" min={today.toISOString().substring(0,10)} ref={endDateRef} className="w-[120px] border" />
       </div>
       <div className="space-x-4 mb-5">
         <span>가격</span>
-        <input type="number" className="w-[120px] border" placeholder="정가" ref={costRef} />
+        <input type="number" min={0} className="w-[120px] border" placeholder="정가" ref={costRef} />
         <span>-</span>
-        <input type="number" className="w-[120px] border" placeholder="판매가" ref={priceRef} />
+        <input type="number" min={0} className="w-[120px] border" placeholder="판매가" ref={priceRef} />
       </div>
       <div className="space-x-4 mb-5">
         <span>수량</span>
-        <input type="number" className="w-[120px] border" ref={productCountRef} />
+        <input type="number" min={0} className="w-[120px] border" ref={productCountRef} />
       </div>
     </details>
   );

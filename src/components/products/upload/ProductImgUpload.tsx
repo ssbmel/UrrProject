@@ -51,8 +51,8 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ setDetailImg, setMainImg })
   return (
     <>
       <div className="my-5">
-        <p className="font-bold mb-3 text-md">썸네일 첨부</p>
-        <input type="file" accept="image/*" onChange={readMainImg} />
+        <label htmlFor="file" className="btn-upload">썸네일 파일 첨부하기</label>
+        <input type="file" name="file" id="file" accept="image/*" onChange={readMainImg} />
         {mainImgUrl && (
           <div>
             <img src={mainImgUrl} alt="Main Image" width="auto" height="auto" className="mb-5" />
@@ -61,8 +61,9 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ setDetailImg, setMainImg })
       </div>
       <hr />
       <div className="my-5">
-        <p className="font-bold mb-3 text-md">상세설명 첨부</p>
-        <input type="file" multiple accept="image/*" onChange={readDetailImages} />
+        <label htmlFor="files" className="btn-upload">상세설명 파일 첨부하기</label>
+        <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
+        <p className="text-sm text-yellow-500 text-center">*사진은 최대 5장까지 업로드 가능합니다.</p>
         <div>
           {detailImgUrls.map((item) => (
             <div key={item.url}>

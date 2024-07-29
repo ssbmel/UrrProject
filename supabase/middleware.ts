@@ -34,8 +34,6 @@ export async function updateSession(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser();
 
-  // 유저테이블에서 위의 아이디를 통해 user row 가져옴
-
   // const response = await fetch("http://localhost:3000/api/auth/users");
   // const publicUserData = await response.json();
   // console.log("publicUserData ========", publicUserData);

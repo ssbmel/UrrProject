@@ -1,11 +1,14 @@
 "use client";
 
+import { useUserData } from "@/hooks/useUserData";
 import { infUserApprove, updateUserApprove } from "@/services/users/users.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AdminPage() {
   const [restart, setRestart] = useState<boolean>(false);
+  const router = useRouter();
 
   const { data: influencerApproveList, isSuccess } = useQuery({
     queryKey: ["infApprove", restart],
@@ -22,6 +25,13 @@ export default function AdminPage() {
   const influencerApproveHandler = (userId: string) => {
     mutation.mutate(userId);
   };
+
+  const { data } = useUserData();
+  if (data) {
+    if (data?.role !== "관리자") {
+      router.push("/");
+    }
+  }
 
   return (
     <>

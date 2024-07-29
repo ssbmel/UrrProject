@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, { params }: { params: { keyword: string; currentPage: string } }) => {
   const { keyword, currentPage } = params;
+
   // const keyword = req.nextUrl.searchParams.get("keyword");
   // const currentPage = req.nextUrl.searchParams.get("currentPage");
 

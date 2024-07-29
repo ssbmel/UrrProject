@@ -1,7 +1,13 @@
 "use client";
 
+import Fail from "@/components/payment/Fail";
+
 const page = () => {
-  return <div>page</div>;
+  return (
+    <div>
+      <Fail />
+    </div>
+  );
 };
 
 export default page;

@@ -13,7 +13,8 @@ export const GET = async (req: NextRequest) => {
     if (!res.ok) {
       const errorData = await res.json();
       console.error("Server response error:", errorData);
-      throw new Error(`HTTP ERROR OCCURED. status: ${res.status}`);
+      return NextResponse.json(errorData, { status: 500 });
+      // throw new Error(`HTTP ERROR OCCURED. status: ${res.status}`);
     }
 
     const data = await res.json();

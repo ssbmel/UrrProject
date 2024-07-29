@@ -19,7 +19,7 @@ const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDe
       <p className="mb-5 font-bold text-lg">글 작성하기</p>
       <input
         type="text"
-        placeholder="[활동명] 제목" 
+        placeholder="상품명" 
         className="border w-full h-8 mb-5"
         ref={titleRef}
       />

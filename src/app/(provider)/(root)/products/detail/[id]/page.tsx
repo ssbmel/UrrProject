@@ -1,8 +1,9 @@
-'use client';
-import React from 'react';
+"use client";
 
-const ProductsDetail = () => {
-  return <div>ProductsDetail</div>;
+type ParamsType = { postId: string };
+
+const ProductsDetail = ({ params }: { params: ParamsType }) => {
+  return <div>page</div>;
 };
 
 export default ProductsDetail;

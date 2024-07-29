@@ -1,4 +1,5 @@
-import React from 'react';
+import Image from "next/image";
+import defaultImg from "../../../public/images/default.png";
 
 function ReviewList() {
   return (
@@ -7,7 +8,7 @@ function ReviewList() {
 
       <div className="w-full h-[300px] overflow-y-auto flex flex-col gap-y-4">
         <div className="flex gap-3">
-          <div className="border w-[130px] h-[130px] rounded-md"></div>
+          <Image src={defaultImg} alt="" width={130} />
           <div className="flex flex-col w-1/2">
             <p className="font-bold">[우르르]상품명</p>
             <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>
@@ -15,7 +16,7 @@ function ReviewList() {
           </div>
         </div>
         <div className="flex gap-3">
-          <div className="border w-[130px] h-[130px] rounded-md"></div>
+          <Image src={defaultImg} alt="" width={130} />
           <div className="flex flex-col w-1/2">
             <p className="font-bold">[우르르]상품명</p>
             <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>
@@ -23,7 +24,7 @@ function ReviewList() {
           </div>
         </div>
         <div className="flex gap-3">
-          <div className="border w-[130px] h-[130px] rounded-md"></div>
+          <Image src={defaultImg} alt="" width={130} />
           <div className="flex flex-col w-1/2">
             <p className="font-bold">[우르르]상품명</p>
             <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>
@@ -31,7 +32,7 @@ function ReviewList() {
           </div>
         </div>
         <div className="flex gap-3">
-          <div className="border w-[130px] h-[130px] rounded-md"></div>
+          <Image src={defaultImg} alt="" width={130} />
           <div className="flex flex-col w-1/2">
             <p className="font-bold">[우르르]상품명</p>
             <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>

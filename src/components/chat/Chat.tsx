@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import { useUserData } from "@/hooks/useUserData";
 import { getMessages } from "@/services/chats/chats.service";
 
@@ -27,6 +28,17 @@ export default function Chat () {
   return (
     <>
      <button onClick={getChatMessages}>채팅방 입장하기</button>
+=======
+export default function Chat() {
+  const createChatRoom = () => {};
+  const enterChatChannel = () => {};
+  const getChatMessages = () => {};
+  const sendChatMessage = () => {};
+  const receiveChatMessage = () => {};
+  return (
+    <>
+      <button>채팅방 입장하기</button>
+>>>>>>> 7ef642c7614d83b531d50a9cda0f040ccef53584
     </>
-  )
+  );
 }

@@ -1,14 +1,14 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function ListCategory() {
   const categories = [
-    { name: '전체', image: '/images/all.png' },
-    { name: '인플루언서 추천', image: '/images/default.png' },
-    { name: '음식', image: '/images/default.png' },
-    { name: '생활용품', image: '/images/default.png' },
-    { name: '화장품', image: '/images/default.png' },
-    { name: '위생용품', image: '/images/default.png' },
-    { name: '문구류', image: '/images/default.png' }
+    { name: "전체", image: "/images/all.png" },
+    { name: "인플루언서 추천", image: "/images/default.png" },
+    { name: "음식", image: "/images/default.png" },
+    { name: "생활용품", image: "/images/default.png" },
+    { name: "화장품", image: "/images/default.png" },
+    { name: "위생용품", image: "/images/default.png" },
+    { name: "문구류", image: "/images/default.png" }
   ];
   return (
     <>

@@ -1,4 +1,5 @@
-import React from 'react';
+import Image from "next/image";
+import defaultImg from "../../../public/images/default.png";
 
 function BestInfluencerList() {
   return (
@@ -6,7 +7,7 @@ function BestInfluencerList() {
       <h2 className="font-bold mb-5 text-xl">현재 인기 인플루언서</h2>
       <div className="w-full h-[400px] overflow-y-auto">
         <div className="border rounded-md bg-gray-300 w-full min-h-[100px] mx-auto p-5 grid grid-rows-1 grid-flow-col mb-4">
-          <div className="bg-gray-100 rounded-md w-[80px] h-[80px]"></div>
+          <Image src={defaultImg} alt="" width={100} />
           <div className="flex flex-col">
             <p className="flex-1">우르르</p>
             <p className="mt-auto">#OOOO</p>
@@ -15,7 +16,7 @@ function BestInfluencerList() {
           <button className="self-center ml-auto">구독</button>
         </div>
         <div className="border rounded-md bg-gray-300 w-full min-h-[100px] mx-auto p-5 grid grid-rows-1 grid-flow-col mb-4">
-          <div className="bg-gray-100 rounded-md w-[80px] h-[80px]"></div>
+          <Image src={defaultImg} alt="" width={100} />
           <div className="flex flex-col">
             <p className="flex-1">우르르</p>
             <p className="mt-auto">#OOOO</p>
@@ -24,7 +25,7 @@ function BestInfluencerList() {
           <button className="self-center ml-auto">구독</button>
         </div>
         <div className="border rounded-md bg-gray-300 w-full min-h-[100px] mx-auto p-5 grid grid-rows-1 grid-flow-col mb-4">
-          <div className="bg-gray-100 rounded-md w-[80px] h-[80px]"></div>
+          <Image src={defaultImg} alt="" width={100} />
           <div className="flex flex-col">
             <p className="flex-1">우르르</p>
             <p className="mt-auto">#OOOO</p>
@@ -33,7 +34,7 @@ function BestInfluencerList() {
           <button className="self-center ml-auto">구독</button>
         </div>
         <div className="border rounded-md bg-gray-300 w-full min-h-[100px] mx-auto p-5 grid grid-rows-1 grid-flow-col mb-4">
-          <div className="bg-gray-100 rounded-md w-[80px] h-[80px]"></div>
+          <Image src={defaultImg} alt="" width={100} />
           <div className="flex flex-col">
             <p className="flex-1">우르르</p>
             <p className="mt-auto">#OOOO</p>

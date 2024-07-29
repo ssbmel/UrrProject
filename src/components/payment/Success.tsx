@@ -17,11 +17,11 @@ export default function Success() {
 
       const json = await response.json();
 
-      //   if (!response.ok) {
-      //     // 결제 실패 비즈니스 로직을 구현하세요.
-      //     router.push(`/payment/fail?message=${json.message}&code=${json.code}`);
-      //     return;
-      //   }
+      if (!response.ok) {
+        //     // 결제 실패 비즈니스 로직을 구현하세요.
+        router.push(`/payment/fail?message=${json.message}&code=${json.code}`);
+        return;
+      }
 
       // 결제 성공 비즈니스 로직을 구현하세요.
     },

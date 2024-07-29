@@ -12,8 +12,6 @@ export default function AdminPage() {
     queryFn: infUserApprove
   }); // 커스텀훅으로 만들기
 
-  const queryClient = useQueryClient();
-
   const mutation = useMutation({
     mutationFn: updateUserApprove,
     onSuccess: () => {

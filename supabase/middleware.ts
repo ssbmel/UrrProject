@@ -37,9 +37,9 @@ export async function updateSession(request: NextRequest) {
 
   // 유저테이블에서 위의 아이디를 통해 user row 가져옴
 
-  const response = await fetch("http://localhost:3000/api/auth/users");
-  const data = await response.json();
-  console.log(data);
+  // const response = await fetch("http://localhost:3000/api/auth/users");
+  // const publicUserData = await response.json();
+  // console.log("publicUserData ========", publicUserData);
 
   if (!user && request.nextUrl.pathname.startsWith("/mypage")) {
     // no user, potentially respond by redirecting the user to the login page
@@ -49,7 +49,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // if (request.nextUrl.pathname.startsWith("/admin")) {
-  //   if (user?.role !== "관리자") {
+  //   if (publicUserData?.role !== "관리자") {
   //     const url = request.nextUrl.clone();
   //     url.pathname = "/";
   //     return NextResponse.redirect(url);

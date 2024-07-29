@@ -1,3 +1,4 @@
+import { FormEvent } from "react";
 import { NextResponse } from "next/server";
 import { createClient } from "../../../../../supabase/server";
 // The client you created from the Server-Side Auth instructions
@@ -9,9 +10,19 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+    const kakaoUser = data.user;
+    // console.log("카카오 로그인 :", kakaoUser);
+
     if (!error) {
-      // insert
+      if (kakaoUser) {
+        const { error } = await supabase.from("users").insert({
+          id: kakaoUser.id,
+          email: kakaoUser.email,
+          nickname: kakaoUser.user_metadata.user_name
+        });
+      }
       const forwardedHost = request.headers.get("x-forwarded-host"); // original origin before load balancer
       const isLocalEnv = process.env.NODE_ENV === "development";
       if (isLocalEnv) {

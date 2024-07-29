@@ -14,12 +14,12 @@ const InfoOnEdit = () => {
           <div className="w-[100px] h-[100px] bg-orange-300"></div>
           <button className="absolute bottom-0 right-0">➕</button>
         </div>
-        <input type="text" value={user.nickname} placeholder="새 닉네임" />
+        <input type="text" value={user?.nickname} placeholder="새 닉네임" />
       </section>
       <section className="border">
         <div className="border border-black bg-slate-400">
           <p>이메일</p>
-          <input type="email" value={user.email} disabled />
+          <input type="email" value={user?.email} disabled />
         </div>
         <div className="border border-black bg-slate-400">
           <p>비밀번호</p>

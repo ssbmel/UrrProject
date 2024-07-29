@@ -2,7 +2,6 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
-import { channel } from "diagnostics_channel";
 
 export default function Chat() {
   const userdata = useUserData().data;
@@ -34,9 +33,8 @@ export default function Chat() {
         .eq('channel_id', 1)
       console.log(data)
     }
-
-
   }
+  
   const sendChatMessage = () => {
 
   }

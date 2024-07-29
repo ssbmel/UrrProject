@@ -3,7 +3,6 @@
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
 import { useEffect, useState } from "react";
-import chatlist from "@/app/(provider)/(root)/chatlist/page";
 
 export default function ChatList() {
   const userdata = useUserData().data;
@@ -29,7 +28,7 @@ export default function ChatList() {
   }
 
   const getChatListData = async (chatlist: number[] | null) => {
-    //유저의 대화구독목록 불러오기
+    //구독리스트의 정보 불러오기
     // const user_id = userdata.id
     // console.log(user_id)
     if (channelList) {

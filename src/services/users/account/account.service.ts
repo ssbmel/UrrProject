@@ -5,7 +5,7 @@ export const patchUserFromUserId = async () => {};
 
 export const getAddress = async (addressProps: AddressProps) => {
   const { keyword, currentPage } = addressProps;
-  const res = await fetch(`/api/auth/users/edit/address?keyword=${keyword}&currentPage=${currentPage}`);
+  const res = await fetch(`/api/auth/users/edit/address/${keyword}/${currentPage}`);
   const data = await res.json();
   return data;
 };

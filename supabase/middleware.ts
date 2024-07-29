@@ -1,3 +1,4 @@
+import { useUserData } from "@/hooks/useUserData";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -33,6 +34,12 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user }
   } = await supabase.auth.getUser();
+
+  // 유저테이블에서 위의 아이디를 통해 user row 가져옴
+
+  const response = await fetch("http://localhost:3000/api/auth/users");
+  const data = await response.json();
+  console.log(data);
 
   if (!user && request.nextUrl.pathname.startsWith("/mypage")) {
     // no user, potentially respond by redirecting the user to the login page

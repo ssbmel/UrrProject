@@ -6,8 +6,8 @@ import { useRef } from "react";
 import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
 import Link from "next/link";
-import { kakaoSignUp } from "@/services/users/kakao/kakaousers.service";
 import { createClient } from "../../../supabase/client";
+import { kakaoSignUp } from "@/services/users/kakao/kakaousers.service";
 
 export default function Login() {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
@@ -38,22 +38,21 @@ export default function Login() {
 
   // 카카오 회원가입
   const kakaoLoginHandler = async () => {
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "kakao",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent"
-        }
-      }
-    });
-    if (error) {
-      console.log("카카오 로그인 실패");
-    }
-    if (data) {
-      console.log(data);
-    }
+    const data = await kakaoSignUp();
+    console.log(data);
+    // const supabase = createClient();
+    // const { data, error } = await supabase.auth.signInWithOAuth({
+    //   provider: "kakao",
+    //   options: {
+    //     redirectTo: "http://localhost:3000/api/auth/login/kakao/callback"
+    //   }
+    // });
+    // if (error) {
+    //   console.log("카카오 로그인 실패");
+    // }
+    // if (data) {
+    //   console.log(data);
+    // }
   };
 
   return (

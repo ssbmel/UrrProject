@@ -59,8 +59,8 @@ export const userLogin = async ({ email, password }: { email: string; password: 
 export const infUserApprove = async () => {
   try {
     const response = await fetch("/api/auth/users/infuser");
-    const data = await response.json();
-    return data.data;
+    const { data } = await response.json();
+    return data;
   } catch (error) {
     console.log(error);
   }

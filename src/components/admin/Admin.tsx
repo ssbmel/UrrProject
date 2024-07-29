@@ -3,20 +3,22 @@
 import { InfWaitList } from "@/hooks/useInfWaitList";
 import { infUserApprove, updateUserApprove } from "@/services/users/users.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function AdminPage() {
+  const [restart, setRestart] = useState<boolean>(false);
   const { data: influencerApproveList, isSuccess } = useQuery({
-    queryKey: ["infApprove"],
+    queryKey: ["infApprove", restart],
     queryFn: infUserApprove
   }); // 커스텀훅으로 만들기
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: updateUserApprove
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries(["infApprove"]);
-    // }
+    mutationFn: updateUserApprove,
+    onSuccess: () => {
+      setRestart(!restart);
+    }
   });
 
   const influencerApproveHandler = (userId: string) => {

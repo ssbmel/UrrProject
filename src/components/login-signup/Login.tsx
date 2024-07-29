@@ -7,7 +7,6 @@ import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
 import Link from "next/link";
 import { createClient } from "../../../supabase/client";
-import { kakaoSignUp } from "@/services/users/kakao/kakaousers.service";
 
 export default function Login() {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";

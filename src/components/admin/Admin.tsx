@@ -1,12 +1,12 @@
 "use client";
 
-import { InfWaitList } from "@/hooks/useInfWaitList";
 import { infUserApprove, updateUserApprove } from "@/services/users/users.service";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function AdminPage() {
   const [restart, setRestart] = useState<boolean>(false);
+
   const { data: influencerApproveList, isSuccess } = useQuery({
     queryKey: ["infApprove", restart],
     queryFn: infUserApprove

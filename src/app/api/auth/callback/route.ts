@@ -1,4 +1,3 @@
-import { FormEvent } from "react";
 import { NextResponse } from "next/server";
 import { createClient } from "../../../../../supabase/server";
 // The client you created from the Server-Side Auth instructions

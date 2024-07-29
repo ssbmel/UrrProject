@@ -2,11 +2,10 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
-
+import { channel } from "diagnostics_channel";
 
 export default function Chat() {
   const userdata = useUserData().data;
-  console.log(userdata);
   const supabase = createClient();
 
   const createChatRoom = () => {
@@ -15,9 +14,12 @@ export default function Chat() {
   const enterChatChannel = () => {
     //유저의 대화방 입장하기
   }
+
   const getChatMessages = async () => {
+
     const user_id = userdata.id
-    if (userdata.approve) {
+    const approve = userdata.approve
+    if (approve) {
       const { data, error } = await supabase
         .from('chat_messages')
         .select('*')
@@ -41,8 +43,12 @@ export default function Chat() {
   const receiveChatMessage = () => {
 
   }
+
+  
+
   return (
     <>
+      
       <button onClick={getChatMessages}>채팅방 입장하기</button>
     </>
   );

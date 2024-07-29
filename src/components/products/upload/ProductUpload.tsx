@@ -11,9 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
 
-const supabase = createClient();
-
 function ProductUpload() {
+  const supabase = createClient();
   const [radioCheckedValue, setRadioCheckedValue] = useState<string>("");
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
@@ -25,9 +24,9 @@ function ProductUpload() {
   const [detailImg, setDetailImg] = useState<File[]>([]);
   const [mainImg, setMainImg] = useState<File | null>(null);
   const { data: user } = useUserData();
-  const router = useRouter(); 
+  const router = useRouter();
 
-  const uploadMainImg = async (postId : string ): Promise<string | null> => {
+  const uploadMainImg = async (postId: string): Promise<string | null> => {
     if (!mainImg) {
       return null;
     }
@@ -46,7 +45,9 @@ function ProductUpload() {
     const uploads = detailImg.map(async (detail) => {
       const ext = detail.name.split(".").pop();
       const newFileName = `${uuidv4()}.${ext}`;
-      const { data, error } = await supabase.storage.from("products").upload(`${postId}/detailImages/${newFileName}`, detail);
+      const { data, error } = await supabase.storage
+        .from("products")
+        .upload(`${postId}/detailImages/${newFileName}`, detail);
       if (error) {
         console.log(`파일이 업로드 되지 않습니다.${error}`);
         return null;

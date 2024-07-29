@@ -1,6 +1,5 @@
-import Section from '@/components/mypage/Section';
-import UserCard from '@/components/mypage/UserCard';
-import React from 'react';
+import Section from "@/components/mypage/Section";
+import UserCard from "@/components/mypage/UserCard";
 
 const MyPage = () => {
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import { Addr, PageData } from "../../../../types/addr.type";
 import { getAddress } from "@/services/users/account/account.service";
 

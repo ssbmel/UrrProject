@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
-  const keyword = req.nextUrl.searchParams.get("keyword");
-  const currentPage = req.nextUrl.searchParams.get("currentPage");
+export const GET = async (req: NextRequest, { params }: { params: { keyword: string; currentPage: string } }) => {
+  const { keyword, currentPage } = params;
+  // const keyword = req.nextUrl.searchParams.get("keyword");
+  // const currentPage = req.nextUrl.searchParams.get("currentPage");
 
   const res = await fetch(
     `https://business.juso.go.kr/addrlink/addrLinkApi.do?countPerPage=8&currentPage=${currentPage}&keyword=${keyword}&confmKey=${process

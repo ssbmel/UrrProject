@@ -1,3 +1,4 @@
+"use client";
 import { Addr, PageData } from "../../../../types/addr.type";
 import { getAddress } from "@/services/users/account/account.service";
 

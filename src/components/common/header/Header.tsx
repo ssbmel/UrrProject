@@ -1,4 +1,5 @@
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
 const Header = () => {
   return (
@@ -10,6 +11,9 @@ const Header = () => {
         <div className="flex gap-2">
           <p>검색</p>
           <p>장바구니</p>
+          <Link href={"/admin"}>
+            <p>관리자</p>
+          </Link>
         </div>
       </header>
       {/* <div className="bg-gray-300 flex-col h-[100px] w-full fixed">

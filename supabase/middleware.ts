@@ -34,12 +34,24 @@ export async function updateSession(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser();
 
+  // const response = await fetch("http://localhost:3000/api/auth/users");
+  // const publicUserData = await response.json();
+  // console.log("publicUserData ========", publicUserData);
+
   if (!user && request.nextUrl.pathname.startsWith("/mypage")) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
+
+  // if (request.nextUrl.pathname.startsWith("/admin")) {
+  //   if (publicUserData?.role !== "관리자") {
+  //     const url = request.nextUrl.clone();
+  //     url.pathname = "/";
+  //     return NextResponse.redirect(url);
+  //   }
+  // } // 왜 관리자도 못들어가게하니 .....
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:

@@ -10,7 +10,7 @@ export default function BottomNav() {
           <Link href={"/"}>
             <li className={liStyle}>홈</li>
           </Link>
-          <Link href={"/mypage/1"}>
+          <Link href={"/mypage"}>
             <li className={liStyle}>마이페이지</li>
           </Link>
           <Link href={"/products/list"}>

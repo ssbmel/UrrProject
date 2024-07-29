@@ -6,6 +6,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
 import Link from "next/link";
+import { createClient } from "../../../supabase/client";
 
 export default function Login() {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
@@ -14,7 +15,7 @@ export default function Login() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const onLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
@@ -27,10 +28,27 @@ export default function Login() {
     if (email && password) {
       try {
         await userLogin({ email, password });
-        router.push("/mypage/1"); // 녕수님 push하면 바꾸기
+        router.push("/mypage");
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  // 카카오 회원가입
+  const kakaoLoginHandler = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "kakao",
+      options: {
+        redirectTo: "http://localhost:3000/api/auth/callback"
+      }
+    });
+    if (error) {
+      console.log("카카오 로그인 실패");
+    }
+    if (data) {
+      console.log(data);
     }
   };
 
@@ -41,7 +59,7 @@ export default function Login() {
           <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
         </div>
 
-        <form onSubmit={onLoginHandler} className="flex flex-col h-[40%]">
+        <form onSubmit={loginHandler} className="flex flex-col h-[40%]">
           <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
           <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
           <button className="flex justify-end mb-4">비밀번호 찾기</button>
@@ -51,7 +69,9 @@ export default function Login() {
         </form>
 
         <div className="flex flex-col items-center h-[25%]">
-          <button className="bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg">카카오로 시작하기</button>
+          <button onClick={kakaoLoginHandler} className="bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg">
+            카카오 로그인
+          </button>
           <div className="flex">
             <p>아직 회원이 아니신가요?</p>
             <Link href={"/signup"}>

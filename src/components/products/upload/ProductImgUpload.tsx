@@ -30,14 +30,30 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ setDetailImg, setMainImg })
 
   const readDetailImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
+
     const files = Array.from(e.target.files);
+    setDetailImg((prevFiles) => {
+        const totalFiles = prevFiles.length + files.length;
+        if (totalFiles > 10) {
+            alert("사진은 최대 10장까지 업로드 가능합니다.");
+            return prevFiles;
+        }
+        return [...prevFiles, ...files];
+    });
+
     const newDetailImgUrls = files.map((file) => ({
-      file,
-      url: URL.createObjectURL(file),
+        file,
+        url: URL.createObjectURL(file),
     }));
-    setDetailImg((prevFiles) => [...prevFiles, ...files]);
-    setDetailImgUrls((prevUrls) => [...prevUrls, ...newDetailImgUrls]);
-  };
+    setDetailImgUrls((prevUrls) => {
+        const totalUrls = prevUrls.length + newDetailImgUrls.length;
+        if (totalUrls > 10) {
+            return prevUrls;
+        }
+        return [...prevUrls, ...newDetailImgUrls];
+    });
+};
+
 
   const handleDeleteImage = (file: File) => {
     const itemToDelete = detailImgUrls.find(item => item.file === file);
@@ -63,7 +79,7 @@ const ProductImgUpload: React.FC<ContentsProps> = ({ setDetailImg, setMainImg })
       <div className="my-5">
         <label htmlFor="files" className="btn-upload">상세설명 파일 첨부하기</label>
         <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
-        <p className="text-sm text-yellow-500">*사진은 최대 5장까지 업로드 가능합니다.</p>
+        <p className="text-sm text-yellow-500">*사진은 최대 10장까지 업로드 가능합니다.</p>
         <div>
           {detailImgUrls.map((item) => (
             <div key={item.url} className="static">

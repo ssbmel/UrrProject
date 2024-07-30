@@ -37,11 +37,16 @@ const InfoOnEdit = () => {
         </div>
         <div className="border border-black bg-slate-400">
           <p>이름</p>
-          <input type="text" id="name" />
+          <input type="text" id="name" placeholder="이름을 입력해주세요" defaultValue={user ? user.name : ""} />
         </div>
         <div className="border border-black bg-slate-400">
           <p>휴대폰</p>
-          <input type="text" id="phoneNumber" />
+          <input
+            type="text"
+            id="phoneNumber"
+            placeholder="휴대폰 번호를 입력해주세요"
+            defaultValue={user ? user.phonenum : null}
+          />
         </div>
         <InfoOnEditAddress />
       </section>

@@ -4,7 +4,7 @@ export const GET = async (req: NextRequest, { params }: { params: { keyword: str
   const { keyword, currentPage } = params;
 
   const res = await fetch(
-    `https://business.juso.go.kr/addrlink/addrLinkApi.do?countPerPage=8&currentPage=${currentPage}&keyword=${keyword}&confmKey=${process
+    `https://business.juso.go.kr/addrlink/addrLinkApi.do?countPerPage=7&currentPage=${currentPage}&keyword=${keyword}&confmKey=${process
       .env.NEXT_PUBLIC_ADDRESS_API_KEY!}&resultType=json`
   );
 

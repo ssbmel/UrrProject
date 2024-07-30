@@ -18,13 +18,16 @@ const InfoOnEditAddress = () => {
   const roadAddrRef = useRef<HTMLInputElement>(null);
   const [jibun, setJibun] = useState<string | null>(null);
   const userAddrRef = useRef<HTMLInputElement>(null);
+  const userAddrInsert = useRef<HTMLInputElement>(null);
 
-  const openAddressForm = (e: FormEvent) => {
-    e.preventDefault();
+  const openAddressForm = () => {
+    keyword.current!.value = "";
+    setData(null);
+    setStep(1);
     setIsVisible(!isVisible);
   };
 
-  const searchHandler = async (e: React.FormEvent, keyword: string, currentPage: number) => {
+  const searchHandler = async (e: FormEvent, keyword: string, currentPage: number) => {
     e.preventDefault();
     if (!keyword) {
       alert("검색어를 입력해주세요");
@@ -39,11 +42,12 @@ const InfoOnEditAddress = () => {
       alert(common?.errorMessage);
       return;
     }
+
     setPageData(common);
     setData(data);
   };
 
-  const selectAddr = (e: React.MouseEvent, addr: Addr) => {
+  const selectAddr = (addr: Addr) => {
     setIsSelected(true);
     const { zipNo, roadAddr, jibunAddr } = addr;
     zipNoRef.current!.value = zipNo;
@@ -51,10 +55,26 @@ const InfoOnEditAddress = () => {
     setJibun(jibunAddr);
   };
 
-  const goNextStep = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStep((prev) => prev + 1);
+  const goNextStep = () => {
+    if (!zipNoRef.current!.value) {
+      alert("입력할 주소를 선택해주세요");
+      return;
+    }
+    if (step === 2) {
+      if (!userAddrInsert.current!.value) {
+        alert("상세 주소를 입력해주세요");
+        return;
+      }
+      userAddrRef.current!.value = userAddrInsert.current!.value;
+      keyword.current!.value = "";
+      setData(null);
+      setIsVisible(!isVisible);
+      return;
+    }
+    setStep(2);
   };
+
+  console.log(step);
 
   return (
     <div>
@@ -67,8 +87,8 @@ const InfoOnEditAddress = () => {
           </button>
         </div>
         <div className={isVisible ? "bg-slate-200 fixed flex flex-col w-full h-screen top-0 left-0" : "hidden"}>
-          <button onClick={openAddressForm} className="p-2 self-end">
-            X
+          <button onClick={openAddressForm} className="p-1 self-end">
+            ❌
           </button>
           <form
             onSubmit={(e) => searchHandler(e, keyword.current?.value!, currentPage)}
@@ -77,40 +97,54 @@ const InfoOnEditAddress = () => {
             <input className="w-[80%]" ref={keyword} type="text" placeholder="검색어를 입력하세요" />
             <button className="w-[18%] border align-baseline bg-white font-bold">🔍</button>
           </form>
-          <div className="w-full p-1 border flex justify-evenly items-center text-center">
-            <p className="w-[14%]">우편 번호</p>
-            <p className="w-[78%]">주소</p>
-          </div>
+          {step === 1 ? (
+            <div className="w-full p-1 border flex justify-evenly items-center text-center">
+              <p className="w-[14%] text-[12px]">우편 번호</p>
+              <p className="w-[78%] text-[12px]">주소</p>
+            </div>
+          ) : (
+            <div className="w-full p-1 border flex justify-evenly items-center text-center">
+              <p className="w-[92%] text-[12px]">주소</p>
+            </div>
+          )}
           <>
             {step === 1 ? (
-              <>
-                <ul className="max-h-[488px] overflow-y-auto w-full bg-slate-300">
-                  {data?.map((addr) => (
-                    <li
-                      key={addr?.bdMgtSn}
-                      onClick={(e) => selectAddr(e, addr)}
-                      className="flex justify-evenly items-center h-[61px] p-1 border"
-                    >
-                      <p className="w-[14%] text-[12px] font-bold text-center">
-                        <input type="radio" name="" id="" />
-                        {addr?.zipNo}
-                      </p>
-                      <div className="text-[12px] w-[78%]">
-                        <span className="font-bold block">{addr?.roadAddr}</span>
-                        <span className="text-[10px] block">{addr?.jibunAddr}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+              <div className="flex flex-col justify-center h-[75%] gap-1">
+                {data ? (
+                  <ul className="overflow-y-auto w-full flex flex-col justify-center bg-slate-300">
+                    {data.length ? (
+                      data.map((addr, idx) => (
+                        <li key={addr?.bdMgtSn} onClick={() => selectAddr(addr)}>
+                          <label
+                            htmlFor={"address" + idx}
+                            className="flex justify-evenly items-center h-[61px] p-1 border"
+                          >
+                            <input type="radio" name="address" id={"address" + idx} />
+                            <p className="w-[14%] text-[12px] font-bold text-center">{addr?.zipNo}</p>
+                            <div className="text-[12px] w-[78%]">
+                              <span className="font-bold block">{addr?.roadAddr}</span>
+                              <span className="text-[10px] block">{addr?.jibunAddr}</span>
+                            </div>
+                          </label>
+                        </li>
+                      ))
+                    ) : (
+                      <div className="w-full text-center">검색 결과가 없습니다.</div>
+                    )}
+                  </ul>
+                ) : (
+                  <div className="w-full text-center">검색할 주소를 입력해주세요</div>
+                )}
+
                 <AddrPagination
-                  keyword={keyword.current?.value!}
+                  keyword={keyword.current?.value}
                   currentPage={currentPage}
                   pageData={pageData}
                   setCurrentPage={setCurrentPage}
                   setPageData={setPageData}
                   setData={setData}
                 />
-              </>
+              </div>
             ) : step === 2 ? (
               <div>
                 <div>
@@ -118,15 +152,20 @@ const InfoOnEditAddress = () => {
                   <p>{roadAddrRef.current!.value}</p>
                   <p>{jibun}</p>
                 </div>
-                <div className="">
-                  <input className="text-[12px] w-[78%]" type="text" placeholder="상세 주소를 입력해주세요" />
+                <div>
+                  <input
+                    className="text-[12px] w-[78%]"
+                    type="text"
+                    ref={userAddrInsert}
+                    placeholder="상세 주소를 입력해주세요"
+                  />
                 </div>
               </div>
             ) : (
               <div>검색된 주소가 없습니다!!!!!!!!!</div>
             )}
           </>
-          <div>
+          <div className="h-[17%]">
             <button onClick={goNextStep} className="w-full p-2 bg-amber-400">
               {step === 1 ? "다음" : step === 2 ? "완료" : ""}
             </button>

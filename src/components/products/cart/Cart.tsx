@@ -1,26 +1,25 @@
 import Image from "next/image";
 import defaultImg from "../../../../public/images/default.png";
 import TotalAmount from "./TotalAmount";
+
 function Cart() {
   return (
-    <div className="w-full p-2">
-      <div className="border flex gap-2 items-center">
+    <div className="w-full p-4">
+      <div className="flex items-center gap-2 p-2">
         <input type="checkbox" />
         <p>전체상품</p>
-        <button className="ml-auto">삭제</button>
+        <button className="ml-auto px-2 py-1 rounded">삭제</button>
       </div>
-      <hr />
-      <div className="border w-full flex gap-2">
+      <hr className="my-4" />
+      <div className="border flex items-center gap-4 p-2 mb-4">
         <input type="checkbox" />
-        <Image src={defaultImg} alt="image" width={100} />
-        <div className="">
-          <p>인플루언서명</p>
-          <p>상품명</p>
-          <p>가격</p>
+        <Image src={defaultImg} alt="image" width={100} height={100} className="object-cover" />
+        <div className="flex flex-col gap-1">
+          <p className="font-medium">인플루언서명</p>
+          <p className="text-gray-500">상품명</p>
+          <p className="text-gray-700 font-bold">가격</p>
         </div>
-        <div className="ml-auto">
-          <button>삭제</button>
-        </div>
+        <button className="ml-auto px-2 py-1 rounded">삭제</button>
       </div>
       <TotalAmount />
     </div>

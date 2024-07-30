@@ -11,7 +11,6 @@ const Header = () => {
         <div className="flex gap-2">
           <p>검색</p>
           <Link href={"/cart"}><p>장바구니</p></Link>
-          <p>장바구니</p>
           <Link href={"/admin"}>
             <p>관리자</p>
           </Link>

@@ -1,4 +1,11 @@
+"use client";
+import Image from "next/image";
 import Link from "next/link";
+import homeIcon from "../../../../public/icon/homeIcon.png";
+import mypageIcon from "../../../../public/icon/mypageIcon.png";
+import storeIcon from "../../../../public/icon/storeIcon.png";
+import influencerIcon from "../../../../public/icon/influencerIcon.png";
+import chatIcon from "../../../../public/icon/chatIcon.png";
 
 export default function BottomNav() {
   const liStyle = "flex justify-center w-16 h-7 text-sm whitespace-nowrap";
@@ -6,21 +13,46 @@ export default function BottomNav() {
   return (
     <>
       <div className="bg-[#FAFAFF] h-[80px] w-full fixed bottom-0">
-        <ul className="flex justify-between items-center pt-2">
+        <div className="flex justify-between items-center pt-2 mx-5">
           <Link href={"/"}>
-            <li className={liStyle}>홈</li>
+            <div className={liStyle}>
+              <div className="flex flex-col items-center gap-1">
+                <Image src={homeIcon} alt="홈" />
+                <p>홈</p>
+              </div>
+            </div>
           </Link>
           <Link href={"/mypage"}>
-            <li className={liStyle}>마이페이지</li>
+            <div className={liStyle}>
+              <div className="flex flex-col items-center gap-1">
+                <Image src={mypageIcon} alt="마이페이지" />
+                <p>마이페이지</p>
+              </div>
+            </div>
           </Link>
           <Link href={"/products/list"}>
-            <li className={liStyle}>스토어</li>
+            <div className={liStyle}>
+              <div className="flex flex-col items-center gap-1">
+                <Image src={storeIcon} alt="스토어" />
+                <p>스토어</p>
+              </div>
+            </div>
           </Link>
           <Link href={"/influencer"}>
-            <li className={liStyle}>인플루언서</li>
+            <div className={liStyle}>
+              <div className="flex flex-col items-center gap-1">
+                <Image src={influencerIcon} alt="인플루언서" />
+                <p>인플루언서</p>
+              </div>
+            </div>
           </Link>
-          <li className={liStyle}>채팅</li>
-        </ul>
+          <div className={liStyle}>
+            <div className="flex flex-col items-center gap-1">
+              <Image src={chatIcon} alt="채팅" />
+              <p>채팅</p>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

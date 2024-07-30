@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
     .from("products")
     .select("*")
     .textSearch("title", `${searchWord}`);
-  console.log(searchWord);
 
   if (error) {
     console.log("error message:", error.message);

@@ -9,8 +9,7 @@ function UpButton() {
 
   useEffect(() => {
     const handleShowButton = () => {
-      // 스크롤 위치가 1000px 이상일 때 버튼을 표시
-      if (window.scrollY > 1000) {
+      if (window.scrollY > 600) {
         setUpButton(true);
       } else {
         setUpButton(false);

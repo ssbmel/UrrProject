@@ -55,3 +55,30 @@ export const userLogin = async ({ email, password }: { email: string; password: 
     console.log(error);
   }
 };
+
+export const infUserApprove = async () => {
+  try {
+    const response = await fetch("/api/auth/users/infuser");
+    const { data } = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUserApprove = async (userId: string) => {
+  try {
+    const response = await fetch("/api/auth/users/infuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ userId })
+    });
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

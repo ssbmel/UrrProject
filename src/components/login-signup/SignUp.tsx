@@ -26,9 +26,6 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
 
-  // 확인해야됨
-  const [approve, setApprove] = useState<boolean>(false);
-
   const onSignUpHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const email = emailRef.current?.value;
@@ -44,7 +41,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
     if (selectUser === "인플루언서") {
       if (email && password && nickname && confirm) {
         try {
-          await userSignUp({ email, password, nickname, confirm, selectUser, approve });
+          await userSignUp({ email, password, nickname, confirm, selectUser, approve: false });
         } catch (error) {
           console.log(error);
         }
@@ -52,7 +49,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
     } else {
       if (email && password && nickname) {
         try {
-          await userSignUp({ email, password, nickname, selectUser, approve });
+          await userSignUp({ email, password, nickname, selectUser, approve: false });
         } catch (error) {
           console.log(error);
         }

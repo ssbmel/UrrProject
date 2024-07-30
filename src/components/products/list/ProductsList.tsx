@@ -40,10 +40,10 @@ export default function ProductsList() {
               </Link>
             </div>
             <div className="ml-2">
-              <h2 className="text-sm text-gray-400">[{product.influencer}]의</h2>
+              {/* <h2 className="text-sm text-gray-400">[{product.influencer}]의</h2> */}
               <p className="text-sm text-gray-600">{product.title}</p>
               <div className="flex items-center">
-                <p className="text-sm text-red-500">{product.discount}</p>
+                {/* <p className="text-sm text-red-500">{product.discount}</p> */}
                 <p className="text-md font-bold ml-1">{product.price}</p>
               </div>
             </div>

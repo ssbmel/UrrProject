@@ -108,7 +108,7 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
               <button
                 type="button"
                 onClick={() => handleDeleteImage(item)}
-                className="border w-7 rounded-md absolute bg-black text-white"
+                className="border w-7 rounded-sm absolute bg-white"
               >
                 ✖︎
               </button>

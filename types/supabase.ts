@@ -71,6 +71,90 @@ export type Database = {
       };
       order: {
         Row: {
+<<<<<<< HEAD
+          category: string
+          created_at: string
+          id: string
+          order_count: number
+          price: number
+          title: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          order_count: number
+          price: number
+          title: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          order_count?: number
+          price?: number
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category: string | null
+          cost: number | null
+          created_at: string
+          detail_img: string[] | null
+          end: string | null
+          id: string
+          main_img: string | null
+          price: number | null
+          product_count: number | null
+          start: string | null
+          text: string | null
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          cost?: number | null
+          created_at?: string
+          detail_img?: string[] | null
+          end?: string | null
+          id: string
+          main_img?: string | null
+          price?: number | null
+          product_count?: number | null
+          start?: string | null
+          text?: string | null
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          cost?: number | null
+          created_at?: string
+          detail_img?: string[] | null
+          end?: string | null
+          id?: string
+          main_img?: string | null
+          price?: number | null
+          product_count?: number | null
+          start?: string | null
+          text?: string | null
+          title?: string | null
+          user_id?: string
+        }
+=======
           created_at: string;
           id: string;
         };
@@ -130,6 +214,7 @@ export type Database = {
           title?: string | null;
           user_id?: string;
         };
+>>>>>>> bb0a6c00e4f2741b071302fc7e2822af1a9149e9
         Relationships: [
           {
             foreignKeyName: "products_user_id_fkey";

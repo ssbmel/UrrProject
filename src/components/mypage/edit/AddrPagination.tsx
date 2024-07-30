@@ -1,9 +1,10 @@
 "use client";
+
 import { Addr, PageData } from "../../../../types/addr.type";
 import { getAddress } from "@/services/users/account/account.service";
 
 interface Props {
-  keyword: string;
+  keyword: string | undefined;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   pageData: PageData | null;
@@ -30,7 +31,7 @@ const AddrPagination = ({ keyword, currentPage, setCurrentPage, pageData, setPag
 
   return (
     <>
-      {keyword ? (
+      {keyword?.length ? (
         <div className="flex justify-center items-center gap-5">
           <button
             onClick={(e) => pageHandler(e, keyword, currentPage - 1)}

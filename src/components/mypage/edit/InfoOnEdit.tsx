@@ -5,7 +5,6 @@ import { useUserData } from "@/hooks/useUserData";
 
 const InfoOnEdit = () => {
   const { data: user } = useUserData();
-  console.log(user);
 
   return (
     <>
@@ -14,12 +13,12 @@ const InfoOnEdit = () => {
           <div className="w-[100px] h-[100px] bg-orange-300"></div>
           <button className="absolute bottom-0 right-0">➕</button>
         </div>
-        <input type="text" value={user?.nickname} placeholder="새 닉네임" />
+        <input type="text" defaultValue={user?.nickname} placeholder="새 닉네임" />
       </section>
       <section className="border">
         <div className="border border-black bg-slate-400">
           <p>이메일</p>
-          <input type="email" value={user?.email} disabled />
+          <input type="email" defaultValue={user?.email} disabled />
         </div>
         <div className="border border-black bg-slate-400">
           <p>비밀번호</p>
@@ -38,7 +37,16 @@ const InfoOnEdit = () => {
         </div>
         <div className="border border-black bg-slate-400">
           <p>이름</p>
-          <input type="text" id="name" />
+          <input type="text" id="name" placeholder="이름을 입력해주세요" defaultValue={user ? user.name : ""} />
+        </div>
+        <div className="border border-black bg-slate-400">
+          <p>휴대폰</p>
+          <input
+            type="text"
+            id="phoneNumber"
+            placeholder="휴대폰 번호를 입력해주세요"
+            defaultValue={user ? user.phonenum : null}
+          />
         </div>
         <InfoOnEditAddress />
       </section>

@@ -2,7 +2,6 @@
 
 import { userSignUp } from "@/services/users/users.service";
 import { useRef, useState } from "react";
-import PageTitleHeader from "../common/header/PageTitleHeader";
 
 interface SignUpProps {
   confirmRef: string | undefined;
@@ -92,7 +91,6 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
   return (
     <>
       <div className="p-5 h-[700px] whitespace-nowrap">
-        <PageTitleHeader title={"회원가입"} />
         <form className="flex flex-col gap-9">
           <label className="flex flex-col">
             닉네임 *

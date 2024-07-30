@@ -107,7 +107,6 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
             <div key={item.url} className="static">
               <button
                 type="button"
-                // onClick={() => handleDeleteImage(item.file)}
                 onClick={() => handleDeleteImage(item)}
                 className="border w-7 rounded-md absolute bg-black text-white"
               >

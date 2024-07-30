@@ -57,7 +57,9 @@ const Header = () => {
         <Link href={"/search"}>
           <Image src={searchIcon} alt="검색" />
         </Link>
-        <Image src={cartIcon} alt="장바구니" />
+        <Link href={"/cart"}>
+          <Image src={cartIcon} alt="장바구니" />
+        </Link>
       </>
     );
   } else if (PRODUCTS_LIST || MY_PAGE) {

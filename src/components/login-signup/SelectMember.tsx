@@ -41,8 +41,8 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             <p className="text-sm">링크 또는 계정 아이디</p>
             <input
               type="text"
-              className="h-[51px] border border-[#D9D9D9] rounded-md"
-              placeholder="asdf123@asdf.vqsd"
+              className="h-[51px] border border-[#D9D9D9] rounded-md indent-3 outline-none"
+              placeholder="링크 또는 계정 아이디"
               ref={confirmRef}
             />
           </div>

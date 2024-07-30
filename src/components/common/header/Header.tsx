@@ -1,20 +1,83 @@
+"use client";
+import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import logo from "../../../../public/logo/title_logo.png";
+import backIcon from "../../../../public/icon/backIcon.png";
+import searchIcon from "../../../../public/icon/searchIcon.png";
+import cartIcon from "../../../../public/icon/cartIcon.png";
+import xIcon from "../../../../public/icon/xIcon.png";
 
 const Header = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const HOME = pathname === "/";
+  const ADMIN = pathname === "/admin";
+  const LOGIN = pathname === "/login";
+  const PRODUCTS_LIST = pathname === "/products/list";
+  const MY_PAGE = pathname === "/mypage";
+  const SIGN_UP = pathname === "/signup";
+  const PRODUCTS_UPLOAD = pathname === "/products/upload";
+  const SEARCH = pathname === "/search";
+
+  // header 타이틀
+  let headerTitle;
+  if (SIGN_UP) {
+    headerTitle = "회원가입";
+  } else if (PRODUCTS_UPLOAD) {
+    headerTitle = "공구 구매 상품 등록";
+  } else if (SEARCH) {
+    headerTitle = "검색";
+  }
+
+  // header 왼쪽 아이콘
+  let leftIcon;
+  if (HOME || ADMIN || MY_PAGE || PRODUCTS_LIST) {
+    leftIcon = (
+      <Link href={"/"}>
+        <Image src={logo} alt="urr_logo" width={62} />
+      </Link>
+    );
+  } else if (LOGIN) {
+    leftIcon = <div></div>;
+  } else {
+    leftIcon = (
+      <button onClick={() => router.back()}>
+        <Image src={backIcon} alt="뒤로가기 버튼" />
+      </button>
+    );
+  }
+
+  // header 오른쪽 아이콘
+  let rightIcon;
+  if (HOME || ADMIN) {
+    rightIcon = (
+      <>
+        <Link href={"/search"}>
+          <Image src={searchIcon} alt="검색" />
+        </Link>
+        <Link href={"/cart"}>
+          <Image src={cartIcon} alt="장바구니" />
+        </Link>
+      </>
+    );
+  } else if (PRODUCTS_LIST || MY_PAGE) {
+    rightIcon = <Image src={cartIcon} alt="장바구니" />;
+  } else if (SIGN_UP || LOGIN || SEARCH) {
+    rightIcon = (
+      <Link href={"/"}>
+        <Image src={xIcon} alt="홈" />
+      </Link>
+    );
+  }
+
   return (
     <>
       <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto">
-        <div>
-          <h1>로고</h1>
-        </div>
-        <div className="flex gap-2">
-          <p>검색</p>
-          <p>장바구니</p>
-          <Link href={"/admin"}>
-            <p>관리자</p>
-          </Link>
-        </div>
+        <div>{leftIcon}</div>
+        <div className=" font-semibold text-xl">{headerTitle}</div>
+        <div className="flex">{rightIcon}</div>
       </header>
       {/* <div className="bg-gray-300 flex-col h-[100px] w-full fixed">
         <div className="flex flex-col border border-red-500 w-[90%] mx-auto">

@@ -38,6 +38,7 @@ function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {
                   value={c.title}
                   onChange={handleRadioChange}
                   className="mr-1 cursor-pointer"
+                  checked={radioCheckedValue === c.title}
                 />
                 {c.title}
               </label>

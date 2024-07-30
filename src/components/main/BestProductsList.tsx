@@ -12,7 +12,7 @@ function BestProductsList() {
             <button>더보기</button>
           </Link>
         </div>
-        <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10">
+        <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10 scrollbar">
           <div className="w-[200px] flex flex-col gap-y-2">
             <Image src={defaultImg} alt="" width={200} />
             <p className="text-gray-500 text-sm">인플루언서</p>

@@ -1,5 +1,5 @@
+"use client";
 import Link from "next/link";
-import React from "react";
 
 const Header = () => {
   return (
@@ -9,7 +9,7 @@ const Header = () => {
           <h1>로고</h1>
         </div>
         <div className="flex gap-2">
-          <p>검색</p>
+          <Link href={"/search"}>검색</Link>
           <p>장바구니</p>
           <Link href={"/admin"}>
             <p>관리자</p>

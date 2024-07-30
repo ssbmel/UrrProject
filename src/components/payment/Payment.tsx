@@ -1,105 +1,67 @@
-import { useUserData } from "@/hooks/useUserData";
-import { loadTossPayments, ANONYMOUS, TossPaymentsWidgets } from "@tosspayments/tosspayments-sdk";
-import { useEffect, useState } from "react";
+import PortOne from "@portone/browser-sdk/v2";
 
-const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-const customerKey = "MPR8lr3Dqodj0UTsEaLz7";
 export default function Payment() {
-  const { data } = useUserData();
-  const [amount, setAmount] = useState({
-    currency: "KRW",
-    value: 50_000
-  });
-  const [ready, setReady] = useState(false);
-  const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
-
-  useEffect(() => {
-    async function fetchPaymentWidgets() {
-      // ------  결제위젯 초기화 ------
-      const tossPayments = await loadTossPayments(clientKey);
-      // 회원 결제
-      const widgets = tossPayments.widgets({
-        customerKey
-      });
-      // 비회원 결제
-      // const widgets = tossPayments.widgets({ customerKey: ANONYMOUS });
-
-      setWidgets(widgets);
-    }
-
-    fetchPaymentWidgets();
-  }, [clientKey, customerKey]);
-
-  useEffect(() => {
-    async function renderPaymentWidgets() {
-      if (widgets == null) {
-        return;
-      }
-      // ------ 주문의 결제 금액 설정 ------
-      await widgets.setAmount(amount);
-
-      await Promise.all([
-        // ------  결제 UI 렌더링 ------
-        widgets.renderPaymentMethods({
-          selector: "#payment-method",
-          variantKey: "DEFAULT"
-        }),
-        // ------  이용약관 UI 렌더링 ------
-        widgets.renderAgreement({
-          selector: "#agreement",
-          variantKey: "AGREEMENT"
-        })
-      ]);
-
-      setReady(true);
-    }
-
-    renderPaymentWidgets();
-  }, [widgets]);
-
-  useEffect(() => {
-    if (widgets == null) {
-      return;
-    }
-
-    widgets.setAmount(amount);
-  }, [widgets, amount]);
-
+  const payment = async () => {
+    const response = await PortOne.requestPayment({
+      // Store ID 설정
+      storeId: "store-094c2470-d0a2-4f20-b350-87b98f1e345c",
+      // 채널 키 설정
+      channelKey: "channel-key-bcf487fd-75d7-4863-977c-cf468a354a86",
+      paymentId: `payment-${Math.random()}`,
+      customer: {
+        customerId: "현아",
+        fullName: "임현아",
+        email: "hyunah0418@naver.com",
+        phoneNumber: "1"
+      },
+      orderName: "나이키 와플 트레이너 2 SD",
+      totalAmount: 1000,
+      currency: "CURRENCY_KRW",
+      payMethod: "CARD",
+      redirectUrl: "http://localhost:3000/payment/complete"
+    });
+  };
   return (
-    <div className="wrapper">
-      <div className="box_section">
-        {/* 결제 UI */}
-        <div id="payment-method" />
-        {/* 이용약관 UI */}
-        <div id="agreement" />
-
-        {/* 결제하기 버튼 */}
-        <button
-          className="w-96 h-10 ml-5 button border rounded-md bg-blue-500"
-          disabled={!ready}
-          onClick={async () => {
-            try {
-              // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-              // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-              // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-              await widgets?.requestPayment({
-                orderId: "7rApKJsZLMyoGw",
-                orderName: "토스 티셔츠 외 2건",
-                successUrl: window.location.origin + "/payment/success",
-                failUrl: window.location.origin + "/payment/fail",
-                customerEmail: "customer123@gmail.com",
-                customerName: "김토스",
-                customerMobilePhone: "01012341234"
-              });
-            } catch (error) {
-              // 에러 처리하기
-              console.error(error);
-            }
-          }}
-        >
-          결제하기
-        </button>
-      </div>
-    </div>
+    <>
+      <main className="bg-gray-100 flex justify-center h-screen">
+        <div className="w-full flex flex-col items-start gap-[20px] bg-white p-[16px] shadow-md">
+          <p className="text-[20px] mb-[4px]">주문자 정보</p>
+          <p>
+            <span>주문자</span>
+            <span className="text-red-600">*</span>
+          </p>
+          <input className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]" type="text" placeholder="이름" />
+          <p>
+            <span>휴대폰</span>
+            <span className="text-red-600">*</span>
+          </p>
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="휴대폰 번호"
+          />
+          <p>
+            <span>주소</span>
+            <span className="text-red-600">*</span>
+            <button className="w-12 ml-4 border border-blue-400 rounded-md">검색</button>
+          </p>
+          <input className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]" type="text" />
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="상세주소를 입력하세요"
+          />
+          <p>배송 요청사항</p>
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="부재시, 경비실에 놔주세요"
+          />
+          <button className="w-full h-[52px] rounded-md bg-[#1A82FF] text-white mt-[20px]" onClick={payment}>
+            구매하기
+          </button>
+        </div>
+      </main>
+    </>
   );
 }

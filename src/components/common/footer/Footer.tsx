@@ -1,8 +1,9 @@
 import React from 'react';
+import "./style.css";
 
 const Footer = () => {
   return (
-    <div className="bg-gray-200 mb-[80px] w-full h-[250px]">
+    <div className="footer bg-gray-200 mb-[80px] w-full h-[250px]">
       <div className="max-w-[800px] grid grid-flow-col p-5 gap-2 mx-auto">
         <div className="whitespace-nowrap">
           <p className="font-bold text-sm">서비스</p>

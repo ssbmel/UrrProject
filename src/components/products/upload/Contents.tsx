@@ -2,17 +2,20 @@
 
 import { RefObject } from "react";
 import ProductImgUpload from "./ProductImgUpload";
+import { DetailedImgGroup } from "./ProductUpload";
 
 interface ContentsProps {
   titleRef: RefObject<HTMLInputElement>;
   textRef: RefObject<HTMLTextAreaElement>;
-  detailImg: File[];
-  setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
-  mainImg: File | null;
+  detailImg: DetailedImgGroup[];
+  // setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
+  setDetailImg: React.Dispatch<React.SetStateAction<DetailedImgGroup[]>>;
+  uploadedMainImg: string;
+  uploadedDetailImg: DetailedImgGroup[];
   setMainImg: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDetailImg, mainImg, setMainImg}) => {
+const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDetailImg, uploadedMainImg, uploadedDetailImg,  setMainImg}) => {
 
   return (
     <div className="border w-full h-[auto] p-5">
@@ -29,9 +32,10 @@ const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDe
         ref={textRef} 
         ></textarea>
       <ProductImgUpload 
-      detailImg={detailImg}
+      // detailImg={detailImg}
       setDetailImg={setDetailImg}
-      mainImg={mainImg}
+      uploadedMainImg={uploadedMainImg}
+      uploadedDetailImg={uploadedDetailImg}
       setMainImg={setMainImg}/>
     </div>
   );

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Header = () => {
@@ -9,7 +10,7 @@ const Header = () => {
         </div>
         <div className="flex gap-2">
           <p>검색</p>
-          <p>장바구니</p>
+          <Link href={"/cart"}><p>장바구니</p></Link>
         </div>
       </header>
       {/* <div className="bg-gray-300 flex-col h-[100px] w-full fixed">

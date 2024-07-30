@@ -12,19 +12,7 @@ function SubInfluencer() {
         </Link>
       </div>
       <div className="flex p-2 overflow-x-auto flex-nowrap scrollbar">
-        <div className="flex flex-col justify-center items-center flex-shrink-0 w-[150px] text-center">
-          <Image src={defaultImg} alt="Influencer" width={100} height={100} />
-          <p>우르르</p>
-        </div>
-        <div className="flex flex-col justify-center items-center flex-shrink-0 w-[150px] text-center">
-          <Image src={defaultImg} alt="Influencer" width={100} height={100} />
-          <p>우르르</p>
-        </div>
-        <div className="flex flex-col justify-center items-center flex-shrink-0 w-[150px] text-center">
-          <Image src={defaultImg} alt="Influencer" width={100} height={100} />
-          <p>우르르</p>
-        </div>
-        <div className="flex flex-col justify-center items-center flex-shrink-0 w-[150px] text-center">
+        <div className="flex flex-col justify-center flex-shrink-0 w-[100px] text-center">
           <Image src={defaultImg} alt="Influencer" width={100} height={100} />
           <p>우르르</p>
         </div>

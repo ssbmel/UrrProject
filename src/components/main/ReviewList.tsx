@@ -15,30 +15,6 @@ function ReviewList() {
             <p className="text-xs text-gray-400 mt-auto">닉네임 | 2024.07.22</p>
           </div>
         </div>
-        <div className="flex gap-3">
-          <Image src={defaultImg} alt="" width={130} />
-          <div className="flex flex-col w-1/2">
-            <p className="font-bold">[우르르]상품명</p>
-            <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>
-            <p className="text-xs text-gray-400 mt-auto">닉네임 | 2024.07.22</p>
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <Image src={defaultImg} alt="" width={130} />
-          <div className="flex flex-col w-1/2">
-            <p className="font-bold">[우르르]상품명</p>
-            <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>
-            <p className="text-xs text-gray-400 mt-auto">닉네임 | 2024.07.22</p>
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <Image src={defaultImg} alt="" width={130} />
-          <div className="flex flex-col w-1/2">
-            <p className="font-bold">[우르르]상품명</p>
-            <p>너무 좋아요! 너무 좋아요! 너무 좋아요!</p>
-            <p className="text-xs text-gray-400 mt-auto">닉네임 | 2024.07.22</p>
-          </div>
-        </div>
       </div>
     </div>
   );

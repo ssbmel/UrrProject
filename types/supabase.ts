@@ -77,25 +77,48 @@ export type Database = {
       }
       order: {
         Row: {
+          category: string
           created_at: string
           id: string
+          order_count: number
+          price: number
+          title: string
+          user_id: string
         }
         Insert: {
+          category: string
           created_at?: string
           id?: string
+          order_count: number
+          price: number
+          title: string
+          user_id: string
         }
         Update: {
+          category?: string
           created_at?: string
           id?: string
+          order_count?: number
+          price?: number
+          title?: string
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "order_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products: {
         Row: {
           category: string | null
           cost: number | null
           created_at: string
-          detail_img: string | null
+          detail_img: string[] | null
           end: string | null
           id: string
           main_img: string | null
@@ -110,7 +133,7 @@ export type Database = {
           category?: string | null
           cost?: number | null
           created_at?: string
-          detail_img?: string | null
+          detail_img?: string[] | null
           end?: string | null
           id: string
           main_img?: string | null
@@ -125,7 +148,7 @@ export type Database = {
           category?: string | null
           cost?: number | null
           created_at?: string
-          detail_img?: string | null
+          detail_img?: string[] | null
           end?: string | null
           id?: string
           main_img?: string | null

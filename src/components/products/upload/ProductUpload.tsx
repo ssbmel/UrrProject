@@ -136,8 +136,9 @@ function ProductUpload() {
       user_id: user.id,
       created_at: new Date().toISOString(),
       id: postId,
+      nickname: user.nickname
     };
-
+  
     if (
       !productData.category ||
       !productData.start ||

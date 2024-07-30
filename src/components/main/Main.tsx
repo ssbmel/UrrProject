@@ -9,14 +9,12 @@ import UpButton from '../common/button/UpButton';
 
 function Main() {
   return (
-    <div className="p-5 max-w-[1200px] mx-auto flex flex-col gap-y-5 mb-[80px]">
+    <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 mb-[80px]">
       <Banner />
       <SubInfluencer/>
       <hr />
       <BestProductsList/>
-      <hr />
       <BestInfluencerList/>
-      <hr />
       <ReviewList/>
       <UpButton/>
     </div>

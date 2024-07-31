@@ -26,3 +26,40 @@ details p {
 details[open] summary::after {
   display: none;
 }
+
+.btn-upload {
+  margin: 0 auto 10px auto;
+  width: auto;
+  height: 35px;
+  background: #fff;
+  color: #0068E5;
+  border: 1px solid #0068E5;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background: #0068E5;
+    color: #fff;
+  }
+}
+
+#file {
+  display: none;
+}
+
+#files {
+  display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

@@ -15,7 +15,7 @@ const Header = () => {
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
   const LOGIN = pathname === "/login";
-  const PRODUCTS_LIST = pathname === "products/list";
+  const PRODUCTS_LIST = pathname === "/products/list";
   const MY_PAGE = pathname === "/mypage";
   const SIGN_UP = pathname === "/signup";
   const PRODUCTS_UPLOAD = pathname === "/products/upload";
@@ -57,11 +57,17 @@ const Header = () => {
         <Link href={"/search"}>
           <Image src={searchIcon} alt="검색" />
         </Link>
-        <Image src={cartIcon} alt="장바구니" />
+        <Link href={"/cart"}>
+          <Image src={cartIcon} alt="장바구니" />
+        </Link>
       </>
     );
   } else if (PRODUCTS_LIST || MY_PAGE) {
-    rightIcon = <Image src={cartIcon} alt="장바구니" />;
+    rightIcon = (
+      <Link href={"/cart"}>
+        <Image src={cartIcon} alt="장바구니" />
+      </Link>
+    );
   } else if (SIGN_UP || LOGIN || SEARCH) {
     rightIcon = (
       <Link href={"/"}>

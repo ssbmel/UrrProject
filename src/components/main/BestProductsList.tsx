@@ -6,7 +6,6 @@ import defaultImg from "../../../public/images/default.png";
 import { PostData } from "./Main";
 
 function BestProductsList({productsList }: {productsList : PostData[]}) {
-
   return (
     <>
       <div className="w-full h-auto mx-auto p-5">
@@ -18,8 +17,13 @@ function BestProductsList({productsList }: {productsList : PostData[]}) {
         </div>
         <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10 scrollbar">
           <div className="grid grid-flow-col gap-5">
-            {productsList.map((list) => (
-              <div className="w-[130px]" key={list.id}>
+            {productsList.map((list) => {
+              
+              const cost = parseFloat(list.cost);
+              const price = parseFloat(list.price);
+              const discountRate = Math.round(((cost - price) / cost) * 100);
+
+              return (<div className="w-[130px]" key={list.id}>
                 <div className="relative w-full h-[130px] mb-2">
                 <Image 
                     src={list.main_img || defaultImg}
@@ -32,11 +36,11 @@ function BestProductsList({productsList }: {productsList : PostData[]}) {
                 <p className="text-[#B2B5B8] text-sm">{list.nickname}</p>
                 <p className="text-[16px] truncate">{list.title}</p>
                 <div className="flex gap-1">
-                  <p className="text-[#F03F33] font-semibold">18%</p>
-                  <p className="font-bold">{list.cost}</p>
+                  <p className="text-[#F03F33] font-semibold">{discountRate}%</p>
+                  <p className="font-bold">{price.toLocaleString()}</p>
                 </div>
-              </div>
-            ))}
+              </div>)
+})}
           </div>
         </div>
       </div>

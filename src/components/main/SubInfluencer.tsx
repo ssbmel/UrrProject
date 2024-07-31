@@ -20,7 +20,7 @@ function SubInfluencer() {
               <p>{u.nickname}</p>
             </div>
           ))} */}
-          <Image src={defaultImg} alt="Influencer" width={100} height={100} />
+          <Image src={defaultImg} alt="Influencer" width={100} height={100} className="gradient-border"/>
           <p>인플루언서</p>
         </div>
       </div>

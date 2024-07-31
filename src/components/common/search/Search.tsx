@@ -42,15 +42,6 @@ export default function Search() {
     });
   };
 
-  // 단일 검색어 삭제
-  const handleRemoveKeyword = (id: string) => {
-    setKeywords((prevKeywords) => {
-      const nextKeywords = prevKeywords.filter((keyword) => keyword.id !== id);
-      localStorage.setItem("keywords", JSON.stringify(nextKeywords));
-      return nextKeywords;
-    });
-  };
-
   //검색어 전체 삭제
   const handleClearKeywords = () => {
     setKeywords([]);
@@ -84,11 +75,24 @@ export default function Search() {
           />
           <button>⭕️</button>
 
+          {filteringTitle.length > 0 ? (
+            <ul>
+              {filteringTitle.map((product) => (
+                <li key={product.id}>
+                  <Link href={`/products/detail/${product.id}`}>
+                    <div>{product.title}</div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="h-[100px] bg-blue-100"></div>
+          )}
           <div>
             <h2>최근 검색어</h2>
             {keywords.length ? (
               <button type="button" onClick={handleClearKeywords}>
-                전체 삭제
+                모두 삭제
               </button>
             ) : (
               <button />
@@ -99,28 +103,14 @@ export default function Search() {
                 keywords.map((keyword) => (
                   <li key={keyword.id} className="flex">
                     <p>{keyword.text}</p>
-                    <button onClick={() => handleRemoveKeyword(keyword.id)}>❌</button>
                   </li>
                 ))
               ) : (
-                <div>최근 검색어가 없습니다</div>
+                <div className="h-[100px] bg-red-100"></div>
               )}
             </ul>
           </div>
         </form>
-        {filteringTitle.length > 0 ? (
-          <ul>
-            {filteringTitle.map((product) => (
-              <li key={product.id}>
-                <Link href={`/products/detail/${product.id}`}>
-                  <div>{product.title}</div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>검색 결과가 없습니다.</p>
-        )}
       </div>
     </>
   );

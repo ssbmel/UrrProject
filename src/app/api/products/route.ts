@@ -6,7 +6,6 @@ export async function GET() {
     const supabase = createClient();
     const { data } = await supabase.from("products").select("*");
     return NextResponse.json(data);
-    
   } catch (error) {
     return NextResponse.json({ error: "데이터를 가져오는 데 실패했습니다." });
   }

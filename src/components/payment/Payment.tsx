@@ -1,105 +1,95 @@
+import usePayment from "@/hooks/usePayment";
 import { useUserData } from "@/hooks/useUserData";
-import { loadTossPayments, ANONYMOUS, TossPaymentsWidgets } from "@tosspayments/tosspayments-sdk";
-import { useEffect, useState } from "react";
+import PortOne from "@portone/browser-sdk/v2";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-const customerKey = "MPR8lr3Dqodj0UTsEaLz7";
+import { useState } from "react";
+
 export default function Payment() {
-  const { data } = useUserData();
-  const [amount, setAmount] = useState({
-    currency: "KRW",
-    value: 50_000
-  });
-  const [ready, setReady] = useState(false);
-  const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
+  const paymentFunc = usePayment();
+  const router = useRouter();
+  const [fullName, setFullName] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const searchParams = useSearchParams();
+  const pathName = searchParams.get("path_name");
+  const code = searchParams.get("code");
 
-  useEffect(() => {
-    async function fetchPaymentWidgets() {
-      // ------  결제위젯 초기화 ------
-      const tossPayments = await loadTossPayments(clientKey);
-      // 회원 결제
-      const widgets = tossPayments.widgets({
-        customerKey
+  const handleSubmit = async () => {
+    try {
+      const response = await paymentFunc({
+        fullName: fullName,
+        orderCount: 2,
+        orderName: "sample test", // 주문상품 이름
+        totalAmount: 1000, // 전체 금액
+        price: 1000, // 상품 하나 가격
+        address: address,
+        phoneNumber: phoneNumber
       });
-      // 비회원 결제
-      // const widgets = tossPayments.widgets({ customerKey: ANONYMOUS });
-
-      setWidgets(widgets);
-    }
-
-    fetchPaymentWidgets();
-  }, [clientKey, customerKey]);
-
-  useEffect(() => {
-    async function renderPaymentWidgets() {
-      if (widgets == null) {
-        return;
+      console.log(response);
+      if (response?.paymentId) {
+        // alert("결제가 성공적으로 완료되었습니다.");
+        router.push(`/payment/loading?paymentId=${response.paymentId}`);
+      } else {
+        alert("결제 중 오류가 발생했습니다.");
       }
-      // ------ 주문의 결제 금액 설정 ------
-      await widgets.setAmount(amount);
-
-      await Promise.all([
-        // ------  결제 UI 렌더링 ------
-        widgets.renderPaymentMethods({
-          selector: "#payment-method",
-          variantKey: "DEFAULT"
-        }),
-        // ------  이용약관 UI 렌더링 ------
-        widgets.renderAgreement({
-          selector: "#agreement",
-          variantKey: "AGREEMENT"
-        })
-      ]);
-
-      setReady(true);
+    } catch (error) {
+      console.error(error);
+      alert("결제 요청 중 오류가 발생했습니다.");
     }
-
-    renderPaymentWidgets();
-  }, [widgets]);
-
-  useEffect(() => {
-    if (widgets == null) {
-      return;
-    }
-
-    widgets.setAmount(amount);
-  }, [widgets, amount]);
+  };
 
   return (
-    <div className="wrapper">
-      <div className="box_section">
-        {/* 결제 UI */}
-        <div id="payment-method" />
-        {/* 이용약관 UI */}
-        <div id="agreement" />
-
-        {/* 결제하기 버튼 */}
-        <button
-          className="w-96 h-10 ml-5 button border rounded-md bg-blue-500"
-          disabled={!ready}
-          onClick={async () => {
-            try {
-              // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-              // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-              // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-              await widgets?.requestPayment({
-                orderId: "7rApKJsZLMyoGw",
-                orderName: "토스 티셔츠 외 2건",
-                successUrl: window.location.origin + "/payment/success",
-                failUrl: window.location.origin + "/payment/fail",
-                customerEmail: "customer123@gmail.com",
-                customerName: "김토스",
-                customerMobilePhone: "01012341234"
-              });
-            } catch (error) {
-              // 에러 처리하기
-              console.error(error);
-            }
-          }}
-        >
-          결제하기
-        </button>
+    <>
+      <div className="bg-gray-100 flex justify-center">
+        <div className="w-full flex flex-col items-start gap-[20px] bg-white p-[16px] shadow-md">
+          <p className="text-[20px] mb-[4px]">주문자 정보</p>
+          <p>
+            <span>주문자</span>
+            <span className="text-red-600">*</span>
+          </p>
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="이름"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+          <p>
+            <span>휴대폰</span>
+            <span className="text-red-600">*</span>
+          </p>
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="휴대폰 번호"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <p>
+            <span>주소</span>
+            <span className="text-red-600">*</span>
+            <button className="w-12 ml-4 border border-blue-400 rounded-md">검색</button>
+          </p>
+          <input className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]" type="text" />
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="상세주소를 입력하세요"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <p>배송 요청사항</p>
+          <input
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            type="text"
+            placeholder="부재시, 경비실에 놔주세요"
+          />
+          <button className="w-full h-[52px] rounded-md bg-[#1A82FF] text-white mt-[20px]" onClick={handleSubmit}>
+            구매하기
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

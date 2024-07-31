@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Payment() {
   const paymentFunc = usePayment();
+  const router = useRouter();
   const [fullName, setFullName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [address, setAddress] = useState<string>("");
@@ -26,11 +27,12 @@ export default function Payment() {
         phoneNumber: phoneNumber
       });
       console.log(response);
-      // if (response.ok) {
-      //   alert("결제가 성공적으로 완료되었습니다.");
-      // } else {
-      //   alert("결제 중 오류가 발생했습니다.");
-      // }
+      if (response?.paymentId) {
+        // alert("결제가 성공적으로 완료되었습니다.");
+        router.push(`/payment/loading?paymentId=${response.paymentId}`);
+      } else {
+        alert("결제 중 오류가 발생했습니다.");
+      }
     } catch (error) {
       console.error(error);
       alert("결제 요청 중 오류가 발생했습니다.");

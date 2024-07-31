@@ -4,6 +4,7 @@ import PortOne from "@portone/browser-sdk/v2";
 import { useUserData } from "./useUserData";
 import { uuid } from "uuidv4";
 import { useCallback } from "react";
+import { useAddrStore } from "@/zustand/addrStore";
 
 interface paymentType {
   fullName: string;
@@ -17,12 +18,23 @@ interface paymentType {
 
 const usePayment = () => {
   const { data } = useUserData();
+  const { setPaymentData } = useAddrStore();
 
   const makePayment = useCallback(
     async (req: paymentType) => {
       const paymentId = uuid(); // 주문 번호 uuid 고유값, primary key
       const email = data.email;
       const customerId = data.id;
+
+      setPaymentData({
+        fullName: req.fullName,
+        userId: customerId,
+        orderCount: req.orderCount, // 고칠것 수량
+        price: req.price,
+        orderName: req.orderName,
+        address: req.address,
+        phoneNumber: req.phoneNumber
+      });
 
       const response = await PortOne.requestPayment({
         // Store ID 설정
@@ -41,38 +53,10 @@ const usePayment = () => {
         currency: "CURRENCY_KRW",
         products: [{ id: "dd", name: "apple", amount: 400, quantity: 3 }], // 상품 목록
         payMethod: "CARD",
-        redirectUrl: "http://localhost:3000/payment/loading",
-        customData: {
-          message: "i dont know"
-        }
+        redirectUrl: "http://localhost:3000/payment/loading"
       });
 
-      console.log(response);
-
-      if (response && response.paymentId) {
-        try {
-          const res = await fetch("/api/payment", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              name: req.fullName,
-              userId: customerId,
-              orderCount: req.orderCount, // 고칠것 수량
-              paymentId: response.paymentId,
-              price: req.price,
-              orderName: req.orderName,
-              address: req.address,
-              phoneNumber: req.phoneNumber
-            })
-          });
-          return res;
-        } catch (error) {
-          console.error(error);
-          alert("post 오류");
-        }
-      }
+      return response;
     },
     [data]
   );

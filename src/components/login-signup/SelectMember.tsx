@@ -60,7 +60,8 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             인플루언서
           </button>
           <button
-            onClick={nextSignUpPage} // 인플루언서 버튼이 눌리면 비활성화
+            onClick={nextSignUpPage}
+            disabled={selectUser === "인플루언서"}
             className={`${
               selectUser === "인플루언서"
                 ? "bg-[#F2F2F2] border border-[##DADDDD] text-[#CDCFD0]"

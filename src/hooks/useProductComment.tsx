@@ -2,15 +2,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-const UserCommentList = async () => {
-  const response = await fetch("/api/products/comment");
+const UserCommentList = async (id: string) => {
+  const response = await fetch(`/api/products/comment/${id}`);
   const data = response.json();
   return data;
 };
 
-export const useProductComment = () => {
+export const useProductComment = (id: string, restart: boolean) => {
   return useQuery({
-    queryKey: ["productComment"],
-    queryFn: UserCommentList
+    queryKey: ["productComment", id, restart],
+    queryFn: () => UserCommentList(id)
   });
 };

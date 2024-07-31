@@ -75,33 +75,40 @@ export type Database = {
         }
         Relationships: []
       }
-      comment: {
+      comments: {
         Row: {
-          comment_id: string | null
           content: string | null
           created_at: string
-          id: number
-          user_id: string
+          id: string
+          product_id: string | null
+          user_id: string | null
         }
         Insert: {
-          comment_id?: string | null
           content?: string | null
           created_at?: string
-          id?: number
-          user_id: string
+          id?: string
+          product_id?: string | null
+          user_id?: string | null
         }
         Update: {
-          comment_id?: string | null
           content?: string | null
           created_at?: string
-          id?: number
-          user_id?: string
+          id?: string
+          product_id?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "comment_user_id_fkey"
+            foreignKeyName: "comments_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_user_id_fkey"
             columns: ["user_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -110,47 +117,41 @@ export type Database = {
       order: {
         Row: {
           address: string | null
-          category: string
           created_at: string
-          id: string
           name: string | null
-          order_count: number
-          paymentid: string | null
-          phonenum: number | null
+          orderCount: number
+          orderName: string
+          paymentId: string
+          phoneNumber: number | null
           price: number
-          title: string
-          user_id: string
+          userId: string
         }
         Insert: {
           address?: string | null
-          category: string
           created_at?: string
-          id?: string
           name?: string | null
-          order_count: number
-          paymentid?: string | null
-          phonenum?: number | null
+          orderCount: number
+          orderName: string
+          paymentId: string
+          phoneNumber?: number | null
           price: number
-          title: string
-          user_id: string
+          userId: string
         }
         Update: {
           address?: string | null
-          category?: string
           created_at?: string
-          id?: string
           name?: string | null
-          order_count?: number
-          paymentid?: string | null
-          phonenum?: number | null
+          orderCount?: number
+          orderName?: string
+          paymentId?: string
+          phoneNumber?: number | null
           price?: number
-          title?: string
-          user_id?: string
+          userId?: string
         }
         Relationships: [
           {
-            foreignKeyName: "order_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "order_userId_fkey"
+            columns: ["userId"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]

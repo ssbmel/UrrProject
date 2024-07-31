@@ -14,8 +14,8 @@ export default function ListCategory() {
   ];
   return (
     <>
-      <div className="container mx-auto p-4">
-        <div className="flex overflow-x-auto space-x-2 justify-between">
+      <div className="container mx-auto bg-[#F2F4F8]">
+        <div className="flex overflow-x-auto space-x-2 justify-between p-3">
           {categories.map((category) => (
             <div key={category.name} className="category-item text-center p-1  min-w-[100px]">
               <Image

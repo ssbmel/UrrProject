@@ -3,7 +3,7 @@ import defaultImg from "../../../public/images/default.png";
 
 function ReviewList() {
   return (
-    <div className="w-full mx-auto p-2">
+    <div className="w-full mx-auto p-5 mb-[80px]">
         <h2 className="font-bold mb-5 text-xl">후기</h2>
 
       <div className="w-full overflow-y-auto flex flex-col gap-y-4 scrollbar">

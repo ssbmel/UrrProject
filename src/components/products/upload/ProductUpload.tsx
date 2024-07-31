@@ -136,8 +136,9 @@ function ProductUpload() {
       user_id: user.id,
       created_at: new Date().toISOString(),
       id: postId,
+      nickname: user.nickname
     };
-
+  
     if (
       !productData.category ||
       !productData.start ||
@@ -185,7 +186,7 @@ function ProductUpload() {
         />
         <div className="flex justify-end">
           <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-5 mb-[80px]">
-            {id === "new" ? "등록하기" : "수정완료"}
+            등록하기
           </button>
         </div>
       </div>

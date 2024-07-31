@@ -1,13 +1,17 @@
-"use client"
+"use client";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import './styles.css';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "./styles.css";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import Image from "next/image";
+import { PostData } from "../Main";
+import urrMainImg from "../../../../public/bgImg/image1.png"
+import urrSubImg from "../../../../public/bgImg/image5.png"
 
-export default function Banner() {
+export default function Banner({productsList }: {productsList : PostData[]}) {
   return (
     <>
       <Swiper
@@ -15,20 +19,25 @@ export default function Banner() {
         centeredSlides={true}
         autoplay={{
           delay: 2500,
-          disableOnInteraction: false,
+          disableOnInteraction: false
         }}
         pagination={{
-          clickable: true,
+          clickable: true
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide><Image src={urrMainImg} alt="mainImg" fill quality={100}></Image></SwiperSlide>
+        <SwiperSlide><Image src={urrSubImg} alt="mainImg" fill quality={100}></Image></SwiperSlide>
+        {productsList.map((list) => (
+            
+          <div key={list.id}>
+            <SwiperSlide>
+              <Image src={list.main_img} alt="img" fill></Image>
+            </SwiperSlide>
+          </div>
+        ))}
       </Swiper>
     </>
   );

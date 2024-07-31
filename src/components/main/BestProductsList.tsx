@@ -3,42 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
-import { useEffect, useState } from "react";
+import { PostData } from "./Main";
 
-interface PostData {
-  id: string;
-  start: string;
-  end: string;
-  cost: string;
-  price: string;
-  product_count: string;
-  title: string;
-  text: string;
-  category: string;
-  main_img: string;
-  detail_img: string[];
-  nickname: string;
-}
-
-function BestProductsList() {
-  const [productsList, setProductsList] = useState<PostData[]>([]);
-  const getPostData = async () => {
-    const response = await fetch("/api/products");
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data: PostData[] = await response.json();
-    setProductsList(data);
-  };
-
-  useEffect(() => {
-    getPostData();
-  }, []);
+function BestProductsList({productsList }: {productsList : PostData[]}) {
 
   return (
     <>
-      <div className="w-full h-auto mx-auto p-2">
-        <div className="flex mb-5 p-3">
+      <div className="w-full h-auto mx-auto p-5">
+        <div className="flex mb-5">
           <h2 className="font-bold text-xl">인기상품</h2>
           <Link className="ml-auto text-xs flex-end" href={"/products/list"}>
             <button>더보기</button>

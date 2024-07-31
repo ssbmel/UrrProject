@@ -18,7 +18,7 @@ function Cart() {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 mb-[80px]">
       <div className="flex items-center gap-2 p-2">
         <input type="checkbox" name="product-all"/>
         <p>전체상품</p>

@@ -1,19 +1,37 @@
+"use client";
+
 import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
+import Icon from "../../../public/icon/rightArrow.svg";
+import InfluencerImg from "../../../public/bgImg/influencerImg.png";
+import "./style.css";
 
 function BestInfluencerList() {
   return (
-    <div className="w-full min-h-[150px] mx-auto p-2">
-      <h2 className="font-bold mb-5 text-xl">현재 인기 인플루언서</h2>
+    <div className="box w-full mx-auto p-5">
+      <Image 
+        src={InfluencerImg} 
+        alt="bgImg" 
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+        className="absolute -z-10"
+        ></Image>
+      <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
       <div className="w-full overflow-y-auto scrollbar">
-        <div className="border-2 border-[#0068E5] rounded-[12px] bg-[##FFFFFE] w-full min-h-[100px] mx-auto p-[10px] grid grid-rows-1 grid-flow-col mb-4">
-          <Image src={defaultImg} alt="인플루언서이미지" width={100} />
-          <div className="flex flex-col">
-            <p className="text-[16px] font-medium flex-1">우르르</p>
-            <p className="mt-auto font-light">#OOOO</p>
+        <div className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full min-h-[100px] mx-auto py-[10px] px-[12px] grid grid-rows-1 grid-flow-col mb-4">
+          <Image src={defaultImg} alt="인플루언서이미지" width={100} className="gradient-border"/>
+          <div className="grid">
+            <div className="flex py-4">
+              <p className="text-[16px] font-bold">우르르</p>
+              <span className="mx-2">|</span>
+              <p className="text-[16px] font-bold">123k</p>
+            </div>
+            <p className="font-light">한줄소개</p>
           </div>
-          <p className="text-[16px] font-medium">123k</p>
-          <button className="self-center ml-auto">〉</button>
+          <button className="self-center ml-auto">
+            <Icon />
+          </button>
         </div>
       </div>
     </div>

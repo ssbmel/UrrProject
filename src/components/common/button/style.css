@@ -1,20 +1,16 @@
 .btnEffect {
-  width: 60px;
-  height: 60px;
-  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  opacity: 0;
-  transition: 0.3s;
-  visibility: hidden;
-  display: block;
-  position: fixed;
-  bottom: 105px;
-  right: 120px;
-  visibility: visible;
-  opacity: 1;
-  border-radius: 50px;
-  color: var(--button-color);
-  &:hover {
-    color: var(--point-color);
-  }
+  transition: background-color 0.3s;
+  bottom: 12%;
+  right: 8%;
 }
+
+.btnEffect:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+ 

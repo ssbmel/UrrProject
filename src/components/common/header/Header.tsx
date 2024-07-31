@@ -63,7 +63,11 @@ const Header = () => {
       </>
     );
   } else if (PRODUCTS_LIST || MY_PAGE) {
-    rightIcon = <Image src={cartIcon} alt="장바구니" />;
+    rightIcon = (
+      <Link href={"/cart"}>
+        <Image src={cartIcon} alt="장바구니" />
+      </Link>
+    );
   } else if (SIGN_UP || LOGIN || SEARCH) {
     rightIcon = (
       <Link href={"/"}>

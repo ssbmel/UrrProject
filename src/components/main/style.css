@@ -13,10 +13,10 @@
   background: #ffffff; /*스크롤바 뒷 배경 색상*/
 }
 
-.container {
+.box {
     z-index: -1;
     position: relative;
-    height: 800px;
+    height: 600px;
     min-height: 500px;
 }
 

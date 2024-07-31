@@ -8,7 +8,7 @@ import "./style.css";
 
 function BestInfluencerList() {
   return (
-    <div className="container w-full mx-auto p-5 bg-[#0051B2]">
+    <div className="box w-full mx-auto p-5">
       <Image 
         src={InfluencerImg} 
         alt="bgImg" 

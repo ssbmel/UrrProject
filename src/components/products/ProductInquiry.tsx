@@ -5,12 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { createClient } from "../../../supabase/client";
 import { useProductComment } from "@/hooks/useProductComment";
-import { updateComment } from "@/services/comment/comment.service";
-
-type CommentData = {
-  id: string;
-  content: string;
-};
+import { deleteComment, updateComment } from "@/services/comment/comment.service";
 
 type NewComment = {
   content: string;
@@ -90,6 +85,18 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
   //   setEditingCommentId(null);
   // }; // 이거 함수로 만들어서 하고싶은데 type오류 남 ㅠㅠ
 
+  // 댓글 삭제
+  const { mutate: deleteMutation } = useMutation({
+    mutationFn: (id: string) => deleteComment(id),
+    onSuccess: () => {
+      setRestart(!restart);
+    }
+  });
+
+  const deleteCommentHandler = (id: string) => {
+    deleteMutation(id);
+  };
+
   return (
     <>
       <div className="h-[700px] p-2">
@@ -133,7 +140,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
                       저장
                     </button>
                   )}
-                  <button>삭제</button>
+                  <button onClick={() => deleteCommentHandler(comment.id)}>삭제</button>
                 </div>
               )}
             </div>

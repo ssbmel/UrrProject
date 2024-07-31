@@ -6,3 +6,12 @@ export const updateComment = async ({ content, id }: { id: string; content: stri
   });
   return response.json();
 };
+
+export const deleteComment = async (id: string) => {
+  const response = await fetch("/api/products/comment", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(id)
+  });
+  return response.json();
+};

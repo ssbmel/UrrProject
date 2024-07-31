@@ -50,6 +50,8 @@ function ProductUpload() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: PostData[] = await response.json();
+    console.log(data);
+    
     const post = data.find((post) => post.id === id);
     if (!post) {
       return;

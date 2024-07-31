@@ -1,11 +1,15 @@
 "use client";
 
 import { getAddress } from "@/services/users/account/account.service";
-import React, { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Addr, PageData } from "../../../../types/addr.type";
 import AddrPagination from "./AddrPagination";
 
-const InfoOnEditAddress = () => {
+interface Props {
+  setAddress: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+const InfoOnEditAddress = ({ setAddress }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
@@ -67,14 +71,13 @@ const InfoOnEditAddress = () => {
       }
       userAddrRef.current!.value = userAddrInsert.current!.value;
       keyword.current!.value = "";
+      setAddress(`${zipNoRef.current!.value}, ${roadAddrRef.current!.value} ${userAddrInsert.current!.value}`);
       setData(null);
       setIsVisible(!isVisible);
       return;
     }
     setStep(2);
   };
-
-  console.log(step);
 
   return (
     <div>

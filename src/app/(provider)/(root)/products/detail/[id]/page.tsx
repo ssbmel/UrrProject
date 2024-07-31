@@ -1,9 +1,16 @@
 "use client";
+import Detail from "@/components/products/detail/Detail";
+import React from "react";
+interface PageProps {
+  params: { id: string };
+}
 
-type ParamsType = { postId: string };
-
-const ProductsDetail = ({ params }: { params: ParamsType }) => {
-  return <div>page</div>;
+const page = ({ params }: PageProps) => {
+  return (
+    <div>
+      <Detail params={params} />
+    </div>
+  );
 };
 
-export default ProductsDetail;
+export default page;

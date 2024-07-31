@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import InfoOnEditAddress from "./InfoOnEditAddress";
 import { useUserData } from "@/hooks/useUserData";
 
@@ -8,10 +8,12 @@ const InfoOnEdit = () => {
   const { data: user } = useUserData();
 
   const [address, setAddress] = useState<string | null>(null);
-  const profileRef = useRef<HTMLInputElement>(null);
-  const nicknameRef = useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const phonenumRef = useRef<HTMLInputElement>(null);
+  const [profile, setProfile] = useState<string | null>(null);
+  const [nickname, setNickname] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [phonenum, setPhonenum] = useState<string | null>(null);
+
+  const updateHandler = async () => {};
 
   return (
     <>
@@ -58,7 +60,7 @@ const InfoOnEdit = () => {
         <InfoOnEditAddress setAddress={setAddress} />
       </section>
       <div>
-        <button>수정 완료</button>
+        <button>완료</button>
       </div>
     </>
   );

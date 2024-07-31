@@ -1,10 +1,17 @@
 "use client";
 
+import { useRef, useState } from "react";
 import InfoOnEditAddress from "./InfoOnEditAddress";
 import { useUserData } from "@/hooks/useUserData";
 
 const InfoOnEdit = () => {
   const { data: user } = useUserData();
+
+  const [address, setAddress] = useState<string | null>(null);
+  const profileRef = useRef<HTMLInputElement>(null);
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const phonenumRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -13,12 +20,12 @@ const InfoOnEdit = () => {
           <div className="w-[100px] h-[100px] bg-orange-300"></div>
           <button className="absolute bottom-0 right-0">➕</button>
         </div>
-        <input type="text" defaultValue={user?.nickname} placeholder="새 닉네임" />
+        <input type="text" value={user?.nickname} placeholder="새 닉네임" />
       </section>
       <section className="border">
         <div className="border border-black bg-slate-400">
           <p>이메일</p>
-          <input type="email" defaultValue={user?.email} disabled />
+          <input type="email" value={user?.email} disabled />
         </div>
         <div className="border border-black bg-slate-400">
           <p>비밀번호</p>
@@ -45,11 +52,14 @@ const InfoOnEdit = () => {
             type="text"
             id="phoneNumber"
             placeholder="휴대폰 번호를 입력해주세요"
-            defaultValue={user ? user.phonenum : null}
+            value={user ? user.phonenum : null}
           />
         </div>
-        <InfoOnEditAddress />
+        <InfoOnEditAddress setAddress={setAddress} />
       </section>
+      <div>
+        <button>수정 완료</button>
+      </div>
     </>
   );
 };

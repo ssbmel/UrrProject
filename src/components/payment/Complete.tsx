@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
 
 export default function Complete() {
   const products = [
@@ -17,6 +21,7 @@ export default function Complete() {
       image: "/images/비니.jpg"
     }
   ];
+
   const totalAmount = products.reduce((sum, product) => sum + parseInt(product.price.replace(/,/g, "")), 0);
   return (
     <div>

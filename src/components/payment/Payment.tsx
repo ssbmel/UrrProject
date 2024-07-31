@@ -1,73 +1,42 @@
+import usePayment from "@/hooks/usePayment";
 import { useUserData } from "@/hooks/useUserData";
 import PortOne from "@portone/browser-sdk/v2";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useState } from "react";
-import { uuid } from "uuidv4";
 
 export default function Payment() {
-  const { data } = useUserData();
-  const router = useRouter();
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
+  const paymentFunc = usePayment();
+  const [fullName, setFullName] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   const searchParams = useSearchParams();
   const pathName = searchParams.get("path_name");
+  const code = searchParams.get("code");
 
-  const handlePayment = async () => {
-    const paymentId = `payment-${Math.random()}`;
-    const email = data.email;
-    const customerId = data.id;
-    const code = searchParams.get("code");
-    const customerFullName = data.nickname;
-
-    if (code === "FAILURE_TYPE_PG") {
-      alert("결제 취소되었습니다.");
-      router.push("/payment");
-      return;
-    }
-    const response = await PortOne.requestPayment({
-      // Store ID 설정
-      storeId: "store-094c2470-d0a2-4f20-b350-87b98f1e345c",
-      // 채널 키 설정
-      channelKey: "channel-key-bcf487fd-75d7-4863-977c-cf468a354a86",
-      paymentId,
-      customer: {
-        customerId,
-        fullName: customerFullName,
-        email,
-        phoneNumber
-      },
-      orderName: "나이키 와플 트레이너 2 SD",
-      totalAmount: 100,
-      currency: "CURRENCY_KRW",
-      payMethod: "CARD",
-      redirectUrl: "http://localhost:3000/payment/complete"
-    });
-
-    if (response && response.paymentId) {
-      try {
-        await fetch("/api/payment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            id: uuid,
-            name: fullName,
-            user_id: customerId,
-            price: 1000,
-            title: "나이키 와플 트레이너 2 SD",
-            address,
-            phonenum: phoneNumber
-          })
-        });
-      } catch (error) {
-        console.error(error);
-        alert("post 오류");
-      }
+  const handleSubmit = async () => {
+    try {
+      const response = await paymentFunc({
+        fullName: fullName,
+        orderCount: 2,
+        orderName: "sample test", // 주문상품 이름
+        totalAmount: 1000, // 전체 금액
+        price: 1000, // 상품 하나 가격
+        address: address,
+        phoneNumber: phoneNumber
+      });
+      console.log(response);
+      // if (response.ok) {
+      //   alert("결제가 성공적으로 완료되었습니다.");
+      // } else {
+      //   alert("결제 중 오류가 발생했습니다.");
+      // }
+    } catch (error) {
+      console.error(error);
+      alert("결제 요청 중 오류가 발생했습니다.");
     }
   };
+
   return (
     <>
       <div className="bg-gray-100 flex justify-center">
@@ -114,7 +83,7 @@ export default function Payment() {
             type="text"
             placeholder="부재시, 경비실에 놔주세요"
           />
-          <button className="w-full h-[52px] rounded-md bg-[#1A82FF] text-white mt-[20px]" onClick={handlePayment}>
+          <button className="w-full h-[52px] rounded-md bg-[#1A82FF] text-white mt-[20px]" onClick={handleSubmit}>
             구매하기
           </button>
         </div>

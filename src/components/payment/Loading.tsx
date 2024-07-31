@@ -46,16 +46,16 @@ const LoadingComponent = () => {
       router.push("/payment");
       return;
     } else if (!code) {
+      console.log(paymentData);
       // 성공 케이스
       if (paymentData) {
-        // console.log(JSON.parse(data?.customData));
         paymentSupabase(paymentData);
         router.push(`/payment/complete?paymentId=${paymentId}`);
       }
     } else if (code === "PORTONE_ERROR") {
       router.push("/payment/fail");
     }
-  }, []);
+  }, [paymentData]);
 
   return <div>This is Loading Component</div>;
 };

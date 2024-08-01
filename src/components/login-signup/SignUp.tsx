@@ -9,7 +9,7 @@ interface SignUpProps {
 }
 
 export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
-  const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
+  const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5 outline-none";
   const stLabel = "text-xs text-[#575757] mt-[8px]";
 
   const emailRef = useRef<HTMLInputElement>(null);
@@ -138,7 +138,11 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
             <p className={stLabel}>{passwordConfirmMessage}</p>
           </label>
           <div className="flex">
-            <button onClick={onSignUpHandler} className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium">
+            <button
+              onClick={onSignUpHandler}
+              // disabled={!(isPassword && isPasswordConfirm)} // 나중에 풀기
+              className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium"
+            >
               회원가입
             </button>
           </div>

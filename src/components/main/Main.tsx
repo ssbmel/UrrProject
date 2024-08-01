@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import BestProductsList from './BestProductsList';
-import SubInfluencer from './SubInfluencer';
-import BestInfluencerList from './BestInfluencerList';
-import ReviewList from './ReviewList';
-import Banner from './swiper/Banner';
-import "./style.css"
-import UpButton from '../common/button/UpButton';
+import React, { useEffect, useState } from "react";
+import BestProductsList from "./BestProductsList";
+import SubInfluencer from "./SubInfluencer";
+import BestInfluencerList from "./BestInfluencerList";
+import ReviewList from "./ReviewList";
+import Banner from "./swiper/Banner";
+import "./style.css";
+import UpButton from "../common/button/UpButton";
 export interface PostData {
   id: string;
   start: string;
@@ -38,16 +38,16 @@ function Main() {
   useEffect(() => {
     getPostData();
   }, []);
-  
+
   return (
-    <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 mb-[80px]">
-      <Banner productsList={productsList}/>
-      <SubInfluencer/>
+    <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 ">
+      <Banner productsList={productsList} />
+      <SubInfluencer />
       <hr />
-      <BestProductsList productsList={productsList}/>
-      <BestInfluencerList/>
-      <ReviewList/>
-      <UpButton/>
+      <BestProductsList productsList={productsList} />
+      <BestInfluencerList />
+      <ReviewList />
+      <UpButton />
     </div>
   );
 }

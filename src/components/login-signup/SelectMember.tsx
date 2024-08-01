@@ -41,8 +41,8 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             <p className="text-sm">링크 또는 계정 아이디</p>
             <input
               type="text"
-              className="h-[51px] border border-[#D9D9D9] rounded-md"
-              placeholder="asdf123@asdf.vqsd"
+              className="h-[51px] border border-[#D9D9D9] rounded-md indent-3 outline-none"
+              placeholder="링크 또는 계정 아이디"
               ref={confirmRef}
             />
           </div>
@@ -60,7 +60,8 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             인플루언서
           </button>
           <button
-            onClick={nextSignUpPage} // 인플루언서 버튼이 눌리면 비활성화
+            onClick={nextSignUpPage}
+            disabled={selectUser === "인플루언서"}
             className={`${
               selectUser === "인플루언서"
                 ? "bg-[#F2F2F2] border border-[##DADDDD] text-[#CDCFD0]"

@@ -78,7 +78,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto">
+      <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto shrink-0">
         <div>{leftIcon}</div>
         <div className=" font-semibold text-xl">{headerTitle}</div>
         <div className="flex">{rightIcon}</div>

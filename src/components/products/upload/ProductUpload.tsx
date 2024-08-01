@@ -178,7 +178,9 @@ function ProductUpload() {
   return (
     <form onSubmit={onSubmit}>
       <div className="max-w-[1200px] mx-auto grid gap-3 bg-[#F4F4F4]">
-        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
+        <Category 
+          radioCheckedValue={radioCheckedValue} 
+          setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
           startDateRef={startDateRef}
           endDateRef={endDateRef}

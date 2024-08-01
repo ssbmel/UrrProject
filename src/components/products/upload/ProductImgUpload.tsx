@@ -86,9 +86,9 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
   };
 
   return (
-    <>
-      <div className="my-5">
-        <h3 className="font-bold text-lg my-2">썸네일 등록하기</h3>
+    <div>
+      <div className="w-full p-5 contents-box my-3">
+        <h3 className="font-bold text-lg py-3">썸네일 등록하기</h3>
         {!mainImgUrl && (
           <div className="w-full border min-h-[300px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
             <Image src={camera} alt="img" width={50} className="mb-2"></Image>
@@ -105,9 +105,9 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
           썸네일 파일 첨부하기
         </label>
       </div>
-      <hr />
-      <div className="my-5">
-        <h3 className="font-bold text-lg my-2">상세설명 파일 등록하기</h3>
+
+      <div className="w-full p-5 contents-box">
+        <h3 className="font-bold text-lg py-3">상세설명 파일 등록하기</h3>
         {!detailImgUrls || detailImgUrls.length === 0 ? (
           <div className="w-full border min-h-[300px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
             <Image src={camera} alt="img" width={50} className="mb-2"></Image>
@@ -130,7 +130,6 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
               ))}
           </div>
         )}
-
         <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
         <div className="flex my-2">
           <div className="mr-1 mt-[2px]">
@@ -142,7 +141,7 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
           상세설명 파일 첨부하기
         </label>
       </div>
-    </>
+    </div>
   );
 };
 

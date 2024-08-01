@@ -1,12 +1,13 @@
 "use client";
 
-import { notFound } from "next/navigation";
-import { createClient } from "../../../../supabase/client";
 import Image from "next/image";
-import getProductDetail from "@/services/products/detail/productDetail.service";
+import cart from "../../../../public/icon/장바구니.png";
 import { useEffect, useState } from "react";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
+import ProductInquiry from "../ProductInquiry";
+import DetailImg from "./DetailImg";
+import Link from "next/link";
 
 interface detailProps {
   params: { id: string };
@@ -17,6 +18,7 @@ type CompoStateType = "상품정보" | "상품후기" | "상품문의";
 export default function Detail({ params }: detailProps) {
   const { data } = useGetProductDetail({ id: params.id });
   const [compoState, setCompoState] = useState<CompoStateType>("상품정보");
+  const [restart, setRestart] = useState<boolean>(false);
 
   const cost = parseFloat(data?.cost);
   const price = parseFloat(data?.price);
@@ -30,7 +32,7 @@ export default function Detail({ params }: detailProps) {
 
   return (
     <>
-      <div className="flex flex-col h-svh mb-[250px]">
+      <div className="flex flex-col min-h-screen">
         <div className="flex justify-center w-full">
           <Image src={data?.main_img} alt={data?.title} width={500} height={375} />
         </div>
@@ -72,7 +74,7 @@ export default function Detail({ params }: detailProps) {
           </div>
         </div>
         <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
-        <div className="flex flex-col w-[343px] mx-auto bg-slate-300">
+        <div className="flex flex-col w-full mx-auto">
           <div className="flex justify-center items-center">
             <div onClick={() => setCompoState("상품정보")} className={getClassNames("상품정보")}>
               상품 정보
@@ -84,13 +86,35 @@ export default function Detail({ params }: detailProps) {
               상품 문의
             </div>
           </div>
-          {compoState === "상품정보" && <div>상품 정보 컴포넌트</div>}
-          {compoState === "상품후기" && (
+          <div className="component w-full">
+            {compoState === "상품정보" && (
+              <div>
+                <DetailImg id={params.id} />
+              </div>
+            )}
+            {compoState === "상품후기" && (
+              <div>
+                <ReviewList id={params.id} />
+              </div>
+            )}
+            {compoState === "상품문의" && (
+              <div>
+                <ProductInquiry id={params.id} restart={restart} setRestart={setRestart} />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="paybar sticky bottom-[79px] bg-white left-0 w-full z-50">
+          <div className="flex justify-evenly">
+            <Link href={"/cart"}>
+              <div>
+                <Image src={cart} alt="장바구니로고" width={52} height={52} />
+              </div>
+            </Link>
             <div>
-              <ReviewList id={params.id} />
+              <button className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md">구매하기</button>
             </div>
-          )}
-          {compoState === "상품문의" && <div>상품 문의 컴포넌트</div>}
+          </div>
         </div>
       </div>
     </>

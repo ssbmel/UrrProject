@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import logo from "../../../../public/logo/title_logo.png";
-import backIcon from "../../../../public/icon/backIcon.png";
-import searchIcon from "../../../../public/icon/searchIcon.png";
-import cartIcon from "../../../../public/icon/cartIcon.png";
-import xIcon from "../../../../public/icon/xIcon.png";
+import BackIcon from "../../../../public/icon/backIcon.svg";
+import SearchIcon from "../../../../public/icon/searchIcon.svg";
+import CartIcon from "../../../../public/icon/cartIcon.svg";
+import XIcon from "../../../../public/icon/xIcon.svg";
 
 const Header = () => {
   const pathname = usePathname();
@@ -44,7 +44,7 @@ const Header = () => {
   } else {
     leftIcon = (
       <button onClick={() => router.back()}>
-        <Image src={backIcon} alt="뒤로가기 버튼" />
+        <BackIcon />
       </button>
     );
   }
@@ -55,23 +55,23 @@ const Header = () => {
     rightIcon = (
       <>
         <Link href={"/search"}>
-          <Image src={searchIcon} alt="검색" />
+          <SearchIcon />
         </Link>
         <Link href={"/cart"}>
-          <Image src={cartIcon} alt="장바구니" />
+          <CartIcon />
         </Link>
       </>
     );
   } else if (PRODUCTS_LIST || MY_PAGE) {
     rightIcon = (
       <Link href={"/cart"}>
-        <Image src={cartIcon} alt="장바구니" />
+        <CartIcon />
       </Link>
     );
   } else if (SIGN_UP || LOGIN || SEARCH) {
     rightIcon = (
       <Link href={"/"}>
-        <Image src={xIcon} alt="홈" />
+        <XIcon />
       </Link>
     );
   }

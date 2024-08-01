@@ -29,7 +29,6 @@ type CommentType = {
 export default function ProductInquiry({ id, restart, setRestart }: StateType) {
   const commentRef = useRef<HTMLInputElement>(null);
   const editCommentRef = useRef<HTMLInputElement>(null);
-  const queryClient = useQueryClient(); // 필요없으면 지우기
   const { data: userId } = useUserData();
 
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);

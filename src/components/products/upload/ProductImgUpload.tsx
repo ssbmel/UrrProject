@@ -3,6 +3,9 @@
 
 import { useState, useEffect } from "react";
 import { DetailedImgGroup } from "./ProductUpload";
+import AccentIcon from "../../../../public/icon/accentmark.svg";
+import camera from "../../../../public/bgImg/camera.png";
+import Image from "next/image";
 
 interface ContentsProps {
   setDetailImg: React.Dispatch<React.SetStateAction<DetailedImgGroup[]>>;
@@ -85,37 +88,59 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
   return (
     <>
       <div className="my-5">
-        <label htmlFor="file" className="btn-upload">
-          썸네일 파일 첨부하기
-        </label>
+        <h3 className="font-bold text-lg my-2">썸네일 등록하기</h3>
+        {!mainImgUrl && (
+          <div className="w-full border min-h-[300px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
+            <Image src={camera} alt="img" width={50} className="mb-2"></Image>
+            <p>파일 미리보기</p>
+          </div>
+        )}
         <input type="file" name="file" id="file" accept="image/*" onChange={readMainImg} />
         {mainImgUrl && (
           <div>
             <img src={mainImgUrl} alt="Main Image" width="auto" height="auto" className="mb-5" />
           </div>
         )}
+        <label htmlFor="file" className="btn-upload">
+          썸네일 파일 첨부하기
+        </label>
       </div>
       <hr />
       <div className="my-5">
+        <h3 className="font-bold text-lg my-2">상세설명 파일 등록하기</h3>
+        {!detailImgUrls || detailImgUrls.length === 0 ? (
+          <div className="w-full border min-h-[300px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
+            <Image src={camera} alt="img" width={50} className="mb-2"></Image>
+            <p>파일 미리보기</p>
+          </div>
+        ) : (
+          <div>
+            {detailImgUrls &&
+              detailImgUrls.map((item) => (
+                <div key={item.url} className="static">
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(item)}
+                    className="border w-7 rounded-sm absolute bg-white"
+                  >
+                    ✖︎
+                  </button>
+                  <img src={item.url} alt="img" width="auto" height="auto" className="mb-5" />
+                </div>
+              ))}
+          </div>
+        )}
+
+        <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
+        <div className="flex my-2">
+          <div className="mr-1 mt-[2px]">
+            <AccentIcon />
+          </div>
+          <p className="text-sm text-[#989C9F]">사진은 최대 10장까지 업로드 가능합니다.</p>
+        </div>
         <label htmlFor="files" className="btn-upload">
           상세설명 파일 첨부하기
         </label>
-        <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
-        <p className="text-sm text-yellow-500">*사진은 최대 10장까지 업로드 가능합니다.</p>
-        <div>
-          {detailImgUrls.map((item) => (
-            <div key={item.url} className="static">
-              <button
-                type="button"
-                onClick={() => handleDeleteImage(item)}
-                className="border w-7 rounded-sm absolute bg-white"
-              >
-                ✖︎
-              </button>
-              <img src={item.url} alt="img" width="auto" height="auto" className="mb-5" />
-            </div>
-          ))}
-        </div>
       </div>
     </>
   );

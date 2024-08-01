@@ -25,7 +25,7 @@ function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {
   }
   
   return (
-      <details open className="border w-full px-5">
+      <details open className="w-full px-5 contents-box mt-3">
         <summary className="font-bold text-lg">카테고리</summary>
         <hr />
         <div className="grid grid-cols-3 gap-3 my-5">

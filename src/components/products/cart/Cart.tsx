@@ -3,6 +3,7 @@
 import Image from "next/image";
 import defaultImg from "../../../../public/images/default.png";
 import { useState } from "react";
+import { createClient } from "../../../../supabase/server";
 
 function Cart() {
   const [count, setCount] = useState(0);

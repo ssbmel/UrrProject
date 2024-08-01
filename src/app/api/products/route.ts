@@ -34,6 +34,7 @@ export async function PUT(request: NextRequest) {
       return alert(`${error.message}`);
     }
     return NextResponse.json(data);
+    
   } catch (error) {
     return NextResponse.json({ error: "게시물 등록에 실패했습니다." });
   }

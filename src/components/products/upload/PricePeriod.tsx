@@ -27,7 +27,7 @@ const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, cos
   };
 
   return (
-    <details open className="border w-full px-5">
+    <details open className="w-full px-5 contents-box">
       <summary className="font-bold text-lg">기간 및 가격 설정</summary>
       <hr />
       <div className="space-x-4 my-5">

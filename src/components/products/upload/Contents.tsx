@@ -18,12 +18,12 @@ interface ContentsProps {
 const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDetailImg, uploadedMainImg, uploadedDetailImg,  setMainImg}) => {
 
   return (
-    <div className="border w-full h-[auto] p-5">
+    <div className="contents-box w-full h-[auto] p-5">
       <p className="mb-5 font-bold text-lg">글 작성하기</p>
       <input
         type="text"
-        placeholder="상품명" 
-        className="border w-full h-8 mb-5"
+        placeholder="[제품사명]제품명" 
+        className="border w-full mb-5"
         ref={titleRef}
       />
       <textarea 
@@ -31,8 +31,7 @@ const Contents: React.FC<ContentsProps> = ({ titleRef, textRef, detailImg, setDe
         placeholder="내용을 입력하세요."
         ref={textRef} 
         ></textarea>
-      <ProductImgUpload 
-      // detailImg={detailImg}
+      <ProductImgUpload
       setDetailImg={setDetailImg}
       uploadedMainImg={uploadedMainImg}
       uploadedDetailImg={uploadedDetailImg}

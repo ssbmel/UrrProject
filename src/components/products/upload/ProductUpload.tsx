@@ -10,6 +10,7 @@ import { Product } from "../../../../types/common";
 import { v4 as uuidv4 } from "uuid";
 import { useParams, useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
+import { useMutation } from "@tanstack/react-query";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 interface PostData {
@@ -24,6 +25,9 @@ interface PostData {
   category: string;
   main_img: string;
   detail_img: string[];
+  user_id : string;
+  created_at: string;
+  nickname: string;
 }
 
 function ProductUpload() {
@@ -50,7 +54,7 @@ function ProductUpload() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: PostData[] = await response.json();
-    const post = data.find((post) => post.id === id);
+    const post: PostData | undefined = data.find((post) => post.id === id);
     if (!post) {
       return;
     }
@@ -75,6 +79,28 @@ function ProductUpload() {
       getPostData();
     }
   }, [id]);
+
+  const savePost = async (data: PostData) => {
+    const response = await fetch("/api/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  };
+
+  const editPost = async (data: PostData) => {
+    const response = await fetch("/api/products", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  };
+
+  const { mutate: saveMutation } = useMutation<Product, unknown, PostData>({
+    mutationFn: (data: PostData) => (id === "new" ? savePost(data) : editPost(data)),
+  });
 
   const uploadMainImg = async (postId: string): Promise<string | null> => {
     if (!mainImg) {
@@ -120,20 +146,20 @@ function ProductUpload() {
     const mainImgId = (await uploadMainImg(postId)) || "";
     const detailImgId = await uploadDetailImages(postId);
 
-    const productData: Product = {
+    const productData: PostData = {
       category: radioCheckedValue,
-      start: startDateRef.current?.value || null,
-      end: endDateRef.current?.value || null,
-      cost: costRef.current?.value ? parseInt(costRef.current?.value) : null,
-      price: priceRef.current?.value ? parseInt(priceRef.current?.value) : null,
-      product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,
-      title: titleRef.current?.value || null,
-      text: textRef.current?.value || null,
+      start: startDateRef.current?.value || "",
+      end: endDateRef.current?.value || "",
+      cost: costRef.current?.value || "",
+      price: priceRef.current?.value || "",
+      product_count: productCountRef.current?.value || "",
+      title: titleRef.current?.value || "",
+      text: textRef.current?.value || "",
       detail_img: detailImgId,
       main_img: mainImgId,
       user_id: user.id,
       created_at: new Date().toISOString(),
-      id: postId,
+      id: id === "new" ? postId : (id as string),
       nickname: user.nickname
     };
 
@@ -151,15 +177,17 @@ function ProductUpload() {
     ) {
       alert("상품 정보를 입력해주세요.");
       return;
-    }
+    } 
+    saveMutation(productData);
+    router.push("/products/list");
 
-    const { data, error } = await supabase.from("products").insert([productData]).select();
-    if (error) {
-      console.error("Error inserting data:", error);
-    } else {
-      console.log("Data inserted:", data);
-      router.push("/products/list");
-    }
+    // const { data, error } = await supabase.from("products").insert([productData]).select();
+    // if (error) {
+    //   console.error("Error inserting data:", error);
+    // } else {
+    //   saveMutation(productData);
+    //   router.push("/products/list");
+    // }
   };
 
   return (

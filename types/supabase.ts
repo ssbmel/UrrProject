@@ -9,6 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cart: {
+        Row: {
+          amount: number | null
+          id: string
+          name: string | null
+          product_id: string | null
+          quantity: number | null
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          id?: string
+          name?: string | null
+          product_id?: string | null
+          quantity?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          id?: string
+          name?: string | null
+          product_id?: string | null
+          quantity?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cart_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chat_channels: {
         Row: {
           channel_id: number
@@ -154,6 +196,44 @@ export type Database = {
             columns: ["userId"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_review: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string | null
+          review_content: string | null
+          review_images: string[] | null
+          review_score: number | null
+          user_nickname: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          review_content?: string | null
+          review_images?: string[] | null
+          review_score?: number | null
+          user_nickname?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          review_content?: string | null
+          review_images?: string[] | null
+          review_score?: number | null
+          user_nickname?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_review_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]

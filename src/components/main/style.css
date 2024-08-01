@@ -16,31 +16,5 @@
 .box {
     z-index: -1;
     position: relative;
-    height: 600px;
-    min-height: 500px;
 }
 
-/* .gradient-border {
-  border: 5px solid;
-  border-radius: 15px;
-  border-image: linear-gradient(to bottom right, #0068E5, #9AEC5B) 1;
-} */
- 
-/* .gradient-border {
-  position: relative;
-  border: 4px solid transparent;
-  border-radius: 16px;
-  background: linear-gradient(#0068E5, #9AEC5B);
-  background-clip: padding-box;
-  padding: 5px;
-}
-
-.gradient-border::after {
-  position: absolute;
-  top: -4px; bottom: -4px;
-  left: -4px; right: -4px;
-  background: linear-gradient(to bottom right #0068E5, #9AEC5B);
-  content: '';
-  z-index: -1;
-  border-radius: 16px;
-} */

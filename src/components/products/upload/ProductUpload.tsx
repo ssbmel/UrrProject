@@ -10,6 +10,7 @@ import { Product } from "../../../../types/common";
 import { v4 as uuidv4 } from "uuid";
 import { useParams, useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
+import { useMutation } from "@tanstack/react-query";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 interface PostData {
@@ -50,8 +51,6 @@ function ProductUpload() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: PostData[] = await response.json();
-    console.log(data);
-    
     const post = data.find((post) => post.id === id);
     if (!post) {
       return;
@@ -77,6 +76,28 @@ function ProductUpload() {
       getPostData();
     }
   }, [id]);
+
+  const savePost = async (data: PostData) => {
+    const response = await fetch("/api/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  };
+
+  const editPost = async (data: PostData) => {
+    const response = await fetch("/api/products", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  };
+
+  const { mutate: saveMutation } = useMutation<PostData, unknown, PostData>({
+    mutationFn: (data: PostData) => (id === "new" ? savePost(data) : editPost(data)),
+  });
 
   const uploadMainImg = async (postId: string): Promise<string | null> => {
     if (!mainImg) {
@@ -155,15 +176,17 @@ function ProductUpload() {
     ) {
       alert("상품 정보를 입력해주세요.");
       return;
-    }
+    } 
+    saveMutation(productData);
+    router.push("/products/list");
 
-    const { data, error } = await supabase.from("products").insert([productData]).select();
-    if (error) {
-      console.error("Error inserting data:", error);
-    } else {
-      console.log("Data inserted:", data);
-      router.push("/products/list");
-    }
+    // const { data, error } = await supabase.from("products").insert([productData]).select();
+    // if (error) {
+    //   console.error("Error inserting data:", error);
+    // } else {
+    //   saveMutation(productData);
+    //   router.push("/products/list");
+    // }
   };
 
   return (

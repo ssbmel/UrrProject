@@ -66,7 +66,7 @@ function ProductUpload() {
     setUploadedMainImg(post.main_img);
     const structuredArr = post.detail_img.map((a: string) => ({
       file: null,
-      url: a,
+      url: a
     }));
     setUploadedDetailImg(structuredArr);
   };
@@ -105,9 +105,7 @@ function ProductUpload() {
     }
     const ext = mainImg.name.split(".").pop();
     const newFileName = `${uuidv4()}.${ext}`;
-    const { data, error } = await supabase.storage
-      .from("products")
-      .upload(`${postId}/mainImg/${newFileName}`, mainImg);
+    const { data, error } = await supabase.storage.from("products").upload(`${postId}/mainImg/${newFileName}`, mainImg);
     if (error) {
       console.log(`파일이 업로드 되지 않습니다.${error}`);
       return null;
@@ -161,7 +159,7 @@ function ProductUpload() {
       id: postId,
       nickname: user.nickname
     };
-  
+
     if (
       !productData.category ||
       !productData.start ||
@@ -210,7 +208,7 @@ function ProductUpload() {
           setMainImg={setMainImg}
         />
         <div className="flex justify-end">
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-5 mb-[80px]">
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-5 ">
             등록하기
           </button>
         </div>

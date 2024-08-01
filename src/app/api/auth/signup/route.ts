@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     if (userData?.user?.id) {
       if (confirm === "인플루언서") {
-        const { data } = await supabase.from("users").insert({
+        const { data, error } = await supabase.from("users").insert({
           id: userData?.user?.id,
           email,
           nickname,
@@ -29,8 +29,12 @@ export async function POST(request: NextRequest) {
           approve,
           profile_url: profile_url
         });
+
+        if (error) {
+          console.error("인플루언서 회원가입 실패", error.message);
+        }
       } else {
-        const { data, error: insertError } = await supabase.from("users").insert({
+        const { data } = await supabase.from("users").insert({
           id: userData?.user?.id,
           email,
           nickname,
@@ -38,10 +42,6 @@ export async function POST(request: NextRequest) {
           approve,
           profile_url: profile_url
         });
-
-        if (insertError) {
-          console.log("테이블 추가 안됨", insertError);
-        }
       }
     }
 

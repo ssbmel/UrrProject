@@ -6,7 +6,6 @@ const Review = ({ props }) => {
       ProductReview
       <div className="flex">
         <div>{props.user_nickname}</div>
-        <div>별표별표별표</div>
       </div>
       <div className="flex">
         {props.review_images.map((value, index) => {

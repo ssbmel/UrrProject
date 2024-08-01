@@ -22,6 +22,11 @@ export default function Detail({ params }: detailProps) {
   const price = parseFloat(data?.price);
   const discountPercentage = ((cost - price) / cost) * 100;
   const discountPercentageInteger = Math.floor(discountPercentage);
+  const getClassNames = (state: any) => {
+    return `w-[113px] p-4 flex justify-center items-center border-b-4 ${
+      compoState === state ? "border-blue-500 text-blue-500" : "border-gray-200"
+    }`;
+  };
 
   return (
     <>
@@ -38,7 +43,7 @@ export default function Detail({ params }: detailProps) {
           </p>
           <p className="text-[#989C9F]">리뷰 05건</p>
         </div>
-        <div className="border-[#F4F4F4] border-[8px] w-full mt-3" />
+        <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
         <div className="m-4 mx-auto w-[343px] flex flex-col items-center">
           <div className="flex flex-col gap-[14px]">
             <p className="flex">
@@ -66,13 +71,19 @@ export default function Detail({ params }: detailProps) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-[343px] mx-auto">
-          <div className="flex ">
-            <div onClick={() => setCompoState("상품정보")}>상품 정보</div>
-            <div onClick={() => setCompoState("상품후기")}>상품 후기</div>
-            <div onClick={() => setCompoState("상품문의")}>상품 문의</div>
+        <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
+        <div className="flex flex-col w-[343px] mx-auto bg-slate-300">
+          <div className="flex justify-center items-center">
+            <div onClick={() => setCompoState("상품정보")} className={getClassNames("상품정보")}>
+              상품 정보
+            </div>
+            <div onClick={() => setCompoState("상품후기")} className={getClassNames("상품후기")}>
+              상품 후기
+            </div>
+            <div onClick={() => setCompoState("상품문의")} className={getClassNames("상품문의")}>
+              상품 문의
+            </div>
           </div>
-          <div>{data?.cost}</div>
           {compoState === "상품정보" && <div>상품 정보 컴포넌트</div>}
           {compoState === "상품후기" && (
             <div>

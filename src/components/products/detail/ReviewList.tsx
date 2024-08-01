@@ -9,7 +9,6 @@ const ReviewList = ({ id }: { id: string }) => {
 
   return (
     <div>
-      ReviewList
       {data?.map((value, index) => {
         return <Review key={index} props={value} />;
       })}

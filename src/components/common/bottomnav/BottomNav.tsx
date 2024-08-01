@@ -12,7 +12,7 @@ export default function BottomNav() {
 
   return (
     <>
-      <div className="bg-[#FAFAFF] h-[80px] w-full fixed bottom-0">
+      <div className="bg-[#FAFAFF] h-[80px] w-full sticky bottom-0 shrink-0">
         <div className="flex justify-between items-center pt-2 mx-5">
           <Link href={"/"}>
             <div className={liStyle}>

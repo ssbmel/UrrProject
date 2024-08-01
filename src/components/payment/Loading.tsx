@@ -10,9 +10,10 @@ const LoadingComponent = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const paymentId = searchParams.get("paymentId");
-  const { paymentData } = useAddrStore();
+  const { paymentData, productList } = useAddrStore();
 
   const paymentSupabase = async (req: any) => {
+    console.log(productList);
     try {
       const res = await fetch("/api/payment", {
         method: "POST",
@@ -27,10 +28,11 @@ const LoadingComponent = () => {
           price: req.price,
           orderName: req.orderName,
           address: req.address,
-          phoneNumber: req.phoneNumber
+          phoneNumber: req.phoneNumber,
+          productList: productList
         })
       });
-
+      console.log(res);
       clearPaymentData();
 
       return res;
@@ -44,9 +46,7 @@ const LoadingComponent = () => {
     if (code === "FAILURE_TYPE_PG") {
       alert("결제 취소되었습니다.");
       router.push("/payment");
-      return;
     } else if (!code) {
-      console.log(paymentData);
       // 성공 케이스
       if (paymentData) {
         paymentSupabase(paymentData);

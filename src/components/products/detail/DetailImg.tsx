@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 const DetailImg = ({ id }: { id: string }) => {
   const { data } = useGetProductDetail({ id });
   const [images, setImages] = useState<string[]>([]);
-  console.log(data);
   useEffect(() => {
     if (data && Array.isArray(data.detail_img)) {
       setImages(data.detail_img);

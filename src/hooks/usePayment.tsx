@@ -5,15 +5,16 @@ import { useUserData } from "./useUserData";
 import { uuid } from "uuidv4";
 import { useCallback } from "react";
 import { useAddrStore } from "@/zustand/addrStore";
+import { ProductList } from "../../types/addr.type";
 
 interface paymentType {
   fullName: string;
   orderCount: number;
   orderName: string; // 주문상품 이름
-  totalAmount: number; // 전체 금액
-  price: number; // 상품 하나 가격
+  price: number; // 전체 가격
   address: string;
   phoneNumber: string;
+  productList: ProductList[];
 }
 
 const usePayment = () => {
@@ -33,7 +34,8 @@ const usePayment = () => {
         price: req.price,
         orderName: req.orderName,
         address: req.address,
-        phoneNumber: req.phoneNumber
+        phoneNumber: req.phoneNumber,
+        productList: req.productList
       });
 
       const response = await PortOne.requestPayment({
@@ -49,9 +51,9 @@ const usePayment = () => {
           phoneNumber: req.phoneNumber
         },
         orderName: req.orderName,
-        totalAmount: req.totalAmount,
+        totalAmount: req.price,
         currency: "CURRENCY_KRW",
-        products: [{ id: "dd", name: "apple", amount: 400, quantity: 3 }], // 상품 목록
+        products: req.productList, // 상품 목록
         payMethod: "CARD",
         redirectUrl: "http://localhost:3000/payment/loading"
       });

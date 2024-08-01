@@ -89,6 +89,9 @@ export default function Payment() {
             구매하기
           </button>
         </div>
+        <div>
+          <button>구매하기</button>
+        </div>
       </div>
     </>
   );

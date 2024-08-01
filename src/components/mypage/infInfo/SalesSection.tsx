@@ -3,7 +3,7 @@ import SalesList from "./SalesList";
 
 const SalesSection = () => {
   return (
-    <section>
+    <section className="flex flex-col">
       <SalesList />
       <SalesList />
     </section>

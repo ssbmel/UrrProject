@@ -25,6 +25,9 @@ interface PostData {
   category: string;
   main_img: string;
   detail_img: string[];
+  user_id : string;
+  created_at: string;
+  nickname: string;
 }
 
 function ProductUpload() {
@@ -51,7 +54,7 @@ function ProductUpload() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data: PostData[] = await response.json();
-    const post = data.find((post) => post.id === id);
+    const post: PostData | undefined = data.find((post) => post.id === id);
     if (!post) {
       return;
     }
@@ -95,7 +98,7 @@ function ProductUpload() {
     return response.json();
   };
 
-  const { mutate: saveMutation } = useMutation<PostData, unknown, PostData>({
+  const { mutate: saveMutation } = useMutation<Product, unknown, PostData>({
     mutationFn: (data: PostData) => (id === "new" ? savePost(data) : editPost(data)),
   });
 
@@ -143,20 +146,20 @@ function ProductUpload() {
     const mainImgId = (await uploadMainImg(postId)) || "";
     const detailImgId = await uploadDetailImages(postId);
 
-    const productData: Product = {
+    const productData: PostData = {
       category: radioCheckedValue,
-      start: startDateRef.current?.value || null,
-      end: endDateRef.current?.value || null,
-      cost: costRef.current?.value ? parseInt(costRef.current?.value) : null,
-      price: priceRef.current?.value ? parseInt(priceRef.current?.value) : null,
-      product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,
-      title: titleRef.current?.value || null,
-      text: textRef.current?.value || null,
+      start: startDateRef.current?.value || "",
+      end: endDateRef.current?.value || "",
+      cost: costRef.current?.value || "",
+      price: priceRef.current?.value || "",
+      product_count: productCountRef.current?.value || "",
+      title: titleRef.current?.value || "",
+      text: textRef.current?.value || "",
       detail_img: detailImgId,
       main_img: mainImgId,
       user_id: user.id,
       created_at: new Date().toISOString(),
-      id: postId,
+      id: id === "new" ? postId : (id as string),
       nickname: user.nickname
     };
 

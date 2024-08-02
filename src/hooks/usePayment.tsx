@@ -15,6 +15,7 @@ interface paymentType {
   address: string;
   phoneNumber: string;
   productList: ProductList[];
+  request: string;
 }
 
 const usePayment = () => {
@@ -35,7 +36,8 @@ const usePayment = () => {
         orderName: req.orderName,
         address: req.address,
         phoneNumber: req.phoneNumber,
-        productList: req.productList
+        productList: req.productList,
+        request: req.request
       });
 
       const response = await PortOne.requestPayment({

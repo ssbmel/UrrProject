@@ -15,7 +15,15 @@
     animation: slide-up 0.3s ease-out;
   }
 }
-
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 body {
   background-color: #fffffe;
   display: flex;
@@ -46,4 +54,19 @@ body {
 html,
 body {
   height: 100%;
+}
+.dot-animation {
+  animation: fadeInOut 1.5s infinite;
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.5s;
+}
+
+.dot-3 {
+  animation-delay: 1s;
 }

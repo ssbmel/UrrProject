@@ -12,7 +12,8 @@ export const POST = async (request: NextRequest) => {
     address: req.address,
     phoneNumber: req.phoneNumber,
     paymentId: req.paymentId,
-    product_list: req.productList
+    product_list: req.productList,
+    request: req.request
   });
 
   if (error) {

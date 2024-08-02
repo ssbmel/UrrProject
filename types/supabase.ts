@@ -185,6 +185,7 @@ export type Database = {
           phoneNumber: number | null
           price: number
           product_list: Json[] | null
+          request: string | null
           userId: string
         }
         Insert: {
@@ -195,6 +196,7 @@ export type Database = {
           phoneNumber?: number | null
           price: number
           product_list?: Json[] | null
+          request?: string | null
           userId: string
         }
         Update: {
@@ -205,6 +207,7 @@ export type Database = {
           phoneNumber?: number | null
           price?: number
           product_list?: Json[] | null
+          request?: string | null
           userId?: string
         }
         Relationships: [

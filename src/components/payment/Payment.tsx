@@ -13,6 +13,7 @@ export default function Payment() {
   const [fullName, setFullName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [address, setAddress] = useState<string>("");
+  const [request, setRequest] = useState<string>("");
   const price = productList?.reduce((acc: any, cur: any) => {
     return acc + cur.amount * cur.quantity;
   }, 0);
@@ -27,7 +28,8 @@ export default function Payment() {
           price: price, // 상품 전체 가격
           address: address,
           phoneNumber: phoneNumber,
-          productList: productList
+          productList: productList,
+          request: request
         });
 
         if (response?.paymentId) {
@@ -88,6 +90,8 @@ export default function Payment() {
             className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
             type="text"
             placeholder="부재시, 경비실에 놔주세요"
+            value={request}
+            onChange={(e) => setRequest(e.target.value)}
           />
           <button className="w-full h-[52px] rounded-md bg-[#1A82FF] text-white mt-[20px]" onClick={handleSubmit}>
             구매하기

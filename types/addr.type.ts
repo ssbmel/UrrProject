@@ -14,6 +14,7 @@ export type PaymentData = {
   address: string;
   phoneNumber: string;
   productList: ProductList[];
+  request: string;
 };
 
 export type ProductList = {

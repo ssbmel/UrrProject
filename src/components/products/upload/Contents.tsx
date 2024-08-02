@@ -8,7 +8,6 @@ interface ContentsProps {
   titleRef: RefObject<HTMLInputElement>;
   textRef: RefObject<HTMLTextAreaElement>;
   detailImg: DetailedImgGroup[];
-  // setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
   setDetailImg: React.Dispatch<React.SetStateAction<DetailedImgGroup[]>>;
   uploadedMainImg: string;
   setMainImg: React.Dispatch<React.SetStateAction<File | null>>;

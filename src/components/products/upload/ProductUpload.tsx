@@ -38,7 +38,6 @@ function ProductUpload() {
     }
     const data: Product[] = await response.json();
     const post = data.find((post) => post.id === id);
-    console.log(data);
     
     if (!post) {
       return;

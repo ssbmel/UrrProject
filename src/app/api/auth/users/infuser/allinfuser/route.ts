@@ -5,7 +5,6 @@ export async function GET() {
   const supabase = createClient();
 
   const { data, error } = await supabase.from("users").select("*").eq("approve", true).eq("role", "인플루언서");
-  console.log(data);
 
   if (error) {
     console.log("error message:", error.message);

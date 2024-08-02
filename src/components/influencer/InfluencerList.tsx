@@ -3,17 +3,23 @@
 import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
 import emptyImg from "../../../public/bgImg/emptyImg.png";
-import { Product } from "../../../types/common";
-import { useEffect } from "react";
+import { User } from "../../../types/common";
+import { useEffect, useState } from "react";
 
 function InfluencerList() {
+  const [influencerData, setInfluencerData] = useState<User[]>();
   const getUserData = async () => {
-    const response = await fetch("/api/auth/users/infuser/allinfuser");
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+      const response = await fetch("/api/auth/users/infuser/allinfuser");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const user: User[] = await data.data;
+      setInfluencerData(user);
+    } catch (error) {
+      console.log("Failed to fetch user data:", error);
     }
-    const data: Product[] = await response.json();
-    console.log(data);
   };
 
   useEffect(() => {
@@ -35,10 +41,14 @@ function InfluencerList() {
       <div className="w-full h-[70%] p-2 my-5">
         <h1 className="font-bold text-lg">전체 인플루언서</h1>
         <div className="w-full grid grid-cols-3 gap-3">
-          <div className="w-[1/3] text-center mt-2 overflow-y-auto">
-            <Image src={defaultImg} alt="" width={120} className="gradient-border" />
-            <p className="my-2 text-sm">인플루언서</p>
-          </div>
+          {influencerData?.map((inf) => (
+            <div key={inf.id}>
+              <div className="w-[1/3] text-center mt-2 overflow-y-auto">
+                <Image src={defaultImg} alt="img" width={120} height={120} className="gradient-border" />
+                <p className="my-2 text-sm">{inf.nickname}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

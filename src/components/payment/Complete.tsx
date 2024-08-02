@@ -9,6 +9,14 @@ import orderCom from "../../../public/icon/orderComplete.png";
 
 type orderType = Tables<"order"> | null;
 
+type productList = {
+  id: string;
+  name: string;
+  imgUrl: string;
+  amount: number;
+  quantity: number;
+};
+
 export default function Complete() {
   const [products, setProducts] = useState<orderType>(null);
   const supabase = createClient();
@@ -55,31 +63,34 @@ export default function Complete() {
         <div className="border-[#F4F4F4] border-[8px] w-full mt-3" />
         <div className="m-4">
           <p className="m-3 text-lg">주문상품</p>
-          {/* <div className="flex flex-col divide-y">
+          <div className="flex flex-col divide-y">
             {products?.product_list &&
-              products?.product_list.map((product, index) => (
-                <div key={index} className="bg-white rounded-md p-2 flex ">
-                  <div className="flex justify-center ">
-                    <div className="relative w-[72px] h-[72px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
-                      <Image
-                        src={product.imgUrl}
-                        alt={product.name}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-md"
-                      />
+              products?.product_list.map((product, index) => {
+                const typedProduct = product as productList;
+                return (
+                  <div key={index} className="bg-white rounded-md p-2 flex ">
+                    <div className="flex justify-center ">
+                      <div className="relative w-[72px] h-[72px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
+                        <Image
+                          src={typedProduct?.imgUrl}
+                          alt={typedProduct?.name}
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded-md"
+                        />
+                      </div>
+                    </div>
+                    <div className="ml-2">
+                      <div className="flex flex-col">
+                        <p className="text-sm text-[#4C4F52]">{typedProduct?.name}</p>
+                        <p className="text-md font-semibold">{typedProduct?.amount} 원</p>
+                        <p className="text-sm text-[#989C9F]">{String(typedProduct?.quantity).padStart(2, "0")} 개</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-2">
-                    <div className="flex flex-col">
-                      <p className="text-sm text-[#4C4F52]">{product.name}</p>
-                      <p className="text-md font-semibold">{product.amount} 원</p>
-                      <p className="text-sm text-[#989C9F]">{String(product.quantity).padStart(2, "0")} 개</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div> */}
+                );
+              })}
+          </div>
         </div>
         <div className="border-[#F4F4F4] border mx-3 " />
         <div className="p-5 flex justify-between fixed bottom-[80px] w-full shadow-inner text-lg">

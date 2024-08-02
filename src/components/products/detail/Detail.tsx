@@ -56,7 +56,7 @@ export default function Detail({ params }: detailProps) {
     <>
       <div className="flex flex-col min-h-screen">
         <div className="flex justify-center w-full">
-          <Image src={data?.main_img} alt={data?.title} width={500} height={375} />
+          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} />}
         </div>
         <div className="my-[20px] mx-4">
           <p className="my-4 text-xl">{data?.title}</p>
@@ -69,7 +69,7 @@ export default function Detail({ params }: detailProps) {
         </div>
         <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
         <div className="m-4 mx-auto w-[343px] flex flex-col items-center">
-          <div className="flex flex-col gap-[14px] ">
+          <div className="flex flex-col gap-[14px] my-2 ">
             <p className="flex">
               <span className="w-[105px]">진행기간</span>
               <span>
@@ -89,7 +89,7 @@ export default function Detail({ params }: detailProps) {
               <span>3,000 원</span>
             </p>
 
-            <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-12 p-4">
+            <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4">
               <p className="my-2 text-lg font-semibold text-[#0051B2]">주문 전 확인해주세요!</p>
               <p className="text-md text-[#4C4F52]">{data?.text}</p>
             </div>
@@ -127,7 +127,7 @@ export default function Detail({ params }: detailProps) {
           </div>
         </div>
         <div className="paybar sticky bottom-[79px] bg-white left-0 w-full z-50">
-          <div className="flex justify-evenly">
+          <div className="flex justify-evenly p-2">
             <Link href={"/cart"}>
               <div>
                 <Image src={cart} alt="장바구니로고" width={52} height={52} />

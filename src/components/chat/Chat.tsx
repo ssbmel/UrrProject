@@ -3,10 +3,13 @@
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function Chat() {
   const userdata = useUserData().data;
   const supabase = createClient();
+  const params = useSearchParams();
+  const channel_id = Number(params.get('list'));
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
   const [message, setMessage] = useState<String>('');
@@ -26,7 +29,7 @@ export default function Chat() {
       const { data, error } = await supabase
         .from('chat_messages')
         .select('*')
-        .eq('channel_id', 1)
+        .eq('channel_id', channel_id)
       console.log(data)
     } else {
       const influ_id = 'e717cc1d-16de-43c6-a90b-a567022b48e0'
@@ -34,7 +37,7 @@ export default function Chat() {
         .from('chat_messages')
         .select('*')
         .in('user_id', [user_id, influ_id])
-        .eq('channel_id', 1)
+        .eq('channel_id', channel_id)
       console.log(data)
     }
   }
@@ -45,7 +48,6 @@ export default function Chat() {
 
   const sendChatMessage = async () => {
     const user_id = await userdata.id
-    const channel_id = 1;
     //유저가 해당 채팅방을 구독하고 있는지 확인하는 함수 필요
     console.log(message)
     const content = JSON.stringify({
@@ -120,7 +122,7 @@ export default function Chat() {
   }
 
   useEffect(() => {
-    if (userdata != undefined) receiveChatMessage(1);
+    if (userdata != undefined) receiveChatMessage(channel_id);
   }, [userdata])
   
   return (

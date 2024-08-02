@@ -44,7 +44,7 @@ export default function ProductsList() {
         <p className="text-lg">총 {totalProducts}개</p>
         {/* <p>추천순</p> */}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
         {products.map((product, index) => {
           const cost = parseFloat(product.cost);
           const price = parseFloat(product.price);
@@ -65,7 +65,7 @@ export default function ProductsList() {
                   </div>
                 </Link>
               </div>
-              <div className="ml-2">
+              <div className="ml-3">
                 <p className="text-sm text-gray-600">{product.title}</p>
                 <div className="flex items-center">
                   <p className="text-sm text-red-500">{discountRate}%</p>

@@ -6,10 +6,16 @@ import React, { useEffect, useState } from "react";
 import { createClient } from "../../../supabase/client";
 import { Tables } from "../../../types/supabase";
 
+interface Product {
+  imgUrl: string;
+  name: string;
+  amount: number;
+  quantity: number;
+}
+
 type orderType = Tables<"order"> | null;
 
 export default function Complete() {
-  const [orderList, setOrderList] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const [products, setProducts] = useState<orderType>(null);
   const supabase = createClient();
@@ -21,7 +27,7 @@ export default function Complete() {
       if (paymentId) {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
 
-        setProducts(data);
+        setProducts(data as orderType);
       }
     };
 
@@ -34,7 +40,8 @@ export default function Complete() {
         <div className="p-8 text-center">
           <h2 className=" text-[20px] mb-[12px]">주문이 완료되었습니다</h2>
           <p className="text-gray-400 text-[16px]">
-            <span>주문번호</span>
+            <span>주문번호 </span>
+            <span>{paymentId}</span>
           </p>
         </div>
         <div className="border-[#F4F4F4] border-[8px] w-full mt-3" />
@@ -74,9 +81,10 @@ export default function Complete() {
                     </div>
                   </div>
                   <div className="ml-2">
-                    <p className="text-sm text-gray-600">{product.name}</p>
-                    <div className="flex items-center">
-                      <p className="text-md font-bold ml-1">{product.amount} 원</p>
+                    <div className="flex flex-col">
+                      <p className="text-sm text-[#4C4F52]">{product.name}</p>
+                      <p className="text-md font-semibold">{product.amount} 원</p>
+                      <p className="text-sm text-[#989C9F]">{String(product.quantity).padStart(2, "0")} 개</p>
                     </div>
                   </div>
                 </div>

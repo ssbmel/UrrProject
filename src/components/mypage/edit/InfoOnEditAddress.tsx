@@ -6,7 +6,7 @@ import { Addr, PageData } from "../../../../types/addr.type";
 import AddrPagination from "./AddrPagination";
 
 interface Props {
-  setAddress: React.Dispatch<React.SetStateAction<string | null>>;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const InfoOnEditAddress = ({ setAddress }: Props) => {

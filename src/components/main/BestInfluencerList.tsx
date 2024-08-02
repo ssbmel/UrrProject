@@ -8,7 +8,7 @@ import "./style.css";
 
 function BestInfluencerList() {
   return (
-    <div className="box w-full mx-auto p-5">
+    <div className="box w-full mx-auto p-5 h-[600px]">
       <Image 
         src={InfluencerImg} 
         alt="bgImg" 
@@ -18,7 +18,7 @@ function BestInfluencerList() {
         className="absolute -z-10"
         ></Image>
       <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
-      <div className="w-full h-[400px] overflow-y-auto scrollbar">
+      <div className="w-full h-[450px] scrollbar">
         <div className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full min-h-[100px] mx-auto py-[10px] px-[12px] grid grid-rows-1 grid-flow-col mb-4">
           <Image src={defaultImg} alt="인플루언서이미지" width={100} className="gradient-border"/>
           <div className="grid">

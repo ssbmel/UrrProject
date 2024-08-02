@@ -1,5 +1,6 @@
 import usePayment from "@/hooks/usePayment";
 import { useUserData } from "@/hooks/useUserData";
+import { useAddrStore } from "@/zustand/addrStore";
 import PortOne from "@portone/browser-sdk/v2";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -8,30 +9,35 @@ import { useState } from "react";
 export default function Payment() {
   const paymentFunc = usePayment();
   const router = useRouter();
+  const { productList } = useAddrStore();
   const [fullName, setFullName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const searchParams = useSearchParams();
-  const pathName = searchParams.get("path_name");
-  const code = searchParams.get("code");
+  const [request, setRequest] = useState<string>("");
+  const price = productList?.reduce((acc: any, cur: any) => {
+    return acc + cur.amount * cur.quantity;
+  }, 0);
 
   const handleSubmit = async () => {
     try {
-      const response = await paymentFunc({
-        fullName: fullName,
-        orderCount: 2,
-        orderName: "sample test", // 주문상품 이름
-        totalAmount: 1000, // 전체 금액
-        price: 1000, // 상품 하나 가격
-        address: address,
-        phoneNumber: phoneNumber
-      });
-      console.log(response);
-      if (response?.paymentId) {
-        // alert("결제가 성공적으로 완료되었습니다.");
-        router.push(`/payment/loading?paymentId=${response.paymentId}`);
-      } else {
-        alert("결제 중 오류가 발생했습니다.");
+      if (productList) {
+        const response = await paymentFunc({
+          fullName: fullName,
+          orderCount: 2,
+          orderName: "sample test", // 주문상품 이름
+          price: price, // 상품 전체 가격
+          address: address,
+          phoneNumber: phoneNumber,
+          productList: productList,
+          request: request
+        });
+
+        if (response?.paymentId) {
+          // alert("결제가 성공적으로 완료되었습니다.");
+          router.push(`/payment/loading?paymentId=${response.paymentId}`);
+        } else {
+          alert("결제 중 오류가 발생했습니다.");
+        }
       }
     } catch (error) {
       console.error(error);
@@ -84,13 +90,12 @@ export default function Payment() {
             className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
             type="text"
             placeholder="부재시, 경비실에 놔주세요"
+            value={request}
+            onChange={(e) => setRequest(e.target.value)}
           />
           <button className="w-full h-[52px] rounded-md bg-[#1A82FF] text-white mt-[20px]" onClick={handleSubmit}>
             구매하기
           </button>
-        </div>
-        <div>
-          <button>구매하기</button>
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Addr, PaymentData } from "../../types/addr.type";
+import { Addr, PaymentData, ProductList } from "../../types/addr.type";
 import { persist } from "zustand/middleware";
 
 interface AddrStore {
@@ -7,6 +7,8 @@ interface AddrStore {
   setAddrData: (data: Addr) => void;
   paymentData: PaymentData | null;
   setPaymentData: (data: PaymentData) => void;
+  productList: ProductList[] | null;
+  setProductList: (data: ProductList[]) => void;
   clearData: () => void;
 }
 
@@ -17,7 +19,9 @@ export const useAddrStore = create(
       setAddrData: (data: Addr) => set({ addrData: data }),
       paymentData: null,
       setPaymentData: (data: PaymentData) => set({ paymentData: data }),
-      clearData: () => set({ paymentData: null }) // Implement clearData method
+      productList: null,
+      setProductList: (data: ProductList[]) => set({ productList: data }),
+      clearData: () => set({ paymentData: null, productList: null }) // Implement clearData method
     }),
     {
       name: "AddrStore"

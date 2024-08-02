@@ -8,7 +8,6 @@ const chatlist = () => {
       <div>
         <ChatList />
       </div>
-      <Chat />
     </>
   )
 }

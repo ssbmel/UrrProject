@@ -1,8 +1,6 @@
 "use client";
 
-import ProductInquiry from "@/components/products/ProductInquiry";
 import Detail from "@/components/products/detail/Detail";
-import { useState } from "react";
 
 type ParamsType = { id: string };
 

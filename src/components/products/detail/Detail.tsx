@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import cart from "../../../../public/icon/장바구니.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
 import ProductInquiry from "../ProductInquiry";
 import DetailImg from "./DetailImg";
 import Link from "next/link";
+import CountModal from "./CountModal";
+import { useAddrStore } from "@/zustand/addrStore";
+import { useRouter } from "next/navigation";
 
 interface detailProps {
   params: { id: string };
@@ -19,22 +22,41 @@ export default function Detail({ params }: detailProps) {
   const { data } = useGetProductDetail({ id: params.id });
   const [compoState, setCompoState] = useState<CompoStateType>("상품정보");
   const [restart, setRestart] = useState<boolean>(false);
-
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [quantity, setQuantity] = useState<number>(1);
+  const { setProductList } = useAddrStore();
   const cost = parseFloat(data?.cost);
   const price = parseFloat(data?.price);
   const discountPercentage = ((cost - price) / cost) * 100;
   const discountPercentageInteger = Math.floor(discountPercentage);
+  const router = useRouter();
   const getClassNames = (state: any) => {
     return `w-[113px] p-4 flex justify-center items-center border-b-4 ${
       compoState === state ? "border-blue-500 text-blue-500" : "border-gray-200"
     }`;
   };
 
+  const handleBuy = () => {
+    setShowModal(false);
+    // 여기에 구매 로직 추가
+    setProductList([
+      {
+        id: data.id,
+        name: data.title,
+        amount: data.price,
+        quantity: quantity,
+        imgUrl: data.main_img
+      }
+    ]);
+    router.push(`/payment`);
+    // console.log(`구매 수량: ${quantity}`);
+  };
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
         <div className="flex justify-center w-full">
-          <Image src={data?.main_img} alt={data?.title} width={500} height={375} />
+          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} />}
         </div>
         <div className="my-[20px] mx-4">
           <p className="my-4 text-xl">{data?.title}</p>
@@ -47,7 +69,7 @@ export default function Detail({ params }: detailProps) {
         </div>
         <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
         <div className="m-4 mx-auto w-[343px] flex flex-col items-center">
-          <div className="flex flex-col gap-[14px]">
+          <div className="flex flex-col gap-[14px] my-2 ">
             <p className="flex">
               <span className="w-[105px]">진행기간</span>
               <span>
@@ -67,7 +89,7 @@ export default function Detail({ params }: detailProps) {
               <span>3,000 원</span>
             </p>
 
-            <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-12 p-4">
+            <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4">
               <p className="my-2 text-lg font-semibold text-[#0051B2]">주문 전 확인해주세요!</p>
               <p className="text-md text-[#4C4F52]">{data?.text}</p>
             </div>
@@ -105,18 +127,34 @@ export default function Detail({ params }: detailProps) {
           </div>
         </div>
         <div className="paybar sticky bottom-[79px] bg-white left-0 w-full z-50">
-          <div className="flex justify-evenly">
+          <div className="flex justify-evenly p-2">
             <Link href={"/cart"}>
               <div>
                 <Image src={cart} alt="장바구니로고" width={52} height={52} />
               </div>
             </Link>
             <div>
-              <button className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md">구매하기</button>
+              <button
+                onClick={() => setShowModal(true)}
+                className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md"
+              >
+                구매하기
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <CountModal
+        id={params.id}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        handleBuy={handleBuy}
+        title={data?.title}
+        price={price}
+        cost={cost}
+      />
     </>
   );
 }

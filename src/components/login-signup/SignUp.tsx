@@ -2,8 +2,7 @@
 
 import { userSignUp } from "@/services/users/users.service";
 import { useRef, useState } from "react";
-import { createClient } from "../../../supabase/client";
-import { nicknameCheck } from "@/services/cart/cart.service";
+import { nicknameCheck } from "@/services/users/users.service";
 
 interface SignUpProps {
   confirmRef: string | undefined;

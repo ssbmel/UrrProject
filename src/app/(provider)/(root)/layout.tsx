@@ -1,7 +1,8 @@
 import BottomNav from "@/components/common/bottomnav/BottomNav";
 import Footer from "@/components/common/footer/Footer";
 import Header from "@/components/common/header/Header";
-import React, { PropsWithChildren } from "react";
+import LoadingUrr from "@/components/common/loading/LoadingUrr";
+import React, { PropsWithChildren, Suspense } from "react";
 
 const Mainlayout = ({ children }: PropsWithChildren) => {
   return (

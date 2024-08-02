@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { notFound } from "next/navigation";
 import { createClient } from "../../../../../../supabase/server";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {

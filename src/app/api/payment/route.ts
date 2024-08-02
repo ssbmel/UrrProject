@@ -8,12 +8,12 @@ export const POST = async (request: NextRequest) => {
   const { error } = await supabase.from("order").insert({
     userId: req.userId,
     price: req.price,
-    orderName: req.orderName,
-    orderCount: req.orderCount,
     name: req.name,
     address: req.address,
     phoneNumber: req.phoneNumber,
-    paymentId: req.paymentId
+    paymentId: req.paymentId,
+    product_list: req.productList,
+    request: req.request
   });
 
   if (error) {

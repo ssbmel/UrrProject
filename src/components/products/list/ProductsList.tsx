@@ -1,7 +1,5 @@
 import Image from "next/image";
-
 import { useEffect, useState } from "react";
-import { Product } from "../../../../types/common";
 import Link from "next/link";
 
 interface PostData {

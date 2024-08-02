@@ -13,6 +13,16 @@ export type PaymentData = {
   orderName: string;
   address: string;
   phoneNumber: string;
+  productList: ProductList[];
+  request: string;
+};
+
+export type ProductList = {
+  id: string;
+  name: string;
+  amount: number;
+  quantity: number;
+  imgUrl: string;
 };
 
 export type PageData = {

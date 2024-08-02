@@ -81,7 +81,7 @@ const Header = () => {
       <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto shrink-0">
         <div>{leftIcon}</div>
         <div className=" font-semibold text-xl">{headerTitle}</div>
-        <div className="flex">{rightIcon}</div>
+        <div className="flex gap-2">{rightIcon}</div>
       </header>
       {/* <div className="bg-gray-300 flex-col h-[100px] w-full fixed">
         <div className="flex flex-col border border-red-500 w-[90%] mx-auto">

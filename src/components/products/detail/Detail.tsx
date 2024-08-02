@@ -8,10 +8,6 @@ import ReviewList from "./ReviewList";
 import ProductInquiry from "../ProductInquiry";
 import DetailImg from "./DetailImg";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useUserData } from "@/hooks/useUserData";
-import { useUserCartItems } from "@/hooks/useCartData";
-import { createClient } from "../../../../supabase/client";
 
 interface detailProps {
   params: { id: string };
@@ -23,9 +19,6 @@ export default function Detail({ params }: detailProps) {
   const { data } = useGetProductDetail({ id: params.id });
   const [compoState, setCompoState] = useState<CompoStateType>("상품정보");
   const [restart, setRestart] = useState<boolean>(false);
-  const [count, setCount] = useState(1);
-  const router = useRouter();
-  const { data: userData } = useUserData();
 
   const cost = parseFloat(data?.cost);
   const price = parseFloat(data?.price);
@@ -36,16 +29,6 @@ export default function Detail({ params }: detailProps) {
       compoState === state ? "border-blue-500 text-blue-500" : "border-gray-200"
     }`;
   };
-
-  const plusCount = () => {
-    setCount(count + 1);
-  };
-
-  const minusCount = () => {
-    setCount(count - 1);
-  };
-
-  const onAddCart = async () => {};
 
   return (
     <>
@@ -125,7 +108,7 @@ export default function Detail({ params }: detailProps) {
           <div className="flex justify-evenly">
             <Link href={"/cart"}>
               <div>
-                <Image src={cart} alt="장바구니로고" width={52} height={52} onClick={onAddCart} />
+                <Image src={cart} alt="장바구니로고" width={52} height={52} />
               </div>
             </Link>
             <div>

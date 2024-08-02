@@ -2,6 +2,7 @@
 
 import { userSignUp } from "@/services/users/users.service";
 import { useRef, useState } from "react";
+import { nicknameCheck } from "@/services/users/users.service";
 
 interface SignUpProps {
   confirmRef: string | undefined;
@@ -20,10 +21,12 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
   // 오류메세지 상태 저장
   const [passwordMessage, setPasswordMessage] = useState<string>("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState<string>("");
+  const [nicknameConfirmMessage, setNicknameConfirmMessage] = useState<string>("");
 
   // 유효성 검사
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
+  const [isNicknameConfirm, setIsNicknameConfirm] = useState<boolean>(false);
 
   const onSignUpHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -52,6 +55,22 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
         } catch (error) {
           console.log(error);
         }
+      }
+    }
+  };
+
+  // 닉네임 중복확인
+  const onChangenicknameCheck = async () => {
+    const nickname = nicknameRef.current?.value;
+    if (nickname) {
+      const overlapNickname = await nicknameCheck(nickname);
+      // console.log(overlapNickname);
+      if (overlapNickname.length !== 0) {
+        setNicknameConfirmMessage("이미 사용중인 닉네임입니다");
+        setIsNicknameConfirm(false);
+      } else {
+        setNicknameConfirmMessage("");
+        setIsNicknameConfirm(true);
       }
     }
   };
@@ -92,25 +111,22 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
     <>
       <div className="p-5 h-[700px] whitespace-nowrap">
         <form className="flex flex-col gap-9">
-          <label className="flex flex-col">
-            닉네임 *
-            <input
-              type="text"
-              placeholder="닉네임
-      "
-              ref={nicknameRef}
-              className={stInput}
-            />
-          </label>
+          <div>
+            <label className="flex flex-col">
+              닉네임 *
+              <input
+                type="text"
+                placeholder="닉네임"
+                onChange={onChangenicknameCheck}
+                ref={nicknameRef}
+                className={stInput}
+              />
+              <p className={stLabel}>{nicknameConfirmMessage}</p>
+            </label>
+          </div>
           <label className="flex flex-col">
             이메일 *
-            <input
-              type="text"
-              placeholder="asdf123@asdf.vqsd
-      "
-              ref={emailRef}
-              className={stInput}
-            />
+            <input type="text" placeholder="asdf123@asdf.vqsd" ref={emailRef} className={stInput} />
             <p className={stLabel}>이메일은 수정이 불가하니 정확하게 입력하세요.</p>
           </label>
           <label className="flex flex-col">

@@ -1,11 +1,11 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
-import homeIcon from "../../../../public/icon/homeIcon.png";
-import mypageIcon from "../../../../public/icon/mypageIcon.png";
-import storeIcon from "../../../../public/icon/storeIcon.png";
-import influencerIcon from "../../../../public/icon/influencerIcon.png";
-import chatIcon from "../../../../public/icon/chatIcon.png";
+import HomeIcon from "../../../../public/icon/homeIcon.svg";
+import MypageIcon from "../../../../public/icon/mypageIcon.svg";
+import StoreIcon from "../../../../public/icon/storeIcon.svg";
+import InfluencerIcon from "../../../../public/icon/influencerIcon.svg";
+import ChatIcon from "../../../../public/icon/chatIcon.svg";
 
 export default function BottomNav() {
   const liStyle = "flex justify-center w-16 h-7 text-sm whitespace-nowrap";
@@ -17,7 +17,9 @@ export default function BottomNav() {
           <Link href={"/"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-1">
-                <Image src={homeIcon} alt="홈" />
+                <div className="w-5">
+                  <HomeIcon />
+                </div>
                 <p>홈</p>
               </div>
             </div>
@@ -25,7 +27,9 @@ export default function BottomNav() {
           <Link href={"/mypage"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-1">
-                <Image src={mypageIcon} alt="마이페이지" />
+                <div className="w-5">
+                  <MypageIcon />
+                </div>
                 <p>마이페이지</p>
               </div>
             </div>
@@ -33,7 +37,9 @@ export default function BottomNav() {
           <Link href={"/products/list"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-1">
-                <Image src={storeIcon} alt="스토어" />
+                <div className="w-5">
+                  <StoreIcon />
+                </div>
                 <p>스토어</p>
               </div>
             </div>
@@ -41,14 +47,18 @@ export default function BottomNav() {
           <Link href={"/influencer"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-1">
-                <Image src={influencerIcon} alt="인플루언서" />
+                <div className="w-5">
+                  <InfluencerIcon />
+                </div>
                 <p>인플루언서</p>
               </div>
             </div>
           </Link>
           <div className={liStyle}>
             <div className="flex flex-col items-center gap-1">
-              <Image src={chatIcon} alt="채팅" />
+              <div className="w-5">
+                <ChatIcon />
+              </div>
               <p>채팅</p>
             </div>
           </div>

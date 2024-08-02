@@ -12,7 +12,6 @@ export type Database = {
       cart: {
         Row: {
           amount: number | null
-          count: number | null
           created_at: string
           id: number
           name: string | null
@@ -22,7 +21,6 @@ export type Database = {
         }
         Insert: {
           amount?: number | null
-          count?: number | null
           created_at?: string
           id?: number
           name?: string | null
@@ -32,7 +30,6 @@ export type Database = {
         }
         Update: {
           amount?: number | null
-          count?: number | null
           created_at?: string
           id?: number
           name?: string | null
@@ -142,6 +139,7 @@ export type Database = {
           content: string | null
           created_at: string
           id: string
+          private: boolean | null
           product_id: string | null
           user_id: string | null
         }
@@ -149,6 +147,7 @@ export type Database = {
           content?: string | null
           created_at?: string
           id?: string
+          private?: boolean | null
           product_id?: string | null
           user_id?: string | null
         }
@@ -156,6 +155,7 @@ export type Database = {
           content?: string | null
           created_at?: string
           id?: string
+          private?: boolean | null
           product_id?: string | null
           user_id?: string | null
         }

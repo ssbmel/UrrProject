@@ -70,3 +70,6 @@ body {
 .dot-3 {
   animation-delay: 1s;
 }
+input {
+  outline-color: #1a82ff;
+}

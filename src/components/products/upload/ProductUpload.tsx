@@ -22,12 +22,11 @@ function ProductUpload() {
   const costRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const productCountRef = useRef<HTMLInputElement>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);``
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [detailImg, setDetailImg] = useState<DetailedImgGroup[]>([]);
   const [mainImg, setMainImg] = useState<File | null>(null);
   const [uploadedMainImg, setUploadedMainImg] = useState("");
-  const [uploadedDetailImg, setUploadedDetailImg] = useState<DetailedImgGroup[]>([]);
   const { data: user } = useUserData();
   const router = useRouter();
   const { id } = useParams();
@@ -39,6 +38,8 @@ function ProductUpload() {
     }
     const data: Product[] = await response.json();
     const post = data.find((post) => post.id === id);
+    console.log(data);
+    
     if (!post) {
       return;
     }
@@ -51,11 +52,8 @@ function ProductUpload() {
     if (textRef.current) textRef.current.value = post.text || "";
     setRadioCheckedValue(post.category || "");
     setUploadedMainImg(post.main_img || "");
-    const structuredArr = post.detail_img ? post.detail_img.map((a: string) => ({
-      file: null,
-      url: a,
-    })) : [];
-    setUploadedDetailImg(structuredArr);
+    const detailImgGroup = post.detail_img?.map<DetailedImgGroup>(imgUrl => ({file: null, url: imgUrl}));
+    setDetailImg(detailImgGroup || []);
   };
 
   useEffect(() => {
@@ -81,7 +79,10 @@ function ProductUpload() {
     return res.data.publicUrl;
   };
 
-  const uploadDetailImages = async (postId: string): Promise<string[]> => {
+  const uploadDetailImages = async (postId: string): Promise<string[] | null> => {
+    if(!detailImg.length){
+      return null;
+    }
     const uploads = detailImg.map(async (detail) => {
       if (!detail.file) return detail.url;
 
@@ -129,8 +130,8 @@ function ProductUpload() {
       return;
     }
     const postId = uuidv4();
-    const mainImgId = (await uploadMainImg(postId)) || "";
-    const detailImgId = await uploadDetailImages(postId);
+    const mainImgId = (await uploadMainImg(postId)) || uploadedMainImg;
+    const detailImgId = (await uploadDetailImages(postId));
 
     const productData: Product = {
       category: radioCheckedValue,
@@ -141,7 +142,7 @@ function ProductUpload() {
       product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,
       title: titleRef.current?.value || null,
       text: textRef.current?.value || null,
-      detail_img: detailImgId.length > 0 ? detailImgId : null,
+      detail_img: detailImgId,
       main_img: mainImgId,
       user_id: user.id,
       created_at: new Date().toISOString(),
@@ -157,15 +158,13 @@ function ProductUpload() {
       !productData.price ||
       !productData.product_count ||
       !productData.title ||
-      !productData.text ||
-      !productData.detail_img ||
-      !productData.main_img
+      !productData.text
     ) {
       alert("상품 정보를 입력해주세요.");
       return;
     }
 
-    const { data, error } = await supabase.from("products").insert([productData]).select();
+    const { data, error } = await supabase.from("products").upsert([productData]).select();
     if (error) {
       console.error("Error inserting data:", error);
     } else {
@@ -194,11 +193,10 @@ function ProductUpload() {
           detailImg={detailImg}
           setDetailImg={setDetailImg}
           uploadedMainImg={uploadedMainImg}
-          uploadedDetailImg={uploadedDetailImg}
           setMainImg={setMainImg}
         />
         <div className="flex justify-end">
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-2">
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-2 mr-5">
             {id === "new" ? "등록하기" : "수정완료"}
           </button>
         </div>

@@ -10,21 +10,21 @@ import Image from "next/image";
 interface ContentsProps {
   setDetailImg: React.Dispatch<React.SetStateAction<DetailedImgGroup[]>>;
   uploadedMainImg: string;
-  uploadedDetailImg: DetailedImgGroup[];
+  detailImg: DetailedImgGroup[];
   setMainImg: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
 const ProductImgUpload: React.FC<ContentsProps> = ({
   setDetailImg,
+  detailImg,
   uploadedMainImg,
-  uploadedDetailImg,
   setMainImg
 }) => {
   const [mainImgUrl, setMainImgUrl] = useState<string | undefined>(uploadedMainImg);
   const [detailImgUrls, setDetailImgUrls] = useState<DetailedImgGroup[]>([]);
   useEffect(() => {
-    setDetailImgUrls(uploadedDetailImg);
-  }, [uploadedDetailImg]);
+    setDetailImgUrls(detailImg);
+  }, [detailImg]);
 
   useEffect(() => {
     return () => {
@@ -35,8 +35,8 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
 
   useEffect(() => {
     setMainImgUrl(uploadedMainImg);
-    setDetailImgUrls(uploadedDetailImg);
-  }, [uploadedMainImg, uploadedDetailImg]);
+    setDetailImgUrls(detailImg);
+  }, [uploadedMainImg, detailImg]);
 
   const readMainImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;

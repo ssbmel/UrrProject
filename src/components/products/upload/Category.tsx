@@ -14,8 +14,8 @@ const category = [
   { id: 3, title: '생활용품', name: 'living' },
   { id: 4, title: '가전/디지털', name: 'digital' },
   { id: 5, title: '취미/도서', name: 'hobbies' },
-  { id: 6, title: '반려동물용품', name: 'pets' },
-  { id: 7, title: '헬스/건강', name: 'health' }
+  { id: 7, title: '헬스건강', name: 'pets' },
+  { id: 6, title: '반려동물용품', name: 'health' }
 ];
 
 function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {

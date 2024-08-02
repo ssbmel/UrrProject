@@ -11,7 +11,6 @@ interface ContentsProps {
   // setDetailImg: React.Dispatch<React.SetStateAction<File[]>>;
   setDetailImg: React.Dispatch<React.SetStateAction<DetailedImgGroup[]>>;
   uploadedMainImg: string;
-  uploadedDetailImg: DetailedImgGroup[];
   setMainImg: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
@@ -21,7 +20,6 @@ const Contents: React.FC<ContentsProps> = ({
   detailImg,
   setDetailImg,
   uploadedMainImg,
-  uploadedDetailImg,
   setMainImg
 }) => {
   return (
@@ -36,9 +34,9 @@ const Contents: React.FC<ContentsProps> = ({
         ></textarea>
       </div>
       <ProductImgUpload
+        detailImg={detailImg}
         setDetailImg={setDetailImg}
         uploadedMainImg={uploadedMainImg}
-        uploadedDetailImg={uploadedDetailImg}
         setMainImg={setMainImg}
       />
     </div>

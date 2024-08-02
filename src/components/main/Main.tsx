@@ -7,7 +7,6 @@ import BestInfluencerList from "./BestInfluencerList";
 import ReviewList from "./ReviewList";
 import Banner from "./swiper/Banner";
 import "./style.css";
-import UpButton from "../common/button/UpButton";
 export interface PostData {
   id: string;
   start: string;
@@ -47,7 +46,6 @@ function Main() {
       <BestProductsList productsList={productsList} />
       <BestInfluencerList />
       <ReviewList />
-      <UpButton />
     </div>
   );
 }

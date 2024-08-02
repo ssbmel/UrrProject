@@ -9,7 +9,7 @@ function UpButton() {
 
   useEffect(() => {
     const handleShowButton = () => {
-      if (window.scrollY > 600) {
+      if (window.scrollY > 150) {
         setUpButton(true);
       } else {
         setUpButton(false);
@@ -28,6 +28,9 @@ function UpButton() {
       behavior: 'smooth',
     });
   };
+
+  console.log(scroll);
+  
 
   return (
     <>

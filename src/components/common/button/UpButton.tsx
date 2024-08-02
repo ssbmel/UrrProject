@@ -29,9 +29,6 @@ function UpButton() {
     });
   };
 
-  console.log(scroll);
-  
-
   return (
     <>
       {upButton && (

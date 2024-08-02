@@ -4,7 +4,7 @@ import { createClient } from "../../../../../../../supabase/client";
 export async function GET() {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("users").select("*").eq("role", "인플루언서").eq("approve", true);
+  const { data, error } = await supabase.from("users").select("*").eq("approve", true).eq("role", "인플루언서");
 
   if (error) {
     console.log("error message:", error.message);
@@ -12,4 +12,5 @@ export async function GET() {
   }
 
   return NextResponse.json({ data });
+  
 }

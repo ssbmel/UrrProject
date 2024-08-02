@@ -228,6 +228,7 @@ export type Database = {
           review_content: string | null
           review_images: string[] | null
           review_score: number | null
+          title: string | null
           user_nickname: string | null
         }
         Insert: {
@@ -237,6 +238,7 @@ export type Database = {
           review_content?: string | null
           review_images?: string[] | null
           review_score?: number | null
+          title?: string | null
           user_nickname?: string | null
         }
         Update: {
@@ -246,6 +248,7 @@ export type Database = {
           review_content?: string | null
           review_images?: string[] | null
           review_score?: number | null
+          title?: string | null
           user_nickname?: string | null
         }
         Relationships: []

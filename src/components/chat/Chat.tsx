@@ -2,7 +2,7 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function Chat() {
@@ -11,9 +11,13 @@ export default function Chat() {
   const params = useSearchParams();
   const channel_id = Number(params.get('list'));
 
+  //const scrollRef = useRef<HTMLDivElement>(null);
+  //console.log(scrollRef.current);
+
   //const [content, setContent] = useState<{ message : string } | null>(null)
   const [message, setMessage] = useState<String>('');
   const [preMessages, setPreMessages] = useState<{ time: string, content: { message: string | null } }[]>([]);
+
 
   const createChatRoom = () => {
     //유저의 대화 시작하기
@@ -65,7 +69,6 @@ export default function Chat() {
   const sendChatMessage = async () => {
     const user_id = await userdata.id
     //유저가 해당 채팅방을 구독하고 있는지 확인하는 함수 필요
-    console.log(message)
     const content = JSON.stringify({
       message: message
     });
@@ -114,7 +117,10 @@ export default function Chat() {
             table: 'chat_messages',
             filter: `channel_id=eq.${channel_id}`,
           },
-          (payload) => console.log(payload)
+          (payload) => {
+            console.log(payload);
+          }
+
         )
         .subscribe()
     } else {
@@ -129,28 +135,35 @@ export default function Chat() {
             table: 'chat_messages',
             filter: `channel_id=eq.${channel_id}`,
           },
-          (payload) => console.log(payload)
+          (payload) => {
+            const newMessage = payload.new;
+            setPreMessages((pre)=>{
+              return [...pre, { time: newMessage.created_at, content:newMessage.content }]
+            })
+          }
         )
         .subscribe()
     }
 
   }
-
+  
   useEffect(() => {
+    
     if (userdata != undefined) {
       getChatMessages();
       receiveChatMessage();
-      console.log(preMessages)
+
+      // scrollRef.current!.scrollTop = scrollRef.current!.scrollHeight;
     }
   }, [userdata])
 
   return (
-    <>
+    <div>
       <div>
         {preMessages?.map((preMessage) => (
           <div>
             <label className="">{preMessage.content.message}</label>
-            <label className="text-xs text-inherit">{preMessage.time.slice(11,19)}</label>
+            <label className="text-xs text-inherit">{preMessage.time.slice(11, 19)}</label>
           </div>
 
         ))}
@@ -160,10 +173,11 @@ export default function Chat() {
         <textarea className="border-style: solid; border-color: rgb(0 0 0);" onChange={handleTextarea}></textarea>
       </div>
 
-      <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={(message != '') ? sendChatMessage : () => {
+      <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={(message != '') ? ()=>{
+        sendChatMessage();
+       } : () => {
         console.log('보낼 내용 없음')
       }}>채팅 보내기</button>
-      <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={getChatMessages}>메세지 불러오기</button>
-    </>
+    </div>
   );
 }

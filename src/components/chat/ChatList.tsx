@@ -14,8 +14,7 @@ export default function ChatList() {
 
   const getChatList = async () => {
     //유저의 대화구독목록 불러오기
-  const user_id = userdata.id
-  console.log(user_id)
+    const user_id = userdata.id
     const { data, error } = await supabase
       .from('chat_subscribe')
       .select('*')
@@ -38,7 +37,6 @@ export default function ChatList() {
         .select('*')
         .in('channel_id', [...channelList])
       if (data) {
-        console.log(data)
         const channelListDatas = data.map((channel) => {
           return {
             channel_id: channel.channel_id,
@@ -60,11 +58,9 @@ export default function ChatList() {
   useEffect(() => {
     if (userdata != undefined) getChatList();
   }, [userdata])
-  useEffect(()=>{
+  useEffect(() => {
     getChatListData(channelList);
-  },[channelList])
-  
-  console.log(chatListData);
+  }, [channelList])
   return (
     <>
       {chatListData?.map((channel) => (
@@ -73,7 +69,7 @@ export default function ChatList() {
           <Link href={{
             pathname: `/chatlist/chat`,
             query: { list: channel.channel_id },
-          }}
+          }} scroll={false}
           >{channel.channel_name}의 채팅방 입장하기</Link>
         </div>
       ))}

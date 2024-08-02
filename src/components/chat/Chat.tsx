@@ -13,7 +13,8 @@ export default function Chat() {
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
   const [message, setMessage] = useState<String>('');
-  const textRef = useRef<HTMLInputElement>(null);
+  const [preMessages, setPreMessages] = useState<{ time: string, content: { message: string | null } }[]>([]);
+
   const createChatRoom = () => {
     //유저의 대화 시작하기
   }
@@ -30,16 +31,31 @@ export default function Chat() {
         .from('chat_messages')
         .select('*')
         .eq('channel_id', channel_id)
-      console.log(data)
+      if (error) console.log(error);
+      else {
+        const preMessageDataList = data?.map((message) => {
+          return { time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
+        })
+        if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
+      }
     } else {
-      const influ_id = 'e717cc1d-16de-43c6-a90b-a567022b48e0'
+      const influ_id = await checkChannelOwner();
       const { data, error } = await supabase
         .from('chat_messages')
         .select('*')
         .in('user_id', [user_id, influ_id])
         .eq('channel_id', channel_id)
-      console.log(data)
+      if (error) console.log(error);
+      else {
+        console.log(data);
+        const preMessageDataList = data?.map((message) => {
+          return { time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
+        })
+        if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
+      }
+
     }
+
   }
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,7 +83,7 @@ export default function Chat() {
     }
   }
 
-  const checkChannelOwner = async (channel_id: number): Promise<String | null> => {
+  const checkChannelOwner = async (): Promise<String | null> => {
     const { data, error } = await supabase
       .from('chat_channels')
       .select('owner_id')
@@ -78,61 +94,76 @@ export default function Chat() {
       return null;
     }
     else {
-      console.log(data.owner_id);
       return data.owner_id;
     }
   }
 
-  const receiveChatMessage = async (channel_id: number) => {
+  const receiveChatMessage = async () => {
     const user_id = await userdata.id
     const approve = await userdata.approve
-    const owner_id = await checkChannelOwner(channel_id);
+    const owner_id = await checkChannelOwner();
     if (approve && owner_id == user_id) {
       console.log('인플루언서 본인의 채팅방입니다.')
       const channelInflu = supabase
-      .channel('changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'chat_messages',
-          filter: `channel_id=eq.${channel_id}`,
-        },
-        (payload) => console.log(payload)
-      )
-      .subscribe()
+        .channel('changes')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'chat_messages',
+            filter: `channel_id=eq.${channel_id}`,
+          },
+          (payload) => console.log(payload)
+        )
+        .subscribe()
     } else {
       console.log('팬 채팅방입니다.')
       const channelFan = supabase
-      .channel('changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'chat_messages',
-          filter: `channel_id=eq.${channel_id}`,
-        },
-        (payload) => console.log(payload)
-      )
-      .subscribe()
+        .channel('changes')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'chat_messages',
+            filter: `channel_id=eq.${channel_id}`,
+          },
+          (payload) => console.log(payload)
+        )
+        .subscribe()
     }
 
   }
 
   useEffect(() => {
-    if (userdata != undefined) receiveChatMessage(channel_id);
+    if (userdata != undefined) {
+      getChatMessages();
+      receiveChatMessage();
+      console.log(preMessages)
+    }
   }, [userdata])
-  
+
   return (
     <>
-      <textarea className="border-style: solid; border-color: rgb(0 0 0);" onChange={handleTextarea}></textarea>
+      <div>
+        {preMessages?.map((preMessage) => (
+          <div>
+            <label className="">{preMessage.content.message}</label>
+            <label className="text-xs text-inherit">{preMessage.time.slice(11,19)}</label>
+          </div>
+
+        ))}
+      </div>
+
+      <div>
+        <textarea className="border-style: solid; border-color: rgb(0 0 0);" onChange={handleTextarea}></textarea>
+      </div>
+
       <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={(message != '') ? sendChatMessage : () => {
         console.log('보낼 내용 없음')
       }}>채팅 보내기</button>
       <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={getChatMessages}>메세지 불러오기</button>
-      <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={() => { receiveChatMessage(1) }}>메세지 받기</button>
     </>
   );
 }

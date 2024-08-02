@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import cart from "../../../../public/icon/장바구니.png";
 import closeIcon from "../../../../public/icon/close.png";
+import { addCartItems, userCartItems } from "@/services/cart/cart.service";
+import { useUserData } from "@/hooks/useUserData";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
+  id: string;
   showModal: boolean;
   setShowModal: (show: boolean) => void;
   quantity: number;
@@ -15,9 +18,39 @@ interface ModalProps {
   cost: number;
 }
 
-const CountModal = ({ showModal, setShowModal, quantity, setQuantity, handleBuy, title, price, cost }: ModalProps) => {
+export type CartItemsProps = {
+  user_id: string;
+  product_id: string;
+  name: string;
+  amount: number;
+  quantity: number;
+};
+
+const CountModal = ({
+  id,
+  showModal,
+  setShowModal,
+  quantity,
+  setQuantity,
+  handleBuy,
+  title,
+  price,
+  cost
+}: ModalProps) => {
   const totalPrice = quantity * price;
   const totalCost = quantity * cost;
+  const { data } = useUserData();
+  const userID = data?.id;
+
+  const addToCart = async () => {
+    const userCartItem = await userCartItems(id);
+    if (userCartItem.length !== 0) {
+      confirm("이미 장바구니에 있습니다!");
+    } else {
+      await addCartItems({ user_id: userID, product_id: id, name: title, amount: price, quantity });
+    }
+  };
+
   return (
     <>
       <div
@@ -66,11 +99,10 @@ const CountModal = ({ showModal, setShowModal, quantity, setQuantity, handleBuy,
             </div>
           </div>
           <div className="flex justify-between">
-            <Link href={"/cart"}>
-              <div>
-                <Image src={cart} alt="장바구니로고" width={52} height={52} />
-              </div>
-            </Link>
+            <div>
+              <Image src={cart} alt="장바구니로고" width={52} height={52} onClick={addToCart} />
+            </div>
+
             <Link href={"/payment"}>
               <button className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md" onClick={handleBuy}>
                 구매하기

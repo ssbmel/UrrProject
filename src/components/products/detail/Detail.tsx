@@ -145,6 +145,7 @@ export default function Detail({ params }: detailProps) {
         </div>
       </div>
       <CountModal
+        id={params.id}
         showModal={showModal}
         setShowModal={setShowModal}
         quantity={quantity}

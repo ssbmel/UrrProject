@@ -95,6 +95,7 @@ export type Database = {
           content: Json | null
           created_at: string
           message_id: number
+          nickname: string | null
           user_id: string
         }
         Insert: {
@@ -102,6 +103,7 @@ export type Database = {
           content?: Json | null
           created_at?: string
           message_id?: number
+          nickname?: string | null
           user_id: string
         }
         Update: {
@@ -109,6 +111,7 @@ export type Database = {
           content?: Json | null
           created_at?: string
           message_id?: number
+          nickname?: string | null
           user_id?: string
         }
         Relationships: []
@@ -459,4 +462,3 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never
-

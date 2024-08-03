@@ -15,7 +15,7 @@ export default function Chat() {
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
   const [message, setMessage] = useState<string | number | readonly string[] | undefined>('');
-  const [preMessages, setPreMessages] = useState<{ message_id:number; nickname: string; isMine: boolean, time: string, content: { message: string | null } }[]>([]);
+  const [preMessages, setPreMessages] = useState<{ message_id:number; nickname: string | null; isMine: boolean, time: string, content: { message: string | null } }[]>([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false)
   const scrollToBottom = () => {
     if (scrollRef.current) {

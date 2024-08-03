@@ -11,13 +11,22 @@ export default function Chat() {
   const params = useSearchParams();
   const channel_id = Number(params.get('list'));
 
-  //const scrollRef = useRef<HTMLDivElement>(null);
-  //console.log(scrollRef.current);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
-  const [message, setMessage] = useState<String>('');
-  const [preMessages, setPreMessages] = useState<{ time: string, content: { message: string | null } }[]>([]);
-
+  const [message, setMessage] = useState<string | number | readonly string[] | undefined>('');
+  const [preMessages, setPreMessages] = useState<{ message_id:number; nickname: string | null; isMine: boolean, time: string, content: { message: string | null } }[]>([]);
+  const [firstLoading, setFirstLoading] = useState<boolean>(false)
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      if (!firstLoading) {
+        setFirstLoading(true)
+      } else {
+        scrollRef.current.style.scrollBehavior = 'smooth';
+      }
+    }
+  }
 
   const createChatRoom = () => {
     //유저의 대화 시작하기
@@ -31,6 +40,7 @@ export default function Chat() {
     const user_id = await userdata.id
     const approve = await userdata.approve
     if (approve) {
+      //인플
       const { data, error } = await supabase
         .from('chat_messages')
         .select('*')
@@ -38,11 +48,12 @@ export default function Chat() {
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
-          return { time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
+          return { message_id:message.message_id, nickname: message.nickname, isMine: (message.user_id == user_id) ? true : false, time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
         })
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
     } else {
+      //팬
       const influ_id = await checkChannelOwner();
       const { data, error } = await supabase
         .from('chat_messages')
@@ -51,15 +62,12 @@ export default function Chat() {
         .eq('channel_id', channel_id)
       if (error) console.log(error);
       else {
-        console.log(data);
         const preMessageDataList = data?.map((message) => {
-          return { time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
+          return { message_id:message.message_id, nickname: message.nickname, isMine: (message.user_id == user_id) ? true : false, time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
         })
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
-
     }
-
   }
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,7 +75,8 @@ export default function Chat() {
   }
 
   const sendChatMessage = async () => {
-    const user_id = await userdata.id
+    const user_id = await userdata.id;
+    const nickname = await userdata.nickname;
     //유저가 해당 채팅방을 구독하고 있는지 확인하는 함수 필요
     const content = JSON.stringify({
       message: message
@@ -78,7 +87,8 @@ export default function Chat() {
       .insert({
         channel_id: channel_id,
         content: JSON.parse(content),
-        user_id: user_id
+        user_id: user_id,
+        nickname: nickname
       })
     if (error) {
       console.log('채팅 보내기 실패')
@@ -118,7 +128,10 @@ export default function Chat() {
             filter: `channel_id=eq.${channel_id}`,
           },
           (payload) => {
-            console.log(payload);
+            const newMessage = payload.new;
+            setPreMessages((pre) => {
+              return [...pre, { message_id:newMessage.message_id, nickname: newMessage.nickname, isMine: (newMessage.user_id == user_id) ? true : false, time: newMessage.created_at, content: newMessage.content }]
+            })
           }
 
         )
@@ -137,47 +150,62 @@ export default function Chat() {
           },
           (payload) => {
             const newMessage = payload.new;
-            setPreMessages((pre)=>{
-              return [...pre, { time: newMessage.created_at, content:newMessage.content }]
-            })
+            if (newMessage.user_id == user_id || newMessage.user_id == owner_id) {
+              setPreMessages((pre) => {
+                return [...pre, { message_id:newMessage.message_id, nickname: newMessage.nickname, isMine: (newMessage.user_id == user_id) ? true : false, time: newMessage.created_at, content: newMessage.content }]
+              })
+            }
           }
         )
         .subscribe()
     }
 
   }
-  
+
   useEffect(() => {
-    
     if (userdata != undefined) {
       getChatMessages();
       receiveChatMessage();
-
-      // scrollRef.current!.scrollTop = scrollRef.current!.scrollHeight;
     }
   }, [userdata])
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [preMessages])
+
   return (
-    <div>
-      <div>
+    <div className="relative overflow-y-hidden">
+      <div key={channel_id} ref={scrollRef} className="relative h-full overflow-y-auto max-h-56">
         {preMessages?.map((preMessage) => (
-          <div>
-            <label className="">{preMessage.content.message}</label>
-            <label className="text-xs text-inherit">{preMessage.time.slice(11, 19)}</label>
-          </div>
+          (preMessage.isMine) ?
+            <div key={preMessage.message_id} className="text-right">
+              <label className="text-xs text-inherit">{preMessage.time.slice(11, 16)}</label>
+              <label className="">{preMessage.content.message}</label>
+            </div>
+            :
+            <div key={preMessage.message_id}>
+              <div>
+                <label className="">{preMessage.nickname}</label>
+              </div>
+              <div className="text-left">
+                <label className="">{preMessage.content.message}</label>
+                <label className="text-xs text-inherit">{preMessage.time.slice(11, 16)}</label>
+              </div>
+            </div>
+
 
         ))}
       </div>
 
-      <div>
-        <textarea className="border-style: solid; border-color: rgb(0 0 0);" onChange={handleTextarea}></textarea>
+      <div className="w-full h-full bottom-0 shrink-0 mt-0.5 mb-0">
+        <textarea className="h-[80px] w-full border border-black" value={message} onChange={handleTextarea}></textarea>
+        <button className="border border-black bottom-0 mb-0" onClick={(message != '') ? () => {
+          sendChatMessage();
+          setMessage('');
+        } : () => {
+          console.log('보낼 내용 없음')
+        }}>채팅 보내기</button>
       </div>
-
-      <button className="border-style: solid; border-color: rgb(0 0 0);" onClick={(message != '') ? ()=>{
-        sendChatMessage();
-       } : () => {
-        console.log('보낼 내용 없음')
-      }}>채팅 보내기</button>
     </div>
   );
 }

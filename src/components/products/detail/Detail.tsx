@@ -5,7 +5,7 @@ import cart from "../../../../public/icon/장바구니.png";
 import { useState } from "react";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
-import ProductInquiry from "../ProductInquiry";
+import ProductInquiry from "./ProductInquiry";
 import DetailImg from "./DetailImg";
 import Link from "next/link";
 import CountModal from "./CountModal";

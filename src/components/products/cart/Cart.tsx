@@ -5,12 +5,16 @@ import defaultImg from "../../../../public/images/default.png";
 import { useState } from "react";
 import { useUserData } from "@/hooks/useUserData";
 import { useUserCartItems } from "@/hooks/useUserCartItems";
+import { useAddrStore } from "@/zustand/addrStore";
+import { useRouter } from "next/navigation";
 
 function Cart() {
   const [count, setCount] = useState(0);
   const { data: userData } = useUserData();
   const userId = userData?.id;
   const allCartItems = useUserCartItems(userId);
+  const { setProductList } = useAddrStore();
+  const router = useRouter();
 
   const addCount = () => {
     setCount(count + 1);
@@ -22,6 +26,21 @@ function Cart() {
     }
   };
 
+  const handleBuy = () => {
+    // 여기에 구매 로직 추가
+    setProductList([
+      {
+        id: allCartItems.id,
+        name: allCartItems.title,
+        amount: allCartItems.price,
+        quantity: allCartItems.quantity,
+        imgUrl: allCartItems.main_img
+      }
+    ]);
+    router.push(`/payment`);
+    // console.log(`구매 수량: ${quantity}`);
+  };
+
   return (
     <div className="w-full p-4 mb-[80px]">
       <div className="flex items-center gap-2 p-2">
@@ -31,6 +50,9 @@ function Cart() {
       </div>
 
       <hr className="my-4" />
+      {/* {allCartItems.map((item)=>(
+
+      ))} */}
       <div className="border flex items-center gap-4 p-2 mb-4">
         <input type="checkbox" name="product" />
         <Image src={defaultImg} alt="image" width={100} height={100} className="object-cover" />
@@ -63,7 +85,9 @@ function Cart() {
           <p>결제 예정 금액</p>
           <p>000원</p>
         </div>
-        <button className="w-full mt-4 py-2 rounded-md bg-[#1A82FF] text-white">구매하기</button>
+        <button onClick={handleBuy} className="w-full mt-4 py-2 rounded-md bg-[#1A82FF] text-white">
+          구매하기
+        </button>
       </div>
     </div>
   );

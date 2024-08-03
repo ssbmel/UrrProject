@@ -40,14 +40,16 @@ const CountModal = ({
   const totalPrice = quantity * price;
   const totalCost = quantity * cost;
   const { data } = useUserData();
-  const userID = data?.id;
+  const userId = data?.id;
 
   const addToCart = async () => {
-    const userCartItem = await userCartItems(id);
+    const userCartItem = await userCartItems({ id, userId });
+    console.log(userCartItem);
+
     if (userCartItem.length !== 0) {
       confirm("이미 장바구니에 있습니다!");
     } else {
-      await addCartItems({ user_id: userID, product_id: id, name: title, amount: price, quantity });
+      await addCartItems({ user_id: userId, product_id: id, name: title, amount: price, quantity });
     }
   };
 

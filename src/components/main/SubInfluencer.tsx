@@ -14,7 +14,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
           <div key={inf.id} className="flex flex-col justify-center w-[100px] text-center mx-2">
             <div className="relative w-[100px] h-[100px]">
             <Image
-              src={inf.profile_url || defaultImg}
+              src={inf?.profile_url || defaultImg}
               alt="Influencer"
               fill
               sizes="100px"

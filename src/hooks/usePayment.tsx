@@ -62,7 +62,7 @@ const usePayment = () => {
 
       return response;
     },
-    [data]
+    [data, setPaymentData]
   );
 
   return makePayment;

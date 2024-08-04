@@ -5,7 +5,6 @@ import defaultImg from "../../../public/images/default.png";
 import { User } from "../../../types/common";
 
 function SubInfluencer({ infUser }: { infUser: User[] }) {
-  console.log(infUser);
   
   return (
     <div className="w-full h-[200px] mx-auto p-5">

@@ -29,9 +29,9 @@ function BestProductsList({ productsList }: { productsList: Product[] }) {
                       <Image
                         src={list.main_img || defaultImg}
                         alt="img"
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-md"
+                        fill
+                        sizes="130px"
+                        className="rounded-md object-cover"
                       />
                     </div>
                     <p className="text-[#B2B5B8] text-sm">{list.nickname}</p>

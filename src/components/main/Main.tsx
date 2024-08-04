@@ -43,7 +43,7 @@ function Main() {
 
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 ">
-      <Banner productsList={productsList} />
+      <Banner/>
       <SubInfluencer infUser={infUser} />
       <hr />
       <BestProductsList productsList={productsList} />

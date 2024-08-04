@@ -58,9 +58,9 @@ export default function ProductsList() {
                     <Image
                       src={product.main_img}
                       alt={product.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-md"
+                      fill
+                      sizes="130px"
+                      className="rounded-md object-cover"
                     />
                   </div>
                 </Link>

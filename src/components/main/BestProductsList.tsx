@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Product } from "../../../types/common";
+import defaultImg from "../../../public/images/default.png"
 
 function BestProductsList({ productsList }: { productsList: Product[] }) {
   return (

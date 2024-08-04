@@ -1,6 +1,8 @@
-import Chat from "@/components/chat/Chat"
 
-const chat = () => {
+import dynamic from 'next/dynamic';
+
+const Chat = dynamic(() => import('@/components/chat/Chat'), {ssr: false})
+const ChatPage = () => {
   return (
     <>
       <Chat/>
@@ -8,4 +10,4 @@ const chat = () => {
   )
 }
 
-export default chat;
+export default ChatPage;

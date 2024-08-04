@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import defaultImg from "../../../public/images/default.png";
 import { Product } from "../../../types/common";
+import defaultImg from "../../../public/images/default.png"
 
 function BestProductsList({ productsList }: { productsList: Product[] }) {
   return (
@@ -18,13 +18,14 @@ function BestProductsList({ productsList }: { productsList: Product[] }) {
         <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10 scrollbar">
           <div className="grid grid-flow-col gap-5">
             {productsList.map((list) => {
-              const cost = list.cost;
-              const price = list.price;
+              const cost = parseFloat(list.cost);
+              const price = parseFloat(list.price);
               const discountRate = Math.round(((cost - price) / cost) * 100);
+
               return (
                 <Link href={`/products/detail/${list.id}`} key={list.id}>
                   <div className="w-[130px]">
-                    <div className="relative w-[130px] h-[130px] mb-2">
+                    <div className="relative w-full h-[130px] mb-2">
                       <Image
                         src={list.main_img || defaultImg}
                         alt="img"

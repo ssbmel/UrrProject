@@ -74,9 +74,9 @@ export default function Complete() {
                         <Image
                           src={typedProduct?.imgUrl}
                           alt={typedProduct?.name}
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-md"
+                          fill
+                          sizes="72px"
+                          className="rounded-md object-cover"
                         />
                       </div>
                     </div>

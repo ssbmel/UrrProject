@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-ts" : "concurrently -n NEXT,TS -c magenta,cyan \"next dev -p 1234\" \"yarn ts --watch\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen": "npx supabase gen types typescript --project-id \"fikdisavtipodbzfiafd\" --schema public > types/supabase.ts"
+    "gen": "npx supabase gen types typescript --project-id \"fikdisavtipodbzfiafd\" --schema public > types/supabase.ts",
+    "ts": "tsc --noEmit --incremental --preserveWatchOutput --pretty"
   },
   "dependencies": {
     "@portone/browser-sdk": "^0.0.8",
@@ -31,6 +33,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",

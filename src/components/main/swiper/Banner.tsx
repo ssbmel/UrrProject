@@ -14,7 +14,7 @@ import product2 from "../../../../public/bgImg/product2.png"
 import product3 from "../../../../public/bgImg/product3.png"
 import { Product } from "../../../../types/common";
 
-export default function Banner({productsList }: {productsList : Product[]}) {
+export default function Banner() {
   return (
     <>
       <Swiper
@@ -36,14 +36,7 @@ export default function Banner({productsList }: {productsList : Product[]}) {
         <SwiperSlide><Image src={product2} alt="mainImg" fill quality={100}></Image></SwiperSlide>
         <SwiperSlide><Image src={product3} alt="mainImg" fill quality={100}></Image></SwiperSlide>
         <SwiperSlide><Image src={urrSubImg} alt="mainImg" fill quality={100}></Image></SwiperSlide>
-        {/* {productsList.map((list) => (
-            
-          <div key={list.id}>
-            <SwiperSlide>
-              <Image src={list.main_img} alt="img" fill></Image>
-            </SwiperSlide>
-          </div>
-        ))} */}
+
       </Swiper>
     </>
   );

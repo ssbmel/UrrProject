@@ -1,8 +1,7 @@
 import dynamic from "next/dynamic";
 
 const Complete = dynamic(() => import("@/components/payment/Complete"), { ssr: false });
-
-const page = () => {
+const CompletePage = () => {
   return (
     <div>
       <Complete />
@@ -10,4 +9,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CompletePage;

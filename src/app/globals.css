@@ -28,6 +28,7 @@ body {
   background-color: #fffffe;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .gradient-border {

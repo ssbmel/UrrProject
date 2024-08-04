@@ -1,7 +1,7 @@
 "use client";
 import Payment from "@/components/payment/Payment";
 
-const page = () => {
+const PaymentPage = () => {
   return (
     <div>
       <Payment />
@@ -9,4 +9,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PaymentPage;

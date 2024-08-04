@@ -1,18 +1,32 @@
-import React from 'react';
-import SectionCard from './SectionCard';
-import Tabs from './Tabs';
+"use client";
+
+import React, { useState } from "react";
+import TabList from "./TabList";
+import TabButton from "./TabButton";
+import Shopping from "./Shopping";
+import Activity from "./Activity";
 
 const Section = () => {
+  const [active, setActive] = useState<number>(1);
+
+  const tabOn = "p-[14px] text-[#0068E5] text-[16px] border-b-[4px] border-b-[#0068E5] w-[50%] transition-colors";
+  const tabOff = "p-[14px] text-gray-300 text-[16px] text-gray-400 w-[50%] transition-colors";
+
+  const Tabs = [
+    { button: "쇼핑", content: <Shopping /> },
+    { button: "활동", content: <Activity /> }
+  ];
+
   return (
     <div>
-      <div>
-        <Tabs />
-        <div className="flex justify-between items-center">
-          <h1>섹션 이름</h1>
-          <span>더보기 😊</span>
-        </div>
-        <SectionCard />
-      </div>
+      <TabList>
+        {Tabs.map((tab, idx) => (
+          <TabButton key={idx} idx={idx} active={active} tabOn={tabOn} tabOff={tabOff} setActive={setActive}>
+            {tab.button}
+          </TabButton>
+        ))}
+      </TabList>
+      <div className="p-[20px]">{Tabs[active].content}</div>
     </div>
   );
 };

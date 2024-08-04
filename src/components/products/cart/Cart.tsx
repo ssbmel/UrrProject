@@ -26,17 +26,18 @@ function Cart() {
     }
   };
 
+  const test = allCartItems?.map((item: any) => ({
+    id: item.product_id,
+    name: item.name,
+    amount: item.amount,
+    quantity: item.quantity,
+    imgUrl: item.main_img
+  }));
+
+  console.log(test);
   const handleBuy = () => {
     // 여기에 구매 로직 추가
-    setProductList([
-      {
-        id: allCartItems.product_id,
-        name: allCartItems.name,
-        amount: allCartItems.amount,
-        quantity: allCartItems.quantity,
-        imgUrl: allCartItems.main_img
-      }
-    ]);
+    setProductList(test);
     router.push(`/payment`);
     // console.log(`구매 수량: ${quantity}`);
   };

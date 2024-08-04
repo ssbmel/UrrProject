@@ -38,6 +38,7 @@ function Cart() {
   const handleBuy = () => {
     // 여기에 구매 로직 추가
     setProductList(test);
+    setCount(allCartItems.quantity);
     router.push(`/payment`);
     // console.log(`구매 수량: ${quantity}`);
   };

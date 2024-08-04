@@ -1,6 +1,9 @@
-import Complete from "@/components/payment/Complete";
+// import Complete from "@/components/payment/Complete";
 
-const page = () => {
+import dynamic from 'next/dynamic';
+
+const Complete = dynamic(() => import('@/components/payment/Complete'), {ssr: false})
+const CompletePage = () => {
   return (
     <div>
       <Complete />
@@ -8,4 +11,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CompletePage;

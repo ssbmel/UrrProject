@@ -27,20 +27,19 @@ export default function Complete() {
     const getProducts = async () => {
       if (paymentId) {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
-
         setProducts(data as orderType);
       }
     };
 
     getProducts();
-  }, []);
+  }, [paymentId, supabase]);
 
   return (
     <div>
-      <div className="bg-white  rounded-lg ">
+      <div className="bg-white rounded-lg">
         <div className="p-8 text-center">
           <Image src={orderCom} alt="주문완료" width={24} height={24} className="ml-[62px]" />
-          <h2 className=" text-[20px] mb-[12px]">주문이 완료되었습니다</h2>
+          <h2 className="text-[20px] mb-[12px]">주문이 완료되었습니다</h2>
           <p className="text-gray-400 text-[16px]">
             <span>주문번호 </span>
             <span>{paymentId}</span>
@@ -65,34 +64,31 @@ export default function Complete() {
           <p className="m-3 text-lg">주문상품</p>
           <div className="flex flex-col divide-y">
             {products?.product_list &&
-              products?.product_list.map((product, index) => {
-                const typedProduct = product as productList;
-                return (
-                  <div key={index} className="bg-white rounded-md p-2 flex ">
-                    <div className="flex justify-center ">
-                      <div className="relative w-[72px] h-[72px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
-                        <Image
-                          src={typedProduct?.imgUrl}
-                          alt={typedProduct?.name}
-                          fill
-                          sizes="72px"
-                          className="rounded-md object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="ml-2">
-                      <div className="flex flex-col">
-                        <p className="text-sm text-[#4C4F52]">{typedProduct?.name}</p>
-                        <p className="text-md font-semibold">{typedProduct?.amount} 원</p>
-                        <p className="text-sm text-[#989C9F]">{String(typedProduct?.quantity).padStart(2, "0")} 개</p>
-                      </div>
+              (products.product_list as productList[]).map((product, index) => (
+                <div key={index} className="bg-white rounded-md p-2 flex">
+                  <div className="flex justify-center">
+                    <div className="relative w-[72px] h-[72px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
+                      <Image
+                        src={product.imgUrl}
+                        alt={product.name}
+                        fill
+                        sizes="72px"
+                        className="rounded-md object-cover"
+                      />
                     </div>
                   </div>
-                );
-              })}
+                  <div className="ml-2">
+                    <div className="flex flex-col">
+                      <p className="text-sm text-[#4C4F52]">{product.name}</p>
+                      <p className="text-md font-semibold">{product.amount} 원</p>
+                      <p className="text-sm text-[#989C9F]">{String(product.quantity).padStart(2, "0")} 개</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
-        <div className="border-[#F4F4F4] border mx-3 " />
+        <div className="border-[#F4F4F4] border mx-3" />
         <div className="p-5 flex justify-between fixed bottom-[80px] w-full shadow-inner text-lg">
           <div>최종 결제 금액</div>
           <div>{products?.price.toLocaleString()} 원</div>

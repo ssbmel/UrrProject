@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import defaultImg from "../../../../public/images/default.png";
 import { useState } from "react";
 import { useUserData } from "@/hooks/useUserData";
 import { useUserCartItems } from "@/hooks/useUserCartItems";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
+import { CartItems } from "../../../../types/common";
 
 function Cart() {
   const [count, setCount] = useState(0);
@@ -30,9 +30,9 @@ function Cart() {
     // 여기에 구매 로직 추가
     setProductList([
       {
-        id: allCartItems.id,
-        name: allCartItems.title,
-        amount: allCartItems.price,
+        id: allCartItems.product_id,
+        name: allCartItems.name,
+        amount: allCartItems.amount,
         quantity: allCartItems.quantity,
         imgUrl: allCartItems.main_img
       }
@@ -50,26 +50,25 @@ function Cart() {
       </div>
 
       <hr className="my-4" />
-      {/* {allCartItems.map((item)=>(
-
-      ))} */}
-      <div className="border flex items-center gap-4 p-2 mb-4">
-        <input type="checkbox" name="product" />
-        <Image src={defaultImg} alt="image" width={100} height={100} className="object-cover" />
-        <div className="flex flex-col gap-1">
-          <p className="font-medium">인플루언서명</p>
-          <p className="text-gray-500">상품명</p>
-          <p className="text-gray-700 font-bold">가격</p>
-        </div>
-        <div className="grid ml-auto gap-5">
-          <button className="ml-auto px-2 py-1 rounded">✖︎</button>
-          <div className="border flex w-[60px] px-2 justify-center gap-2">
-            <button onClick={minusCount}>-</button>
-            <p>{count}</p>
-            <button onClick={addCount}>+</button>
+      {allCartItems?.map((item: CartItems) => (
+        <div key={item.id} className="border flex items-center gap-4 p-2 mb-4">
+          <input type="checkbox" name="product" />
+          <Image src={item.main_img} alt="image" width={100} height={100} className="object-cover" />
+          <div className="flex flex-col gap-1">
+            <p className="font-medium">{item.nickname}</p>
+            <p className="text-gray-500">{item.name}</p>
+            <p className="text-gray-700 font-bold">{item.amount}</p>
+          </div>
+          <div className="grid ml-auto gap-5">
+            <button className="ml-auto px-2 py-1 rounded">✖︎</button>
+            <div className="border flex w-[60px] px-2 justify-center gap-2">
+              <button onClick={minusCount}>-</button>
+              <p>{count}</p>
+              <button onClick={addCount}>+</button>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
 
       <div className="border w-full p-4">
         <div className="flex justify-between mb-2">

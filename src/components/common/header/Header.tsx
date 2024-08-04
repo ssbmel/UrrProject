@@ -20,6 +20,9 @@ const Header = () => {
   const SIGN_UP = pathname === "/signup";
   const PRODUCTS_UPLOAD = pathname === "/products/upload";
   const SEARCH = pathname === "/search";
+  const PAYMENT = pathname === "/payment";
+  const CHATLIST = pathname === "/chatlist";
+  const INFLUENCER = pathname === "/influencer";
 
   // header 타이틀
   let headerTitle;
@@ -29,11 +32,13 @@ const Header = () => {
     headerTitle = "공구 구매 상품 등록";
   } else if (SEARCH) {
     headerTitle = "검색";
+  } else if (PAYMENT) {
+    headerTitle = "결제하기";
   }
 
   // header 왼쪽 아이콘
   let leftIcon;
-  if (HOME || ADMIN || MY_PAGE || PRODUCTS_LIST) {
+  if (HOME || ADMIN || MY_PAGE || PRODUCTS_LIST || CHATLIST || INFLUENCER) {
     leftIcon = (
       <Link href={"/"}>
         <Image src={logo} alt="urr_logo" width={62} />
@@ -62,13 +67,13 @@ const Header = () => {
         </Link>
       </>
     );
-  } else if (PRODUCTS_LIST || MY_PAGE) {
+  } else if (PRODUCTS_LIST || MY_PAGE || CHATLIST || INFLUENCER) {
     rightIcon = (
       <Link href={"/cart"}>
         <CartIcon />
       </Link>
     );
-  } else if (SIGN_UP || LOGIN || SEARCH) {
+  } else if (SIGN_UP || LOGIN || SEARCH || PAYMENT) {
     rightIcon = (
       <Link href={"/"}>
         <XIcon />

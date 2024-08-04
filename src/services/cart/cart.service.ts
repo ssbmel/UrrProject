@@ -1,12 +1,20 @@
 import { CartItemsProps } from "@/components/products/detail/CountModal";
 
-export const addCartItems = async ({ user_id, product_id, name, amount, quantity }: CartItemsProps) => {
+export const addCartItems = async ({
+  user_id,
+  product_id,
+  name,
+  amount,
+  quantity,
+  main_img,
+  nickname
+}: CartItemsProps) => {
   const response = await fetch(`/api/auth/cart/${product_id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ user_id, product_id, name, amount, quantity })
+    body: JSON.stringify({ user_id, product_id, name, amount, quantity, main_img, nickname })
   });
   const data = await response.json();
 

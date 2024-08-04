@@ -154,6 +154,8 @@ export default function Detail({ params }: detailProps) {
         title={data?.title}
         price={price}
         cost={cost}
+        main_img={data?.main_img}
+        nickname={data?.nickname}
       />
     </>
   );

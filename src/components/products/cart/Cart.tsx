@@ -1,16 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import defaultImg from "../../../../public/images/default.png";
 import { useState } from "react";
 import { useUserData } from "@/hooks/useUserData";
 import { useUserCartItems } from "@/hooks/useUserCartItems";
+import { useAddrStore } from "@/zustand/addrStore";
+import { useRouter } from "next/navigation";
+import { CartItems } from "../../../../types/common";
 
 function Cart() {
   const [count, setCount] = useState(0);
   const { data: userData } = useUserData();
   const userId = userData?.id;
   const allCartItems = useUserCartItems(userId);
+  const { setProductList } = useAddrStore();
+  const router = useRouter();
 
   const addCount = () => {
     setCount(count + 1);
@@ -22,6 +26,21 @@ function Cart() {
     }
   };
 
+  const handleBuy = () => {
+    // 여기에 구매 로직 추가
+    setProductList([
+      {
+        id: allCartItems.product_id,
+        name: allCartItems.name,
+        amount: allCartItems.amount,
+        quantity: allCartItems.quantity,
+        imgUrl: allCartItems.main_img
+      }
+    ]);
+    router.push(`/payment`);
+    // console.log(`구매 수량: ${quantity}`);
+  };
+
   return (
     <div className="w-full p-4 mb-[80px]">
       <div className="flex items-center gap-2 p-2">
@@ -31,23 +50,25 @@ function Cart() {
       </div>
 
       <hr className="my-4" />
-      <div className="border flex items-center gap-4 p-2 mb-4">
-        <input type="checkbox" name="product" />
-        <Image src={defaultImg} alt="image" width={100} height={100} className="object-cover" />
-        <div className="flex flex-col gap-1">
-          <p className="font-medium">인플루언서명</p>
-          <p className="text-gray-500">상품명</p>
-          <p className="text-gray-700 font-bold">가격</p>
-        </div>
-        <div className="grid ml-auto gap-5">
-          <button className="ml-auto px-2 py-1 rounded">✖︎</button>
-          <div className="border flex w-[60px] px-2 justify-center gap-2">
-            <button onClick={minusCount}>-</button>
-            <p>{count}</p>
-            <button onClick={addCount}>+</button>
+      {allCartItems?.map((item: CartItems) => (
+        <div key={item.id} className="border flex items-center gap-4 p-2 mb-4">
+          <input type="checkbox" name="product" />
+          <Image src={item.main_img} alt="image" width={100} height={100} className="object-cover" />
+          <div className="flex flex-col gap-1">
+            <p className="font-medium">{item.nickname}</p>
+            <p className="text-gray-500">{item.name}</p>
+            <p className="text-gray-700 font-bold">{item.amount}</p>
+          </div>
+          <div className="grid ml-auto gap-5">
+            <button className="ml-auto px-2 py-1 rounded">✖︎</button>
+            <div className="border flex w-[60px] px-2 justify-center gap-2">
+              <button onClick={minusCount}>-</button>
+              <p>{count}</p>
+              <button onClick={addCount}>+</button>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
 
       <div className="border w-full p-4">
         <div className="flex justify-between mb-2">
@@ -63,7 +84,9 @@ function Cart() {
           <p>결제 예정 금액</p>
           <p>000원</p>
         </div>
-        <button className="w-full mt-4 py-2 rounded-md bg-[#1A82FF] text-white">구매하기</button>
+        <button onClick={handleBuy} className="w-full mt-4 py-2 rounded-md bg-[#1A82FF] text-white">
+          구매하기
+        </button>
       </div>
     </div>
   );

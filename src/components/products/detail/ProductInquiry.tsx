@@ -1,13 +1,13 @@
 "use client";
 
 import { useUserData } from "@/hooks/useUserData";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import { createClient } from "../../../supabase/client";
+import { createClient } from "../../../../supabase/client";
 import { useProductComment } from "@/hooks/useProductComment";
 import { deleteComment, updateComment } from "@/services/comment/comment.service";
 import Image from "next/image";
-import lock from "../../../public/icon/lock.png";
+import lock from "../../../../public/icon/lock.png";
 
 type NewComment = {
   content: string;

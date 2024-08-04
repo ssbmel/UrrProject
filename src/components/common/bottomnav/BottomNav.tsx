@@ -54,14 +54,16 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
-          <div className={liStyle}>
-            <div className="flex flex-col items-center gap-1">
-              <div className="w-5">
-                <ChatIcon />
+          <Link href={"/chatlist"}>
+            <div className={liStyle}>
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-5">
+                  <ChatIcon />
+                </div>
+                <p>채팅</p>
               </div>
-              <p>채팅</p>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </>

@@ -16,6 +16,8 @@ interface ModalProps {
   title: string;
   price: number;
   cost: number;
+  main_img: string;
+  nickname: string;
 }
 
 export type CartItemsProps = {
@@ -24,6 +26,8 @@ export type CartItemsProps = {
   name: string;
   amount: number;
   quantity: number;
+  main_img: string;
+  nickname: string;
 };
 
 const CountModal = ({
@@ -35,21 +39,27 @@ const CountModal = ({
   handleBuy,
   title,
   price,
-  cost
+  cost,
+  main_img,
+  nickname
 }: ModalProps) => {
   const totalPrice = quantity * price;
   const totalCost = quantity * cost;
   const { data } = useUserData();
   const userId = data?.id;
+  const router = useRouter();
 
   const addToCart = async () => {
     const userCartItem = await userCartItems({ id, userId });
-    console.log(userCartItem);
 
     if (userCartItem.length !== 0) {
-      confirm("이미 장바구니에 있습니다!");
+      alert("이미 장바구니에 있습니다!");
     } else {
-      await addCartItems({ user_id: userId, product_id: id, name: title, amount: price, quantity });
+      await addCartItems({ user_id: userId, product_id: id, name: title, amount: price, quantity, main_img, nickname });
+      const cart = confirm("장바구니로 이동하시겠습니까?");
+      if (cart === true) {
+        router.push("/cart");
+      }
     }
   };
 

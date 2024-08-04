@@ -22,6 +22,5 @@ export const useUserCartItems = (userId: string) => {
   if (error) {
     console.log(error);
   }
-  console.log(data);
   return data;
 };

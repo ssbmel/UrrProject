@@ -20,6 +20,16 @@ interface ModalProps {
   nickname: string;
 }
 
+export type CartItemsProps = {
+  user_id: string;
+  product_id: string;
+  name: string;
+  amount: number;
+  quantity: number;
+  main_img: string;
+  nickname: string;
+};
+
 const CountModal = ({
   id,
   showModal,

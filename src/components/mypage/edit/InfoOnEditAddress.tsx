@@ -6,7 +6,7 @@ import { Addr, PageData } from "../../../../types/addr.type";
 import AddrPagination from "./AddrPagination";
 
 interface Props {
-  setAddress: React.Dispatch<React.SetStateAction<string | null>>;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const InfoOnEditAddress = ({ setAddress }: Props) => {
@@ -80,51 +80,82 @@ const InfoOnEditAddress = ({ setAddress }: Props) => {
   };
 
   return (
-    <div>
-      <p>배송지</p>
-      <div>
-        <div>
-          <input type="text" ref={zipNoRef} readOnly className="border outline-none" />
-          <button onClick={openAddressForm} className="bg-blue-300">
+    <div className="flex flex-col gap-[8px]">
+      <p className="font-bold">주소</p>
+      <div className="flex flex-col gap-[12px]">
+        <div className="flex gap-[8px]">
+          <input
+            type="text"
+            ref={zipNoRef}
+            readOnly
+            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] w-1/3"
+            placeholder="우편번호"
+          />
+          <button
+            onClick={openAddressForm}
+            className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5] h-[40px]"
+          >
             주소 검색
           </button>
         </div>
-        <div className={isVisible ? "bg-slate-200 fixed flex flex-col w-full h-screen top-0 left-0" : "hidden"}>
-          <button onClick={openAddressForm} className="p-1 self-end">
-            ❌
-          </button>
+        <div
+          className={
+            isVisible ? "bg-[#FFFFFE] fixed flex flex-col w-full h-full top-0 left-0 z-10 overflow-y-auto" : "hidden"
+          }
+        >
+          <div className="flex justify-end p-[6px] pr-[16px] pl-[16px] h-[40px]">
+            <button onClick={openAddressForm} className="w-[32px] h-[32px] text-[20px]">
+              ✖
+            </button>
+          </div>
           <form
             onSubmit={(e) => searchHandler(e, keyword.current?.value!, currentPage)}
-            className="p-2 flex justify-between"
+            className="p-[16px] pt-[28px] pb-[28px] flex flex-col justify-center gap-[8px]"
           >
-            <input className="w-[80%]" ref={keyword} type="text" placeholder="검색어를 입력하세요" />
-            <button className="w-[18%] border align-baseline bg-white font-bold">🔍</button>
+            <p className="text-[18px]">도로명 주소를 입력해주세요</p>
+            <div className="h-[51px] flex justify-between">
+              <input
+                className="w-[80%] p-[12px] pt-[4px] pb-[4px] rounded-[6px] border"
+                ref={keyword}
+                type="text"
+                placeholder="ex) 종로1가"
+              />
+              <button className="w-[18%] rounded-[6px] font-[600] text-[#0068E5] bg-[#F2F2F2]">검색</button>
+            </div>
           </form>
+          <hr className="border-4" />
           {step === 1 ? (
-            <div className="w-full p-1 border flex justify-evenly items-center text-center">
-              <p className="w-[14%] text-[12px]">우편 번호</p>
-              <p className="w-[78%] text-[12px]">주소</p>
+            <div className="w-[calc(100%-32px)] ml-[16px] mr-[16px] pt-[16px] pb-[16px] flex justify-evenly items-center text-center text-[14px] border-b">
+              <p className="w-[25%] text-[12px]">우편 번호</p>
+              <p className="w-[70%] text-[12px]">주소</p>
             </div>
           ) : (
-            <div className="w-full p-1 border flex justify-evenly items-center text-center">
-              <p className="w-[92%] text-[12px]">주소</p>
+            <div className="w-[calc(100%-32px)] ml-[16px] mr-[16px] pt-[16px] pb-[16px] flex justify-evenly items-center text-center text-[14px] border-b">
+              <p className="w-[95%] text-[12px]">주소</p>
             </div>
           )}
           <>
             {step === 1 ? (
-              <div className="flex flex-col justify-center h-[75%] gap-1">
+              <div className="flex flex-col justify-center gap-1">
                 {data ? (
-                  <ul className="overflow-y-auto w-full flex flex-col justify-center bg-slate-300">
+                  <ul className="overflow-y-auto w-[calc(100%-32px)] ml-[16px] mr-[16px] flex flex-col justify-center bg-[#FFFFFE]">
                     {data.length ? (
                       data.map((addr, idx) => (
                         <li key={addr?.bdMgtSn} onClick={() => selectAddr(addr)}>
                           <label
                             htmlFor={"address" + idx}
-                            className="flex justify-evenly items-center h-[61px] p-1 border"
+                            className="flex justify-evenly items-center h-[81px] text-[12px] pt-[20px] pb-[20px] border-b"
                           >
-                            <input type="radio" name="address" id={"address" + idx} />
-                            <p className="w-[14%] text-[12px] font-bold text-center">{addr?.zipNo}</p>
-                            <div className="text-[12px] w-[78%]">
+                            <div className="flex gap-[6px] w-[25%] items-center">
+                              <input
+                                type="radio"
+                                name="address"
+                                className="w-[18px] h-[18px] m-[4px] p-[6px] focus:ring-0"
+                                id={"address" + idx}
+                              />
+                              <p className="font-bold text-center">{addr?.zipNo}</p>
+                            </div>
+                            <div className="text-[12px] w-[70%]">
                               <span className="font-bold block">{addr?.roadAddr}</span>
                               <span className="text-[10px] block">{addr?.jibunAddr}</span>
                             </div>
@@ -136,9 +167,10 @@ const InfoOnEditAddress = ({ setAddress }: Props) => {
                     )}
                   </ul>
                 ) : (
-                  <div className="w-full text-center">검색할 주소를 입력해주세요</div>
+                  <div className="w-full text-center flex items-center justify-center text-[#CDCFD0] min-h-[340px]">
+                    <p>검색할 주소를 입력해주세요</p>
+                  </div>
                 )}
-
                 <AddrPagination
                   keyword={keyword.current?.value}
                   currentPage={currentPage}
@@ -149,34 +181,51 @@ const InfoOnEditAddress = ({ setAddress }: Props) => {
                 />
               </div>
             ) : step === 2 ? (
-              <div>
-                <div>
-                  <span>{zipNoRef.current!.value}</span>
-                  <p>{roadAddrRef.current!.value}</p>
-                  <p>{jibun}</p>
+              <div className="p-[16px] flex flex-col gap-[16px] min-h-[340px]">
+                <div className="flex flex-col gap-[8px]">
+                  <span className="text-[14px]">{zipNoRef.current!.value}</span>
+                  <div>
+                    <p className="font-bold">{roadAddrRef.current!.value}</p>
+                    <p className="text-[#4C4F52]">{jibun}</p>
+                  </div>
                 </div>
                 <div>
                   <input
-                    className="text-[12px] w-[78%]"
                     type="text"
                     ref={userAddrInsert}
-                    placeholder="상세 주소를 입력해주세요"
+                    placeholder="상세 주소"
+                    className="h-[40px] w-full border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
                   />
                 </div>
               </div>
             ) : (
-              <div>검색된 주소가 없습니다!!!!!!!!!</div>
+              <div className="w-full text-center flex items-center justify-center text-[#CDCFD0] min-h-[340px]">
+                <p>검색 결과가 없습니다.</p>
+              </div>
             )}
           </>
-          <div className="h-[17%]">
-            <button onClick={goNextStep} className="w-full p-2 bg-amber-400">
+          <div className="h-[10%]">
+            <button
+              onClick={goNextStep}
+              className="w-[calc(100%-32px)] m-[16px] mb-[18px] mt-[8px] h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF]"
+            >
               {step === 1 ? "다음" : step === 2 ? "완료" : ""}
             </button>
           </div>
         </div>
-        <div className="flex flex-row flex-wrap">
-          <input type="text" ref={roadAddrRef} readOnly className="outline-none border w-full" />
-          <input type="text" ref={userAddrRef} readOnly className="border outline-none w-full" />
+        <div className="flex flex-col gap-[12px]">
+          <input
+            type="text"
+            ref={roadAddrRef}
+            readOnly
+            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
+          />
+          <input
+            type="text"
+            ref={userAddrRef}
+            readOnly
+            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
+          />
         </div>
       </div>
     </div>

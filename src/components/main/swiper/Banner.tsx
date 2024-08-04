@@ -7,14 +7,14 @@ import "swiper/css/pagination";
 import "./styles.css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
-import { PostData } from "../Main";
 import urrMainImg from "../../../../public/bgImg/image1.png"
 import urrSubImg from "../../../../public/bgImg/image5.png"
 import product1 from "../../../../public/bgImg/product1.png"
 import product2 from "../../../../public/bgImg/product2.png"
 import product3 from "../../../../public/bgImg/product3.png"
+import { Product } from "../../../../types/common";
 
-export default function Banner({productsList }: {productsList : PostData[]}) {
+export default function Banner({productsList }: {productsList : Product[]}) {
   return (
     <>
       <Swiper

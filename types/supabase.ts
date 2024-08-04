@@ -272,14 +272,14 @@ export type Database = {
       products: {
         Row: {
           category: string | null
-          cost: number | null
+          cost: number
           created_at: string
           detail_img: string[] | null
           end: string | null
           id: string
           main_img: string | null
           nickname: string | null
-          price: number | null
+          price: number
           product_count: number | null
           start: string | null
           text: string | null
@@ -288,14 +288,14 @@ export type Database = {
         }
         Insert: {
           category?: string | null
-          cost?: number | null
+          cost?: number
           created_at?: string
           detail_img?: string[] | null
           end?: string | null
           id: string
           main_img?: string | null
           nickname?: string | null
-          price?: number | null
+          price?: number
           product_count?: number | null
           start?: string | null
           text?: string | null
@@ -304,14 +304,14 @@ export type Database = {
         }
         Update: {
           category?: string | null
-          cost?: number | null
+          cost?: number
           created_at?: string
           detail_img?: string[] | null
           end?: string | null
           id?: string
           main_img?: string | null
           nickname?: string | null
-          price?: number | null
+          price?: number
           product_count?: number | null
           start?: string | null
           text?: string | null

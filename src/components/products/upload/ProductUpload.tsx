@@ -22,7 +22,8 @@ function ProductUpload() {
   const costRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const productCountRef = useRef<HTMLInputElement>(null);
-  const titleRef = useRef<HTMLInputElement>(null);``
+  const titleRef = useRef<HTMLInputElement>(null);
+  ``;
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [detailImg, setDetailImg] = useState<DetailedImgGroup[]>([]);
   const [mainImg, setMainImg] = useState<File | null>(null);
@@ -38,7 +39,7 @@ function ProductUpload() {
     }
     const data: Product[] = await response.json();
     const post = data.find((post) => post.id === id);
-    
+
     if (!post) {
       return;
     }
@@ -51,7 +52,7 @@ function ProductUpload() {
     if (textRef.current) textRef.current.value = post.text || "";
     setRadioCheckedValue(post.category || "");
     setUploadedMainImg(post.main_img || "");
-    const detailImgGroup = post.detail_img?.map<DetailedImgGroup>(imgUrl => ({file: null, url: imgUrl}));
+    const detailImgGroup = post.detail_img?.map<DetailedImgGroup>((imgUrl) => ({ file: null, url: imgUrl }));
     setDetailImg(detailImgGroup || []);
   };
 
@@ -67,9 +68,7 @@ function ProductUpload() {
     }
     const ext = mainImg.name.split(".").pop();
     const newFileName = `${uuidv4()}.${ext}`;
-    const { data, error } = await supabase.storage
-      .from("products")
-      .upload(`${postId}/mainImg/${newFileName}`, mainImg);
+    const { data, error } = await supabase.storage.from("products").upload(`${postId}/mainImg/${newFileName}`, mainImg);
     if (error) {
       console.log(`파일이 업로드 되지 않습니다.${error}`);
       return null;
@@ -79,7 +78,7 @@ function ProductUpload() {
   };
 
   const uploadDetailImages = async (postId: string): Promise<string[] | null> => {
-    if(!detailImg.length){
+    if (!detailImg.length) {
       return null;
     }
     const uploads = detailImg.map(async (detail) => {
@@ -105,7 +104,7 @@ function ProductUpload() {
     const response = await fetch("/api/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     return response.json();
   };
@@ -114,13 +113,13 @@ function ProductUpload() {
     const response = await fetch("/api/products", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     return response.json();
   };
 
   const { mutate: saveMutation } = useMutation<Product, unknown, Product>({
-    mutationFn: (data) => (id === "new" ? savePost(data) : editPost(data)),
+    mutationFn: (data) => (id === "new" ? savePost(data) : editPost(data))
   });
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -130,7 +129,7 @@ function ProductUpload() {
     }
     const postId = uuidv4();
     const mainImgId = (await uploadMainImg(postId)) || uploadedMainImg;
-    const detailImgId = (await uploadDetailImages(postId));
+    const detailImgId = await uploadDetailImages(postId);
 
     const productData: Product = {
       category: radioCheckedValue,
@@ -146,7 +145,7 @@ function ProductUpload() {
       user_id: user.id,
       created_at: new Date().toISOString(),
       id: id === "new" ? postId : (id as string),
-      nickname: user.nickname,
+      nickname: user.nickname
     };
 
     if (
@@ -176,9 +175,7 @@ function ProductUpload() {
   return (
     <form onSubmit={onSubmit}>
       <div className="max-w-[1200px] mx-auto grid gap-3 bg-[#F4F4F4]">
-        <Category 
-          radioCheckedValue={radioCheckedValue} 
-          setRadioCheckedValue={setRadioCheckedValue} />
+        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
           startDateRef={startDateRef}
           endDateRef={endDateRef}
@@ -205,4 +202,3 @@ function ProductUpload() {
 }
 
 export default ProductUpload;
-

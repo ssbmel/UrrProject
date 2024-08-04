@@ -83,17 +83,11 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex flex-row justify-between items-center h-12 w-[90%] mx-auto shrink-0">
+      <header className="flex flex-row justify-between items-center h-12 w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[5%]">
         <div>{leftIcon}</div>
         <div className=" font-semibold text-xl">{headerTitle}</div>
         <div className="flex gap-2">{rightIcon}</div>
       </header>
-      {/* <div className="bg-gray-300 flex-col h-[100px] w-full fixed">
-        <div className="flex flex-col border border-red-500 w-[90%] mx-auto">
-          <input type="text" className="border border-black rounded-md mx-auto h-8 w-[80%]" />
-          <p>추천 인플루언서</p>
-        </div>
-      </div> */}
     </>
   );
 };

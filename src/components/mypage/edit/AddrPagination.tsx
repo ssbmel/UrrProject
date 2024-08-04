@@ -25,6 +25,7 @@ const AddrPagination = ({ keyword, currentPage, setCurrentPage, pageData, setPag
     if (common?.errorCode !== "0") {
       alert(common?.errorMessage);
     }
+    console.log(results);
     setPageData(common);
     setData(data);
   };
@@ -32,7 +33,7 @@ const AddrPagination = ({ keyword, currentPage, setCurrentPage, pageData, setPag
   return (
     <>
       {keyword?.length ? (
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex justify-center items-center gap-5 mt-[20px] mb-[20px] text-[14px] h-[33px] p-[6px]">
           <button
             onClick={(e) => pageHandler(e, keyword, currentPage - 1)}
             disabled={currentPage === 1}
@@ -40,7 +41,9 @@ const AddrPagination = ({ keyword, currentPage, setCurrentPage, pageData, setPag
           >
             ◀
           </button>
-          <span>{currentPage}</span>
+          <span>
+            {currentPage} / {Math.ceil(Number(pageData?.totalCount) / Number(pageData?.countPerPage))}
+          </span>
           <button
             onClick={(e) => pageHandler(e, keyword, currentPage + 1)}
             disabled={currentPage === Math.ceil(Number(pageData?.totalCount) / Number(pageData?.countPerPage))}

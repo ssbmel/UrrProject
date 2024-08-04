@@ -22,10 +22,10 @@ function InfluencerList() {
     }
   };
 
-  const { data: infUser} = useQuery({
-     queryKey : ["user"],
-     queryFn: () => getUserData(),
-  })
+  const { data: infUser } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserData()
+  });
 
   useEffect(() => {
     getUserData();
@@ -44,14 +44,20 @@ function InfluencerList() {
       </div>
       <hr />
       <div className="w-full h-[70%] p-2 my-5">
-        <h1 className="font-bold text-lg">전체 인플루언서</h1>
-        <div className="w-full grid grid-cols-3 gap-3">
+        <h1 className="font-bold text-lg mb-3">전체 인플루언서</h1>
+        <div className="w-full gap-3 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
           {infUser?.map((inf) => (
-            <div key={inf.id}>
-              <div className="w-[1/3] text-center mt-2 overflow-y-auto">
-                <Image src={inf.profile_url || defaultImg} alt="img" width={130} height={130} className="gradient-border" />
-                <p className="my-2 text-sm">{inf.nickname}</p>
+            <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
+              <div className="relative w-[100px] h-[100px] mb-2">
+                <Image
+                  src={inf.profile_url || defaultImg}
+                  alt="img"
+                  fill
+                  sizes="100px"
+                  className="rounded-md object-cover gradient-border"
+                />
               </div>
+              <p className="text-sm">{inf.nickname}</p>
             </div>
           ))}
         </div>

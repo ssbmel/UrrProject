@@ -21,6 +21,16 @@ export type Database = {
           quantity: number
           user_id: string
         }
+          amount: number;
+          created_at: string;
+          id: number;
+          main_img: string;
+          name: string;
+          nickname: string;
+          product_id: string;
+          quantity: number;
+          user_id: string;
+        };
         Insert: {
           amount: number
           created_at?: string

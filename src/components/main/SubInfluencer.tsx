@@ -5,6 +5,8 @@ import defaultImg from "../../../public/images/default.png";
 import { User } from "../../../types/common";
 
 function SubInfluencer({ infUser }: { infUser: User[] }) {
+  console.log(infUser);
+  
   return (
     <div className="w-full h-[200px] mx-auto p-5">
       <h2 className="font-bold text-xl mb-5">내가 구독한 인플루언서</h2>
@@ -13,7 +15,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
           <div key={inf.id} className="flex flex-col justify-center w-[100px] text-center mx-2">
             <div className="relative w-[100px] h-[100px]">
             <Image
-              src={inf.profile_url || defaultImg}
+              src={inf?.profile_url || defaultImg}
               alt="Influencer"
               fill
               sizes="100px"

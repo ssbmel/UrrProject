@@ -3,9 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Product } from "../../../types/common";
-import defaultImg from "../../../public/images/default.png"
+import defaultImg from "../../../public/images/default.png";
 
 function BestProductsList({ productsList }: { productsList: Product[] }) {
+  console.log(typeof productsList[0]?.cost);
   return (
     <>
       <div className="w-full h-auto mx-auto p-5">
@@ -18,8 +19,8 @@ function BestProductsList({ productsList }: { productsList: Product[] }) {
         <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10 scrollbar">
           <div className="grid grid-flow-col gap-5">
             {productsList.map((list) => {
-              const cost = parseFloat(list.cost);
-              const price = parseFloat(list.price);
+              const cost = list.cost;
+              const price = list.price;
               const discountRate = Math.round(((cost - price) / cost) * 100);
 
               return (

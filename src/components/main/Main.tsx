@@ -7,44 +7,47 @@ import BestInfluencerList from "./BestInfluencerList";
 import ReviewList from "./ReviewList";
 import Banner from "./swiper/Banner";
 import "./style.css";
-export interface PostData {
-  id: string;
-  start: string;
-  end: string;
-  cost: string;
-  price: string;
-  product_count: string;
-  title: string;
-  text: string;
-  category: string;
-  main_img: string;
-  detail_img: string[];
-  nickname: string;
-}
+import { Product, User } from "../../../types/common";
 
 function Main() {
-  const [productsList, setProductsList] = useState<PostData[]>([]);
+  const [productsList, setProductsList] = useState<Product[]>([]);
+  const [infUser, setInfUser] = useState<User[]>([]);
 
   const getPostData = async () => {
     const response = await fetch("/api/products");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data: PostData[] = await response.json();
+    const data: Product[] = await response.json();
     setProductsList(data);
   };
 
+  const getUserData = async () => {
+    try {
+      const response = await fetch("/api/auth/users/infuser/allinfuser");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const user: User[] = await data.data;
+      setInfUser(user);
+    } catch (error) {
+      console.log("Failed to fetch user data:", error);
+    }
+  };
   useEffect(() => {
     getPostData();
+    getUserData();
   }, []);
+
 
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 ">
       <Banner productsList={productsList} />
-      <SubInfluencer />
+      <SubInfluencer infUser={infUser} />
       <hr />
       <BestProductsList productsList={productsList} />
-      <BestInfluencerList />
+      <BestInfluencerList infUser={infUser} />
       <ReviewList />
     </div>
   );

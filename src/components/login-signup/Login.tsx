@@ -62,8 +62,9 @@ export default function Login() {
         <form onSubmit={loginHandler} className="flex flex-col h-[40%]">
           <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
           <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
-          <button className="flex justify-end mb-4">비밀번호 찾기</button>
-          <button type="submit" className="bg-[#D9D9D9] h-[50px] rounded-md text-lg">
+          {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}
+          <div className="mb-[40px]"></div>
+          <button type="submit" className="bg-[#1A82FF] text-white h-[50px] rounded-md text-lg">
             로그인하기
           </button>
         </form>

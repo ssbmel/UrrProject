@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
 import emptyImg from "../../../public/bgImg/emptyImg.png";
 import { User } from "../../../types/common";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 
 function InfluencerList() {
   const getUserData = async () => {

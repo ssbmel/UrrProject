@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -53,7 +52,7 @@ function ProductUpload() {
     if (textRef.current) textRef.current.value = post.text || "";
     setRadioCheckedValue(post.category || "");
     setUploadedMainImg(post.main_img || "");
-    const detailImgGroup = post.detail_img?.map<DetailedImgGroup>((imgUrl) => ({ file: null, url: imgUrl }));
+    const detailImgGroup = post.detail_img?.map<DetailedImgGroup>((imgUrl:string) => ({ file: null, url: imgUrl }));
     setDetailImg(detailImgGroup || []);
   };
 

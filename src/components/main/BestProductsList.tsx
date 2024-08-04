@@ -24,13 +24,13 @@ function BestProductsList({ productsList }: { productsList: Product[] }) {
               return (
                 <Link href={`/products/detail/${list.id}`} key={list.id}>
                   <div className="w-[130px]">
-                    <div className="relative w-full h-[130px] mb-2">
+                    <div className="relative w-[130px] h-[130px] mb-2">
                       <Image
                         src={list.main_img || defaultImg}
                         alt="img"
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-md"
+                        fill
+                        sizes="130px"
+                        className="rounded-md object-cover"
                       />
                     </div>
                     <p className="text-[#B2B5B8] text-sm">{list.nickname}</p>

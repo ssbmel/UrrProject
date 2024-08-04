@@ -11,13 +11,15 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
       <div className="flex flex-row p-1 overflow-x-auto flex-nowrap scrollbar">
         {infUser.map((inf) => (
           <div key={inf.id} className="flex flex-col justify-center w-[100px] text-center mx-2">
+            <div className="relative w-[100px] h-[100px]">
             <Image
               src={inf.profile_url || defaultImg}
               alt="Influencer"
-              width={100}
-              height={100}
-              className="gradient-border"
+              fill
+              sizes="100px"
+              className="gradient-border object-cover"
             />
+            </div>
             <p>{inf.nickname}</p>
           </div>
         ))}

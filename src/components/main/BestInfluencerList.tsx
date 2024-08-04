@@ -14,8 +14,8 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
         src={InfluencerImg}
         alt="bgImg"
         fill
-        style={{ objectFit: "cover", objectPosition: "center" }}
-        className="absolute -z-10"
+        sizes="100%"
+        className="absolute -z-10 w-auto h-auto object-cover"
       ></Image>
       <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
       <div className="w-full h-[450px]">
@@ -24,12 +24,14 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
             key={inf.id}
             className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full min-h-[100px] mx-auto py-[10px] px-[12px] grid grid-rows-1 grid-flow-col mb-4"
           >
+            <div className="relative w-[100px] h-[100px] mb-2">
             <Image 
               src={inf.profile_url || defaultImg} 
               alt="인플루언서이미지" 
-              width={100}
-              height={100}
-              className="gradient-border" />
+              fill
+              sizes="100px"
+              className="gradient-border object-cover" />
+              </div>
             <div className="grid">
               <div className="flex py-4">
                 <p className="text-[16px] font-bold">{inf.nickname}</p>

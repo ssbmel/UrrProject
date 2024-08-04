@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { CartItems } from "../../../../types/common";
 
 function Cart() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const { data: userData } = useUserData();
   const userId = userData?.id;
   const allCartItems = useUserCartItems(userId);

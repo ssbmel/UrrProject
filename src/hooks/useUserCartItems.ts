@@ -19,9 +19,9 @@ export const useUserCartItems = (userId: string) => {
     queryKey: ["allCartItems", userId],
     queryFn: () => userCartList(userId)
   });
+  console.log(data);
   if (error) {
     console.log(error);
   }
-  console.log(data);
   return data;
 };

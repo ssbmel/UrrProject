@@ -21,6 +21,16 @@ export type Database = {
           quantity: number
           user_id: string
         }
+          amount: number;
+          created_at: string;
+          id: number;
+          main_img: string;
+          name: string;
+          nickname: string;
+          product_id: string;
+          quantity: number;
+          user_id: string;
+        };
         Insert: {
           amount: number
           created_at?: string
@@ -272,14 +282,14 @@ export type Database = {
       products: {
         Row: {
           category: string | null
-          cost: number | null
+          cost: number
           created_at: string
           detail_img: string[] | null
           end: string | null
           id: string
           main_img: string | null
           nickname: string | null
-          price: number | null
+          price: number
           product_count: number | null
           start: string | null
           text: string | null
@@ -288,14 +298,14 @@ export type Database = {
         }
         Insert: {
           category?: string | null
-          cost?: number | null
+          cost: number
           created_at?: string
           detail_img?: string[] | null
           end?: string | null
           id: string
           main_img?: string | null
           nickname?: string | null
-          price?: number | null
+          price: number
           product_count?: number | null
           start?: string | null
           text?: string | null
@@ -304,14 +314,14 @@ export type Database = {
         }
         Update: {
           category?: string | null
-          cost?: number | null
+          cost?: number
           created_at?: string
           detail_img?: string[] | null
           end?: string | null
           id?: string
           main_img?: string | null
           nickname?: string | null
-          price?: number | null
+          price?: number
           product_count?: number | null
           start?: string | null
           text?: string | null

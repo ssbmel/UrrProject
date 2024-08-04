@@ -13,3 +13,5 @@ export type ChatMessage = Tables<"chat_messages">;
 export type Comment = Tables<"comments">;
 
 export type Review = Tables<"product_review">;
+
+export type CartItems = Tables<"cart">;

@@ -66,7 +66,7 @@ export default function ProductsList() {
                 </Link>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-gray-600">{product.title}</p>
+                <p className="text-sm text-gray-600 truncate w-[165px]">{product.title}</p>
                 <div className="flex items-center">
                   <p className="text-sm text-red-500">{discountRate}%</p>
                   <p className="text-md font-bold ml-1">{price.toLocaleString()}원</p>

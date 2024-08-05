@@ -1,6 +1,5 @@
 "use client";
 
-import useGetPayment from "@/hooks/useGetPayment";
 import { clearPaymentData, useAddrStore } from "@/zustand/addrStore";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";

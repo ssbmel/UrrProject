@@ -175,7 +175,7 @@ export default function Chat() {
 
   return (
     <div className="relative overflow-y-hidden">
-      <div key={channel_id} ref={scrollRef} className="relative h-full overflow-y-auto max-h-56">
+      <div key={channel_id} ref={scrollRef} className="relative h-full overflow-y-auto max-h-[620px]">
         {preMessages?.map((preMessage) => (
           (preMessage.isMine) ?
             <div key={preMessage.message_id} className="text-right">

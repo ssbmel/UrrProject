@@ -26,45 +26,23 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      });
+      const response = await userLogin({ email, password });
+      router.push("/mypage");
 
-      const data = await response.json();
+      // if (response) {
+      //   console.log("리스폰스 존재 상");
+      //   try {
+      //     await router.push("/mypage");
+      //     console.log("Navigation succeeded");
+      //   } catch (error) {
+      //     console.log("Navigation failed", error);
+      //   }
 
-      if (!data.errorMsg) {
-        alert("로그인 성공!");
-        router.push("/mypage");
-      } else {
-        alert(`로그인 에러: ${data.errorMsg}`);
-      }
-      return data;
+      //   console.log("리스폰스 존재 하");
+      // }
     } catch (error) {
       console.log(error);
     }
-
-    // try {
-    //   const response = await userLogin({ email, password });
-    //   router.push("/mypage");
-
-    //   // if (response) {
-    //   //   console.log("리스폰스 존재 상");
-    //   //   try {
-    //   //     await router.push("/mypage");
-    //   //     console.log("Navigation succeeded");
-    //   //   } catch (error) {
-    //   //     console.log("Navigation failed", error);
-    //   //   }
-
-    //   //   console.log("리스폰스 존재 하");
-    //   // }
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   // 카카오 로그인

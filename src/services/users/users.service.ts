@@ -33,29 +33,28 @@ export const userSignUp = async ({
   }
 };
 
-// 로그인
-// export const userLogin = async ({ email, password }: { email: string; password: string }) => {
-//   try {
-//     const response = await fetch("/api/auth/login", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       body: JSON.stringify({ email, password })
-//     });
+export const userLogin = async ({ email, password }: { email: string; password: string }) => {
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-//     const data = await response.json();
+    const data = await response.json();
 
-//     if (!data.errorMsg) {
-//       alert("로그인 성공!");
-//     } else {
-//       alert(`로그인 에러: ${data.errorMsg}`);
-//     }
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    if (!data.errorMsg) {
+      alert("로그인 성공!");
+    } else {
+      alert(`로그인 에러: ${data.errorMsg}`);
+    }
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const userLogout = async () => {
   try {

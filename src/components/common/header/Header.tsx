@@ -6,7 +6,7 @@ import logo from "../../../../public/logo/title_logo.png";
 import BackIcon from "../../../../public/icon/backIcon.svg";
 import SearchIcon from "../../../../public/icon/searchIcon.svg";
 import CartIcon from "../../../../public/icon/cartIcon.svg";
-import XIcon from "../../../../public/icon/xIcon.svg";
+import XIcon from "../../../../public/icon/XIcon.svg";
 
 const Header = () => {
   const pathname = usePathname();

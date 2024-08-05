@@ -18,8 +18,8 @@ function BestProductsList({ productsList }: { productsList: Product[] }) {
         <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10 scrollbar">
           <div className="grid grid-flow-col gap-5">
             {productsList.map((list) => {
-              const cost = parseFloat(list.cost);
-              const price = parseFloat(list.price);
+              const cost = list.cost;
+              const price = list.price;
               const discountRate = Math.round(((cost - price) / cost) * 100);
 
               return (

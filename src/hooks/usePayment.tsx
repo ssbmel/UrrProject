@@ -57,7 +57,7 @@ const usePayment = () => {
         currency: "CURRENCY_KRW",
         products: req.productList, // 상품 목록
         payMethod: "CARD",
-        redirectUrl: "https://urr-final.vercel.app/payment/loading"
+        redirectUrl: "http://localhost:3000/payment/loading"
       });
 
       return response;

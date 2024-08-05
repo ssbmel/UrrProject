@@ -16,7 +16,7 @@ export default function Search() {
   const [filteringTitle, setFilteringTitle] = useState<Product[]>([]);
   const [keywords, setKeywords] = useState<Keyword[]>([]);
 
-  // window 즉, 브라우저가 모두 렌더링된 상태에서 해당 함수를 실행할 수 있도록 작업
+  // 브라우저가 모두 렌더링된 상태에서 해당 함수를 실행할 수 있도록 작업
   useEffect(() => {
     if (typeof window !== "undefined") {
       const result = localStorage.getItem("keywords") || "[]";
@@ -86,7 +86,7 @@ export default function Search() {
               ))}
             </ul>
           ) : (
-            <div className="h-[100px] bg-blue-100"></div>
+            <div className="h-[100px]"></div>
           )}
           <div>
             <h2>최근 검색어</h2>
@@ -106,7 +106,7 @@ export default function Search() {
                   </li>
                 ))
               ) : (
-                <div className="h-[100px] bg-red-100"></div>
+                <div className="h-[100px]"></div>
               )}
             </ul>
           </div>

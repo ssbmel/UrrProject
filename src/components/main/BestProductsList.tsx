@@ -6,7 +6,6 @@ import { Product } from "../../../types/common";
 import defaultImg from "../../../public/images/default.png";
 
 function BestProductsList({ productsList }: { productsList: Product[] }) {
-  console.log(typeof productsList[0]?.cost);
   return (
     <>
       <div className="w-full h-auto mx-auto p-5">

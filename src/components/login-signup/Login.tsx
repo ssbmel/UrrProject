@@ -1,12 +1,12 @@
 "use client";
 
 import { userLogin } from "@/services/users/users.service";
-import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
 import Link from "next/link";
 import { createClient } from "../../../supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
@@ -25,17 +25,26 @@ export default function Login() {
       return;
     }
 
-    if (email && password) {
-      try {
-        await userLogin({ email, password });
-        router.push("/mypage");
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const response = await userLogin({ email, password });
+      router.push("/mypage");
+      // if (response) {
+      //   console.log("리스폰스 존재 상");
+      //   try {
+      //     await router.push("/mypage");
+      //     console.log("Navigation succeeded");
+      //   } catch (error) {
+      //     console.log("Navigation failed", error);
+      //   }
+
+      //   console.log("리스폰스 존재 하");
+      // }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  // 카카오 회원가입
+  // 카카오 로그인
   const kakaoLoginHandler = async () => {
     const supabase = createClient();
     const { data, error } = await supabase.auth.signInWithOAuth({

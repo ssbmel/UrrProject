@@ -3,7 +3,7 @@ import UpButton from "@/components/common/button/UpButton";
 import Footer from "@/components/common/footer/Footer";
 import Header from "@/components/common/header/Header";
 import LoadingUrr from "@/components/common/loading/LoadingUrr";
-import React, { PropsWithChildren, Suspense } from "react";
+import React, { PropsWithChildren } from "react";
 
 const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
@@ -11,7 +11,7 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
       <Header />
       <main className="grow">{children}</main>
       <Footer />
-      <UpButton/>
+      <UpButton />
       <BottomNav />
     </>
   );

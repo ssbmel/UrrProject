@@ -42,6 +42,7 @@ export default function Login() {
       provider: "kakao",
       options: {
         redirectTo: "http://localhost:3000/api/auth/callback"
+        // redirectTo: "https://urr-final.vercel.app/api/auth/callback"
       }
     });
     if (error) {

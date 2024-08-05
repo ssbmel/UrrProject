@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { CartItems } from "../../../../types/common";
 
 function Cart() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const { data: userData } = useUserData();
   const userId = userData?.id;
   const allCartItems = useUserCartItems(userId);
@@ -38,6 +38,7 @@ function Cart() {
   const handleBuy = () => {
     // 여기에 구매 로직 추가
     setProductList(test);
+    setCount(allCartItems.quantity);
     router.push(`/payment`);
     // console.log(`구매 수량: ${quantity}`);
   };

@@ -35,15 +35,18 @@ export default function AdminPage() {
 
   return (
     <>
-      <div className="p-5 h-[700px] whitespace-nowrap">
+      <div className=" p-5 h-[700px] whitespace-nowrap">
         <h2 className="text-xl mb-2">관리자 페이지</h2>
         {isSuccess &&
           influencerApproveList?.map((inf: any, index: number) => {
             return (
-              <div key={index} className="flex">
-                <div>닉네임: {inf.nickname} / </div>
+              <div key={index} className="flex flex-col">
+                <div>닉네임: {inf.nickname} </div>
                 <div>확인 링크: {inf.account_link}</div>
-                <button onClick={() => influencerApproveHandler(inf.id)} className="bg-[#1A82FF] p-1 rounded-md ml-2">
+                <button
+                  onClick={() => influencerApproveHandler(inf.id)}
+                  className="w-10 bg-[#1A82FF] p-1 rounded-md ml-2"
+                >
                   승인
                 </button>
               </div>

@@ -3,6 +3,7 @@
 import { userSignUp } from "@/services/users/users.service";
 import { useRef, useState } from "react";
 import { nicknameCheck } from "@/services/users/users.service";
+import { useRouter } from "next/navigation";
 
 interface SignUpProps {
   confirmRef: string | undefined;
@@ -27,6 +28,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
   const [isNicknameConfirm, setIsNicknameConfirm] = useState<boolean>(false);
+  const router = useRouter();
 
   const onSignUpHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -52,6 +54,8 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
       if (email && password && nickname) {
         try {
           await userSignUp({ email, password, nickname, selectUser, approve: false });
+          alert("회원가입이 완료되었습니다!");
+          router.push("/");
         } catch (error) {
           console.log(error);
         }
@@ -64,7 +68,6 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
     const nickname = nicknameRef.current?.value;
     if (nickname) {
       const overlapNickname = await nicknameCheck(nickname);
-      // console.log(overlapNickname);
       if (overlapNickname.length !== 0) {
         setNicknameConfirmMessage("이미 사용중인 닉네임입니다");
         setIsNicknameConfirm(false);

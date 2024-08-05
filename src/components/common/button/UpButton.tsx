@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import "./style.css";
 import UpArrow from "../../../../public/icon/upArrow.svg";
 
@@ -16,26 +16,23 @@ function UpButton() {
       }
     };
 
-    window.addEventListener('scroll', handleShowButton);
+    window.addEventListener("scroll", handleShowButton);
     return () => {
-      window.removeEventListener('scroll', handleShowButton);
+      window.removeEventListener("scroll", handleShowButton);
     };
   }, []);
 
   const scrollToTop = () => {
     window.scroll({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth"
     });
   };
 
   return (
     <>
       {upButton && (
-        <button 
-          className="btnEffect fixed bottom-5 right-5 z-50" 
-          onClick={scrollToTop} 
-          aria-label="Scroll to top">
+        <button className="btnEffect fixed mb-[30px] mr-[-20px] z-50" onClick={scrollToTop} aria-label="Scroll to top">
           <UpArrow />
         </button>
       )}

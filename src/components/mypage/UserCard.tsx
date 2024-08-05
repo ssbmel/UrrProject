@@ -25,10 +25,10 @@ const UserCard = () => {
   return (
     <div className="flex h-[125px] w-full gap-[12px] p-[16px] pt-[24px] pb-[24px]">
       <img
-        className="block h-[77px] rounded-[4px]"
+        className="w-[77px] rounded-[4px] object-cover bg-gray-300"
         src={
           user?.profile_url ||
-          "https://static.vecteezy.com/system/resources/thumbnails/010/260/479/small/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg"
+          "https://gckottayam.webc.in/sites/default/files/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg"
         }
         alt="샘플이미지"
       />

@@ -22,9 +22,6 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
 }) => {
   const [mainImgUrl, setMainImgUrl] = useState<string | undefined>(uploadedMainImg);
   const [detailImgUrls, setDetailImgUrls] = useState<DetailedImgGroup[]>([]);
-  useEffect(() => {
-    setDetailImgUrls(detailImg);
-  }, [detailImg]);
 
   useEffect(() => {
     return () => {
@@ -34,10 +31,13 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
   }, [mainImgUrl, detailImgUrls]);
 
   useEffect(() => {
-    setMainImgUrl(uploadedMainImg);
     setDetailImgUrls(detailImg);
-  }, [uploadedMainImg, detailImg]);
+  }, [detailImg]);
 
+  useEffect(() => {
+    setMainImgUrl(uploadedMainImg);
+  }, [uploadedMainImg]);
+ 
   const readMainImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
     const imageFile = e.target.files[0];

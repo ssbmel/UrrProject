@@ -13,7 +13,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
       <Image src={InfluencerImg} alt="bgImg" fill className="absolute -z-10 w-auto h-auto object-cover"></Image>
       <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
       <div className="w-full h-[450px]">
-        {infUser.map((inf) => (
+        {infUser.slice(0, 3).map((inf) => (
           <div
             key={inf.id}
             className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full min-h-[100px] mx-auto py-[10px] px-[12px] flex mb-4"

@@ -7,7 +7,7 @@ const Error = ({ children }: { children: React.ReactNode }) => {
     <div>
       <div className="flex flex-col items-center mx-auto h-full py-10">
         <Image src={emptyImg} alt="empty" width={130} className="mx-auto my-5"></Image>
-        <p className="text-[#4C4F52] text-[16px] mx-auto">{children}</p>
+        <div className="text-[#4C4F52] text-[16px] mx-auto">{children}</div>
       </div>
     </div>
   );

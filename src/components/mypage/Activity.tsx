@@ -6,8 +6,6 @@ import InfSaleList from "./InfSaleList";
 const Activity = () => {
   const { data: user } = useUserData();
 
-  console.log(user);
-
   return (
     <div className="flex flex-col gap-[20px]">
       <div className="flex flex-col gap-[20px] p-[20px]">

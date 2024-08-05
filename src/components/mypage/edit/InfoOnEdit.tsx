@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InfoOnEditAddress from "./InfoOnEditAddress";
 import { useUserData } from "@/hooks/useUserData";
 
@@ -38,7 +38,8 @@ const InfoOnEdit = () => {
     <>
       <section className="flex flex-col gap-[18px] items-center mt-[44px] mb-[20px]">
         <div className="relative">
-          <img src="" alt="임시이미지" className="w-[100px] h-[100px] bg-gray-400 rounded-[16px]" />
+          <div className="w-[100px] h-[100px] bg-gray-400 rounded-[16px]"></div>
+          {/* image로 들어가야한다. */}
           <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full border text-center border-white bg-[#E1EEFE] flex justify-center items-center">
             <input type="file" accept="image/*" className="w-full h-full opacity-0" />
             {/* 위의 div 태그 배경 이미지로 아이콘을 삽입한다. */}
@@ -48,10 +49,10 @@ const InfoOnEdit = () => {
           <input
             type="text"
             disabled={isAble === false}
-            defaultValue={nickname}
+            value={nickname || ""}
             onChange={(e) => setNickname(e.target.value)}
             placeholder="새 닉네임"
-            className="w-full font-bold text-[20px] outline-none"
+            className="w-full font-bold text-[20px] outline-none disabled:bg-transparent disabled:text-gray-200"
           />
           <button onClick={() => setIsAble(!isAble)} className="p-[5px]">
             ✏️
@@ -117,7 +118,7 @@ const InfoOnEdit = () => {
           <input
             type="text"
             placeholder="이름을 입력해주세요"
-            value={name}
+            value={name || ""}
             onChange={(e) => setName(e.target.value)}
             className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
           />
@@ -127,7 +128,7 @@ const InfoOnEdit = () => {
           <input
             type="text"
             placeholder="휴대폰 번호를 입력해주세요"
-            value={phonenum}
+            value={phonenum || ""}
             onChange={(e) => setPhonenum(e.target.value)}
             className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
           />

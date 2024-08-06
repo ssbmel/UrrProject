@@ -12,6 +12,7 @@ import CountModal from "./CountModal";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 import Delete from "../delete/Delete";
+import DetailInflu from "./DetailInflu";
 
 interface detailProps {
   params: { id: string };
@@ -59,6 +60,7 @@ export default function Detail({ params }: detailProps) {
         <div className="flex justify-center w-full">
           {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} />}
         </div>
+        <DetailInflu userId={data?.user_id} />
         <div className="my-[20px] mx-4">
           <p className="my-4 text-xl">{data?.title}</p>
           <p className="text-gray-300 line-through">{cost.toLocaleString()}</p>
@@ -128,12 +130,10 @@ export default function Detail({ params }: detailProps) {
           </div>
         </div>
         <div className="paybar sticky bottom-[79px] bg-white left-0 w-full z-50">
-          <div className="flex justify-evenly p-2">
-            <Link href={"/cart"}>
-              <div>
-                <Image src={cart} alt="장바구니로고" width={52} height={52} />
-              </div>
-            </Link>
+          <div className="flex justify-evenly py-2">
+            <div onClick={() => setShowModal(true)}>
+              <Image src={cart} alt="장바구니로고" width={52} height={52} />
+            </div>
             <div>
               <button
                 onClick={() => setShowModal(true)}

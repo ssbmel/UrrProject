@@ -32,9 +32,9 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
                 <div className="flex py-4">
                   <p className="text-[16px] font-bold text-left">{inf.nickname}</p>
                   <span className="mx-2">|</span>
-                  <p className="text-[16px] font-bold text-left">123k</p>
+                  <p className="text-[16px] font-bold text-left">000명</p>
                 </div>
-                <p className="font-light w-[100%]">{inf.intro}</p>
+                <p className="w-[100%] text-[#989C9F]">{inf.intro}</p>
               </div>
               </div>
               <button className="self-center ml-auto">

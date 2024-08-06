@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "../../../supabase/client";
 import fullStar from "../../../public/icon/full_star.png";
 import halfStar from "../../../public/icon/half_star.png";
+import InfluencerIcon from "../../../public/icon/influencer.svg";
 
 function ReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
@@ -69,9 +70,16 @@ function ReviewList() {
                   className="rounded-md object-cover"
                 />
               </div>
-              <div className="flex flex-col w-1/2">
-                <p className="font-bold">{review.title}</p>
-                <p>{review.review_content}</p>
+              <div className="flex-col w-[60%]">
+                <div className="flex text-[#989C9F] gap-1">
+                  <div className="mt-[2px]">
+                    <InfluencerIcon />
+                  </div>
+                  <p className="w-[100%] truncate">
+                    {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
+                  </p>
+                </div>
+                <p className="text-[#1B1C1D] font-medium mb-2">{review.review_content}</p>
                 <div className="flex items-center">
                   {Array(Math.floor(review.review_score!))
                     .fill(1)
@@ -81,7 +89,7 @@ function ReviewList() {
                   {review.review_score! % 1 !== 0 && <Image src={halfStar.src} width={20} height={20} alt="halfStar" />}
                 </div>
                 <p className="text-xs text-gray-400">
-                  {review.user_nickname} | {formatDate(review.created_at)}
+                  {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
                 </p>
               </div>
             </div>

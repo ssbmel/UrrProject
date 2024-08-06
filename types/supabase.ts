@@ -240,6 +240,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          inf_name: string | null
           product_id: string | null
           review_content: string | null
           review_images: string[] | null
@@ -250,6 +251,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          inf_name?: string | null
           product_id?: string | null
           review_content?: string | null
           review_images?: string[] | null
@@ -260,6 +262,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          inf_name?: string | null
           product_id?: string | null
           review_content?: string | null
           review_images?: string[] | null

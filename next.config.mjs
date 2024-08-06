@@ -11,7 +11,7 @@ const nextConfig = {
       },
       {
         hostname: "search.pstatic.net"
-      }
+      },
     ]
   },
   webpack: (config) => {

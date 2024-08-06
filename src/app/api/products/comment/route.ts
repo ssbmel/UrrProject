@@ -25,8 +25,6 @@ export async function DELETE(request: NextRequest) {
       console.error("댓글 삭제 중 오류 발생:", error);
       return NextResponse.json({ error: "삭제에 실패했습니다." });
     }
-
-    console.log(data);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "삭제에 실패했습니다." });

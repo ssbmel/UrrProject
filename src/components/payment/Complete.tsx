@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { createClient } from "../../../supabase/client";
 import { Tables } from "../../../types/supabase";
 import orderCom from "../../../public/icon/orderComplete.png";
+import { refundPayment } from "@/services/payment/payment.service";
 
 type orderType = Tables<"order"> | null;
 
@@ -26,6 +27,12 @@ export default function Complete() {
   useEffect(() => {
     const getProducts = async () => {
       if (paymentId) {
+        await refundPayment(paymentId);
+      } else {
+        console.error("PaymentId is null");
+      }
+
+      if (paymentId) {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
         setProducts(data as orderType);
       }
@@ -38,6 +45,7 @@ export default function Complete() {
     <div>
       <div className="bg-white rounded-lg">
         <div className="p-8 text-center">
+          <h2 className="text-[16px] mb-[12px] text-red-600">저희 프로젝트에서 결제한 내역은 즉시 환불됩니다</h2>
           <Image src={orderCom} alt="주문완료" width={24} height={24} className="ml-[62px]" />
           <h2 className="text-[20px] mb-[12px]">주문이 완료되었습니다</h2>
           <p className="text-gray-400 text-[16px]">

@@ -214,9 +214,9 @@ export default function Chat() {
           ) : (
             <div key={preMessage.message_id}>
               <div>
-                <label className="">{preMessage.nickname}</label>
+                <label className="text-blue-600">{preMessage.nickname}</label>
               </div>
-              <div className="text-left">
+              <div className="text-left border border-gray-400 rounded-md w-48 flex justify-between items-center p-1">
                 <label className="">{preMessage.content.message}</label>
                 <label className="text-xs text-inherit">{preMessage.time.slice(11, 16)}</label>
               </div>

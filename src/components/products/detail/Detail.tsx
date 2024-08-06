@@ -11,6 +11,7 @@ import Link from "next/link";
 import CountModal from "./CountModal";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
+import Delete from "../delete/Delete";
 
 interface detailProps {
   params: { id: string };

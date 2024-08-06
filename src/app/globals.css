@@ -33,11 +33,11 @@ body {
 
 .gradient-border {
   position: relative;
-  border: 4px solid transparent;
-  border-radius: 22px;
+  border: 2px solid transparent;
+  border-radius: 10px;
   background: linear-gradient(#0068e5, #9aec5b);
   background-clip: padding-box;
-  padding: 5px;
+  padding: 4px;
 }
 
 .gradient-border::after {
@@ -49,7 +49,7 @@ body {
   background: linear-gradient(to bottom right #0068e5, #9aec5b);
   content: "";
   z-index: -1;
-  border-radius: 16px;
+  border-radius: 10px;
 }
 
 html,

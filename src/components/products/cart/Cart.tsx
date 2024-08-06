@@ -55,7 +55,6 @@ function Cart() {
     // console.log(`구매 수량: ${quantity}`);
   };
 
-  /** state에 아이템을 추가해주기 */
   const addItems = (newItem: DataType) => {
     setAllCartItems((item) =>
       item.map((item) => (item.id === newItem.id ? { ...item, isChecked: true } : { ...item }))
@@ -87,7 +86,6 @@ function Cart() {
     if (!allCartItems || !allCartItems.length) return;
 
     let checked = true;
-    console.log(allCartItems);
     if (allCartItems.some((item) => !item.isChecked)) {
       checked = false;
     }
@@ -111,10 +109,18 @@ function Cart() {
       addItems(item);
     }
   };
+  /** 아이템 삭제 업데이트 */
+  const removeItemFromState = (product_id: string) => {
+    setAllCartItems((prevItems) => prevItems.filter((item) => item.product_id !== product_id));
+  };
+  /** 주문 총금액 확인 함수 */
+  const getTotalAmount = () => {
+    return allCartItems?.reduce((total, item) => total + item.amount * item.quantity, 0);
+  };
 
   return (
-    <div className="w-full p-4 mb-[80px]">
-      <div className="flex items-center gap-2 p-2">
+    <div className="w-full p-4">
+      <div className="flex items-center gap-2 p-2 border-b-2 border-[#EAECEC]">
         <label>
           <input
             type="checkbox"
@@ -127,23 +133,23 @@ function Cart() {
           />
           전체상품
         </label>
-        <button className="ml-auto px-2 py-1 rounded text-[#1A82FF]">삭제</button>
+        <button className="ml-auto mb-[20px] px-2 py-1 rounded text-[#1A82FF]">삭제</button>
       </div>
 
-      <hr className="my-4" />
       {allCartItems?.map((item: DataType) => (
         <QuantityCount
           key={item.id}
           item={item}
           CheckboxChangeHandler={CheckboxChangeHandler}
           updateItemQuantity={updateItemQuantity}
+          removeItemFromState={removeItemFromState}
         />
       ))}
 
-      <div className="border w-full p-4">
+      <div className=" w-full p-4">
         <div className="flex justify-between mb-2">
-          <p>총 상품 금액</p>
-          <p>0</p>
+          <p>상품 금액</p>
+          <p>{getTotalAmount()?.toLocaleString()}</p>
         </div>
         <div className="flex justify-between">
           <p>배송비</p>
@@ -152,7 +158,7 @@ function Cart() {
         <hr className="my-5" />
         <div className="flex justify-between">
           <p>결제 예정 금액</p>
-          <p>0원</p>
+          <p>{(getTotalAmount() + 3000)?.toLocaleString()}원</p>
         </div>
         <button onClick={handleBuy} className="w-full mt-4 py-2 rounded-md bg-[#1A82FF] text-white">
           구매하기

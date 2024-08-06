@@ -172,6 +172,30 @@ function ProductUpload() {
     }
   };
 
+  const deletePost = async (data: {id:string}) => {
+    const response = await fetch("/api/products", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  };
+
+  const { mutate: deleteMutation } = useMutation<Product, unknown, {id : string}>({
+    mutationFn: (data) => deletePost(data)
+  });
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("해당 상품을 삭제하시겠습니까?"))
+      return;
+        deleteMutation({id});
+        router.push("/products/list");
+    }
+  
+
   return (
     <form onSubmit={onSubmit}>
       <div className="max-w-[1200px] mx-auto grid gap-3 bg-[#F4F4F4]">
@@ -192,6 +216,11 @@ function ProductUpload() {
           setMainImg={setMainImg}
         />
         <div className="flex justify-end">
+          {id === "new" ? null : (
+            <button type="button" onClick={()=>handleDelete(id as string)} className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5">
+              삭제하기
+            </button>
+          )}
           <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-2 mr-5">
             {id === "new" ? "등록하기" : "수정완료"}
           </button>

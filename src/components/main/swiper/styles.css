@@ -45,13 +45,13 @@ body {
 
 .swiper-button-prev,
 .swiper-button-next {
-  opacity: 0.5;
-  padding: 15px 5px;
-  border-radius: 20px;
+  display: none;
 }
 
-.swiper-button-prev:after,
-.swiper-button-next:after {
-  font-size: 1.1rem !important;
-  font-weight: 600 !important;
+
+.swiper-pagination-bullet, 
+.swiper-pagination-bullet-active {
+  width: 25px;
+  height: 5px;
+  border-radius: 15%;
 }

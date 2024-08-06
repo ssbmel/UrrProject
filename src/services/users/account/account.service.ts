@@ -26,7 +26,31 @@ export const getAddress = async (addressProps: AddressProps) => {
   return data;
 };
 
+export const uploadProfile = async ({ profileData }: { profileData: { userId: string; file: File } }) => {
+  const { userId, file } = profileData;
+  const res = await fetch(`/api/auth/users/edit/${userId}/${file}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(profileData)
+  });
+  const data = await res.json();
+  return data;
+};
+
+export const getProfile = async (file: File) => {
+  /* "완료" 버튼으로 제출 시, 이미지의 URL을 받아오는 용도 */
+};
+
 export const sendResetPasswordEmail = async (email: string) => {
   const supabase = createClient();
-  await supabase.auth.resetPasswordForEmail(email);
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:3000/mypage/edit/updatepw"
+  });
+};
+
+export const updateUserPassword = async (password: string) => {
+  const supabase = createClient();
+  await supabase.auth.updateUser({ password });
 };

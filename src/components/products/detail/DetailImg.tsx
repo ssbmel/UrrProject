@@ -16,7 +16,17 @@ const DetailImg = ({ id }: { id: string }) => {
         {images.map((value, index) => {
           return (
             <div key={index} className="w-full relative">
-              {value && <Image src={value} alt="후기사진" key={index} width={500} height={500} objectFit="contain" />}
+              {value && (
+                <Image
+                  src={value}
+                  alt="후기사진"
+                  key={index}
+                  width={500}
+                  height={500}
+                  className="object-cover"
+                  priority
+                />
+              )}
             </div>
           );
         })}

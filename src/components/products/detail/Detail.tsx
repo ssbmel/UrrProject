@@ -58,7 +58,7 @@ export default function Detail({ params }: detailProps) {
     <>
       <div className="flex flex-col min-h-screen">
         <div className="flex justify-center w-full">
-          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} />}
+          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} priority />}
         </div>
         <DetailInflu userId={data?.user_id} />
         <div className="my-[20px] mx-4">

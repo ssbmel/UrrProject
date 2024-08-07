@@ -10,7 +10,7 @@ export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
     { name: "뷰티", image: "/categories/뷰티.png" },
     { name: "패션/잡화", image: "/categories/패션잡화.png" },
     { name: "식품", image: "/categories/식품.png" },
-    { name: "헬스/건강", image: "/categories/헬스건강.png" },
+    { name: "헬스건강", image: "/categories/헬스건강.png" },
     { name: "반려동물용품", image: "/categories/반려동물용품.png" },
     { name: "생활용품", image: "/categories/생활용품.png" },
     { name: "가전/디지털", image: "/categories/가전디지털.png" },

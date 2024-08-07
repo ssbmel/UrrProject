@@ -8,7 +8,6 @@ const getProductReview = async ({ id }: { id: string }) => {
     }
   });
   const { data } = await response.json();
-  console.log(data);
   return data;
 };
 

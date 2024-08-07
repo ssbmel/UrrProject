@@ -80,9 +80,9 @@ export default function Detail({ params }: detailProps) {
             <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
           </div>
           <p className="text-gray-300 line-through font-thin">{cost.toLocaleString()}</p>
-          <p className="my-1">
+          <p className="my-1 text-[18px]">
             <span className="text-red-500">{discountPercentageInteger}%</span>
-            <span className="text-lg font-semibold ml-2">{price.toLocaleString()} 원</span>
+            <span className=" font-semibold ml-2">{price.toLocaleString()} 원</span>
           </p>
           <p className="text-[#989C9F]">리뷰 05건</p>
         </div>

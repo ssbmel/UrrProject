@@ -69,6 +69,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                     src={product.main_img}
                     alt={product.title}
                     fill
+                    priority
                     sizes="165px"
                     className="rounded-md object-cover"
                   />

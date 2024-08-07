@@ -3,14 +3,17 @@
 import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
 import emptyImg from "../../../public/bgImg/emptyImg.png";
-import { User } from "../../../types/common";
+import { InfSubscribe, User } from "../../../types/common";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
+import { useUserData } from "@/hooks/useUserData";
 
 function InfluencerList() {
-  const [isLiked, setIsLiked] = useState(false);
+  const { data: user } = useUserData();
+  const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
+  console.log(subscribeIds);
   const getUserData = async () => {
     try {
       const response = await fetch("/api/auth/users/infuser/allinfuser");
@@ -25,18 +28,53 @@ function InfluencerList() {
     }
   };
 
+  const getSubscribeData = async ()=> {
+    try {
+      if(!user)
+        return null;
+
+      const response = await fetch(`/api/subscribe?user_id=${user.id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setSubscribeIds(data.map((d: InfSubscribe)=>d.infuser_id));
+    } catch (error) {
+      console.log("Failed to fetch user data:", error);
+    }
+  }
+
   const { data: infUser } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserData()
   });
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  useEffect(()=>{
+    getSubscribeData();
+  },[user])
 
-  const handleHeartChange = () => {
-    setIsLiked((prevIsLiked) => !prevIsLiked);
+  const subscribedHandler = (inf:User) => {
+    const newInfUser: InfSubscribe = {
+      user_id : user.id,
+      infuser_id : inf.id
+    }
+    likedMutation(newInfUser);    
   };
+
+
+  const subscribedInfUser = async (data: InfSubscribe) => {
+    const response = await fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    await getSubscribeData()
+    return response.json();
+  };
+
+  const { mutate : likedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
+    mutationFn : (data) => subscribedInfUser(data) 
+  })
 
   return (
     <div className="w-full bg-[#F4F4F4] mx-auto">
@@ -64,19 +102,26 @@ function InfluencerList() {
                   sizes="120px"
                   className="rounded-md object-cover gradient-border"
                 />
-                {isLiked ? (
+                <div className="absolute bottom-1 right-2">
+                    <button onClick={()=>subscribedHandler(inf)}>
+                    {
+                      subscribeIds.includes(inf.id) ? <FullHeartIcon /> : <EmptyHeartIcon />
+                    }
+                    </button>
+                </div>
+                {/* {inf.includes()? (
                   <div className="absolute bottom-1 right-2">
-                    <button onClick={handleHeartChange}>
+                    <button onClick={()=>subscribedHandler(inf)}>
                       <FullHeartIcon />
                     </button>
                   </div>
                 ) : (
                   <div className="absolute bottom-1 right-2">
-                    <button onClick={handleHeartChange}>
+                    <button onClick={()=>subscribedHandler(inf)}>
                       <EmptyHeartIcon />
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
               <p className="text-sm">{inf.nickname}</p>
             </div>

@@ -5,7 +5,7 @@ import defaultImg from "../../../public/images/default.png";
 import { User } from "../../../types/common";
 
 function SubInfluencer({ infUser }: { infUser: User[] }) {
-  
+
   return (
     <div className="w-full h-[200px] mx-auto p-5">
       <h2 className="font-bold text-xl mb-5">내가 구독한 인플루언서</h2>

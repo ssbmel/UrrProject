@@ -331,6 +331,36 @@ export type Database = {
           },
         ]
       }
+      subscribe: {
+        Row: {
+          infuser_id: string | null
+          user_id: string
+        }
+        Insert: {
+          infuser_id?: string | null
+          user_id: string
+        }
+        Update: {
+          infuser_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscribe_infuser_id_fkey"
+            columns: ["infuser_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscribe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           account_link: string | null
@@ -342,7 +372,7 @@ export type Database = {
           intro: string | null
           name: string | null
           nickname: string
-          phonenum: number | null
+          phonenum: string | null
           profile_url: string | null
           role: string | null
         }
@@ -356,7 +386,7 @@ export type Database = {
           intro?: string | null
           name?: string | null
           nickname: string
-          phonenum?: number | null
+          phonenum?: string | null
           profile_url?: string | null
           role?: string | null
         }
@@ -370,7 +400,7 @@ export type Database = {
           intro?: string | null
           name?: string | null
           nickname?: string
-          phonenum?: number | null
+          phonenum?: string | null
           profile_url?: string | null
           role?: string | null
         }

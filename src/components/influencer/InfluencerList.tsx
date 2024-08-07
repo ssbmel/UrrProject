@@ -13,7 +13,10 @@ import { useUserData } from "@/hooks/useUserData";
 function InfluencerList() {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
-  console.log(subscribeIds);
+
+  console.log(user?.id);
+  
+
   const getUserData = async () => {
     try {
       const response = await fetch("/api/auth/users/infuser/allinfuser");
@@ -58,9 +61,8 @@ function InfluencerList() {
       user_id : user.id,
       infuser_id : inf.id
     }
-    likedMutation(newInfUser);    
+    subscribedMutation(newInfUser);    
   };
-
 
   const subscribedInfUser = async (data: InfSubscribe) => {
     const response = await fetch("/api/subscribe", {
@@ -72,8 +74,23 @@ function InfluencerList() {
     return response.json();
   };
 
-  const { mutate : likedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
+  const { mutate : subscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
     mutationFn : (data) => subscribedInfUser(data) 
+  })
+
+  const cancelSubscribedInfUser = async (data: InfSubscribe) => {
+    if (!data.user_id || !data.infuser_id) return
+    const response = await fetch("/api/subscribe", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    await getSubscribeData()
+    return response.json();
+  };
+
+  const { mutate : cancelSubscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
+    mutationFn : (data) => cancelSubscribedInfUser(data) 
   })
 
   return (
@@ -103,25 +120,23 @@ function InfluencerList() {
                   className="rounded-md object-cover gradient-border"
                 />
                 <div className="absolute bottom-1 right-2">
-                    <button onClick={()=>subscribedHandler(inf)}>
-                    {
-                      subscribeIds.includes(inf.id) ? <FullHeartIcon /> : <EmptyHeartIcon />
-                    }
-                    </button>
+                {subscribeIds.includes(inf.id) 
+                ? 
+                <button onClick={() => cancelSubscribedMutation({
+                  infuser_id: inf.id, user_id: user.id
+                })}><FullHeartIcon /></button>
+                :
+                <button onClick={()=>subscribedHandler(inf)}><EmptyHeartIcon /></button>
+                  
+                }
                 </div>
-                {/* {inf.includes()? (
-                  <div className="absolute bottom-1 right-2">
+
+
+                {/* <div className="absolute bottom-1 right-2">
                     <button onClick={()=>subscribedHandler(inf)}>
-                      <FullHeartIcon />
+                    {subscribeIds.includes(inf.id) ? <FullHeartIcon /> : <EmptyHeartIcon />}
                     </button>
-                  </div>
-                ) : (
-                  <div className="absolute bottom-1 right-2">
-                    <button onClick={()=>subscribedHandler(inf)}>
-                      <EmptyHeartIcon />
-                    </button>
-                  </div>
-                )} */}
+                </div> */}
               </div>
               <p className="text-sm">{inf.nickname}</p>
             </div>

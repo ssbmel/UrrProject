@@ -34,7 +34,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const info = await request.json();
     const supabase = createClient();
-    const { data, error } = await supabase.from("subscribe").delete().eq("infuser_id", info.id);
+    const { data, error } = await supabase.from("subscribe").delete().eq("user_id", info.user_id).eq("infuser_id", info.infuser_id);
 
     if (error) {
       return alert(`${error.message}`);

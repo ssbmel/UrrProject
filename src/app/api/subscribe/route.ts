@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
     
     const supabase = createClient();
     const { data, error } = await supabase.from("subscribe").insert(info).select();
-    console.log(error);
     if (error) {
       return alert(`${error.message}`);
     }

@@ -7,11 +7,12 @@ import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
 import ProductInquiry from "./ProductInquiry";
 import DetailImg from "./DetailImg";
-import Link from "next/link";
+import share from "../../../../public/icon/share.png";
+
 import CountModal from "./CountModal";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
-import Delete from "../delete/Delete";
+
 import DetailInflu from "./DetailInflu";
 
 interface detailProps {
@@ -40,7 +41,7 @@ export default function Detail({ params }: detailProps) {
 
   const handleBuy = () => {
     setShowModal(false);
-    // 여기에 구매 로직 추가
+
     setProductList([
       {
         id: data.id,
@@ -51,7 +52,18 @@ export default function Detail({ params }: detailProps) {
       }
     ]);
     router.push(`/payment`);
-    // console.log(`구매 수량: ${quantity}`);
+  };
+
+  const handleShare = () => {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        alert("URL이 클립보드에 복사되었습니다!");
+      })
+      .catch((error) => {
+        console.error("URL 복사 실패:", error);
+      });
   };
 
   return (
@@ -62,8 +74,11 @@ export default function Detail({ params }: detailProps) {
         </div>
         <DetailInflu userId={data?.user_id} />
         <div className="my-[20px] mx-4">
-          <p className="my-4 text-xl">{data?.title}</p>
-          <p className="text-gray-300 line-through">{cost.toLocaleString()}</p>
+          <div className="flex justify-between items-cente py-2">
+            <p className="text-xl flex items-center ">{data?.title}</p>
+            <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
+          </div>
+          <p className="text-gray-300 line-through font-thin">{cost.toLocaleString()}</p>
           <p className="my-1">
             <span className="text-red-500">{discountPercentageInteger}%</span>
             <span className="text-lg font-semibold ml-2">{price.toLocaleString()} 원</span>

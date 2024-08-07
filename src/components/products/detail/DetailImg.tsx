@@ -25,9 +25,8 @@ const DetailImg = ({ id }: { id: string }) => {
       }
     };
 
-    // Ensure contentRef is updated before checking
     const timeoutId = setTimeout(checkShowMore, 100);
-    return () => clearTimeout(timeoutId); // Cleanup timeout
+    return () => clearTimeout(timeoutId);
   }, [images]);
 
   useEffect(() => {

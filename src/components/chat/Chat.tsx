@@ -6,6 +6,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import poly from "../../../public/images/chatpoly.png";
+import PlusIcon from "../../../public/icon/pluscontent.svg";
+import SendIcon from "../../../public/icon/sendmessage.svg";
 
 export default function Chat() {
   const userdata = useUserData().data;
@@ -19,7 +21,7 @@ export default function Chat() {
   const [message, setMessage] = useState<string | number | readonly string[] | undefined>('');
   const [preMessages, setPreMessages] = useState<{ message_id: number; nickname: string | null; isMine: boolean, time: string, content: { message: string | null } }[]>([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false)
-  const [height, setHeight] = useState(window.innerHeight);
+  const [height, setHeight] = useState(window.innerHeight - 155 - 76);
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -75,7 +77,7 @@ export default function Chat() {
   }
 
   const handleResize = () => {
-    setHeight(window.innerHeight);
+    setHeight(window.innerHeight - 155 - 76);
   };
 
   const sendChatMessage = async () => {
@@ -180,9 +182,27 @@ export default function Chat() {
     };
   }, []);
 
+  const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // if (e.nativeEvent.isComposing) { 	   // isComposing 이 true 이면 
+    //   return;				   // 조합 중이므로 동작을 막는다.
+    // }
+
+    if (e.key === 'Enter' && !e.shiftKey) { 	   // [Enter] 치면 메시지 보내기
+      if(message !== ''){
+        sendChatMessage();
+        setMessage('');
+      } else {
+        e.preventDefault();
+        return;
+      }
+      e.preventDefault();
+    }
+  };
+
   return (
-    <div className="flex-col relative overflow-y-hidden">
-      <div key={channel_id} ref={scrollRef} className="relative basis-auto flex-1 overflow-y-auto max-h-dvh bg-[#E1EEFE]">
+    <div className='overflow-y-hidden'>
+      {/* <div className="h-12"></div> */}
+      <div key={channel_id} ref={scrollRef} className='relative h-full overflow-y-scroll max-h-[649px] bg-[#E1EEFE]'>
         {preMessages?.map((preMessage) => (
           (preMessage.isMine) ?
             <div key={preMessage.message_id} className="p-2">
@@ -203,22 +223,20 @@ export default function Chat() {
                 <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
               </div>
             </div>
-          )
+        )
         )}
       </div>
 
-      <div className="w-full basis-[736px] flex-1 mt-2 mb-2">
-        <textarea className="h-[40px] w-[255px] border border-black" value={message} onChange={handleTextarea}></textarea>
-        <button className="border border-black bottom-0 mb-0" onClick={(message != '') ? () => {
-          sendChatMessage();
-          setMessage('');
-        } : () => {
-          console.log('보낼 내용 없음')
-        }}>채팅 보내기</button>
-      </div>
-
-      <div>
-        <label>{height}</label>
+      <div className="flex flex-row w-full h-[76px] bottom-0 shrink-0 mt-2 mb-2">
+        <PlusIcon />
+        <textarea onKeyDown={pressEnter} className="flex-1 rounded-[6px] max-h-max h-[40px] w-auto border border-[#EAECEC]" value={message} onChange={handleTextarea}></textarea>
+        <SendIcon>
+          <button className="" onClick={(message != '') ? () => {
+            sendChatMessage();
+            setMessage('');
+          } : () => {
+            console.log('보낼 내용 없음')
+          }} /></SendIcon>
       </div>
     </div>
   );

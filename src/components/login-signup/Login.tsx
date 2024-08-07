@@ -8,12 +8,11 @@ import Link from "next/link";
 import { createClient } from "../../../supabase/client";
 import { useRouter } from "next/navigation";
 
-export default function Login() {
+const Login = () => {
+  const router = useRouter();
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
-
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,21 +23,9 @@ export default function Login() {
       alert("이메일과 비밀번호를 입력해주세요.");
       return;
     }
-
     try {
       const response = await userLogin({ email, password });
       router.push("/mypage");
-      // if (response) {
-      //   console.log("리스폰스 존재 상");
-      //   try {
-      //     await router.push("/mypage");
-      //     console.log("Navigation succeeded");
-      //   } catch (error) {
-      //     console.log("Navigation failed", error);
-      //   }
-
-      //   console.log("리스폰스 존재 하");
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -93,4 +80,6 @@ export default function Login() {
       </div>
     </>
   );
-}
+};
+
+export default Login;

@@ -52,7 +52,7 @@ const CountModal = ({
   const addToCart = async () => {
     const userCartItem = await userCartItems({ id, userId });
 
-    if (userCartItem.length !== 0) {
+    if (userCartItem?.length !== 0) {
       alert("이미 장바구니에 있습니다!");
     } else {
       await addCartItems({ user_id: userId, product_id: id, name: title, amount: price, quantity, main_img, nickname });

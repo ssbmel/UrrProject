@@ -5,13 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import { Product } from "../../../../types/common";
 import Link from "next/link";
 import { v4 as uuidv4 } from "uuid";
+import Image from "next/image";
+import searchGray from "../../../../public/icon/search_gray.png";
 
 type Keyword = {
   id: string;
   text: string;
 };
 
-export default function Search() {
+export default function SearchModal({ closeModal }: { closeModal: () => void }) {
   const searchWordRef = useRef<HTMLInputElement>(null);
   const [filteringTitle, setFilteringTitle] = useState<Product[]>([]);
   const [keywords, setKeywords] = useState<Keyword[]>([]);
@@ -65,22 +67,27 @@ export default function Search() {
 
   return (
     <>
-      <div className="flex flex-col items-center h-svh">
-        <form onSubmit={SearchProducts}>
+      <div className="flex flex-col items-center">
+        <form onSubmit={SearchProducts} className="relative">
+          <div className="h-12 font-semibold text-xl text-center">검색</div>
           <input
             type="text"
             ref={searchWordRef}
             placeholder="검색어를 입력하세요"
-            className="w-[343px] h-[48px] border border-[#EAECEC] rounded-md indent-3"
+            className="w-[343px] h-[48px] border border-[#EAECEC] rounded-md indent-3 mb-2"
           />
-          <button>⭕️</button>
+          <button>
+            <Image src={searchGray} alt="돋보기" width={28} height={28} className="absolute top-[57px] right-3" />
+          </button>
 
           {filteringTitle.length > 0 ? (
-            <ul>
+            <ul className="h-[100px]">
               {filteringTitle.map((product) => (
                 <li key={product.id}>
                   <Link href={`/products/detail/${product.id}`}>
-                    <div>{product.title}</div>
+                    <div className="text-[#0068E5]">
+                      <div>{product.title}</div>
+                    </div>
                   </Link>
                 </li>
               ))}
@@ -89,19 +96,24 @@ export default function Search() {
             <div className="h-[100px]"></div>
           )}
           <div>
-            <h2>최근 검색어</h2>
-            {keywords.length ? (
-              <button type="button" onClick={handleClearKeywords}>
-                모두 삭제
-              </button>
-            ) : (
-              <button />
-            )}
+            <div className="flex justify-between">
+              <h2 className="text-xl">최근 검색어</h2>
+              {keywords.length ? (
+                <button type="button" onClick={handleClearKeywords} className="text-[#0068E5]">
+                  모두 삭제
+                </button>
+              ) : (
+                <button />
+              )}
+            </div>
 
-            <ul>
+            <ul className="flex flex-row">
               {keywords.length ? (
                 keywords.map((keyword) => (
-                  <li key={keyword.id} className="flex">
+                  <li
+                    key={keyword.id}
+                    className="flex border border-[#1A82FF] text-[#0068E5] px-[6px] py-[3px] rounded-[14px] w-max mr-[16px]"
+                  >
                     <p>{keyword.text}</p>
                   </li>
                 ))

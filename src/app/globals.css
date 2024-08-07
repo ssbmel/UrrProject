@@ -55,18 +55,18 @@ body {
 html,
 body {
   height: 100%;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /*일부 드래그 허용*/
 .draggable {
-  -webkit-user-select:all;
-  -moz-user-select:all;
-  -ms-user-select:all;
-  user-select:all
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
 }
 
 button {
@@ -89,4 +89,41 @@ button {
 }
 input {
   outline-color: #1a82ff;
+}
+
+/* 검색 모달 */
+/* 모달 오버레이 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.visible {
+  opacity: 1;
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 0 0 20px 20px;
+  width: 100%;
+  max-width: 500px;
+  height: 42vh;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal-content.slide-down {
+  transform: translateY(0);
 }

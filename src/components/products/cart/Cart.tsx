@@ -26,11 +26,17 @@ function Cart() {
   const saveCartItems = useUserCartItems(userId);
   const [allCartItems, setAllCartItems] = useState<DataType[]>([]);
   const { setProductList } = useAddrStore();
-  const [allChecked, setAllChecked] = useState<boolean>(false);
+  const [allChecked, setAllChecked] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
-    setAllCartItems(saveCartItems);
+    if (saveCartItems) {
+      const setData = saveCartItems.map((item: DataType) => ({
+        ...item,
+        isChecked: true
+      }));
+      setAllCartItems(setData);
+    }
   }, [saveCartItems]);
 
   const handleBuy = () => {
@@ -76,7 +82,7 @@ function Cart() {
   };
 
   const updateItemQuantity = (updateItem: DataType, count: number) => {
-    if (count < 0) return;
+    if (count < 1) return;
     setAllCartItems((item) =>
       item.map((item) => (item.id === updateItem.id ? { ...item, quantity: count } : { ...item }))
     );
@@ -84,7 +90,6 @@ function Cart() {
 
   useEffect(() => {
     if (!allCartItems || !allCartItems.length) return;
-
     let checked = true;
     if (allCartItems.some((item) => !item.isChecked)) {
       checked = false;
@@ -115,7 +120,9 @@ function Cart() {
   };
   /** 주문 총금액 확인 함수 */
   const getTotalAmount = () => {
-    return allCartItems?.reduce((total, item) => total + item.amount * item.quantity, 0);
+    return allCartItems
+      ?.filter((item) => item.isChecked)
+      .reduce((total, item) => total + item.amount * item.quantity, 0);
   };
 
   return (

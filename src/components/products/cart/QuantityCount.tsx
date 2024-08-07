@@ -32,6 +32,8 @@ const QuantityCount = ({ item, CheckboxChangeHandler, updateItemQuantity, remove
     }
   };
 
+  const quantityMul = item.amount * item.quantity;
+
   return (
     <div className=" border-b-2 border-[#EAECEC] mt-[18px]">
       <div key={item.id} className="relative flex items-center gap-4 p-2 mb-4">
@@ -49,7 +51,7 @@ const QuantityCount = ({ item, CheckboxChangeHandler, updateItemQuantity, remove
         <div className="flex flex-col gap-1">
           <p className="text-sm text-[#989898]">{item.nickname}</p>
           <p className="text-base">{item.name}</p>
-          <p className="ext-sm font-semibold">{item.amount * item.quantity}</p>
+          <p className="ext-sm font-semibold">{quantityMul.toLocaleString()}</p>
         </div>
         <div className="grid ml-auto gap-5">
           <Image

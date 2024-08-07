@@ -1,118 +1,260 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import InfoOnEditAddress from "./InfoOnEditAddress";
-import { useUserData } from "@/hooks/useUserData";
+import Image from "next/image";
+import {
+  getProfile,
+  patchUserFromUserId,
+  sendResetPasswordEmail,
+  uploadProfile
+} from "@/services/users/account/account.service";
+import { User } from "../../../../types/common";
+import { nicknameCheck } from "@/services/users/users.service";
+import { useRouter } from "next/navigation";
 
-const InfoOnEdit = () => {
-  const { data: user } = useUserData();
+interface Props {
+  user: User;
+}
 
-  const [profile, setProfile] = useState<string>("");
-  const [previewUrl, setPreviewUrl] = useState("");
+const InfoOnEdit = ({ user }: Props) => {
+  const router = useRouter();
 
-  const [nickname, setNickname] = useState<string>(user?.nickname);
-  const [address, setAddress] = useState<string>("");
-  const [name, setName] = useState<string>(user?.name);
-  const [email, setEmail] = useState<string>(user?.email);
-  const [phonenum, setPhonenum] = useState<string>(user?.phonenum);
+  const [profile, setProfile] = useState<File | null>(null);
+
+  const [userImg, setUserImg] = useState<string | null>(""); /* 해당 column에서 nullish 해제 필요  */
+  const [nickname, setNickname] = useState<string>("");
+  const [address, setAddress] = useState<string | null>("");
+  const [name, setName] = useState<string | null>(""); /* 해당 column에서 nullish 해제 필요  */
+  const [email, setEmail] = useState<string | null>(""); /* 해당 column에서 nullish 해제 필요  */
+  const [phonenum, setPhonenum] = useState<string | null>();
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
-
-  const updateHandler = async () => {};
-
-  const changePasswordHandler = async () => {
-    setIsClicked(!isClicked);
-  };
-
   const [isAble, setIsAble] = useState<boolean>(false);
 
-  /* const handleImageChange = (e) => {
-    const fileObj = e.target.files[0];
-    setProfile(fileObj);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
+  const nicknameRef = useRef<HTMLInputElement>(null);
+
+  const nicknameUnable =
+    "h-[38px] border-b-2 border-b-[#CDCFD0]  flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
+  const nicknameAble =
+    "h-[38px] border-b-2 border-b-[#0068E5]  flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
+
+  useEffect(() => {
+    setUserImg(user?.profile_url);
+    setNickname(user?.nickname);
+    setAddress(user?.address);
+    setName(user?.name);
+    setEmail(user?.email);
+    setPhonenum(user?.phonenum);
+  }, []);
+
+  const changePasswordHandler = async () => {
+    setIsClicked(true);
+    await sendResetPasswordEmail(email!);
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMsg("");
+
+    if (!e.currentTarget.files) {
+      setErrorMsg("프로필 이미지 처리중 문제가 발생했습니다. 다시 시도하세요");
+      return;
+    }
+
+    const fileObj = e.currentTarget.files[0];
     const objectUrl = URL.createObjectURL(fileObj);
-    imgObj.current = objectUrl;
-    setPreviewUrl(objectUrl);
-  }; */
+    setUserImg(objectUrl);
+
+    console.log(fileObj);
+
+    setProfile(fileObj);
+  };
+
+  const applyProfileImg = async (fileObj: File) => {
+    const data = await uploadImgFile(fileObj, user.id);
+
+    const params = {
+      userId: user.id,
+      filePath: data?.path!
+    };
+
+    const imgUrl = await getProfile(params);
+
+    return imgUrl;
+  };
+
+  const uploadImgFile = async (file: File, userId: string) => {
+    const profileData = { file, userId };
+    const data = await uploadProfile({ profileData });
+    return data;
+  };
+
+  function phonenumCheck(phonenum: string) {
+    const regex = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+    return regex.test(phonenum);
+  }
+
+  const validCheck = async () => {
+    if (!nickname.trim()) {
+      setErrorMsg("닉네임을 입력해주세요");
+      return;
+    } else {
+      const duplicateData = await nicknameCheck(nickname);
+      if (duplicateData.length !== 0 && duplicateData[0]?.nickname !== user.nickname) {
+        console.log(duplicateData[0]?.nickname, user.nickname);
+        setErrorMsg("이미 사용중인 닉네임입니다");
+        return;
+      }
+    }
+
+    if (phonenum && phonenum?.length > 0) {
+      if (!phonenumCheck(phonenum)) {
+        setErrorMsg("올바른 형식의 휴대전화 번호를 입력해주세요");
+        return;
+      }
+    }
+
+    if (name && name?.length > 0) {
+      if (name.length < 2) setErrorMsg("이름은 두 글자 이상이여야 합니다.");
+      return;
+    }
+
+    return true;
+  };
+
+  const updateHandler = async (e: FormEvent, profile: File | null) => {
+    e.preventDefault();
+
+    let image = null;
+
+    const signal = await validCheck();
+
+    if (signal) {
+      if (!confirm("작성된 내용을 적용하시겠습니까?")) {
+        return;
+      }
+    }
+
+    if (user.profile_url === userImg) {
+      image = user.profile_url;
+    } else {
+      image = await applyProfileImg(profile!);
+    }
+
+    const editUserData = {
+      id: user.id,
+      nickname,
+      profile_url: image,
+      address,
+      phonenum: phonenum!,
+      name
+    };
+
+    const data = await patchUserFromUserId(editUserData);
+
+    console.log(data);
+
+    alert("개인정보가 업데이트되었습니다.");
+
+    router.push("/mypage");
+  };
 
   return (
     <>
       <section className="flex flex-col gap-[18px] items-center mt-[44px] mb-[20px]">
         <div className="relative">
-          <div className="w-[100px] h-[100px] bg-gray-400 rounded-[16px]"></div>
-          {/* image로 들어가야한다. */}
-          <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full border text-center border-white bg-[#E1EEFE] flex justify-center items-center">
-            <input type="file" accept="image/*" className="w-full h-full opacity-0" />
-            {/* 위의 div 태그 배경 이미지로 아이콘을 삽입한다. */}
+          {userImg && (
+            <div className="w-[100px] h-[100px] rounded-[16px] relative shadow-md">
+              <Image
+                src={userImg || ""}
+                alt="profile_image"
+                sizes="100px"
+                fill
+                priority
+                className="absolute rounded-[16px] overflow-hidden"
+              />
+            </div>
+          )}
+          <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full text-center  bg-[#E1EEFE] bg-[url('../../public/icon/cameraIcon.png')] bg-no-repeat bg-center bg-[length:24px_24px] flex justify-center items-center">
+            <input
+              onChange={(e) => handleImageChange(e)}
+              type="file"
+              accept="image/*"
+              className="w-full h-full opacity-0 cursor-pointer file:cursor-pointer"
+            />
           </div>
         </div>
-        <div className="w-[150px] h-[38px] border-b-2 border-b-slate-400 flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]">
+        <div className={isAble ? nicknameAble : nicknameUnable}>
           <input
             type="text"
+            ref={nicknameRef}
             disabled={isAble === false}
-            value={nickname || ""}
+            value={nickname}
             onChange={(e) => setNickname(e.target.value)}
-            placeholder="새 닉네임"
-            className="w-full font-bold text-[20px] outline-none disabled:bg-transparent disabled:text-gray-200"
+            placeholder="닉네임"
+            className="indent-[7px] font-bold text-[20px] w-[80px] outline-none disabled:bg-transparent disabled:text-[#CDCFD0]"
           />
-          <button onClick={() => setIsAble(!isAble)} className="p-[5px]">
+          <button
+            onClick={() => {
+              setIsAble(true);
+              nicknameRef.current?.focus();
+            }}
+            className="p-[5px]"
+          >
             ✏️
           </button>
         </div>
       </section>
       <hr className="border-4" />
       <section className="p-[16px] pt-[24px] pb-[24px] flex flex-col gap-[20px]">
+        <div className="text-[14px] rounded-[12px] py-[12px] px-[14px] bg-[#E1EEFE] tracking-[-0.05em]">
+          <b>이름</b>, <b>전화번호</b>, <b>주소</b>는 배송시 필요한 정보이므로
+          <br />
+          입력해두시는 것을 권장드립니다.
+        </div>
         <div className="flex flex-col gap-[8px]">
           <p className="font-bold">이메일</p>
           <input
             className="rounded-[6px] p-[4px] pr-[8px] pl-[8px] indent-[4px] h-[51px] text-[#CDCFD0] bg-[#F2F2F2]"
             type="email"
-            defaultValue={email}
+            defaultValue={email || ""}
             disabled
           />
         </div>
-        <div className="flex flex-col gap-[8px]">
-          <p className="font-bold">비밀번호</p>
-          <div className="flex justify-between">
-            <div className="h-[40px] border rounded-[4px] flex justify-between items-center p-[4px] pr-[8px] pl-[8px] w-[calc(100%-96px)]">
-              <input type="password" id="pw" className="w-[calc(100%-39px)] indent-[4px]" />
-              <button className="w-[34px] p-[5px] text-[#CDCFD0]">👁</button>
-            </div>
+        <div className="flex flex-col gap-[10px]">
+          <div className="flex items-center gap-[8px]">
+            <p className="font-bold">비밀번호</p>
             <button
               onClick={changePasswordHandler}
-              className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5]"
+              className="border px-[12px] py-[4px] text-[14px] rounded-[4px] text-[#0068E5]"
             >
               변경하기
             </button>
           </div>
-        </div>
-        {isClicked ? (
-          <div className="flex flex-col gap-[20px]">
-            <div className="flex flex-col gap-[8px]">
-              <p className="font-bold">새 비밀번호</p>
-              <div className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] flex justify-between items-center">
-                <input
-                  type="password"
-                  id="newPw"
-                  placeholder="새 비밀번호"
-                  className="indent-[4px] w-[calc(100%-39px)]"
-                />
-                <button className="w-[34px] p-[5px] text-[#CDCFD0]">👁</button>
+          <div className="text-[12px] text-[#B2B5B8] font-[300] tracking-[-0.05em]">
+            {isClicked ? (
+              <div className="text-[#2267CE] flex gap-[4px] items-start">
+                <p className="align-top">ⓘ</p>
+                <span>
+                  비밀번호 재설정 메일이 발송되었습니다.
+                  <br />
+                  메일을 받지 못하셨다면 ‘변경하기’ 버튼을 한 번 더 눌러주세요.
+                </span>
               </div>
-            </div>
-            <div className="flex flex-col gap-[8px]">
-              <p className="font-bold">새 비밀번호 확인</p>
-              <div className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] flex justify-between items-center">
-                <input
-                  type="password"
-                  id="newPwConfirm"
-                  placeholder="새 비밀번호 확인"
-                  className="indent-[4px] w-[calc(100%-39px)]"
-                />
-                <button className="w-[34px] p-[5px] text-[#CDCFD0]">👁</button>
+            ) : (
+              <div className="text-[#989C9F] flex gap-[4px]">
+                <p>ⓘ</p>
+                <span>
+                  비밀번호 변경을 원하시면 ‘변경하기’ 버튼을 눌러주세요.
+                  <br />
+                  가입하신 이메일로 비밀번호 재설정 링크 메일이 발송됩니다.
+                </span>
               </div>
-            </div>
+            )}
           </div>
-        ) : null}
+        </div>
         <div className="flex flex-col gap-[8px]">
           <p className="font-bold">이름</p>
           <input
@@ -124,19 +266,39 @@ const InfoOnEdit = () => {
           />
         </div>
         <div className="flex flex-col gap-[8px]">
-          <p className="font-bold">휴대폰</p>
+          <p className="font-bold">전화번호</p>
           <input
             type="text"
-            placeholder="휴대폰 번호를 입력해주세요"
+            placeholder="ex) 01X-XXXX-XXXX"
             value={phonenum || ""}
-            onChange={(e) => setPhonenum(e.target.value)}
+            onChange={(e) =>
+              setPhonenum(
+                e.target.value
+                  .replace(/[^0-9]/g, "")
+                  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+                  .replace(/(\-{1,2})$/g, "")
+              )
+            }
             className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
           />
         </div>
-        <InfoOnEditAddress setAddress={setAddress} />
-        <button className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF]">
-          완료
-        </button>
+        <InfoOnEditAddress address={address ? address.split(",") : ""} setAddress={setAddress} />
+        <div className="flex flex-col gap-[20px]">
+          {errorMsg !== "" && <p className="text-[12px] text-[#F03F33] font-semibold">{`ⓘ ${errorMsg}`}</p>}
+          <button
+            onClick={(e) => updateHandler(e, profile)}
+            disabled={
+              userImg === user.profile_url &&
+              nickname === user.nickname &&
+              address === user.address &&
+              name === user.name &&
+              phonenum === user.phonenum
+            }
+            className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF] disabled:"
+          >
+            완료
+          </button>
+        </div>
       </section>
     </>
   );

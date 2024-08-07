@@ -336,6 +336,7 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
+          intro: string | null
           name: string | null
           nickname: string
           phonenum: number | null
@@ -349,6 +350,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id: string
+          intro?: string | null
           name?: string | null
           nickname: string
           phonenum?: number | null
@@ -362,6 +364,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          intro?: string | null
           name?: string | null
           nickname?: string
           phonenum?: number | null

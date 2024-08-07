@@ -7,15 +7,10 @@ export default function LoadingUrr() {
     <>
       <div className="flex justify-center items-center min-h-screen">
         <div className="relative w-36 h-36 mb-[80px]">
-          <Image 
-            src={loading} 
-            alt="로딩" 
-            fill
-            sizes="144px" 
-            className="ml-[12px] mt-2 object-cover" />
-          <div className="absolute inset-0 flex justify-center items-center">
-            <div className="flex space-x-3">
-              <Image src={dot} alt="dot 1" width={12} height={12} className="dot-animation dot-1" />
+          <Image src={loading} alt="로딩" fill sizes="144px" className="object-contain mt-2" />
+          <div className="absolute inset-0 flex items-center p-2 m-5">
+            <div className="relative w-3 h-3 flex space-x-3">
+              <Image src={dot} alt="dot 1" width={12} height={12} className="dot-animation dot-1 " />
               <Image src={dot} alt="dot 2" width={12} height={12} className="dot-animation dot-2" />
               <Image src={dot} alt="dot 3" width={12} height={12} className="dot-animation dot-3" />
             </div>

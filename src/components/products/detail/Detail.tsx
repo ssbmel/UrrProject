@@ -30,6 +30,7 @@ export default function Detail({ params }: detailProps) {
   const discountPercentage = ((cost - price) / cost) * 100;
   const discountPercentageInteger = Math.floor(discountPercentage);
   const router = useRouter();
+
   const getClassNames = (state: any) => {
     return `w-[113px] p-4 flex justify-center items-center border-b-4 ${
       compoState === state ? "border-blue-500 text-blue-500" : "border-gray-200"

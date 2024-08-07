@@ -12,7 +12,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
       <div className="flex flex-row p-1 overflow-x-auto flex-nowrap scrollbar">
         {infUser.map((inf) => (
           <div key={inf.id} className="flex flex-col justify-center w-[100px] text-center mx-2">
-            <div className="relative w-[100px] h-[100px]">
+            <div className="relative w-[100px] h-[100px] mb-[8px]">
             <Image
               src={inf?.profile_url || defaultImg}
               alt="Influencer"
@@ -21,7 +21,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
               className="gradient-border object-cover"
             />
             </div>
-            <p>{inf.nickname}</p>
+            <p className="text-[#4C4F52] font-normal">{inf.nickname}</p>
           </div>
         ))}
       </div>

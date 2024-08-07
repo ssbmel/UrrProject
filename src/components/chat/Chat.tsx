@@ -11,7 +11,7 @@ export default function Chat() {
   const userdata = useUserData().data;
   const supabase = createClient();
   const params = useSearchParams();
-  const channel_id = Number(params.get('list'));
+  const channel_id = Number(params.get("list"));
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -25,30 +25,26 @@ export default function Chat() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
       if (!firstLoading) {
-        setFirstLoading(true)
+        setFirstLoading(true);
       } else {
-        scrollRef.current.style.scrollBehavior = 'smooth';
+        scrollRef.current.style.scrollBehavior = "smooth";
       }
     }
-  }
+  };
 
   const createChatRoom = () => {
     //유저의 대화 시작하기
-  }
+  };
   const enterChatChannel = () => {
     //유저의 대화방 입장하기
-  }
+  };
 
   const getChatMessages = async () => {
-
-    const user_id = await userdata.id
-    const approve = await userdata.approve
+    const user_id = await userdata.id;
+    const approve = await userdata.approve;
     if (approve) {
       //인플
-      const { data, error } = await supabase
-        .from('chat_messages')
-        .select('*')
-        .eq('channel_id', channel_id)
+      const { data, error } = await supabase.from("chat_messages").select("*").eq("channel_id", channel_id);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -60,10 +56,10 @@ export default function Chat() {
       //팬
       const influ_id = await checkChannelOwner();
       const { data, error } = await supabase
-        .from('chat_messages')
-        .select('*')
-        .in('user_id', [user_id, influ_id])
-        .eq('channel_id', channel_id)
+        .from("chat_messages")
+        .select("*")
+        .in("user_id", [user_id, influ_id])
+        .eq("channel_id", channel_id);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -72,7 +68,7 @@ export default function Chat() {
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
     }
-  }
+  };
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
@@ -90,50 +86,47 @@ export default function Chat() {
       message: message
     });
 
-    const { data, error } = await supabase
-      .from('chat_messages')
-      .insert({
-        channel_id: channel_id,
-        content: JSON.parse(content),
-        user_id: user_id,
-        nickname: nickname
-      })
+    const { data, error } = await supabase.from("chat_messages").insert({
+      channel_id: channel_id,
+      content: JSON.parse(content),
+      user_id: user_id,
+      nickname: nickname
+    });
     if (error) {
-      console.log('채팅 보내기 실패')
-      console.log(error)
+      console.log("채팅 보내기 실패");
+      console.log(error);
     }
-  }
+  };
 
   const checkChannelOwner = async (): Promise<String | null> => {
     const { data, error } = await supabase
-      .from('chat_channels')
-      .select('owner_id')
-      .eq('channel_id', channel_id)
-      .single()
+      .from("chat_channels")
+      .select("owner_id")
+      .eq("channel_id", channel_id)
+      .single();
     if (error) {
       console.log(error);
       return null;
-    }
-    else {
+    } else {
       return data.owner_id;
     }
-  }
+  };
 
   const receiveChatMessage = async () => {
-    const user_id = await userdata.id
-    const approve = await userdata.approve
+    const user_id = await userdata.id;
+    const approve = await userdata.approve;
     const owner_id = await checkChannelOwner();
     if (approve && owner_id == user_id) {
-      console.log('인플루언서 본인의 채팅방입니다.')
+      console.log("인플루언서 본인의 채팅방입니다.");
       const channelInflu = supabase
-        .channel('changes')
+        .channel("changes")
         .on(
-          'postgres_changes',
+          "postgres_changes",
           {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'chat_messages',
-            filter: `channel_id=eq.${channel_id}`,
+            event: "INSERT",
+            schema: "public",
+            table: "chat_messages",
+            filter: `channel_id=eq.${channel_id}`
           },
           (payload) => {
             const newMessage = payload.new;
@@ -141,20 +134,19 @@ export default function Chat() {
               return [...pre, { message_id: newMessage.message_id, nickname: newMessage.nickname, isMine: (newMessage.user_id == user_id) ? true : false, time: newMessage.created_at, content: newMessage.content }]
             })
           }
-
         )
-        .subscribe()
+        .subscribe();
     } else {
-      console.log('팬 채팅방입니다.')
+      console.log("팬 채팅방입니다.");
       const channelFan = supabase
-        .channel('changes')
+        .channel("changes")
         .on(
-          'postgres_changes',
+          "postgres_changes",
           {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'chat_messages',
-            filter: `channel_id=eq.${channel_id}`,
+            event: "INSERT",
+            schema: "public",
+            table: "chat_messages",
+            filter: `channel_id=eq.${channel_id}`
           },
           (payload) => {
             const newMessage = payload.new;
@@ -165,17 +157,16 @@ export default function Chat() {
             }
           }
         )
-        .subscribe()
+        .subscribe();
     }
-
-  }
+  };
 
   useEffect(() => {
     if (userdata != undefined) {
       getChatMessages();
       receiveChatMessage();
     }
-  }, [userdata])
+  }, [userdata]);
 
   useEffect(() => {
     scrollToBottom();
@@ -212,9 +203,8 @@ export default function Chat() {
                 <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
               </div>
             </div>
-
-
-        ))}
+          )
+        )}
       </div>
 
       <div className="w-full basis-[736px] flex-1 mt-2 mb-2">

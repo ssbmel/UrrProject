@@ -5,6 +5,8 @@ import defaultImg from "../../../public/images/default.png";
 import { Review } from "../../../types/common";
 import { useEffect, useState } from "react";
 import { createClient } from "../../../supabase/client";
+import fullStar from "../../../public/icon/full_star.png";
+import halfStar from "../../../public/icon/half_star.png";
 
 function ReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
@@ -31,22 +33,23 @@ function ReviewList() {
     return `${year}.${month}.${day}`;
   };
 
-  const typeClass = (typeScore: number): string => {
-    switch (typeScore) {
-      case 1:
-        return "⭐";
-      case 2:
-        return "⭐⭐";
-      case 3:
-        return "⭐⭐⭐";
-      case 4:
-        return "⭐⭐⭐⭐";
-      case 5:
-        return "⭐⭐⭐⭐⭐";
-      default:
-        return "";
-    }
-  };
+  // const typeClass = (typeScore: number): string => {
+  //   switch (typeScore) {
+  //     case 1:
+  //       return "⭐";
+  //     case 2:
+  //       return "⭐⭐";
+  //     case 3:
+  //       return "⭐⭐⭐";
+  //     case 4:
+  //       return "⭐⭐⭐⭐";
+  //     case 5:
+  //       return "⭐⭐⭐⭐⭐";
+  //     default:
+  //       return "";
+  //   }
+  // };
+  // console.log(reviewData);
 
   return (
     <div className="w-full mx-auto p-5">
@@ -69,7 +72,14 @@ function ReviewList() {
               <div className="flex flex-col w-1/2">
                 <p className="font-bold">{review.title}</p>
                 <p>{review.review_content}</p>
-                <p className="text-xs mt-auto">{typeClass(review.review_score as number)}</p>
+                <div className="flex items-center">
+                  {Array(Math.floor(review.review_score!))
+                    .fill(1)
+                    .map((_, index) => (
+                      <Image key={index} src={fullStar.src} width={20} height={20} alt="fullStar" />
+                    ))}
+                  {review.review_score! % 1 !== 0 && <Image src={halfStar.src} width={20} height={20} alt="halfStar" />}
+                </div>
                 <p className="text-xs text-gray-400">
                   {review.user_nickname} | {formatDate(review.created_at)}
                 </p>

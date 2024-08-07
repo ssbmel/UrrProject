@@ -4,16 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "../../../types/common";
 import defaultImg from "../../../public/images/default.png";
+import MiniRightArrowIcon from "../../../public/icon/minirightarrow.svg";
 
 function BestProductsList({ productsList }: { productsList: Product[] }) {
-  console.log(typeof productsList[0]?.cost);
   return (
     <>
       <div className="w-full h-auto mx-auto p-5">
         <div className="flex mb-5">
           <h2 className="font-bold text-xl">인기상품</h2>
-          <Link className="ml-auto text-xs flex-end" href={"/products/list"}>
-            <button>더보기</button>
+          <Link className="ml-auto text-xs flex-end flex" href={"/products/list"}>
+            <button className="text-[14px] mr-2 font-semibold text-[#4C4F52]">더보기</button>
+            <div className="mt-[3px]">
+            <MiniRightArrowIcon/>
+            </div>
           </Link>
         </div>
         <div className="w-full h-[90%] p-2 overflow-x-auto flex flex-nowrap gap-10 scrollbar">

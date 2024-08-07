@@ -333,15 +333,15 @@ export type Database = {
       }
       subscribe: {
         Row: {
-          infuser_id: string | null
+          infuser_id: string
           user_id: string
         }
         Insert: {
-          infuser_id?: string | null
+          infuser_id: string
           user_id: string
         }
         Update: {
-          infuser_id?: string | null
+          infuser_id?: string
           user_id?: string
         }
         Relationships: [
@@ -355,7 +355,7 @@ export type Database = {
           {
             foreignKeyName: "subscribe_user_id_fkey"
             columns: ["user_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },

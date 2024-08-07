@@ -5,9 +5,35 @@ import defaultImg from "../../../public/images/default.png";
 import RightArrowIcon from "../../../public/icon/rightArrow.svg";
 import InfluencerImg from "../../../public/bgImg/influencerImg.png";
 import "./style.css";
-import { User } from "../../../types/common";
+import { InfSubscribe, User } from "../../../types/common";
+import { useUserData } from "@/hooks/useUserData";
+import { useEffect, useState } from "react";
 
 function BestInfluencerList({ infUser }: { infUser: User[] }) {
+  const { data: user } = useUserData();
+  const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (user) {
+      getSubscribeData();
+    }
+  }, [user]);
+
+  const getSubscribeData = async () => {
+    try {
+      if (!user) return;
+
+      const response = await fetch(`/api/subscribe?user_id=${user.id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setSubscribeIds(data.map((d: InfSubscribe) => d.infuser_id));
+    } catch (error) {
+      console.log("Failed to fetch subscription data:", error);
+    }
+  };
+
   return (
     <div className="box w-full mx-auto p-5 h-[550px]">
       <Image src={InfluencerImg} alt="bgImg" fill className="absolute -z-10 w-auto h-auto object-cover"></Image>

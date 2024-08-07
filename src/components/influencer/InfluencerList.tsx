@@ -14,9 +14,6 @@ function InfluencerList() {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
 
-  console.log(user?.id);
-  
-
   const getUserData = async () => {
     try {
       const response = await fetch("/api/auth/users/infuser/allinfuser");
@@ -31,37 +28,36 @@ function InfluencerList() {
     }
   };
 
-  const getSubscribeData = async ()=> {
+  const getSubscribeData = async () => {
     try {
-      if(!user)
-        return null;
+      if (!user) return null;
 
       const response = await fetch(`/api/subscribe?user_id=${user.id}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setSubscribeIds(data.map((d: InfSubscribe)=>d.infuser_id));
+      setSubscribeIds(data.map((d: InfSubscribe) => d.infuser_id));
     } catch (error) {
-      console.log("Failed to fetch user data:", error);
+      console.log("Failed to fetch subscription data:", error);
     }
-  }
+  };
 
   const { data: infUser } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserData()
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     getSubscribeData();
-  },[user])
+  }, [user]);
 
-  const subscribedHandler = (inf:User) => {
+  const subscribedHandler = (inf: User) => {
     const newInfUser: InfSubscribe = {
-      user_id : user.id,
-      infuser_id : inf.id
-    }
-    subscribedMutation(newInfUser);    
+      user_id: user.id,
+      infuser_id: inf.id
+    };
+    subscribedMutation(newInfUser);
   };
 
   const subscribedInfUser = async (data: InfSubscribe) => {
@@ -70,41 +66,76 @@ function InfluencerList() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
-    await getSubscribeData()
+    await getSubscribeData();
     return response.json();
   };
 
-  const { mutate : subscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
-    mutationFn : (data) => subscribedInfUser(data) 
-  })
+  const { mutate: subscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
+    mutationFn: (data) => subscribedInfUser(data)
+  });
 
   const cancelSubscribedInfUser = async (data: InfSubscribe) => {
-    if (!data.user_id || !data.infuser_id) return
+    if (!data.user_id || !data.infuser_id) return;
     const response = await fetch("/api/subscribe", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
-    await getSubscribeData()
+    await getSubscribeData();
     return response.json();
   };
 
-  const { mutate : cancelSubscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
-    mutationFn : (data) => cancelSubscribedInfUser(data) 
-  })
+  const { mutate: cancelSubscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
+    mutationFn: (data) => cancelSubscribedInfUser(data)
+  });
 
   return (
     <div className="w-full bg-[#F4F4F4] mx-auto">
       <div className="w-full min-h-[250px] h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
-        <div className="flex overflow-x-auto mt-5">
+        {subscribeIds.length === 0 ? (
           <div className="flex flex-col items-center mx-auto">
             <div className="relative w-[150px] h-[100px] my-3">
               <Image src={emptyImg} alt="empty" fill sizes="100px" className="mx-auto my-5 object-cover" />
             </div>
             <p className="text-[#4C4F52] text-[16px] my-5">현재 구독중인 인플루언서가 없습니다.</p>
           </div>
-        </div>
+        ) : (
+          <div className="w-auto flex overflow-x-auto mt-5 gap-5">
+            {infUser?.filter(inf => subscribeIds.includes(inf.id)).map((inf) => (
+              <div key={inf.id} className="w-[100px] text-center">
+                <div className="relative w-[100px] h-[100px] mb-2">
+                  <Image
+                    src={inf.profile_url || defaultImg}
+                    alt="img"
+                    fill
+                    sizes="100px"
+                    className="rounded-md object-cover gradient-border"
+                  />
+                  <div className="absolute bottom-1 right-2">
+                    {subscribeIds.includes(inf.id) ? (
+                      <button
+                        onClick={() =>
+                          cancelSubscribedMutation({
+                            infuser_id: inf.id,
+                            user_id: user.id
+                          })
+                        }
+                      >
+                        <FullHeartIcon />
+                      </button>
+                    ) : (
+                      <button onClick={() => subscribedHandler(inf)}>
+                        <EmptyHeartIcon />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <p className="text-sm">{inf.nickname}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="w-full h-[70%] p-4 my-5 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg mb-3">인플루언서</h1>
@@ -120,23 +151,23 @@ function InfluencerList() {
                   className="rounded-md object-cover gradient-border"
                 />
                 <div className="absolute bottom-1 right-2">
-                {subscribeIds.includes(inf.id) 
-                ? 
-                <button onClick={() => cancelSubscribedMutation({
-                  infuser_id: inf.id, user_id: user.id
-                })}><FullHeartIcon /></button>
-                :
-                <button onClick={()=>subscribedHandler(inf)}><EmptyHeartIcon /></button>
-                  
-                }
-                </div>
-
-
-                {/* <div className="absolute bottom-1 right-2">
-                    <button onClick={()=>subscribedHandler(inf)}>
-                    {subscribeIds.includes(inf.id) ? <FullHeartIcon /> : <EmptyHeartIcon />}
+                  {subscribeIds.includes(inf.id) ? (
+                    <button
+                      onClick={() =>
+                        cancelSubscribedMutation({
+                          infuser_id: inf.id,
+                          user_id: user.id
+                        })
+                      }
+                    >
+                      <FullHeartIcon />
                     </button>
-                </div> */}
+                  ) : (
+                    <button onClick={() => subscribedHandler(inf)}>
+                      <EmptyHeartIcon />
+                    </button>
+                  )}
+                </div>
               </div>
               <p className="text-sm">{inf.nickname}</p>
             </div>

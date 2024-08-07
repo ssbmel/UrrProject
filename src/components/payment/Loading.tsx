@@ -12,6 +12,7 @@ const LoadingComponent = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const paymentId = searchParams.get("paymentId");
+  const message = searchParams.get("message") || "";
   const { paymentData, productList } = useAddrStore();
 
   const paymentSupabase = async (req: any) => {
@@ -47,8 +48,11 @@ const LoadingComponent = () => {
 
   useEffect(() => {
     if (code === "FAILURE_TYPE_PG") {
-      alert("결제가 취소되었습니다.");
-      router.push("/payment");
+      if (confirm("결제를 취소하시겠습니까?")) {
+        router.push("/product/list");
+      } else {
+        window.history.back();
+      }
     } else if (!code) {
       // 성공 케이스
       if (paymentData) {
@@ -56,7 +60,9 @@ const LoadingComponent = () => {
         router.push(`/payment/complete?paymentId=${paymentId}`);
       }
     } else if (code === "PORTONE_ERROR") {
-      router.push("/payment/fail");
+      router.push(`/payment/fail?message=${message}`);
+    } else if (code === "PG_PROVIDER_ERROR") {
+      router.push(`/payment/fail?message=${message}`);
     }
   }, [paymentData]);
 

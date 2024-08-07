@@ -6,11 +6,11 @@ import { Addr, PageData } from "../../../../types/addr.type";
 import AddrPagination from "./AddrPagination";
 
 interface Props {
-  address: string | null;
+  address: string | string[];
   setAddress: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const InfoOnEditAddress = ({ setAddress }: Props) => {
+const InfoOnEditAddress = ({ address, setAddress }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
@@ -79,7 +79,7 @@ const InfoOnEditAddress = ({ setAddress }: Props) => {
       }
       userAddrRef.current!.value = userAddrInsert.current!.value;
       searchKeyword.current!.value = "";
-      setAddress(`${zipNoRef.current!.value}, ${roadAddrRef.current!.value} ${userAddrInsert.current!.value}`);
+      setAddress(`${zipNoRef.current!.value},${roadAddrRef.current!.value},${userAddrInsert.current!.value}`);
       setData(null);
       setIsVisible(!isVisible);
       return;
@@ -95,8 +95,9 @@ const InfoOnEditAddress = ({ setAddress }: Props) => {
           <input
             type="text"
             ref={zipNoRef}
+            defaultValue={address[0]}
             readOnly
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] w-1/3"
+            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] w-1/3 outline-none"
             placeholder="우편번호"
           />
           <button
@@ -231,14 +232,16 @@ const InfoOnEditAddress = ({ setAddress }: Props) => {
           <input
             type="text"
             ref={roadAddrRef}
+            defaultValue={address[1]}
             readOnly
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
+            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px] outline-none"
           />
           <input
             type="text"
             ref={userAddrRef}
+            defaultValue={address[2]}
             readOnly
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
+            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px] outline-none"
           />
         </div>
       </div>

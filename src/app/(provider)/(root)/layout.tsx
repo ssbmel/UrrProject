@@ -9,7 +9,7 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Header />
-      <main className="grow overflow-scroll">{children}</main>
+      <main className="grow overflow-y-scroll">{children}</main>
       <Footer />
       <UpButton />
       <BottomNav />

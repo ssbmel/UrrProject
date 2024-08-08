@@ -51,15 +51,27 @@ const CountModal = ({
 
   const addToCart = async () => {
     const userCartItem = await userCartItems({ id, userId });
-
-    if (userCartItem?.length !== 0) {
-      alert("이미 장바구니에 있습니다!");
-    } else {
-      await addCartItems({ user_id: userId, product_id: id, name: title, amount: price, quantity, main_img, nickname });
-      const cart = confirm("장바구니로 이동하시겠습니까?");
-      if (cart === true) {
-        router.push("/cart");
+    if (userId) {
+      if (userCartItem?.length !== 0) {
+        alert("이미 장바구니에 있습니다!");
+      } else {
+        await addCartItems({
+          user_id: userId,
+          product_id: id,
+          name: title,
+          amount: price,
+          quantity,
+          main_img,
+          nickname
+        });
+        const cart = confirm("장바구니로 이동하시겠습니까?");
+        if (cart === true) {
+          router.push("/cart");
+        }
       }
+    } else {
+      alert("로그인이 필요합니다!");
+      router.push("/login");
     }
   };
 

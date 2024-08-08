@@ -39,7 +39,8 @@ const QuantityCount = ({ item, CheckboxChangeHandler, updateItemQuantity, remove
       <div key={item.id} className="relative flex items-center gap-4 p-2 mb-4">
         <input
           type="checkbox"
-          checked={item.isChecked}
+          readOnly
+          defaultChecked={item.isChecked}
           onClick={() => {
             CheckboxChangeHandler(item);
           }}

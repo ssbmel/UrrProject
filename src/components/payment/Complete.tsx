@@ -24,7 +24,9 @@ export default function Complete() {
   const supabase = createClient();
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
-  const userId = useUserData();
+  const { data: userData } = useUserData();
+  const userId = userData?.id;
+  console.log(userId);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -39,9 +41,10 @@ export default function Complete() {
         setProducts(data as orderType);
       }
 
-      // if (userId) {
-      //   const { data } = await supabase.from("cart").delete().eq("user_id", userId);
-      // }
+      if (userId) {
+        const { data } = await supabase.from("cart").delete().eq("user_id", userId);
+        console.log(data);
+      }
     };
 
     getProducts();

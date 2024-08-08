@@ -4,7 +4,6 @@ import { createClient } from "../../../../../supabase/server";
 export async function POST(request: NextRequest) {
   const supabase = createClient();
   const { user_id } = await request.json();
-  console.log(user_id);
 
   const { data } = await supabase
     .from("cart")

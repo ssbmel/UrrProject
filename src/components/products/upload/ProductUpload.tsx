@@ -166,6 +166,7 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
+      alert("상품등록이 완료되었습니다.")
       console.log("Data inserted:", data);
       saveMutation(productData);
       router.push("/products/list");

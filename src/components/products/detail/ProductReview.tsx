@@ -2,9 +2,32 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import Image from "next/image";
+import { createClient } from "../../../../supabase/client";
+import { useEffect, useState } from "react";
+import { OrderType } from "../../../../types/common";
 
 const ProductReview = () => {
   const { data: user } = useUserData();
+  const [orderData, setOrderData] = useState<OrderType[]>([]);
+
+  const getOrderData = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.from("order").select("*");
+    if (error) {
+      console.error("Error fetching review data:", error);
+    } else {
+      // setOrderData(data.map((d)=>d.userId === user.id));
+    }
+  };
+
+  useEffect(() => {
+    getOrderData();
+  }, []);
+
+  console.log(orderData);
+  
+
+
 
   return (
     <div className="border w-full p-4">

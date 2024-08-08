@@ -12,7 +12,6 @@ import urrSubImg from "../../../../public/bgImg/image5.png"
 import product1 from "../../../../public/bgImg/product1.png"
 import product2 from "../../../../public/bgImg/product2.png"
 import product3 from "../../../../public/bgImg/product3.png"
-import { Product } from "../../../../types/common";
 
 export default function Banner() {
   return (

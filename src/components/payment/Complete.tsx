@@ -7,6 +7,7 @@ import { createClient } from "../../../supabase/client";
 import { Tables } from "../../../types/supabase";
 import orderCom from "../../../public/icon/orderComplete.png";
 import { refundPayment } from "@/services/payment/payment.service";
+import { useUserData } from "@/hooks/useUserData";
 
 type orderType = Tables<"order"> | null;
 
@@ -23,6 +24,7 @@ export default function Complete() {
   const supabase = createClient();
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
+  const userId = useUserData();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -36,10 +38,14 @@ export default function Complete() {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
         setProducts(data as orderType);
       }
+
+      // if (userId) {
+      //   const { data } = await supabase.from("cart").delete().eq("user_id", userId);
+      // }
     };
 
     getProducts();
-  }, [paymentId, supabase]);
+  }, [paymentId, supabase, userId]);
 
   return (
     <div>

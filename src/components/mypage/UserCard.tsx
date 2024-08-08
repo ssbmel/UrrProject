@@ -2,8 +2,10 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import { userLogout } from "@/services/users/users.service";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import DefaultImage from "../../../public/images/default.png";
 
 const UserCard = () => {
   const { data: user } = useUserData();
@@ -23,16 +25,24 @@ const UserCard = () => {
     return;
   };
 
+  const commonUser =
+    "absolute rounded-[16px] overflow-hidden border border-[2px] border-transparent p-[4px] object-cover";
+  const adminUser = "absolute rounded-[16px] overflow-hidden border border-[2px] border-[#2267CE] p-[4px] object-cover";
+  const infUser =
+    "absolute rounded-[16px] overflow-hidden border border-[2px] border-transparent p-[4px] object-cover gradient-border";
+
   return (
-    <div className="flex h-[125px] w-full gap-[12px] p-[16px] pt-[24px] pb-[24px]">
-      <img
-        className="w-[77px] rounded-[4px] object-cover bg-gray-300"
-        src={
-          user?.profile_url ||
-          "https://gckottayam.webc.in/sites/default/files/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg"
-        }
-        alt="샘플이미지"
-      />
+    <div className="flex w-full gap-[12px] pb-[16px] pt-[4px] px-[24px]">
+      <div className="w-[80px] h-[80px] rounded-[16px] relative">
+        <Image
+          src={user?.profile_url || DefaultImage}
+          alt="profile_image"
+          sizes="80px"
+          fill
+          priority
+          className={user?.role === "인플루언서" ? infUser : user?.role === "관리자" ? adminUser : commonUser}
+        />
+      </div>
       <div className="w-[calc(100%-80px)] flex flex-col justify-between text-[12px]">
         <div>
           <div className="flex justify-between items-center">

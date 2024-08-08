@@ -2,18 +2,20 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import poly from "../../../public/images/chatpoly.png";
 import PlusIcon from "../../../public/icon/pluscontent.svg";
 import SendIcon from "../../../public/icon/sendmessage.svg";
 
-export default function Chat() {
+interface detailProps {
+  params: { id: string };
+}
+
+export default function Chat({ params }: detailProps) {
   const userdata = useUserData().data;
   const supabase = createClient();
-  const params = useSearchParams();
-  const channel_id = Number(params.get("list"));
+  const channel_id = Number(params.id.slice(3,-3));
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -21,7 +23,7 @@ export default function Chat() {
   const [message, setMessage] = useState<string | number | readonly string[] | undefined>('');
   const [preMessages, setPreMessages] = useState<{ message_id: number; nickname: string | null; isMine: boolean, time: string, content: { message: string | null } }[]>([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false)
-  const [height, setHeight] = useState(window.innerHeight - 155 - 76);
+
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -75,10 +77,6 @@ export default function Chat() {
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
   }
-
-  const handleResize = () => {
-    setHeight(window.innerHeight - 155 - 76);
-  };
 
   const sendChatMessage = async () => {
     const user_id = await userdata.id;
@@ -164,7 +162,7 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    if (userdata != undefined) {
+    if (userdata != undefined && channel_id != null) {
       getChatMessages();
       receiveChatMessage();
     }
@@ -174,18 +172,11 @@ export default function Chat() {
     scrollToBottom();
   }, [preMessages])
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      // cleanup
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // if (e.nativeEvent.isComposing) { 	   // isComposing 이 true 이면 
-    //   return;				   // 조합 중이므로 동작을 막는다.
-    // }
+    if (e.nativeEvent.isComposing) { 	   // isComposing 이 true 이면 
+      return;				   // 조합 중이므로 동작을 막는다.
+    }
 
     if (e.key === 'Enter' && !e.shiftKey) { 	   // [Enter] 치면 메시지 보내기
       if (message !== '') {

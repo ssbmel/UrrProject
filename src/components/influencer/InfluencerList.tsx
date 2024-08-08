@@ -9,6 +9,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
+import "./style.css";
+import StartChat from "../chat/StartChat";
 import Link from "next/link";
 
 function InfluencerList() {
@@ -107,7 +109,7 @@ function InfluencerList() {
             {infUser
               ?.filter((inf) => subscribeIds.includes(inf.id))
               .map((inf) => (
-                <Link href={`influencer/profile/${inf.id}`} key={inf.id} className="w-[100px] text-center z-0">
+                <Link href={`influencer/profile/${inf.id}`} key={inf.id} className="w-[100px] text-center">
                   <div className="relative w-[100px] h-[100px] mb-2">
                     <Image
                       src={inf.profile_url || defaultImg}
@@ -116,7 +118,7 @@ function InfluencerList() {
                       sizes="100px"
                       className="rounded-md object-cover gradient-border"
                     />
-                    <div className="absolute bottom-1 right-2 z-10">
+                    <div className="absolute bottom-1 right-2">
                       {subscribeIds.includes(inf.id) ? (
                         <button
                           onClick={() =>
@@ -129,13 +131,14 @@ function InfluencerList() {
                           <FullHeartIcon />
                         </button>
                       ) : (
-                        <button className="w-full h-full" onClick={(e) => subscribedHandler(e, inf)}>
+                        <button onClick={(e) => subscribedHandler(e, inf)}>
                           <EmptyHeartIcon />
                         </button>
                       )}
                     </div>
                   </div>
                   <p className="text-sm">{inf.nickname}</p>
+                  <StartChat owner_id={inf.id} />
                 </Link>
               ))}
           </div>
@@ -143,7 +146,7 @@ function InfluencerList() {
       </div>
       <div className="w-full h-[70%] p-4 my-5 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg mb-3">인플루언서</h1>
-        <div className="w-full gap-1 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
+        <div className="se-width w-full gap-1 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
               <div className="relative w-[120px] h-[120px] mb-2">

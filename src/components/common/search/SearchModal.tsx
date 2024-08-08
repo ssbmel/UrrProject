@@ -22,12 +22,16 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const result = localStorage.getItem("keywords") || "[]";
-      setKeywords(JSON.parse(result));
+      // setKeywords(JSON.parse(result));
+      if (result) {
+        setKeywords(JSON.parse(result));
+      }
     }
   }, []);
 
   // keywords 객체에 의존하여, 변경될 경우 새롭게 localStorage의 아이템 keywords'를 세팅한다
   useEffect(() => {
+    console.log("입력된 검색어:", keywords);
     localStorage.setItem("keywords", JSON.stringify(keywords));
   }, [keywords]);
 
@@ -86,7 +90,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
                 <li key={product.id}>
                   <Link href={`/products/detail/${product.id}`}>
                     <div className="text-[#0068E5]">
-                      <div>{product.title}</div>
+                      <div onClick={closeModal}>{product.title}</div>
                     </div>
                   </Link>
                 </li>

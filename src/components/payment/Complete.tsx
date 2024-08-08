@@ -8,8 +8,7 @@ import { Tables } from "../../../types/supabase";
 import orderCom from "../../../public/icon/orderComplete.png";
 import { refundPayment } from "@/services/payment/payment.service";
 import { useUserData } from "@/hooks/useUserData";
-
-type orderType = Tables<"order"> | null;
+import { OrderType } from "../../../types/common";
 
 type productList = {
   id: string;
@@ -20,7 +19,7 @@ type productList = {
 };
 
 export default function Complete() {
-  const [products, setProducts] = useState<orderType>(null);
+  const [products, setProducts] = useState<OrderType>(null);
   const supabase = createClient();
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
@@ -38,7 +37,7 @@ export default function Complete() {
 
       if (paymentId) {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
-        setProducts(data as orderType);
+        setProducts(data as OrderType);
         const productList = (data?.product_list as productList[]) || [];
         const productId = productList.map<string>((item) => item.id);
         if (userId && productId) {

@@ -4,11 +4,12 @@ import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
 import emptyImg from "../../../public/bgImg/emptyImg.png";
 import { InfSubscribe, User } from "../../../types/common";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
+import Link from "next/link";
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -52,7 +53,8 @@ function InfluencerList() {
     getSubscribeData();
   }, [user]);
 
-  const subscribedHandler = (inf: User) => {
+  const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: User) => {
+    e.stopPropagation();
     const newInfUser: InfSubscribe = {
       user_id: user.id,
       infuser_id: inf.id
@@ -102,38 +104,40 @@ function InfluencerList() {
           </div>
         ) : (
           <div className="w-auto flex overflow-x-auto mt-5 gap-5">
-            {infUser?.filter(inf => subscribeIds.includes(inf.id)).map((inf) => (
-              <div key={inf.id} className="w-[100px] text-center">
-                <div className="relative w-[100px] h-[100px] mb-2">
-                  <Image
-                    src={inf.profile_url || defaultImg}
-                    alt="img"
-                    fill
-                    sizes="100px"
-                    className="rounded-md object-cover gradient-border"
-                  />
-                  <div className="absolute bottom-1 right-2">
-                    {subscribeIds.includes(inf.id) ? (
-                      <button
-                        onClick={() =>
-                          cancelSubscribedMutation({
-                            infuser_id: inf.id,
-                            user_id: user.id
-                          })
-                        }
-                      >
-                        <FullHeartIcon />
-                      </button>
-                    ) : (
-                      <button onClick={() => subscribedHandler(inf)}>
-                        <EmptyHeartIcon />
-                      </button>
-                    )}
+            {infUser
+              ?.filter((inf) => subscribeIds.includes(inf.id))
+              .map((inf) => (
+                <Link href={`influencer/profile/${inf.id}`} key={inf.id} className="w-[100px] text-center z-0">
+                  <div className="relative w-[100px] h-[100px] mb-2">
+                    <Image
+                      src={inf.profile_url || defaultImg}
+                      alt="img"
+                      fill
+                      sizes="100px"
+                      className="rounded-md object-cover gradient-border"
+                    />
+                    <div className="absolute bottom-1 right-2 z-10">
+                      {subscribeIds.includes(inf.id) ? (
+                        <button
+                          onClick={() =>
+                            cancelSubscribedMutation({
+                              infuser_id: inf.id,
+                              user_id: user.id
+                            })
+                          }
+                        >
+                          <FullHeartIcon />
+                        </button>
+                      ) : (
+                        <button className="w-full h-full" onClick={(e) => subscribedHandler(e, inf)}>
+                          <EmptyHeartIcon />
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <p className="text-sm">{inf.nickname}</p>
-              </div>
-            ))}
+                  <p className="text-sm">{inf.nickname}</p>
+                </Link>
+              ))}
           </div>
         )}
       </div>
@@ -163,7 +167,7 @@ function InfluencerList() {
                       <FullHeartIcon />
                     </button>
                   ) : (
-                    <button onClick={() => subscribedHandler(inf)}>
+                    <button className="w-full h-full" onClick={(e) => subscribedHandler(e, inf)}>
                       <EmptyHeartIcon />
                     </button>
                   )}

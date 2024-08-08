@@ -2,18 +2,20 @@
 
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import poly from "../../../public/images/chatpoly.png";
 import PlusIcon from "../../../public/icon/pluscontent.svg";
 import SendIcon from "../../../public/icon/sendmessage.svg";
 
-export default function Chat() {
+interface detailProps {
+  params: { id: string };
+}
+
+export default function Chat({ params }: detailProps) {
   const userdata = useUserData().data;
   const supabase = createClient();
-  const params = useSearchParams();
-  const channel_id = Number(params.get("list"));
+  const channel_id = Number(params.id.slice(3, -3));
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +31,8 @@ export default function Chat() {
     }[]
   >([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false);
-  const [height, setHeight] = useState(window.innerHeight - 155 - 76);
+
+
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -54,7 +57,10 @@ export default function Chat() {
     const approve = await userdata.approve;
     if (approve) {
       //인플
-      const { data, error } = await supabase.from("chat_messages").select("*").eq("channel_id", channel_id);
+      const { data, error } = await supabase
+        .from("chat_messages")
+        .select("*")
+        .eq("channel_id", channel_id);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -93,12 +99,8 @@ export default function Chat() {
   };
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-  };
-
-  const handleResize = () => {
-    setHeight(window.innerHeight - 155 - 76);
-  };
+    setMessage(e.target.value)
+  }
 
   const sendChatMessage = async () => {
     const user_id = await userdata.id;
@@ -202,7 +204,7 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    if (userdata != undefined) {
+    if (userdata != undefined && channel_id != null) {
       getChatMessages();
       receiveChatMessage();
     }
@@ -212,18 +214,10 @@ export default function Chat() {
     scrollToBottom();
   }, [preMessages]);
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      // cleanup
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.nativeEvent.isComposing) {
-      // isComposing 이 true 이면
-      return; // 조합 중이므로 동작을 막는다.
+    if (e.nativeEvent.isComposing) { 	   // isComposing 이 true 이면 
+      return;				   // 조합 중이므로 동작을 막는다.
     }
 
     if (e.key === "Enter" && !e.shiftKey) {
@@ -300,12 +294,12 @@ export default function Chat() {
           onClick={
             message != ""
               ? () => {
-                  sendChatMessage();
-                  setMessage("");
-                }
+                sendChatMessage();
+                setMessage("");
+              }
               : () => {
-                  console.log("보낼 내용 없음");
-                }
+                console.log("보낼 내용 없음");
+              }
           }
         ></SendIcon>
       </div>

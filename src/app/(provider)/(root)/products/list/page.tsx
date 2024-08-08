@@ -3,7 +3,7 @@ import ListCategory from "@/components/products/list/ListCategory";
 import ProductsList from "@/components/products/list/ProductsList";
 import { useState } from "react";
 
-const list = () => {
+const List = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   return (
     <div>
@@ -13,4 +13,4 @@ const list = () => {
   );
 };
 
-export default list;
+export default List;

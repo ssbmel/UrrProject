@@ -1,12 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderedProduct from "./OrderedProduct";
 import Error from "../common/error/Error";
+import { useUserData } from "@/hooks/useUserData";
+import { createClient } from "../../../supabase/client";
+import { Tables } from "../../../types/supabase";
+import MyOrderCompo from "./MyOrderCompo";
+
+export type orderType = Tables<"order"> | null;
+export type productListType = {
+  id: string;
+  name: string;
+  imgUrl: string;
+  amount: number;
+  quantity: number;
+};
 
 const MyOrderedList = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [items, setItems] = useState<string[] | null>(null); /* 사용자가 주문한 상품 목록 */
+  const [items, setItems] = useState<orderType[] | null>(null); /* 사용자가 주문한 상품 목록 */
+  const supabase = createClient();
+  const { data: user } = useUserData();
+
+  useEffect(() => {
+    const getOrderList = async () => {
+      try {
+        if (user && user.id) {
+          const { data, error } = await supabase.from("order").select("*").eq("userId", user.id);
+          if (error) {
+            throw error;
+          }
+
+          setItems(data);
+          console.log(data);
+        }
+      } catch (error) {
+        console.error("Error fetching order list:", error);
+      }
+    };
+
+    getOrderList();
+  }, [user]);
 
   return (
     <>
@@ -14,26 +49,16 @@ const MyOrderedList = () => {
         <div>
           <h3 className="text-[14px] border-b-2 pb-[8px]">00월 00일</h3>
           <ul>
-            {items
-              ? items.map((item) => (
-                  <li className="pt-[18px] pb-[18px] text-[14px] border-b flex flex-col gap-[18px]">
-                    <div className="flex justify-between items-center">
-                      <img src="" alt="이미지" className="w-[48px] h-[48px] bg-slate-300 rounded-[4px]" />
-                      <div className="flex justify-evenly gap-[18px] flex-shrink-0">
-                        <p>상품 이름</p>
-                        <p>배송 상태</p>
-                        <p>
-                          <span>00,000</span>원
-                        </p>
-                      </div>
-                      <button onClick={() => setIsOpen(!isOpen)} className="p-[9px]">
-                        {isOpen ? "🔺" : "🔻"}
-                      </button>
-                    </div>
-                    {isOpen ? <OrderedProduct /> : null}
-                  </li>
-                ))
-              : null}
+            {items &&
+              items.map((payment, index) => {
+                return (
+                  <div key={index}>
+                    {payment?.product_list?.map((item) => (
+                      <MyOrderCompo key={index} item={item as productListType} delivery={payment.delivery} />
+                    ))}
+                  </div>
+                );
+              })}
           </ul>
         </div>
       ) : (

@@ -215,33 +215,36 @@ export type Database = {
         Row: {
           address: string | null
           created_at: string
+          delivery: string | null
           name: string | null
           paymentId: string
           phoneNumber: number | null
           price: number
-          product_list: Json[] | null
+          product_list: Json[]
           request: string | null
           userId: string
         }
         Insert: {
           address?: string | null
           created_at?: string
+          delivery?: string | null
           name?: string | null
           paymentId: string
           phoneNumber?: number | null
           price: number
-          product_list?: Json[] | null
+          product_list: Json[]
           request?: string | null
           userId: string
         }
         Update: {
           address?: string | null
           created_at?: string
+          delivery?: string | null
           name?: string | null
           paymentId?: string
           phoneNumber?: number | null
           price?: number
-          product_list?: Json[] | null
+          product_list?: Json[]
           request?: string | null
           userId?: string
         }

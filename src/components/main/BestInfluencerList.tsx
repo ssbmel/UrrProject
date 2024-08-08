@@ -5,38 +5,44 @@ import defaultImg from "../../../public/images/default.png";
 import RightArrowIcon from "../../../public/icon/rightArrow.svg";
 import InfluencerImg from "../../../public/bgImg/influencerImg.png";
 import "./style.css";
-import { InfSubscribe, User } from "../../../types/common";
+import { User } from "../../../types/common";
 import { useUserData } from "@/hooks/useUserData";
 import { useEffect, useState } from "react";
 
 function BestInfluencerList({ infUser }: { infUser: User[] }) {
   const { data: user } = useUserData();
-  const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
+  const [subscriptionCounts, setSubscriptionCounts] = useState<{ [key: string]: number }>({});
 
-  useEffect(() => {
-    if (user) {
-      getSubscribeData();
-    }
-  }, [user]);
-
-  const getSubscribeData = async () => {
+  const getSubscribeCount = async (infuserId: string) => {
     try {
-      if (!user) return;
-
-      const response = await fetch(`/api/subscribe?user_id=${user.id}`);
+      const response = await fetch(`/api/subscribe/subscribe-count?infuser_id=${infuserId}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setSubscribeIds(data.map((d: InfSubscribe) => d.infuser_id));
+      return data.count;
     } catch (error) {
-      console.log("Failed to fetch subscription data:", error);
+      console.log("Failed to fetch subscription count:", error);
+      return 0;
     }
   };
 
+  useEffect(() => {
+    const fetchSubscriptionCounts = async () => {
+      const counts: { [key: string]: number } = {};
+      for (const inf of infUser) {
+        const count = await getSubscribeCount(inf.id);
+        counts[inf.id] = count;
+      }
+      setSubscriptionCounts(counts);
+    };
+
+    fetchSubscriptionCounts();
+  }, [infUser]);
+
   return (
     <div className="box w-full mx-auto p-5 h-[550px]">
-      <Image src={InfluencerImg} alt="bgImg" fill className="absolute -z-10 w-auto h-auto object-cover"></Image>
+      <Image src={InfluencerImg} alt="bgImg" fill className="absolute -z-10 w-auto h-auto object-cover" />
       <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
       <div className="w-full h-[450px]">
         {infUser.slice(0, 3).map((inf) => (
@@ -58,16 +64,17 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
                 <div className="flex py-4">
                   <p className="text-[16px] font-bold text-left">{inf.nickname}</p>
                   <span className="mx-2">|</span>
-                  <p className="text-[16px] font-bold text-left">000명</p>
+                  <p className="text-[16px] font-bold text-left">
+                    {subscriptionCounts[inf.id] ? `${subscriptionCounts[inf.id]}명` : 'Loading...'}
+                  </p>
                 </div>
                 <p className="w-[100%] text-[#989C9F]">{inf.intro}</p>
               </div>
-              </div>
-              <button className="self-center ml-auto">
-                <RightArrowIcon />
-              </button>
             </div>
-
+            <button className="self-center ml-auto">
+              <RightArrowIcon />
+            </button>
+          </div>
         ))}
       </div>
     </div>

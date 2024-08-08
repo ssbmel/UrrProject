@@ -17,6 +17,5 @@ export async function POST(request: NextRequest) {
   }
 
   const user = data.user.id;
-  // console.log(Response.json({ user }, { status: 200 }));
   return Response.json({ user }, { status: 200 });
 }

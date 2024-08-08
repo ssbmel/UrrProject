@@ -51,7 +51,7 @@ export default function Complete() {
   }, [paymentId, supabase, userId]);
 
   return (
-    <div className="">
+    <div className="w-100vw overflow-hidden">
       <div className="bg-white rounded-lg mb-[10px]">
         <div className="p-8 text-center">
           <h2 className="text-[16px] mb-[12px] text-red-600">저희 프로젝트에서 결제한 내역은 즉시 환불됩니다</h2>

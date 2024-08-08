@@ -40,12 +40,19 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
     fetchSubscriptionCounts();
   }, [infUser]);
 
+  // Sorting the influencers based on subscription count
+  const sortedInfUser = [...infUser].sort((a, b) => {
+    const countA = subscriptionCounts[a.id] || 0;
+    const countB = subscriptionCounts[b.id] || 0;
+    return countB - countA;
+  });
+
   return (
     <div className="box w-full mx-auto p-5 h-[550px]">
       <Image src={InfluencerImg} alt="bgImg" fill className="absolute -z-10 w-auto h-auto object-cover" />
       <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
       <div className="w-full h-[450px]">
-        {infUser.slice(0, 3).map((inf) => (
+        {sortedInfUser.slice(0, 3).map((inf) => (
           <div
             key={inf.id}
             className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full min-h-[100px] mx-auto py-[10px] px-[12px] flex mb-4"
@@ -65,7 +72,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
                   <p className="text-[16px] font-bold text-left">{inf.nickname}</p>
                   <span className="mx-2">|</span>
                   <p className="text-[16px] font-bold text-left">
-                    {subscriptionCounts[inf.id] ? `${subscriptionCounts[inf.id]}명` : 'Loading...'}
+                    {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : 'Loading...'}
                   </p>
                 </div>
                 <p className="w-[100%] text-[#989C9F]">{inf.intro}</p>

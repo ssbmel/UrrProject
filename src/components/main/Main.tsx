@@ -49,7 +49,8 @@ function Main() {
 
   if (isLoading) {
     return (
-      <div className="spinner">
+      <div className="spinner-wrapper">
+        <div className="spinner"></div>
       </div>
     );
   }

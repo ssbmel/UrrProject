@@ -34,24 +34,6 @@ function ReviewList() {
     return `${year}.${month}.${day}`;
   };
 
-  // const typeClass = (typeScore: number): string => {
-  //   switch (typeScore) {
-  //     case 1:
-  //       return "⭐";
-  //     case 2:
-  //       return "⭐⭐";
-  //     case 3:
-  //       return "⭐⭐⭐";
-  //     case 4:
-  //       return "⭐⭐⭐⭐";
-  //     case 5:
-  //       return "⭐⭐⭐⭐⭐";
-  //     default:
-  //       return "";
-  //   }
-  // };
-  // console.log(reviewData);
-
   return (
     <div className="w-full mx-auto p-5">
       <h2 className="font-bold mb-5 text-xl">후기</h2>

@@ -1,6 +1,11 @@
+"use client";
+
+import { useUserData } from "@/hooks/useUserData";
 import Image from "next/image";
 
 const ProductReview = () => {
+  const { data: user } = useUserData();
+
   return (
     <div className="border w-full p-4">
       <div className="w-full h-[100px] p-4 flex gap-3">
@@ -16,7 +21,7 @@ const ProductReview = () => {
         <div>{/* <Image src={} alt="score"/> */}</div>
         <p className="text-center">상품에 대한 전체적인 평점을 알려주세요</p>
       </div>
-      <div>
+      <form action="">
         <div className="grid gap-6">
           <div className="bg-[#E1EEFE] p-4 rounded-[12px]">
             <p className="font-bold mb-3">후기는 이렇게 작성해보세요!</p>
@@ -27,20 +32,21 @@ const ProductReview = () => {
               더 높일 수 있습니다
             </p>
           </div>
+
           <div className="flex items-center">
-          <label className="font-bold mr-2">별점</label>
-          <select className="p-2 rounded-md border">
-            <option value="1">1</option>
-            <option value="1.5">1.5</option>
-            <option value="2">2</option>
-            <option value="2.5">2.5</option>
-            <option value="3">3</option>
-            <option value="3.5">3.5</option>
-            <option value="4">4</option>
-            <option value="4.5">4.5</option>
-            <option value="5">5</option>
-          </select>
-        </div>
+            <label className="font-bold mr-2">별점</label>
+            <select className="p-2 rounded-md border">
+              <option value="1">1</option>
+              <option value="1.5">1.5</option>
+              <option value="2">2</option>
+              <option value="2.5">2.5</option>
+              <option value="3">3</option>
+              <option value="3.5">3.5</option>
+              <option value="4">4</option>
+              <option value="4.5">4.5</option>
+              <option value="5">5</option>
+            </select>
+          </div>
           <textarea
             name="review-text"
             className="resize-none border w-full h-[300px] rounded-md"
@@ -51,7 +57,7 @@ const ProductReview = () => {
             등록하기
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

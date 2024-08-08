@@ -40,7 +40,7 @@ const QuantityCount = ({ item, CheckboxChangeHandler, updateItemQuantity, remove
         <input
           type="checkbox"
           readOnly
-          defaultChecked={item.isChecked}
+          checked={item.isChecked}
           onClick={() => {
             CheckboxChangeHandler(item);
           }}

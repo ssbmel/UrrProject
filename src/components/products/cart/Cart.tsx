@@ -134,7 +134,7 @@ function Cart() {
             readOnly
             name="product-all"
             className="mr-1"
-            defaultChecked={allChecked}
+            checked={allChecked}
             onClick={(e: any) => {
               selectAllHandler(e.target.checked);
             }}

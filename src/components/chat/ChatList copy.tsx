@@ -5,14 +5,11 @@ import { createClient } from "../../../supabase/client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import StartChat from "./StartChat";
-import { useRouter } from "next/navigation";
 
 
 export default function ChatList() {
   const userdata = useUserData().data;
   const supabase = createClient();
-  const router = useRouter();
 
   const [chatListData, setChatListData] = useState<({ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; } | undefined) [] | null>(null);
   const [channelList, setChannelList] = useState<number[] | null>(null);
@@ -139,38 +136,35 @@ export default function ChatList() {
   useEffect(() => {
     getChatListData(channelList);
   }, [channelList])
-
-  const clickChat = (channel_id : number) => {
-    const id = channel_id.toString()
-    router.push(`/chatlist/[${id}]`)
-  }
-
   return (
     <div className="mt-1 flex flex-col">
       <div className="w-[343px] mx-auto flex flex-col justify-center">
-        {(myChannel != undefined) ? 
-          <div onClick={()=>clickChat(myChannel.channel_id)}>
-          <div key={myChannel.channel_id} className={(myChannel != null) ? "w-[343px] h-[73px] relative flex flex-row" : 'hidden'}>
+        <Link href={{
+          pathname: `/chatlist/chat`,
+          query: { list: myChannel?.channel_id },
+        }}>
+          <div key={myChannel?.channel_id} className={(myChannel != null) ? "w-[343px] h-[73px] relative flex flex-row" : 'hidden'}>
 
             <div className="relative flex-none w-[68px] h-[68px]">
-              {myChannel.owner_profile_url && (
-                <Image fill priority={true} src={myChannel.owner_profile_url} alt="owner profile" className="object-cover rounded-[6px]" />
+              {myChannel?.owner_profile_url && (
+                <Image fill priority={true} src={myChannel?.owner_profile_url} alt="owner profile" className="object-cover rounded-[6px]" />
               )}
             </div>
             <div className="flex flex-col ml-[8px] mr-[12px]">
-              <label className="text-[18px] font-medium">{myChannel.channel_name}</label>
-              <label className="text-[16px] font-light">{myChannel.message}</label>
+              <label className="text-[18px] font-medium">{myChannel?.channel_name}</label>
+              <label className="text-[16px] font-light">{myChannel?.message}</label>
               <label className="text-[12px] font-normal text-[#989C9F]">{myChannel?.created_at}</label>
             </div>
 
           </div>
-        </div>
-         : <></>}
-        
+        </Link>
       </div>
       <div className="w-[343px] mx-auto flex flex-col justify-center">
-        { (chatListData != undefined) ? chatListData.map((channel) => (
-          <Link key={channel?.channel_id} href={`/chatlist/[${channel?.channel_id}]`}>
+        {chatListData?.map((channel) => (
+          <Link key={channel?.channel_id} href={{
+            pathname: `/chatlist/chat`,
+            query: { list: channel?.channel_id },
+          }}>
             <div className="w-[343px] h-[73px] relative flex flex-row">
               <div className="relative flex-none w-[68px] h-[68px]">
                 {channel?.owner_profile_url && (
@@ -184,12 +178,9 @@ export default function ChatList() {
               </div>
             </div>
           </Link>
-        )) : <></>}
+        ))}
       </div>
-      <div>
-        테스트
-        {/* <StartChat owner_id='123'/> */}
-      </div>
+
     </div>
   );
 }

@@ -6,10 +6,16 @@ import MypageIcon from "../../../../public/icon/mypageIcon.svg";
 import StoreIcon from "../../../../public/icon/storeIcon.svg";
 import InfluencerIcon from "../../../../public/icon/influencerIcon.svg";
 import ChatIcon from "../../../../public/icon/chatIcon.svg";
+import { usePathname } from "next/navigation";
 
 export default function BottomNav() {
+  const pathname = usePathname();
   const liStyle =
     "font-[600] flex justify-center px-[6px] w-[44px] text-[14px] whitespace-nowrap transition-colors hover:text-blue-600";
+
+  if (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) {
+    return null;
+  }
 
   return (
     <>

@@ -219,7 +219,7 @@ export type Database = {
           paymentId: string
           phoneNumber: number | null
           price: number
-          product_list: Json[] | null
+          product_list: Json[]
           request: string | null
           userId: string
         }
@@ -230,7 +230,7 @@ export type Database = {
           paymentId: string
           phoneNumber?: number | null
           price: number
-          product_list?: Json[] | null
+          product_list: Json[]
           request?: string | null
           userId: string
         }
@@ -241,7 +241,7 @@ export type Database = {
           paymentId?: string
           phoneNumber?: number | null
           price?: number
-          product_list?: Json[] | null
+          product_list?: Json[]
           request?: string | null
           userId?: string
         }

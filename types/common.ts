@@ -17,3 +17,5 @@ export type Review = Tables<"product_review">;
 export type CartItems = Tables<"cart">;
 
 export type InfSubscribe = Tables<"subscribe">;
+
+export type OrderType = Tables<"order"> | null;

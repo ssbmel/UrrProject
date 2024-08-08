@@ -188,7 +188,7 @@ export default function Chat() {
     // }
 
     if (e.key === 'Enter' && !e.shiftKey) { 	   // [Enter] 치면 메시지 보내기
-      if(message !== ''){
+      if (message !== '') {
         sendChatMessage();
         setMessage('');
       } else {
@@ -200,43 +200,42 @@ export default function Chat() {
   };
 
   return (
-    <div className='overflow-y-hidden'>
-      {/* <div className="h-12"></div> */}
-      <div key={channel_id} ref={scrollRef} className='relative h-full overflow-y-scroll min-h-[649px] max-h-[649px] bg-[#E1EEFE]'>
-        {preMessages?.map((preMessage) => (
-          (preMessage.isMine) ?
-            <div key={preMessage.message_id} className="p-2">
-              <div className="flex flex-row-reverse">
-                <Image src={poly} width={12.87} height={8} quality={100} className="absolute mr-1 z-10 mt-[8px] -scale-x-100" alt="chatpoly"></Image>
-                <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 mr-[15px] mb-2 max-w-[246px]">{preMessage.content.message}</label>
-                <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
+    <div className="h-full overflow-hidden flex flex-col">
+        {/* <div className="h-12"></div> */}
+        <div key={channel_id} ref={scrollRef} className='relative overflow-y-scroll bg-[#E1EEFE] grow'>
+          {preMessages?.map((preMessage) => (
+            (preMessage.isMine) ?
+              <div key={preMessage.message_id} className="p-2">
+                <div className="flex flex-row-reverse">
+                  <Image src={poly} width={12.87} height={8} quality={100} className="absolute mr-1 z-10 mt-[8px] -scale-x-100" alt="chatpoly"></Image>
+                  <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 mr-[15px] mb-2 max-w-[246px]">{preMessage.content.message}</label>
+                  <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
+                </div>
               </div>
-            </div>
-            :
-            <div key={preMessage.message_id} className="p-2">
-              <div className="ml-3 mb-1">
-                <label className="font-normal">{preMessage.nickname}</label>
+              :
+              <div key={preMessage.message_id} className="p-2">
+                <div className="ml-3 mb-1">
+                  <label className="font-normal">{preMessage.nickname}</label>
+                </div>
+                <div className="flex flex-row">
+                  <Image src={poly} width={12.87} height={8} quality={100} className="absolute z-10 mt-[8px] ml-1" alt="chatpoly"></Image>
+                  <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">{preMessage.content.message}</label>
+                  <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
+                </div>
               </div>
-              <div className="flex flex-row">
-                <Image src={poly} width={12.87} height={8} quality={100} className="absolute z-10 mt-[8px] ml-1" alt="chatpoly"></Image>
-                <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">{preMessage.content.message}</label>
-                <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
-              </div>
-            </div>
-        )
-        )}
-      </div>
-
+          )
+          )}
+        </div>
       <div className="flex flex-row w-full h-[76px] bottom-0 shrink-0 mt-2 mb-2">
         <PlusIcon />
         <textarea onKeyDown={pressEnter} className="flex-1 rounded-[6px] max-h-max h-[40px] w-auto border border-[#EAECEC]" value={message} onChange={handleTextarea}></textarea>
-        <SendIcon>
-          <button className="" onClick={(message != '') ? () => {
+        <SendIcon onClick={(message != '') ? () => {
             sendChatMessage();
             setMessage('');
           } : () => {
             console.log('보낼 내용 없음')
-          }} /></SendIcon>
+          }}>
+          </SendIcon>
       </div>
     </div>
   );

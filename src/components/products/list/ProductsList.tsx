@@ -17,7 +17,11 @@ interface PostData {
   nickname: string;
 }
 
-export default function ProductsList() {
+interface ProductsListProps {
+  selectedCategory: string;
+}
+
+export default function ProductsList({ selectedCategory }: ProductsListProps) {
   const [products, setProducts] = useState<PostData[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,35 +41,42 @@ export default function ProductsList() {
     }
     getData();
   }, []);
-  const totalProducts = products.length.toString().padStart(2, "0");
+
+  const filteredProducts =
+    selectedCategory === "전체" ? products : products.filter((product) => product.category === selectedCategory);
+
+  const totalProducts = filteredProducts.length.toString().padStart(2, "0");
+
   return (
     <>
-      <div className="flex justify-between p-6">
+      <div className="flex justify-between px-6 pt-6">
         <p className="text-lg">총 {totalProducts}개</p>
-        {/* <p>추천순</p> */}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
-        {products.map((product, index) => {
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-[36px] p-[17px] ">
+        {filteredProducts.map((product, index) => {
           const cost = parseFloat(product.cost);
           const price = parseFloat(product.price);
           const discountRate = Math.round(((cost - price) / cost) * 100);
 
           return (
-            <div key={index} className="bg-white rounded-md p-2 flex flex-col">
-              <div className="flex justify-center">
-                <Link href={`/products/detail/${product.id}`}>
-                  <div className="relative w-[165px] h-[178px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
-                    <Image
-                      src={product.main_img}
-                      alt={product.title}
-                      fill
-                      sizes="165px"
-                      className="rounded-md object-cover"
-                    />
-                  </div>
-                </Link>
-              </div>
+            <div
+              key={index}
+              className="bg-white rounded-md flex flex-col justify-center items-center w-[166px] mx-auto"
+            >
+              <Link href={`/products/detail/${product.id}`}>
+                <div className="relative w-[165px] h-[178px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
+                  <Image
+                    src={product.main_img}
+                    alt={product.title}
+                    fill
+                    priority
+                    sizes="165px"
+                    className="rounded-md object-cover"
+                  />
+                </div>
+              </Link>
               <div className="ml-3">
+                <p className="text-[#B2B5B8] text-[12px]">{product.nickname}</p>
                 <p className="text-sm text-gray-600 truncate w-[165px]">{product.title}</p>
                 <div className="flex items-center">
                   <p className="text-sm text-red-500">{discountRate}%</p>

@@ -48,11 +48,7 @@ const LoadingComponent = () => {
 
   useEffect(() => {
     if (code === "FAILURE_TYPE_PG") {
-      if (confirm("결제를 취소하시겠습니까?")) {
-        router.push("/product/list");
-      } else {
-        window.history.back();
-      }
+      router.push(`/payment/fail?message=${message}`);
     } else if (!code) {
       // 성공 케이스
       if (paymentData) {

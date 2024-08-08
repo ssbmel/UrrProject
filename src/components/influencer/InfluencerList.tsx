@@ -10,6 +10,7 @@ import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
 import "./style.css";
+import StartChat from "../chat/StartChat";
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -133,6 +134,7 @@ function InfluencerList() {
                   </div>
                 </div>
                 <p className="text-sm">{inf.nickname}</p>
+                <StartChat owner_id={inf.id} />
               </div>
             ))}
           </div>

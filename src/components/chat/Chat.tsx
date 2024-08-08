@@ -15,7 +15,7 @@ interface detailProps {
 export default function Chat({ params }: detailProps) {
   const userdata = useUserData().data;
   const supabase = createClient();
-  const channel_id = Number(params.id.slice(3,-3));
+  const channel_id = Number(params.id.slice(3, -3));
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +57,10 @@ export default function Chat({ params }: detailProps) {
     const approve = await userdata.approve;
     if (approve) {
       //인플
-      const { data, error } = await supabase.from("chat_messages").select("*").eq("channel_id", channel_id);
+      const { data, error } = await supabase
+        .from("chat_messages")
+        .select("*")
+        .eq("channel_id", channel_id);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -291,12 +294,12 @@ export default function Chat({ params }: detailProps) {
           onClick={
             message != ""
               ? () => {
-                  sendChatMessage();
-                  setMessage("");
-                }
+                sendChatMessage();
+                setMessage("");
+              }
               : () => {
-                  console.log("보낼 내용 없음");
-                }
+                console.log("보낼 내용 없음");
+              }
           }
         ></SendIcon>
       </div>

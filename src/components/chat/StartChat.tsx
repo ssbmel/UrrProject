@@ -28,6 +28,10 @@ export default function StartChat(owner_id: string) {
     const user_id = userdata.id
     const channel_id = await checkOwnerChannel();
     if (channel_id) {
+      // const { data, error } = await supabase
+      //   .from('chat_subcribe')
+      //   .select('chat_subcribe_id')
+      //   .eq('channel_id', )
       const { data, error } = await supabase
         .from('chat_subscribe')
         .insert({

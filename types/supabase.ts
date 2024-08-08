@@ -253,6 +253,7 @@ export type Database = {
         Row: {
           created_at: string;
           id: string;
+          inf_name: string | null;
           product_id: string | null;
           review_content: string | null;
           review_images: string[] | null;
@@ -263,6 +264,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           id?: string;
+          inf_name?: string | null;
           product_id?: string | null;
           review_content?: string | null;
           review_images?: string[] | null;
@@ -273,6 +275,7 @@ export type Database = {
         Update: {
           created_at?: string;
           id?: string;
+          inf_name?: string | null;
           product_id?: string | null;
           review_content?: string | null;
           review_images?: string[] | null;
@@ -297,6 +300,29 @@ export type Database = {
           start: string | null;
           text: string | null;
           title: string | null;
+          user_id: string;
+        };
+        Insert: {
+          infuser_id: string;
+          user_id: string;
+        };
+        Update: {
+          infuser_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "products_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      subscribe: {
+        Row: {
+          infuser_id: string;
           user_id: string;
         };
         Insert: {
@@ -360,7 +386,7 @@ export type Database = {
           created_at?: string;
           email?: string | null;
           id?: string;
-          intro: string | null;
+          intro?: string | null;
           name?: string | null;
           nickname?: string;
           phonenum?: string | null;

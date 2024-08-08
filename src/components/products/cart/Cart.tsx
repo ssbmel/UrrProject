@@ -131,9 +131,10 @@ function Cart() {
         <label>
           <input
             type="checkbox"
+            readOnly
             name="product-all"
             className="mr-1"
-            checked={allChecked}
+            defaultChecked={allChecked}
             onClick={(e: any) => {
               selectAllHandler(e.target.checked);
             }}

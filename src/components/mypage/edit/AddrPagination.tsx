@@ -25,14 +25,13 @@ const AddrPagination = ({ keyword, currentPage, setCurrentPage, pageData, setPag
     if (common?.errorCode !== "0") {
       alert(common?.errorMessage);
     }
-    console.log(results);
     setPageData(common);
     setData(data);
   };
 
   return (
     <>
-      {keyword?.length ? (
+      {keyword?.length && Number(pageData?.totalCount) > 0 ? (
         <div className="flex justify-center items-center gap-5 mt-[20px] mb-[20px] text-[14px] h-[33px] p-[6px]">
           <button
             onClick={(e) => pageHandler(e, keyword, currentPage - 1)}

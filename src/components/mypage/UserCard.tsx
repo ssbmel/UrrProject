@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 
 const UserCard = () => {
   const { data: user } = useUserData();
-
   const router = useRouter();
 
   const logoutHandler = async () => {
@@ -20,6 +19,8 @@ const UserCard = () => {
       return;
     }
     router.push("/");
+    location.reload();
+    return;
   };
 
   return (

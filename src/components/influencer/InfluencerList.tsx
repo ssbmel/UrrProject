@@ -9,6 +9,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
+import "./style.css";
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -139,7 +140,7 @@ function InfluencerList() {
       </div>
       <div className="w-full h-[70%] p-4 my-5 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg mb-3">인플루언서</h1>
-        <div className="w-full gap-1 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
+        <div className="se-width w-full gap-1 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
               <div className="relative w-[120px] h-[120px] mb-2">

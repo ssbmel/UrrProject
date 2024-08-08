@@ -39,11 +39,11 @@ export default function Complete() {
       if (paymentId) {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
         setProducts(data as orderType);
-      }
-
-      if (userId) {
-        const { data } = await supabase.from("cart").delete().eq("user_id", userId);
-        console.log(data);
+        const productList = (data?.product_list as productList[]) || [];
+        const productId = productList.map<string>((item) => item.id);
+        if (userId && productId) {
+          await supabase.from("cart").delete().eq("user_id", userId).in("product_id", productId);
+        }
       }
     };
 

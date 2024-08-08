@@ -145,7 +145,7 @@ export default function Detail({ params }: detailProps) {
             )}
           </div>
         </div>
-        <div className="paybar sticky bottom-[79px] bg-white left-0 w-full z-50">
+        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-50">
           <div className="flex justify-evenly py-2">
             <div onClick={() => setShowModal(true)}>
               <Image src={cart} alt="장바구니로고" width={52} height={52} />

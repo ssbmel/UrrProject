@@ -7,10 +7,13 @@ import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
 import ProductInquiry from "./ProductInquiry";
 import DetailImg from "./DetailImg";
-import Link from "next/link";
+import share from "../../../../public/icon/share.png";
+
 import CountModal from "./CountModal";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
+
+import DetailInflu from "./DetailInflu";
 
 interface detailProps {
   params: { id: string };
@@ -39,7 +42,7 @@ export default function Detail({ params }: detailProps) {
 
   const handleBuy = () => {
     setShowModal(false);
-    // 여기에 구매 로직 추가
+
     setProductList([
       {
         id: data.id,
@@ -50,21 +53,36 @@ export default function Detail({ params }: detailProps) {
       }
     ]);
     router.push(`/payment`);
-    // console.log(`구매 수량: ${quantity}`);
+  };
+
+  const handleShare = () => {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        alert("URL이 클립보드에 복사되었습니다!");
+      })
+      .catch((error) => {
+        console.error("URL 복사 실패:", error);
+      });
   };
 
   return (
     <>
       <div className="flex flex-col min-h-screen">
         <div className="flex justify-center w-full">
-          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} />}
+          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} priority />}
         </div>
+        <DetailInflu userId={data?.user_id} />
         <div className="my-[20px] mx-4">
-          <p className="my-4 text-xl">{data?.title}</p>
-          <p className="text-gray-300 line-through">{cost.toLocaleString()}</p>
-          <p className="my-1">
+          <div className="flex justify-between items-cente py-2">
+            <p className="text-xl flex items-center ">{data?.title}</p>
+            <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
+          </div>
+          <p className="text-gray-300 line-through font-thin">{cost.toLocaleString()}</p>
+          <p className="my-1 text-[18px]">
             <span className="text-red-500">{discountPercentageInteger}%</span>
-            <span className="text-lg font-semibold ml-2">{price.toLocaleString()} 원</span>
+            <span className=" font-semibold ml-2">{price.toLocaleString()} 원</span>
           </p>
           <p className="text-[#989C9F]">리뷰 05건</p>
         </div>
@@ -128,12 +146,10 @@ export default function Detail({ params }: detailProps) {
           </div>
         </div>
         <div className="paybar sticky bottom-[79px] bg-white left-0 w-full z-50">
-          <div className="flex justify-evenly p-2">
-            <Link href={"/cart"}>
-              <div>
-                <Image src={cart} alt="장바구니로고" width={52} height={52} />
-              </div>
-            </Link>
+          <div className="flex justify-evenly py-2">
+            <div onClick={() => setShowModal(true)}>
+              <Image src={cart} alt="장바구니로고" width={52} height={52} />
+            </div>
             <div>
               <button
                 onClick={() => setShowModal(true)}

@@ -13,11 +13,11 @@ export default function BottomNav() {
 
   return (
     <>
-      <div className="bg-[#FAFAFF] pb-[42px] h-[107px] pt-[8px] w-full sticky bottom-0 shrink-0">
+      <div className="bg-[#FAFAFF] pb-[42px] h-[93px] pt-[8px] w-full sticky bottom-0 shrink-0">
         <div className="flex justify-between items-center mx-[20px]">
           <Link href={"/"}>
             <div className={liStyle}>
-              <div className="flex flex-col items-center gap-[4px] px-[6px]">
+              <div className="flex flex-col items-center px-[6px]">
                 <div className=" p-[6px]">
                   <HomeIcon />
                 </div>

@@ -92,10 +92,10 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex flex-row justify-between items-center h-12 w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[5%]">
-        <div>{leftIcon}</div>
+      <header className="flex flex-row justify-between items-center h-[50px] w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[5%] py-[6px]">
+        <div className="h-full min-w-[32px] p-[4px] flex justify-center items-center">{leftIcon}</div>
         <div className="font-semibold text-xl">{headerTitle}</div>
-        <div className="flex gap-2">{rightIcon}</div>
+        <div className="flex gap-2 p-[4px]">{rightIcon}</div>
       </header>
 
       {isModalOpen && (

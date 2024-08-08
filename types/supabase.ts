@@ -81,20 +81,31 @@ export type Database = {
           channel_name: string | null;
           created_at: string;
           owner_id: string;
+          owner_profile_url: string | null;
         };
         Insert: {
           channel_id?: number;
           channel_name?: string | null;
           created_at?: string;
           owner_id: string;
+          owner_profile_url?: string | null;
         };
         Update: {
           channel_id?: number;
           channel_name?: string | null;
           created_at?: string;
           owner_id?: string;
+          owner_profile_url?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "chat_channels_channel_name_fkey";
+            columns: ["channel_name"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["nickname"];
+          }
+        ];
       };
       chat_messages: {
         Row: {
@@ -121,7 +132,15 @@ export type Database = {
           nickname?: string | null;
           user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_nickname_fkey";
+            columns: ["nickname"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["nickname"];
+          }
+        ];
       };
       chat_subscribe: {
         Row: {
@@ -281,40 +300,23 @@ export type Database = {
           user_id: string;
         };
         Insert: {
-          category?: string | null;
-          cost: number;
-          created_at?: string;
-          detail_img?: string[] | null;
-          end?: string | null;
-          id: string;
-          main_img?: string | null;
-          nickname?: string | null;
-          price: number;
-          product_count?: number | null;
-          start?: string | null;
-          text?: string | null;
-          title?: string | null;
+          infuser_id: string;
           user_id: string;
         };
         Update: {
-          category?: string | null;
-          cost?: number;
-          created_at?: string;
-          detail_img?: string[] | null;
-          end?: string | null;
-          id?: string;
-          main_img?: string | null;
-          nickname?: string | null;
-          price?: number;
-          product_count?: number | null;
-          start?: string | null;
-          text?: string | null;
-          title?: string | null;
+          infuser_id?: string;
           user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "products_user_id_fkey";
+            foreignKeyName: "subscribe_infuser_id_fkey";
+            columns: ["infuser_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "subscribe_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";

@@ -7,6 +7,7 @@ import { createClient } from "../../../supabase/client";
 import { Tables } from "../../../types/supabase";
 import orderCom from "../../../public/icon/orderComplete.png";
 import { refundPayment } from "@/services/payment/payment.service";
+import { useUserData } from "@/hooks/useUserData";
 
 type orderType = Tables<"order"> | null;
 
@@ -23,6 +24,7 @@ export default function Complete() {
   const supabase = createClient();
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
+  const userId = useUserData();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -36,17 +38,28 @@ export default function Complete() {
         const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
         setProducts(data as orderType);
       }
+
+      // if (userId) {
+      //   const { data } = await supabase.from("cart").delete().eq("user_id", userId);
+      // }
     };
 
     getProducts();
-  }, [paymentId, supabase]);
+  }, [paymentId, supabase, userId]);
 
   return (
-    <div>
-      <div className="bg-white rounded-lg">
+    <div className="">
+      <div className="bg-white rounded-lg mb-[10px]">
         <div className="p-8 text-center">
           <h2 className="text-[16px] mb-[12px] text-red-600">저희 프로젝트에서 결제한 내역은 즉시 환불됩니다</h2>
-          <Image src={orderCom} alt="주문완료" width={24} height={24} className="ml-[62px]" />
+          <Image
+            src={orderCom}
+            alt="주문완료"
+            width={24}
+            height={24}
+            style={{ width: 24, height: 24 }}
+            className="ml-[62px]"
+          />
           <h2 className="text-[20px] mb-[12px]">주문이 완료되었습니다</h2>
           <p className="text-gray-400 text-[16px]">
             <span>주문번호 </span>
@@ -56,7 +69,7 @@ export default function Complete() {
         <div className="border-[#F4F4F4] border-[8px] w-full mt-3" />
         <div className="p-2 m-4">
           <p className="mb-4 text-[18px]">배송정보</p>
-          <div className="grid grid-cols-[30%_70%] gap-y-8 gap-x-4">
+          <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px]">
             <div className="text-[#4C4F52]">주문자</div>
             <div>{products?.name}</div>
 
@@ -65,6 +78,9 @@ export default function Complete() {
 
             <div className="text-[#4C4F52]">배송 요청 사항</div>
             <div>{products?.request}</div>
+
+            <div className="text-[#4C4F52]">택배사 정보</div>
+            <div>cj 대한통운</div>
           </div>
         </div>
         <div className="border-[#F4F4F4] border-[8px] w-full mt-3" />
@@ -85,7 +101,7 @@ export default function Complete() {
                       />
                     </div>
                   </div>
-                  <div className="ml-2">
+                  <div className="ml-4">
                     <div className="flex flex-col">
                       <p className="text-sm text-[#4C4F52]">{product.name}</p>
                       <p className="text-md font-semibold">{product.amount} 원</p>
@@ -97,7 +113,7 @@ export default function Complete() {
           </div>
         </div>
         <div className="border-[#F4F4F4] border mx-3" />
-        <div className="p-5 flex justify-between fixed bottom-[80px] w-full shadow-inner text-lg">
+        <div className="p-5 flex justify-between  bottom-[80px] w-full  text-lg">
           <div>최종 결제 금액</div>
           <div>{products?.price.toLocaleString()} 원</div>
         </div>

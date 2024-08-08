@@ -4,6 +4,10 @@ import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
+import poly from "../../../public/images/chatpoly.png";
+import PlusIcon from "../../../public/icon/pluscontent.svg";
+import SendIcon from "../../../public/icon/sendmessage.svg";
 
 export default function Chat() {
   const userdata = useUserData().data;
@@ -14,17 +18,11 @@ export default function Chat() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
-  const [message, setMessage] = useState<string | number | readonly string[] | undefined>("");
-  const [preMessages, setPreMessages] = useState<
-    {
-      message_id: number;
-      nickname: string | null;
-      isMine: boolean;
-      time: string;
-      content: { message: string | null };
-    }[]
-  >([]);
-  const [firstLoading, setFirstLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | number | readonly string[] | undefined>('');
+  const [preMessages, setPreMessages] = useState<{ message_id: number; nickname: string | null; isMine: boolean, time: string, content: { message: string | null } }[]>([]);
+  const [firstLoading, setFirstLoading] = useState<boolean>(false)
+  const [height, setHeight] = useState(window.innerHeight - 155 - 76);
+
   const scrollToBottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -52,14 +50,8 @@ export default function Chat() {
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
-          return {
-            message_id: message.message_id,
-            nickname: message.nickname,
-            isMine: message.user_id == user_id ? true : false,
-            time: message.created_at,
-            content: JSON.parse(JSON.stringify(message.content))
-          };
-        });
+          return { message_id: message.message_id, nickname: message.nickname, isMine: (message.user_id == user_id) ? true : false, time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
+        })
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
     } else {
@@ -73,21 +65,19 @@ export default function Chat() {
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
-          return {
-            message_id: message.message_id,
-            nickname: message.nickname,
-            isMine: message.user_id == user_id ? true : false,
-            time: message.created_at,
-            content: JSON.parse(JSON.stringify(message.content))
-          };
-        });
+          return { message_id: message.message_id, nickname: message.nickname, isMine: (message.user_id == user_id) ? true : false, time: message.created_at, content: JSON.parse(JSON.stringify(message.content)) }
+        })
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
     }
   };
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
+    setMessage(e.target.value)
+  }
+
+  const handleResize = () => {
+    setHeight(window.innerHeight - 155 - 76);
   };
 
   const sendChatMessage = async () => {
@@ -143,17 +133,8 @@ export default function Chat() {
           (payload) => {
             const newMessage = payload.new;
             setPreMessages((pre) => {
-              return [
-                ...pre,
-                {
-                  message_id: newMessage.message_id,
-                  nickname: newMessage.nickname,
-                  isMine: newMessage.user_id == user_id ? true : false,
-                  time: newMessage.created_at,
-                  content: newMessage.content
-                }
-              ];
-            });
+              return [...pre, { message_id: newMessage.message_id, nickname: newMessage.nickname, isMine: (newMessage.user_id == user_id) ? true : false, time: newMessage.created_at, content: newMessage.content }]
+            })
           }
         )
         .subscribe();
@@ -173,17 +154,8 @@ export default function Chat() {
             const newMessage = payload.new;
             if (newMessage.user_id == user_id || newMessage.user_id == owner_id) {
               setPreMessages((pre) => {
-                return [
-                  ...pre,
-                  {
-                    message_id: newMessage.message_id,
-                    nickname: newMessage.nickname,
-                    isMine: newMessage.user_id == user_id ? true : false,
-                    time: newMessage.created_at,
-                    content: newMessage.content
-                  }
-                ];
-              });
+                return [...pre, { message_id: newMessage.message_id, nickname: newMessage.nickname, isMine: (newMessage.user_id == user_id) ? true : false, time: newMessage.created_at, content: newMessage.content }]
+              })
             }
           }
         )
@@ -200,48 +172,71 @@ export default function Chat() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [preMessages]);
+  }, [preMessages])
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      // cleanup
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // if (e.nativeEvent.isComposing) { 	   // isComposing 이 true 이면 
+    //   return;				   // 조합 중이므로 동작을 막는다.
+    // }
+
+    if (e.key === 'Enter' && !e.shiftKey) { 	   // [Enter] 치면 메시지 보내기
+      if(message !== ''){
+        sendChatMessage();
+        setMessage('');
+      } else {
+        e.preventDefault();
+        return;
+      }
+      e.preventDefault();
+    }
+  };
 
   return (
-    <div className="relative overflow-y-hidden">
-      <div key={channel_id} ref={scrollRef} className="relative h-full overflow-y-auto max-h-[620px]">
-        {preMessages?.map((preMessage) =>
-          preMessage.isMine ? (
-            <div key={preMessage.message_id} className="text-right">
-              <label className="text-xs text-inherit">{preMessage.time.slice(11, 16)}</label>
-              <label className="">{preMessage.content.message}</label>
-            </div>
-          ) : (
-            <div key={preMessage.message_id}>
-              <div>
-                <label className="text-blue-600">{preMessage.nickname}</label>
-              </div>
-              <div className="text-left border border-gray-400 rounded-md w-48 flex justify-between items-center p-1">
-                <label className="">{preMessage.content.message}</label>
-                <label className="text-xs text-inherit">{preMessage.time.slice(11, 16)}</label>
+    <div className='overflow-y-hidden'>
+      {/* <div className="h-12"></div> */}
+      <div key={channel_id} ref={scrollRef} className='relative h-full overflow-y-scroll min-h-[649px] max-h-[649px] bg-[#E1EEFE]'>
+        {preMessages?.map((preMessage) => (
+          (preMessage.isMine) ?
+            <div key={preMessage.message_id} className="p-2">
+              <div className="flex flex-row-reverse">
+                <Image src={poly} width={12.87} height={8} quality={100} className="absolute mr-1 z-10 mt-[8px] -scale-x-100" alt="chatpoly"></Image>
+                <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 mr-[15px] mb-2 max-w-[246px]">{preMessage.content.message}</label>
+                <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
               </div>
             </div>
-          )
+            :
+            <div key={preMessage.message_id} className="p-2">
+              <div className="ml-3 mb-1">
+                <label className="font-normal">{preMessage.nickname}</label>
+              </div>
+              <div className="flex flex-row">
+                <Image src={poly} width={12.87} height={8} quality={100} className="absolute z-10 mt-[8px] ml-1" alt="chatpoly"></Image>
+                <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">{preMessage.content.message}</label>
+                <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">{preMessage.time.slice(11, 16)}</label>
+              </div>
+            </div>
+        )
         )}
       </div>
 
-      <div className="w-full h-full bottom-0 shrink-0 mt-0.5 mb-0">
-        <textarea className="h-[80px] w-full border border-black" value={message} onChange={handleTextarea}></textarea>
-        <button
-          className="border border-black bottom-0 mb-0"
-          onClick={
-            message != ""
-              ? () => {
-                  sendChatMessage();
-                  setMessage("");
-                }
-              : () => {
-                  console.log("보낼 내용 없음");
-                }
-          }
-        >
-          채팅 보내기
-        </button>
+      <div className="flex flex-row w-full h-[76px] bottom-0 shrink-0 mt-2 mb-2">
+        <PlusIcon />
+        <textarea onKeyDown={pressEnter} className="flex-1 rounded-[6px] max-h-max h-[40px] w-auto border border-[#EAECEC]" value={message} onChange={handleTextarea}></textarea>
+        <SendIcon>
+          <button className="" onClick={(message != '') ? () => {
+            sendChatMessage();
+            setMessage('');
+          } : () => {
+            console.log('보낼 내용 없음')
+          }} /></SendIcon>
       </div>
     </div>
   );

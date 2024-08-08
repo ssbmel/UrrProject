@@ -12,6 +12,7 @@ import { Product, User } from "../../../types/common";
 function Main() {
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [infUser, setInfUser] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getPostData = async () => {
     const response = await fetch("/api/products");
@@ -35,11 +36,23 @@ function Main() {
       console.log("Failed to fetch user data:", error);
     }
   };
+  
   useEffect(() => {
-    getPostData();
-    getUserData();
+    const fetchData = async () => {
+      setIsLoading(true);
+      await Promise.all([getPostData(), getUserData()]);
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="spinner">
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 ">

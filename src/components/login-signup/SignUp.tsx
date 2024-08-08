@@ -23,11 +23,14 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
   const [passwordMessage, setPasswordMessage] = useState<string>("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState<string>("");
   const [nicknameConfirmMessage, setNicknameConfirmMessage] = useState<string>("");
+  const [emailConfirmMessage, setEmailConfirmMessage] = useState<string>("");
 
   // 유효성 검사
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
   const [isNicknameConfirm, setIsNicknameConfirm] = useState<boolean>(false);
+  const [isEmailConfirm, setIsEmailConfirm] = useState<boolean>(false);
+
   const router = useRouter();
 
   const onSignUpHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,6 +78,21 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
         setNicknameConfirmMessage("");
         setIsNicknameConfirm(true);
       }
+    }
+  };
+
+  // 이메일 유효성검사
+  const onChangeEmail = () => {
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const email = emailRef.current?.value;
+
+    if (!emailRegex.test(email as string)) {
+      setEmailConfirmMessage("이메일 형식이 다시 확인해주세요!");
+      setIsEmailConfirm(false);
+    } else {
+      setEmailConfirmMessage("");
+      setIsEmailConfirm(true);
     }
   };
 
@@ -129,8 +147,15 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
           </div>
           <label className="flex flex-col">
             이메일 *
-            <input type="text" placeholder="asdf123@asdf.vqsd" ref={emailRef} className={stInput} />
-            <p className={stLabel}>이메일은 수정이 불가하니 정확하게 입력하세요.</p>
+            <input
+              type="text"
+              placeholder="asdf123@asdf.vqsd"
+              onChange={onChangeEmail}
+              ref={emailRef}
+              className={stInput}
+            />
+            <p className={stLabel}>{emailConfirmMessage}</p>
+            {/* <p className={stLabel}>이메일은 수정이 불가하니 정확하게 입력하세요.</p> */}
           </label>
           <label className="flex flex-col">
             비밀번호 *

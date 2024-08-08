@@ -22,23 +22,28 @@ export default function Fail() {
   // }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-screen ">
-      <div className="relative w-[96px] h-[142px]">
-        <Image src={fail} alt="결제실패 이미지" fill sizes="96px" className=" object-cover" />
-      </div>
-      <div className="bg-white p-8 rounded-lg text-center mb-[80px]">
-        <h2 className="text-red-500 text-2xl font-bold m-2">주문을 완료하지 못했어요</h2>
-        <p className="text-[18px] text-[#4C4F52]">이용에 불편을 드려 죄송합니다</p>
+    <div className="flex justify-center items-center w-full h-screen ">
+      <div className="flex flex-col justify-center items-center mb-[80px]">
+        <div className="relative w-[96px] h-[142px]">
+          <Image src={fail} alt="결제실패 이미지" fill sizes="96px" priority className=" object-cover" />
+        </div>
+        <div className="bg-white p-8 rounded-lg text-center mb-[80px] items-center">
+          <h2 className="text-black text-[24px] font-bold m-2">주문을 완료하지 못했어요</h2>
+          <p className="text-[18px] text-[#4C4F52]">이용에 불편을 드려 죄송합니다</p>
 
-        <Link href={"/products/list"}>
-          <div className="w-[250px] h-[74px] border border-[#F2F2F2] rounded-md">
-            <p className="text-gray-800 text-lg">
-              <span className="font-semibold text-sm">실패 사유</span>
-              <span>{message}</span>
-            </p>
+          <div className="w-[300px] h-[110px] border border-[#F2F2F2] text-gray-800  flex flex-col rounded-2xl m-[24px] px-[16px] py-[12px]">
+            <p className=" text-sm mb-1">주문 실패 이유</p>
+            <div className="h-[60px] flex flex-col justify-center">
+              <p className="text-md font-medium justify-center">{message}</p>
+            </div>
           </div>
-          <button className="w-44 h-8 mt-2 rounded-md text-white bg-[#1A82FF]">다시 구매하러 가기</button>
-        </Link>
+          <p className="text-[#4C4F52]">확인 후 다시 주문해주세요</p>
+        </div>
+        <div className="w-full px-3 ">
+          <Link href={"/products/list"}>
+            <button className="w-full h-[52px] mt-2 rounded-md text-[18px] text-white bg-[#1A82FF]">구매하기</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

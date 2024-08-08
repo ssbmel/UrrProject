@@ -239,13 +239,9 @@ export default function Chat() {
   };
 
   return (
-    <div className="overflow-y-hidden ">
+    <div className="h-full overflow-hidden flex flex-col">
       {/* <div className="h-12"></div> */}
-      <div
-        key={channel_id}
-        ref={scrollRef}
-        className="relative h-full overflow-y-scroll min-h-[649px] max-h-[649px] bg-[#E1EEFE] "
-      >
+      <div key={channel_id} ref={scrollRef} className="relative overflow-y-scroll bg-[#E1EEFE] grow">
         {preMessages?.map((preMessage) =>
           preMessage.isMine ? (
             <div key={preMessage.message_id} className="p-2">
@@ -291,7 +287,6 @@ export default function Chat() {
           )
         )}
       </div>
-
       <div className="flex flex-row w-full h-[76px] bottom-0 shrink-0 mt-2 mb-2">
         <PlusIcon />
         <textarea
@@ -300,21 +295,18 @@ export default function Chat() {
           value={message}
           onChange={handleTextarea}
         ></textarea>
-        <SendIcon>
-          <button
-            className=""
-            onClick={
-              message != ""
-                ? () => {
-                    sendChatMessage();
-                    setMessage("");
-                  }
-                : () => {
-                    console.log("보낼 내용 없음");
-                  }
-            }
-          />
-        </SendIcon>
+        <SendIcon
+          onClick={
+            message != ""
+              ? () => {
+                  sendChatMessage();
+                  setMessage("");
+                }
+              : () => {
+                  console.log("보낼 내용 없음");
+                }
+          }
+        ></SendIcon>
       </div>
     </div>
   );

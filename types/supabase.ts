@@ -87,20 +87,31 @@ export type Database = {
           channel_name: string | null
           created_at: string
           owner_id: string
+          owner_profile_url: string | null
         }
         Insert: {
           channel_id?: number
           channel_name?: string | null
           created_at?: string
           owner_id: string
+          owner_profile_url?: string | null
         }
         Update: {
           channel_id?: number
           channel_name?: string | null
           created_at?: string
           owner_id?: string
+          owner_profile_url?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "chat_channels_channel_name_fkey"
+            columns: ["channel_name"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["nickname"]
+          },
+        ]
       }
       chat_messages: {
         Row: {
@@ -127,7 +138,15 @@ export type Database = {
           nickname?: string | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_nickname_fkey"
+            columns: ["nickname"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["nickname"]
+          },
+        ]
       }
       chat_subscribe: {
         Row: {
@@ -248,6 +267,16 @@ export type Database = {
           title: string | null
           user_nickname: string | null
         }
+          created_at: string
+          id: string
+          inf_name: string | null
+          product_id: string | null
+          review_content: string | null
+          review_images: string[] | null
+          review_score: number | null
+          title: string | null
+          user_nickname: string | null
+        }
         Insert: {
           created_at?: string
           id?: string
@@ -259,7 +288,29 @@ export type Database = {
           title?: string | null
           user_nickname?: string | null
         }
+          created_at?: string
+          id?: string
+          inf_name?: string | null
+          product_id?: string | null
+          review_content?: string | null
+          review_images?: string[] | null
+          review_score?: number | null
+          title?: string | null
+          user_nickname?: string | null
+        }
         Update: {
+          created_at?: string
+          id?: string
+          inf_name?: string | null
+          product_id?: string | null
+          review_content?: string | null
+          review_images?: string[] | null
+          review_score?: number | null
+          title?: string | null
+          user_nickname?: string | null
+        }
+        Relationships: []
+      }
           created_at?: string
           id?: string
           inf_name?: string | null
@@ -346,6 +397,29 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "products_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscribe: {
+        Row: {
+          infuser_id: string
+          user_id: string
+        }
+        Insert: {
+          infuser_id: string
+          user_id: string
+        }
+        Update: {
+          infuser_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
             foreignKeyName: "subscribe_infuser_id_fkey"
             columns: ["infuser_id"]
             isOneToOne: false
@@ -376,6 +450,19 @@ export type Database = {
           profile_url: string | null
           role: string | null
         }
+          account_link: string | null
+          address: string | null
+          approve: boolean | null
+          created_at: string
+          email: string | null
+          id: string
+          intro: string | null
+          name: string | null
+          nickname: string
+          phonenum: string | null
+          profile_url: string | null
+          role: string | null
+        }
         Insert: {
           account_link?: string | null
           address?: string | null
@@ -390,7 +477,33 @@ export type Database = {
           profile_url?: string | null
           role?: string | null
         }
+          account_link?: string | null
+          address?: string | null
+          approve?: boolean | null
+          created_at?: string
+          email?: string | null
+          id: string
+          intro?: string | null
+          name?: string | null
+          nickname: string
+          phonenum?: string | null
+          profile_url?: string | null
+          role?: string | null
+        }
         Update: {
+          account_link?: string | null
+          address?: string | null
+          approve?: boolean | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          intro?: string | null
+          name?: string | null
+          nickname?: string
+          phonenum?: string | null
+          profile_url?: string | null
+          role?: string | null
+        }
           account_link?: string | null
           address?: string | null
           approve?: boolean | null

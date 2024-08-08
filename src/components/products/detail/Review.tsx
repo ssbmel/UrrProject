@@ -26,19 +26,19 @@ const Review = ({ props }: { props: ReviewProps }) => {
             .fill(null)
             .map((_, index) => (
               <div key={`full-${index}`} className="w-4 h-4 relative">
-                <Image src={fullStar} alt="full star" fill className="rounded-md object-cover" />
+                <Image src={fullStar} alt="full star" fill sizes="4px" className="rounded-md object-cover" />
               </div>
             ))}
           {hasHalfStar && (
             <div className="w-4 h-4 relative">
-              <Image src={halfStar} alt="half star" fill className="rounded-md object-cover" />
+              <Image src={halfStar} alt="half star" fill sizes="4px" className="rounded-md object-cover" />
             </div>
           )}
           {Array(emptyStars)
             .fill(null)
             .map((_, index) => (
               <div key={`empty-${index}`} className="w-4 h-4 relative">
-                <Image src={emptyStar} alt="empty star" fill className="rounded-md object-cover" />
+                <Image src={emptyStar} alt="empty star" fill sizes="4px" className="rounded-md object-cover" />
               </div>
             ))}
         </div>
@@ -47,7 +47,7 @@ const Review = ({ props }: { props: ReviewProps }) => {
         {props.review_images.map((value, index) => {
           return (
             <div key={index} className="relative w-[84px] h-[84px]">
-              <Image src={value} alt="후기사진" key={index} fill className="rounded-md object-cover" />
+              <Image src={value} alt="후기사진" key={index} fill sizes="84px" className="rounded-md object-cover" />
             </div>
           );
         })}

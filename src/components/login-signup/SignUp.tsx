@@ -49,7 +49,10 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
       if (email && password && nickname && confirm) {
         try {
           await userSignUp({ email, password, nickname, confirm, selectUser, approve: false });
+          alert("회원가입이 완료되었습니다!");
+          router.push("/");
         } catch (error) {
+          alert("회원가입 실패");
           console.log(error);
         }
       }
@@ -60,6 +63,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
           alert("회원가입이 완료되었습니다!");
           router.push("/");
         } catch (error) {
+          alert("회원가입 실패");
           console.log(error);
         }
       }
@@ -102,7 +106,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
     const password = passwordRef.current?.value;
 
     if (!passwordRegex.test(password as string)) {
-      setPasswordMessage("숫자,영문자,특수문자 포함 8자리 이상 입력해주세요!");
+      // setPasswordMessage("숫자,영문자,특수문자 포함 8자리 이상 입력해주세요!");
       setIsPassword(false);
     }
 

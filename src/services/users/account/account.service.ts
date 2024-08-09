@@ -3,6 +3,15 @@ import { AddressProps } from "../../../../types/addr.type";
 import { editUserData } from "../../../../types/auth.type";
 import { v4 as uuidv4 } from "uuid";
 
+export const getUserFromUserId = async (id: string) => {
+  const res = await fetch(`http://localhost:3000/api/auth/users/${id}`);
+  if (!res.ok) {
+    console.log("Error: service error");
+    return;
+  }
+  return res.json();
+};
+
 export const patchUserFromUserId = async (editUserData: editUserData) => {
   console.log(editUserData);
   const { id } = editUserData;

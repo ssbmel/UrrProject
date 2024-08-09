@@ -65,13 +65,12 @@ export default function StartChat(props: setDataType) {
 
   return (
     <div>
-      {(userdata != undefined) ?
+      {(userdata !== undefined) ?
         <button className="flex flex-row cursor-pointer items-center justify-center text-center w-[86px] h-[32px] text-[12px] mr-0 ml-auto text-primarystrong border border-primarynormal rounded bg-white]" onClick={startChat}>
           채팅하기
           <div className="ml-1">
             <ChatStart />
           </div>
-          
         </button>
         : <></>
       }

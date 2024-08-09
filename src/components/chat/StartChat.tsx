@@ -65,7 +65,7 @@ export default function StartChat(props: setDataType) {
   return (
     <div>
       {(userdata != undefined) ?
-        <button className="text-[12px] border-[1.5px] border-[#0051B2] rounded" onClick={startChat}>채팅하기</button>
+        <button className="w-[72px] h-[26px] text-[12px] mt-4 text-primarystrong rounded bg-[#F0F4FA]" onClick={startChat}>채팅하기</button>
         : <></>
       }
 

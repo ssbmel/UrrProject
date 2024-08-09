@@ -127,3 +127,9 @@ input {
 .modal-content.slide-down {
   transform: translateY(0);
 }
+
+.chat {
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  white-space: pre-wrap;
+}

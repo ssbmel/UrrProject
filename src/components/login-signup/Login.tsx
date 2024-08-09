@@ -56,7 +56,7 @@ const Login = () => {
           <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
         </div>
 
-        <form onSubmit={loginHandler} className="flex flex-col h-[40%]">
+        <form onSubmit={loginHandler} className="flex flex-col h-[30%]">
           <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
           <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
           {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}

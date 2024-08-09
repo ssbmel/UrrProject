@@ -30,15 +30,19 @@ export default function Detail({ params }: detailProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
   const { setProductList } = useAddrStore();
+  const router = useRouter();
+
   const cost = parseFloat(data?.cost);
   const price = parseFloat(data?.price);
   const discountPercentage = ((cost - price) / cost) * 100;
   const discountPercentageInteger = Math.floor(discountPercentage);
-  const router = useRouter();
+
+  const endDate = data?.end;
+  const isExpired = endDate && new Date(endDate) < new Date();
 
   useEffect(() => {
     if (!isLoading) {
-      setLoading(false); // 데이터가 로드되면 로딩 상태를 false로 변경
+      setLoading(false);
     }
   }, [isLoading]);
 
@@ -50,7 +54,6 @@ export default function Detail({ params }: detailProps) {
 
   const handleBuy = () => {
     setShowModal(false);
-
     setProductList([
       {
         id: data.id,
@@ -82,8 +85,24 @@ export default function Detail({ params }: detailProps) {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <div className="flex justify-center w-full">
-          {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} priority />}
+        <div className="flex justify-center w-full relative">
+          {data && (
+            <>
+              <Image
+                src={data?.main_img}
+                alt={data?.title}
+                width={500}
+                height={375}
+                priority
+                className={`rounded-md object-cover ${isExpired ? "opacity-50" : ""}`}
+              />
+              {isExpired && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
+                  <p className="text-white text-3xl ">판매 종료된 상품입니다</p>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         <DetailInflu userId={data?.user_id} />
@@ -161,21 +180,23 @@ export default function Detail({ params }: detailProps) {
             )}
           </div>
         </div>
-        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-50">
-          <div className="flex justify-evenly py-2">
-            <div onClick={() => setShowModal(true)}>
-              <Image src={cart} alt="장바구니로고" width={52} height={52} />
-            </div>
-            <div>
-              <button
-                onClick={() => setShowModal(true)}
-                className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md"
-              >
-                구매하기
-              </button>
+        {!isExpired && (
+          <div className="paybar sticky bottom-0 bg-white left-0 w-full z-50">
+            <div className="flex justify-evenly py-2">
+              <div onClick={() => setShowModal(true)}>
+                <Image src={cart} alt="장바구니로고" width={52} height={52} />
+              </div>
+              <div>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md"
+                >
+                  구매하기
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <CountModal
         id={params.id}

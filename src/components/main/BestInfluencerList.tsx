@@ -46,12 +46,12 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
   }); 
 
   return (
-    <div className="w-full mx-auto p-5 h-[550px] bg-[url('../../public/bgImg/influencerImg.png')]">
-      <h2 className="font-bold my-5 text-xl text-white">현재 인기 인플루언서</h2>
+    <div className="w-full mx-auto p-5 h-[500px] bg-[url('../../public/bgImg/influencerImg.png')] bg-center bg-cover">
+      <h2 className="font-bold mt-3 mb-5 text-xl text-white">현재 인기있는 인플루언서</h2>
       <div className="w-full h-[450px]">
         {sortedInfUser.slice(0, 3).map((inf) => (
           <Link key={inf.id} href={`influencer/profile/${inf.id}`}>
-            <div className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full min-h-[100px] mx-auto py-[10px] px-[12px] flex mb-4">
+            <div className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full h-[120px] mx-auto py-[10px] px-[12px] flex mb-4">
               <div className="relative min-w-[100px] h-[100px] mr-2">
                 <Image
                   src={inf.profile_url || defaultImg}
@@ -64,7 +64,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
               </div>
               <div className="flex">
                 <div className="flex flex-col">
-                  <div className="flex py-4">
+                  <div className="flex py-2">
                     <p className="text-[16px] font-bold text-left">{inf.nickname}</p>
                     <span className="mx-2">|</span>
                     <p className="text-[16px] font-bold text-left">

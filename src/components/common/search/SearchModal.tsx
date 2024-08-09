@@ -22,18 +22,11 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const result = localStorage.getItem("keywords") || "[]";
-      // setKeywords(JSON.parse(result));
       if (result) {
         setKeywords(JSON.parse(result));
       }
     }
   }, []);
-
-  // keywords 객체에 의존하여, 변경될 경우 새롭게 localStorage의 아이템 keywords 넣기
-  // useEffect(() => {
-  //   console.log("입력된 검색어:", keywords);
-
-  // }, [keywords]);
 
   // 최근 검색어 추가
   const addKeywordHandler = (text: string) => {
@@ -59,7 +52,6 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
     e.preventDefault();
     const searchWord = searchWordRef.current?.value;
     const searchCache = localStorage.getItem("keywords");
-    console.log(searchCache);
 
     if (searchWord) {
       const { productTitle } = await SearchProductTitleList(searchWord);

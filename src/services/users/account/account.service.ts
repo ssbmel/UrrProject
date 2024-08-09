@@ -4,7 +4,7 @@ import { editUserData } from "../../../../types/auth.type";
 import { v4 as uuidv4 } from "uuid";
 
 export const getUserFromUserId = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/auth/users/${id}`);
+  const res = await fetch(`https://urr-final.vercel.app/api/auth/users/${id}`);
   if (!res.ok) {
     console.log("Error: service error");
     return;
@@ -66,7 +66,7 @@ export const getProfile = async (params: { userId: string; filePath: string }) =
 export const sendResetPasswordEmail = async (email: string) => {
   const supabase = createClient();
   await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "http://localhost:3000/mypage/edit/updatepw"
+    redirectTo: "https://urr-final.vercel.app/mypage/edit/updatepw"
   });
 };
 

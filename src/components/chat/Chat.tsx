@@ -285,7 +285,7 @@ export default function Chat({ params }: detailProps) {
         <PlusIcon />
         <textarea
           onKeyDown={pressEnter}
-          className="flex-1 rounded-[6px] max-h-max h-[40px] w-auto border border-[#EAECEC]"
+          className="flex-1 rounded-[6px] text-[16px] font-medium py-2 px-3 max-h-max h-[40px] w-auto border border-[#EAECEC]"
           value={message}
           onChange={handleTextarea}
         ></textarea>

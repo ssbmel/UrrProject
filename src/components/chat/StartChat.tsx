@@ -3,6 +3,7 @@
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
 import { useRouter } from "next/navigation";
+import ChatStart from "../../../public/icon/chatstart.svg";
 import { useEffect } from "react";
 
 interface setDataType {
@@ -65,7 +66,13 @@ export default function StartChat(props: setDataType) {
   return (
     <div>
       {(userdata != undefined) ?
-        <button className="w-[72px] h-[26px] text-[12px] mt-4 text-primarystrong rounded bg-[#F0F4FA]" onClick={startChat}>채팅하기</button>
+        <button className="flex flex-row items-center justify-center text-center w-[86px] h-[32px] text-[12px] mr-0 ml-auto text-primarystrong border border-primarynormal rounded bg-white]" onClick={startChat}>
+          채팅하기
+          <div className="ml-1">
+            <ChatStart />
+          </div>
+          
+        </button>
         : <></>
       }
 

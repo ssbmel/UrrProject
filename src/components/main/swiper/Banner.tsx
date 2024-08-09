@@ -12,6 +12,7 @@ import urrSubImg from "../../../../public/bgImg/image5.png"
 import product1 from "../../../../public/bgImg/product1.png"
 import product2 from "../../../../public/bgImg/product2.png"
 import product3 from "../../../../public/bgImg/product3.png"
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -34,8 +35,11 @@ export default function Banner() {
         <SwiperSlide><Image src={product1} alt="mainImg" fill quality={100}></Image></SwiperSlide>
         <SwiperSlide><Image src={product2} alt="mainImg" fill quality={100}></Image></SwiperSlide>
         <SwiperSlide><Image src={product3} alt="mainImg" fill quality={100}></Image></SwiperSlide>
-        <SwiperSlide><Image src={urrSubImg} alt="mainImg" fill quality={100}></Image></SwiperSlide>
-
+        <SwiperSlide>
+        <Link href={"/influencer"}>
+          <Image src={urrSubImg} alt="mainImg" fill quality={100}></Image>
+        </Link>
+          </SwiperSlide>
       </Swiper>
     </>
   );

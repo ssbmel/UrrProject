@@ -10,7 +10,6 @@ import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
 import "./style.css";
-import StartChat from "../chat/StartChat";
 import Link from "next/link";
 
 function InfluencerList() {
@@ -109,15 +108,17 @@ function InfluencerList() {
             {infUser
               ?.filter((inf) => subscribeIds.includes(inf.id))
               .map((inf) => (
-                <Link href={`influencer/profile/${inf.id}`} key={inf.id} className="w-[100px] text-center">
+                <div className="grid text-center" key={inf.id}>
                   <div className="relative w-[100px] h-[100px] mb-2">
-                    <Image
-                      src={inf.profile_url || defaultImg}
-                      alt="img"
-                      fill
-                      sizes="100px"
-                      className="rounded-md object-cover gradient-border"
-                    />
+                    <Link href={`influencer/profile/${inf.id}`} >
+                      <Image
+                        src={inf.profile_url || defaultImg}
+                        alt="img"
+                        fill
+                        sizes="100px"
+                        className="rounded-md object-cover gradient-border"
+                      />
+                    </Link>
                     <div className="absolute bottom-1 right-2">
                       {subscribeIds.includes(inf.id) ? (
                         <button
@@ -132,14 +133,13 @@ function InfluencerList() {
                         </button>
                       ) : (
                         <button onClick={(e) => subscribedHandler(e, inf)}>
-                          <EmptyHeartIcon />
+                          <EmptyHeartIcon/>
                         </button>
                       )}
                     </div>
                   </div>
                   <p className="text-sm">{inf.nickname}</p>
-                  <StartChat owner_id={inf.id} />
-                </Link>
+                </div>
               ))}
           </div>
         )}
@@ -150,13 +150,15 @@ function InfluencerList() {
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
               <div className="relative w-[120px] h-[120px] mb-2">
-                <Image
-                  src={inf.profile_url || defaultImg}
-                  alt="img"
-                  fill
-                  sizes="120px"
-                  className="rounded-md object-cover gradient-border"
-                />
+                <Link href={`influencer/profile/${inf.id}`} key={inf.id}>
+                  <Image
+                    src={inf.profile_url || defaultImg}
+                    alt="img"
+                    fill
+                    sizes="120px"
+                    className="rounded-md object-cover gradient-border"
+                  />
+                </Link>
                 <div className="absolute bottom-1 right-2">
                   {subscribeIds.includes(inf.id) ? (
                     <button
@@ -170,7 +172,7 @@ function InfluencerList() {
                       <FullHeartIcon />
                     </button>
                   ) : (
-                    <button className="w-full h-full" onClick={(e) => subscribedHandler(e, inf)}>
+                    <button onClick={(e) => subscribedHandler(e, inf)}>
                       <EmptyHeartIcon />
                     </button>
                   )}

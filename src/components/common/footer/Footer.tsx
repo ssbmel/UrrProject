@@ -1,9 +1,6 @@
-import React from "react";
-import "./style.css";
-
 const Footer = () => {
   return (
-    <div className="footer bg-gray-200 w-full h-[250px] shrink-0">
+    <div className="bg-gray-200 w-full h-[250px] hidden lg:block">
       <div className="max-w-[800px] grid grid-flow-col p-5 gap-2 mx-auto">
         <div className="whitespace-nowrap">
           <p className="font-bold text-sm">서비스</p>

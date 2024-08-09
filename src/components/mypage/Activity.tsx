@@ -12,7 +12,7 @@ const Activity = () => {
         <h2 className="text-[20px] font-bold">리뷰 관리</h2>
         <MyReviewList />
       </div>
-      {user?.approve === "인플루언서" && user?.approve ? (
+      {user?.role === "인플루언서" && user?.approve === true ? (
         <>
           <hr className="border-4" />
           <div className="flex flex-col gap-[20px] p-[20px]">

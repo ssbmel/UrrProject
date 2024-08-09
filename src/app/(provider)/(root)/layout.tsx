@@ -16,8 +16,10 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Header />
-      <main className="grow overflow-auto">{children}</main>
-      <Footer />
+      <main className="grow overflow-auto">{children}
+
+        <Footer />
+      </main>
       <UpButton />
       <BottomNav />
     </>

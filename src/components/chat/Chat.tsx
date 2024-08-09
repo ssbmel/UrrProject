@@ -31,7 +31,7 @@ export default function Chat({ params }: detailProps) {
     }[]
   >([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false);
-
+ 
 
 
   const scrollToBottom = () => {
@@ -55,8 +55,9 @@ export default function Chat({ params }: detailProps) {
   const getChatMessages = async () => {
     const user_id = await userdata.id;
     const approve = await userdata.approve;
-    if (approve) {
-      //인플
+    const influ_id = await checkChannelOwner();
+    if (influ_id === user_id) {
+      //채널주
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
@@ -76,7 +77,6 @@ export default function Chat({ params }: detailProps) {
       }
     } else {
       //팬
-      const influ_id = await checkChannelOwner();
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
@@ -117,7 +117,7 @@ export default function Chat({ params }: detailProps) {
       nickname: nickname
     });
     if (error) {
-      console.log("채팅 보내기 실패");
+      console.log("채팅 보내기 실패"); //alert로 바꿀 것
       console.log(error);
     }
   };
@@ -138,10 +138,9 @@ export default function Chat({ params }: detailProps) {
 
   const receiveChatMessage = async () => {
     const user_id = await userdata.id;
-    const approve = await userdata.approve;
     const owner_id = await checkChannelOwner();
-    if (approve && owner_id == user_id) {
-      console.log("인플루언서 본인의 채팅방입니다.");
+    if (owner_id == user_id) {
+      //채널주
       const channelInflu = supabase
         .channel("changes")
         .on(
@@ -170,7 +169,7 @@ export default function Chat({ params }: detailProps) {
         )
         .subscribe();
     } else {
-      console.log("팬 채팅방입니다.");
+      //팬
       const channelFan = supabase
         .channel("changes")
         .on(
@@ -249,7 +248,7 @@ export default function Chat({ params }: detailProps) {
                   className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
                   alt="chatpoly"
                 ></Image>
-                <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
                   {preMessage.content.message}
                 </label>
                 <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
@@ -271,7 +270,7 @@ export default function Chat({ params }: detailProps) {
                   className="absolute z-10 mt-[8px] ml-1"
                   alt="chatpoly"
                 ></Image>
-                <label className="z-0 text-[16px] font-light bg-white border-[1.5px] border-solid border-[#0051B2] rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
                   {preMessage.content.message}
                 </label>
                 <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
@@ -298,7 +297,7 @@ export default function Chat({ params }: detailProps) {
                 setMessage("");
               }
               : () => {
-                console.log("보낼 내용 없음");
+                
               }
           }
         ></SendIcon>

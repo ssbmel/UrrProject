@@ -25,11 +25,12 @@ export const userSignUp = async ({
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Server response error:", errorData);
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(errorData);
+      // return errorData;
     }
     return await response.json();
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 

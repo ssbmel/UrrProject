@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import "./style.css";
 import UpArrow from "../../../../public/icon/upArrow.svg";
+import { usePathname } from "next/navigation";
 
 function UpButton() {
   const [upButton, setUpButton] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleShowButton = () => {
@@ -29,10 +31,14 @@ function UpButton() {
     });
   };
 
+  if (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) {
+    return null;
+  }
+
   return (
     <>
       {upButton && (
-        <button className="btnEffect fixed mb-[30px] mr-[-20px] z-50" onClick={scrollToTop} aria-label="Scroll to top">
+        <button className="abcd btnEffect fixed bottom-[124px] right-[16px] z-50" onClick={scrollToTop} aria-label="Scroll to top">
           <UpArrow />
         </button>
       )}

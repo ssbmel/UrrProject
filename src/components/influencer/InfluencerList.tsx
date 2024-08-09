@@ -94,7 +94,7 @@ function InfluencerList() {
 
   return (
     <div className="w-full bg-[#F4F4F4] mx-auto">
-      <div className="w-full min-h-[250px] h-[30%] p-4 bg-[#FFFFFE]">
+      <div className="w-full min-h-[200px] h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {subscribeIds.length === 0 ? (
           <div className="flex flex-col items-center mx-auto">
@@ -111,13 +111,14 @@ function InfluencerList() {
                 <div className="grid text-center" key={inf.id}>
                   <div className="relative w-[100px] h-[100px] mb-2">
                     <Link href={`influencer/profile/${inf.id}`} >
+                    <div className="relative w-[100px] h-[100px]">
                       <Image
                         src={inf.profile_url || defaultImg}
                         alt="img"
                         fill
                         sizes="100px"
                         className="rounded-md object-cover gradient-border"
-                      />
+                      /></div>
                     </Link>
                     <div className="absolute bottom-1 right-2">
                       {subscribeIds.includes(inf.id) ? (
@@ -145,19 +146,20 @@ function InfluencerList() {
         )}
       </div>
       <div className="w-full h-[70%] p-4 my-5 bg-[#FFFFFE]">
-        <h1 className="font-bold text-lg mb-3">인플루언서</h1>
+        <h1 className="font-bold text-lg mb-5">인플루언서</h1>
         <div className="se-width w-full gap-1 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
               <div className="relative w-[120px] h-[120px] mb-2">
+                
                 <Link href={`influencer/profile/${inf.id}`} key={inf.id}>
-                  <Image
+                  <div className="relative w-[120px] h-[120px]"><Image
                     src={inf.profile_url || defaultImg}
                     alt="img"
                     fill
                     sizes="120px"
                     className="rounded-md object-cover gradient-border"
-                  />
+                  /></div>
                 </Link>
                 <div className="absolute bottom-1 right-2">
                   {subscribeIds.includes(inf.id) ? (

@@ -33,7 +33,6 @@ const MyOrderedList = () => {
           }
 
           setItems(data);
-          console.log(data);
         }
       } catch (error) {
         console.error("Error fetching order list:", error);

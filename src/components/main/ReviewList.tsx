@@ -45,12 +45,12 @@ function ReviewList() {
           reviewData.map((review) => (
             <div key={review.id} className="flex gap-3">
               <Link href={`/products/detail/${review.product_id}`}>
-                <div className="w-[130px] h-[130px] relative">
+                <div className="w-[120px] h-[120px] relative">
                   <Image
                     src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                     alt="img"
                     fill
-                    sizes="130px"
+                    sizes="120px"
                     className="rounded-md object-cover"
                   />
                 </div>

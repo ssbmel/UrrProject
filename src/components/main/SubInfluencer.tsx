@@ -46,7 +46,6 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
               <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
                 <Link href={`influencer/profile/${inf.id}`} >
                 <div className="relative w-[100px] h-[100px] mb-2">
-                
                   <Image
                     src={inf.profile_url || defaultImg}
                     alt="img"

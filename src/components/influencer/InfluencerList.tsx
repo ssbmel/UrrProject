@@ -153,7 +153,8 @@ function InfluencerList() {
               <div className="relative w-[120px] h-[120px] mb-2">
                 
                 <Link href={`influencer/profile/${inf.id}`} key={inf.id}>
-                  <div className="relative w-[120px] h-[120px]"><Image
+                  <div className="relative w-[120px] h-[120px]">
+                    <Image
                     src={inf.profile_url || defaultImg}
                     alt="img"
                     fill

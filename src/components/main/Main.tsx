@@ -8,6 +8,7 @@ import ReviewList from "./ReviewList";
 import Banner from "./swiper/Banner";
 import "./style.css";
 import { Product, User } from "../../../types/common";
+import LoadingUrr from "../common/loading/LoadingUrr";
 
 function Main() {
   const [productsList, setProductsList] = useState<Product[]>([]);
@@ -48,15 +49,11 @@ function Main() {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="spinner-wrapper">
-        <div className="spinner"></div>
-      </div>
-    );
+    return <LoadingUrr/>;
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto flex flex-col gap-y-5 ">
+    <div className="max-w-[1200px] mx-auto flex flex-col gap-y-2 ">
       <Banner/>
       <SubInfluencer infUser={infUser} />
       <hr />

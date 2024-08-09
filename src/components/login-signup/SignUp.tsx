@@ -1,7 +1,7 @@
 "use client";
 
 import { userSignUp } from "@/services/users/users.service";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nicknameCheck } from "@/services/users/users.service";
 import { useRouter } from "next/navigation";
 
@@ -35,6 +35,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
 
   const onSignUpHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     const nickname = nicknameRef.current?.value;
@@ -59,7 +60,11 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
     } else {
       if (email && password && nickname) {
         try {
-          await userSignUp({ email, password, nickname, selectUser, approve: false });
+          const response = await userSignUp({ email, password, nickname, selectUser, approve: false });
+          // if (response.error) {
+          //   alert("회원가입 실패");
+          //   return;
+          // }
           alert("회원가입이 완료되었습니다!");
           router.push("/");
         } catch (error) {
@@ -188,7 +193,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
           <div className="flex">
             <button
               onClick={onSignUpHandler}
-              // disabled={!(isPassword && isPasswordConfirm)} // 나중에 풀기
+              // disabled={!(isEmailConfirm && isPassword && isPasswordConfirm)} // 나중에 풀기
               className="bg-[#D9D9D9] w-full h-[47px] rounded-xl font-medium"
             >
               회원가입

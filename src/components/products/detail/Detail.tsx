@@ -14,7 +14,6 @@ import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 
 import DetailInflu from "./DetailInflu";
-import { useUserData } from "@/hooks/useUserData";
 
 interface detailProps {
   params: { id: string };
@@ -74,7 +73,9 @@ export default function Detail({ params }: detailProps) {
         <div className="flex justify-center w-full">
           {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} priority />}
         </div>
+
         <DetailInflu userId={data?.user_id} />
+
         <div className="my-[20px] mx-4">
           <div className="flex justify-between items-cente py-2">
             <p className="text-xl flex items-center ">{data?.title}</p>

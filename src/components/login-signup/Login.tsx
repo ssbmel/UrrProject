@@ -25,7 +25,7 @@ const Login = () => {
     }
     try {
       const response = await userLogin({ email, password });
-      router.push("/mypage");
+      window.location.href = "/mypage";
     } catch (error) {
       console.log(error);
     }

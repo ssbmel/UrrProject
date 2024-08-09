@@ -25,17 +25,11 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // console.log("Request URL:", request.nextUrl.pathname);
-
   const {
     data: { user }
   } = await supabase.auth.getUser();
 
-  // console.log("User:", user);
-  // console.log(request.nextUrl.pathname);
-
   if (!user && request.nextUrl.pathname.startsWith("/mypage")) {
-    // console.log("미들웨어");
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/login";

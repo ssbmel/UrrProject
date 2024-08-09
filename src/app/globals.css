@@ -136,3 +136,9 @@ input {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.chat {
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  white-space: pre-wrap;
+}

@@ -44,15 +44,16 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
           <div className="w-auto flex overflow-x-auto gap-5">
             {infUser?.filter(inf => subscribeIds.includes(inf.id)).map((inf) => (
               <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
-                <div className="relative w-[100px] h-[100px] mb-2">
                 <Link href={`influencer/profile/${inf.id}`} >
+                <div className="relative w-[100px] h-[100px] mb-2">
+                
                   <Image
                     src={inf.profile_url || defaultImg}
                     alt="img"
                     fill
                     sizes="100px"
                     className="rounded-md object-cover gradient-border"
-                  /></Link>
+                  />
                   <div className="absolute bottom-1 right-2">
                     {subscribeIds.includes(inf.id) ? (
                       <button>
@@ -66,6 +67,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
                   </div>
                 </div>
                 <p className="text-sm">{inf.nickname}</p>
+                </Link>
               </div>
             ))}
           </div>

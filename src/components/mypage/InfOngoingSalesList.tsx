@@ -14,8 +14,8 @@ const InfOngoingSalesList = () => {
           <h3 className="text-[14px] border-b-2 pb-[8px]">00월 00일</h3>
           <ul>
             {items
-              ? items.map((item) => (
-                  <li className="pt-[18px] pb-[18px] text-[14px] border-b flex flex-col gap-[18px]">
+              ? items.map((item, index) => (
+                  <li key={index} className="pt-[18px] pb-[18px] text-[14px] border-b flex flex-col gap-[18px]">
                     <div className="flex justify-between items-center">
                       <img src="" alt="이미지" className="w-[48px] h-[48px] bg-slate-300 rounded-[4px]" />
                       <div className="flex justify-evenly gap-[18px]">

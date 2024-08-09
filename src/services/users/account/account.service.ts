@@ -13,7 +13,6 @@ export const getUserFromUserId = async (id: string) => {
 };
 
 export const patchUserFromUserId = async (editUserData: editUserData) => {
-  console.log(editUserData);
   const { id } = editUserData;
   const res = await fetch(`/api/auth/users/${id}`, {
     method: "PATCH",
@@ -41,7 +40,6 @@ export const uploadProfile = async ({ profileData }: { profileData: { file: File
   const supabase = createClient();
 
   const { file, userId } = profileData;
-  console.log("service : ", file);
 
   const ext = file.type.split("/").pop();
 
@@ -51,7 +49,6 @@ export const uploadProfile = async ({ profileData }: { profileData: { file: File
     console.log(error);
   }
 
-  console.log(data);
   return data;
 };
 
@@ -59,7 +56,7 @@ export const getProfile = async (params: { userId: string; filePath: string }) =
   const supabase = createClient();
   const { userId, filePath } = params;
   const { data } = supabase.storage.from(`profile`).getPublicUrl(`${filePath}`);
-  console.log(data);
+
   if (!data) {
     console.log("이미지 URL을 받아오지 못했습니다");
   }
@@ -76,6 +73,6 @@ export const sendResetPasswordEmail = async (email: string) => {
 export const updateUserPassword = async (password: string) => {
   const supabase = createClient();
   const res = await supabase.auth.updateUser({ password });
-  console.log(res);
+
   return res;
 };

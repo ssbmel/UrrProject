@@ -2,12 +2,13 @@ import Image from "next/image";
 import React from "react";
 import { PublicUser } from "../../../../types/auth.type";
 import SubscribeButton from "./SubscribeButton";
+import StartChat from "@/components/chat/StartChat";
 interface Props {
   user: PublicUser;
 }
 
 const IntroSection = ({ user }: Props) => {
-  const { profile_url, intro, nickname, account_link } = user;
+  const { profile_url, intro, nickname, account_link, id } = user;
 
   let domainSrc = "";
 
@@ -52,8 +53,8 @@ const IntroSection = ({ user }: Props) => {
           <div className="px-[14px] py-[7px] flex border border=[#EAECEC] rounded-[4px] text-[#0068E5]">
             {domainSrc}
           </div>
-          <div className="border px-[14px] py-[7px] cursor-pointer border-[#0068E5] rounded-[4px] text-[#0068E5]">
-            채팅하기
+          <div className="">
+            <StartChat owner_id={id} />
           </div>
         </div>
       </div>

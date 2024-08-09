@@ -15,3 +15,18 @@ export type editUserData = {
   phonenum: string | null;
   name: string | null;
 };
+
+export type PublicUser = {
+  id: string;
+  created_at: string;
+  email: string;
+  nickname: string;
+  profile_url: string;
+  role: string;
+  approve: boolean;
+  account_link: string | null;
+  address: string | null;
+  phonenum: string | null;
+  name: string | null;
+  intro: string | null;
+};

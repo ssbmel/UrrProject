@@ -52,7 +52,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
       <div className="flex justify-between px-6 pt-6">
         <p className="text-lg">총 {totalProducts}개</p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-[36px] p-[17px] ">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-[36px] p-[17px] gap-x-2 ">
         {filteredProducts.map((product, index) => {
           const cost = parseFloat(product.cost);
           const price = parseFloat(product.price);

@@ -6,7 +6,7 @@ import UpArrow from "../../../../public/icon/upArrow.svg";
 import { usePathname } from "next/navigation";
 
 function UpButton() {
-  const [upButton, setUpButton] = useState(true);
+  const [upButton, setUpButton] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {

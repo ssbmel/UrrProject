@@ -1,27 +1,60 @@
+import Image from "next/image";
 import React from "react";
+import { PublicUser } from "../../../../types/auth.type";
+import SubscribeButton from "./SubscribeButton";
+interface Props {
+  user: PublicUser;
+}
 
-const IntroSection = () => {
-  /* 특정 인플루언서 유저의 id값으로 유저 정보를 취득  */
+const IntroSection = ({ user }: Props) => {
+  const { profile_url, intro, nickname, account_link } = user;
+
+  let domainSrc = "";
+
+  const domainCheck = (link: string) => {
+    const YOUTUBE_DOMAIN = "youtube.com";
+    const INSTAGRAM_DOMAIN = "instagram.com";
+
+    if (link.includes(YOUTUBE_DOMAIN)) {
+      domainSrc = "Y";
+    } else if (link.includes(INSTAGRAM_DOMAIN)) {
+      domainSrc = "I";
+    } else {
+      domainSrc = "Pf";
+    }
+  };
+
+  domainCheck(account_link ?? "");
 
   return (
-    <section className="flex justify-center items-center text-[14px] gap-[12px] pr-[16px] pl-[16px] mt-[25px] mb-[45px]">
-      <div className="w-[104px] h-[104px] bg-blue-400">
-        <img src="" alt="프로필이미지" />
+    <section className="flex justify-start items-center text-[14px] gap-[12px] px-[16px] mt-[25px] mb-[45px]">
+      <div className="min-w-[104px] h-[104px] rounded-[16px] relative">
+        <Image
+          src={profile_url || ""}
+          alt="profile_image"
+          sizes="104px"
+          fill
+          priority
+          className="absolute border border-transparent p-[4px] object-cover gradient-border"
+        />
       </div>
-      <div className="min-w-[226px] h-[104px] flex flex-col justify-evenly">
-        <div className="flex justify-between items-center">
-          <p className="text-[20px] font-bold">닉네임</p>
-          <button className="cursor-pointer">fav</button>
-        </div>
-        <div>
-          <p>소개글</p>
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="flex gap-[1]">
-            <p>icon</p>
-            <p>icon</p>
+      <div className="w-[calc(100%-116px)] flex flex-col justify-between gap-[11px]">
+        <div className="flex flex-col">
+          <div className="flex w-full justify-between items-center h-[38px]">
+            <p className="text-[20px] font-bold">{nickname || ""}</p>
+            <SubscribeButton inf={user} />
           </div>
-          <div className="border p-1 cursor-pointer">채팅Link</div>
+          <p className="text-[14px] h-[21px] border-r-[8px] border-r-transparent scrollbar-hide text-[#4C4F52] whitespace-nowrap overflow-x-scroll">
+            {intro || ""}
+          </p>
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="px-[14px] py-[7px] flex border border=[#EAECEC] rounded-[4px] text-[#0068E5]">
+            {domainSrc}
+          </div>
+          <div className="border px-[14px] py-[7px] cursor-pointer border-[#0068E5] rounded-[4px] text-[#0068E5]">
+            채팅하기
+          </div>
         </div>
       </div>
     </section>

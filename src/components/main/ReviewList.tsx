@@ -44,8 +44,8 @@ function ReviewList() {
         ) : (
           reviewData.map((review) => (
             <div key={review.id} className="flex gap-3">
-              <div className="w-[130px] h-[130px] relative">
-                <Link href={`/products/detail/${review.product_id}`}>
+              <Link href={`/products/detail/${review.product_id}`}>
+                <div className="w-[130px] h-[130px] relative">
                   <Image
                     src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                     alt="img"
@@ -53,8 +53,8 @@ function ReviewList() {
                     sizes="130px"
                     className="rounded-md object-cover"
                   />
-                </Link>
-              </div>
+                </div>
+              </Link>
               <div className="flex-col w-[60%]">
                 <div className="flex text-[#989C9F] gap-1">
                   <div className="mt-[2px]">

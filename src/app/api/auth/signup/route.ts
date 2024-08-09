@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
           console.error("인플루언서 회원가입 실패", error.message);
         }
       } else {
-        const { data } = await supabase.from("users").insert({
+        const { data, error } = await supabase.from("users").insert({
           id: userData?.user?.id,
           email,
           nickname,
@@ -42,12 +42,15 @@ export async function POST(request: NextRequest) {
           approve,
           profile_url: profile_url
         });
+        if (error) {
+          console.error("인플루언서 회원가입 실패", error.message);
+        }
       }
     }
 
     return NextResponse.json({ message: "회원가입 성공" }, { status: 200 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: "Internal Server Error", message: error }, { status: 500 });
+    return NextResponse.json({ error: "회원가입 실패", message: error }, { status: 500 });
   }
 }

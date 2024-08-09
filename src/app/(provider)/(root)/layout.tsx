@@ -10,13 +10,14 @@ export const metadata = {
   description: "인플루언서와 소통하고 공구상품을 구매해보세요!",
   ogImage: "/main.png",
   url: "https://urr-final.vercel.app"
-};
+} as const;
 
 const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Header />
-      <main className="grow overflow-auto">{children}
+      <main className="grow overflow-auto">
+        {children}
 
         <Footer />
       </main>

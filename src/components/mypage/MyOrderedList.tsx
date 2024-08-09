@@ -44,7 +44,7 @@ const MyOrderedList = () => {
 
   return (
     <>
-      {items ? (
+      {items && items.length > 0 ? (
         <div>
           <h3 className="text-[14px] border-b-2 pb-[8px]">00월 00일</h3>
           <ul>

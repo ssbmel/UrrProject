@@ -66,7 +66,7 @@ export default function SignUp({ confirmRef, selectUser }: SignUpProps) {
           //   return;
           // }
           alert("회원가입이 완료되었습니다!");
-          router.push("/");
+          router.push("/signup");
         } catch (error) {
           alert("회원가입 실패");
           console.log(error);

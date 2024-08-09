@@ -14,6 +14,7 @@ import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 
 import DetailInflu from "./DetailInflu";
+import { useUserData } from "@/hooks/useUserData";
 
 interface detailProps {
   params: { id: string };

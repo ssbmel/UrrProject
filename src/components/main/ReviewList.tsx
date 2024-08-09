@@ -8,6 +8,7 @@ import { createClient } from "../../../supabase/client";
 import fullStar from "../../../public/icon/full_star.png";
 import halfStar from "../../../public/icon/half_star.png";
 import InfluencerIcon from "../../../public/icon/influencer.svg";
+import Link from "next/link";
 
 function ReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
@@ -34,6 +35,9 @@ function ReviewList() {
     return `${year}.${month}.${day}`;
   };
 
+  console.log(reviewData);
+  
+
   return (
     <div className="w-full mx-auto p-5">
       <h2 className="font-bold mb-5 text-xl">후기</h2>
@@ -42,15 +46,17 @@ function ReviewList() {
           <p>후기가 없습니다.</p>
         ) : (
           reviewData.map((review) => (
+            
             <div key={review.id} className="flex gap-3">
               <div className="w-[130px] h-[130px] relative">
+              <Link href={`/products/detail/${review.product_id}`}>
                 <Image
                   src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                   alt="img"
                   fill
                   sizes="130px"
                   className="rounded-md object-cover"
-                />
+                /></Link>
               </div>
               <div className="flex-col w-[60%]">
                 <div className="flex text-[#989C9F] gap-1">

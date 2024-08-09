@@ -25,11 +25,10 @@ const UserCard = () => {
     return;
   };
 
-  const commonUser =
-    "absolute rounded-[16px] overflow-hidden border border-[2px] border-transparent p-[4px] object-cover";
-  const adminUser = "absolute rounded-[16px] overflow-hidden border border-[2px] border-[#2267CE] p-[4px] object-cover";
+  const commonUser = "absolute rounded-[16px] overflow-hidden border border-transparent p-[4px] object-cover";
+  const adminUser = "absolute rounded-[16px] overflow-hidden border border-[#2267CE] p-[4px] object-cover";
   const infUser =
-    "absolute rounded-[16px] overflow-hidden border border-[2px] border-transparent p-[4px] object-cover gradient-border";
+    "absolute rounded-[16px] overflow-hidden border border-transparent p-[4px] object-cover gradient-border";
 
   return (
     <div className="flex w-full gap-[12px] pb-[16px] pt-[4px] px-[24px]">

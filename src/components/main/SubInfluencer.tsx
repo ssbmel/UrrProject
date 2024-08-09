@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useUserData } from "@/hooks/useUserData";
 import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
+import Link from "next/link";
 
 function SubInfluencer({ infUser }: { infUser: User[] }) {
   const { data: user } = useUserData();
@@ -44,13 +45,14 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
             {infUser?.filter(inf => subscribeIds.includes(inf.id)).map((inf) => (
               <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
                 <div className="relative w-[100px] h-[100px] mb-2">
+                <Link href={`influencer/profile/${inf.id}`} >
                   <Image
                     src={inf.profile_url || defaultImg}
                     alt="img"
                     fill
                     sizes="100px"
                     className="rounded-md object-cover gradient-border"
-                  />
+                  /></Link>
                   <div className="absolute bottom-1 right-2">
                     {subscribeIds.includes(inf.id) ? (
                       <button>

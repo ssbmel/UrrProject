@@ -19,11 +19,6 @@
   background: #ffffff; /*스크롤바 뒷 배경 색상*/
 }
 
-.box {
-  z-index: -1;
-  position: relative;
-}
-
 .spinner-wrapper {
   display: flex;
   justify-content: center;

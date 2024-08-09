@@ -34,7 +34,7 @@ const OrderedProduct = () => {
         </li>
         <li className="flex gap-[16px] text-left">
           <span className="text-[#4C4F52] block w-[75px]">택배사</span>
-          <span className="font-bold">빨라택배</span>
+          <span className="font-bold">cj 대한통운</span>
         </li>
       </ul>
     </div>

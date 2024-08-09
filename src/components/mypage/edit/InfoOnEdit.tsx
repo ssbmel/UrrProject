@@ -67,8 +67,6 @@ const InfoOnEdit = ({ user }: Props) => {
     const objectUrl = URL.createObjectURL(fileObj);
     setUserImg(objectUrl);
 
-    console.log(fileObj);
-
     setProfile(fileObj);
   };
 

@@ -29,11 +29,11 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
     }
   }, []);
 
-  // keywords 객체에 의존하여, 변경될 경우 새롭게 localStorage의 아이템 keywords'를 세팅한다
-  useEffect(() => {
-    console.log("입력된 검색어:", keywords);
-    localStorage.setItem("keywords", JSON.stringify(keywords));
-  }, [keywords]);
+  // keywords 객체에 의존하여, 변경될 경우 새롭게 localStorage의 아이템 keywords 넣기
+  // useEffect(() => {
+  //   console.log("입력된 검색어:", keywords);
+
+  // }, [keywords]);
 
   // 최근 검색어 추가
   const addKeywordHandler = (text: string) => {
@@ -48,7 +48,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
     });
   };
 
-  //검색어 전체 삭제
+  // 검색어 전체 삭제
   const handleClearKeywords = () => {
     setKeywords([]);
     localStorage.removeItem("keywords");
@@ -58,6 +58,8 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
   const SearchProducts = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const searchWord = searchWordRef.current?.value;
+    const searchCache = localStorage.getItem("keywords");
+    console.log(searchCache);
 
     if (searchWord) {
       const { productTitle } = await SearchProductTitleList(searchWord);
@@ -65,6 +67,11 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
       addKeywordHandler(searchWord);
       if (searchWordRef.current) {
         searchWordRef.current.value = "";
+      }
+    }
+    if (searchWord) {
+      if (searchCache?.includes(searchWord)) {
+        localStorage.setItem("keywords", JSON.stringify([...searchCache, searchWord]));
       }
     }
   };

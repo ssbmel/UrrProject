@@ -53,9 +53,10 @@ const MyOrderedList = () => {
               items.map((payment, index) => {
                 return (
                   <div key={index}>
-                    {payment?.product_list?.map((item) => (
-                      <MyOrderCompo key={index} item={item as productListType} delivery={payment.delivery} />
-                    ))}
+                    {payment?.product_list?.map((item) => {
+                      const test = item as productListType;
+                      return <MyOrderCompo key={test?.id} item={item as productListType} delivery={payment.delivery} />;
+                    })}
                   </div>
                 );
               })}

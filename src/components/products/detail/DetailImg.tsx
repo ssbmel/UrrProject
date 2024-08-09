@@ -1,3 +1,4 @@
+"use client";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";

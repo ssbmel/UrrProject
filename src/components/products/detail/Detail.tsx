@@ -14,7 +14,6 @@ import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 
 import DetailInflu from "./DetailInflu";
-import { useUserData } from "@/hooks/useUserData";
 
 interface detailProps {
   params: { id: string };
@@ -74,13 +73,17 @@ export default function Detail({ params }: detailProps) {
         <div className="flex justify-center w-full">
           {data && <Image src={data?.main_img} alt={data?.title} width={500} height={375} priority />}
         </div>
+
         <DetailInflu userId={data?.user_id} />
+
         <div className="my-[20px] mx-4">
           <div className="flex justify-between items-cente py-2">
             <p className="text-xl flex items-center ">{data?.title}</p>
-            <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
+            <div>
+              <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
+            </div>
           </div>
-          <p className="text-gray-300 line-through font-thin">{cost.toLocaleString()}</p>
+          <p className="text-gray-300 line-through font-light">{cost.toLocaleString()}</p>
           <p className="my-1 text-[18px]">
             <span className="text-red-500">{discountPercentageInteger}%</span>
             <span className=" font-semibold ml-2">{price.toLocaleString()} 원</span>

@@ -2,12 +2,8 @@
 
 import Fail from "@/components/payment/Fail";
 
-const page = () => {
-  return (
-    <div>
-      <Fail />
-    </div>
-  );
+const Failpage = () => {
+  return <Fail />;
 };
 
-export default page;
+export default Failpage;

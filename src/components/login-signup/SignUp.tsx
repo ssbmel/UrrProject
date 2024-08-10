@@ -139,7 +139,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
 
   return (
     <>
-      <div className="p-5 h-screen whitespace-nowrap pt-[58px]">
+      <div className="h-screen w-[375px] mx-auto whitespace-nowrap pt-[58px]">
         <form className="flex flex-col gap-9">
           <div>
             <label className="flex flex-col">

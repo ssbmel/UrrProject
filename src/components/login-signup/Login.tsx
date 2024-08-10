@@ -4,6 +4,8 @@ import { userLogin } from "@/services/users/users.service";
 import { useRef } from "react";
 import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
+import Kakao from "../../../public/logo/Logo_kakao.png";
+import WebLoginBg from "../../../public/images/web_login_bg.svg";
 import Link from "next/link";
 import { createClient } from "../../../supabase/client";
 import { useRouter } from "next/navigation";
@@ -51,30 +53,37 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex flex-col p-5 h-[700px]">
-        <div className="flex justify-center items-center h-[35%]">
-          <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
+      <div className="flex flex-row">
+        <div>
+          <WebLoginBg />
         </div>
+        <div className="flex flex-col h-[700px] w-[375px] mx-auto bg-slate-300">
+          <div className="flex justify-center items-center h-[35%] lg:hidden">
+            <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
+          </div>
+          <h2 className="hidden lg:block text-[28px] font-bold mx-auto mb-[43px]">로그인</h2>
 
-        <form onSubmit={loginHandler} className="flex flex-col h-[30%]">
-          <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
-          <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
-          {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}
-          <div className="mb-[40px]"></div>
-          <button type="submit" className="bg-[#1A82FF] text-white h-[50px] rounded-md text-lg">
-            로그인하기
-          </button>
-        </form>
+          <form onSubmit={loginHandler} className="flex flex-col h-[40%]">
+            <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
+            <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
+            {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}
+            <div className="mb-[40px]"></div>
+            <button type="submit" className="bg-[#1A82FF] text-white h-[50px] rounded-md text-lg">
+              로그인하기
+            </button>
+          </form>
 
-        <div className="flex flex-col items-center h-[25%]">
-          <button onClick={kakaoLoginHandler} className="bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg">
-            카카오 로그인
-          </button>
-          <div className="flex">
-            <p>아직 회원이 아니신가요?</p>
-            <Link href={"/signup"}>
-              <p className="font-medium underline underline-offset-2 ml-1">회원가입</p>
-            </Link>
+          <div className="flex flex-col items-center h-[25%]">
+            <div className="flex  justify-center bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg">
+              {/* <Image src={Kakao} alt="카카오톡 로고" width={20} height={20} /> 이상함 */}
+              <button onClick={kakaoLoginHandler}>카카오 로그인</button>
+            </div>
+            <div className="flex">
+              <p>아직 회원이 아니신가요?</p>
+              <Link href={"/signup"}>
+                <p className="font-medium underline underline-offset-2 ml-1">회원가입</p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

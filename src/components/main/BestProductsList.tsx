@@ -9,12 +9,12 @@ import MiniRightArrowIcon from "../../../public/icon/minirightarrow.svg";
 function BestProductsList({ productsList }: { productsList: Product[] }) {
   return (
     <>
-      <div className="w-full h-auto mx-auto p-4">
-        <div className="flex">
-          <h2 className="font-bold text-xl lg:text-[22px] lg:my-8">인기상품</h2>
+      <div className="w-full h-auto mx-auto px-4 py-8">
+        <div className="flex items-center">
+          <h2 className="font-bold text-xl mb-5 lg:text-[22px] lg:my-8">인기상품</h2>
           <Link className="ml-auto text-xs flex-end flex" href={"/products/list"}>
-            <button className="text-[14px] mr-2 font-semibold text-[#4C4F52] lg:text-[16px] lg:my-8">더보기</button>
-            <div className="mt-[3px] lg:mt-[36px]">
+            <div className="text-[14px] mb-5 mr-2 font-semibold text-[#4C4F52] lg:text-[16px] lg:my-8">더보기</div>
+            <div className=" lg:mt-[36px]">
             <MiniRightArrowIcon/>
             </div>
           </Link>

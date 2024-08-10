@@ -46,8 +46,8 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
   });
 
   return (
-    <div className="w-full mx-auto p-4 bg-[url('../../public/bgImg/influencerImg.png')] bg-center bg-cover">
-      <h2 className="font-bold mt-5 mb-5 text-xl text-white lg:text-[22px] lg:my-8">현재 인기있는 인플루언서</h2>
+    <div className="w-full mx-auto px-4 py-8 bg-[url('../../public/bgImg/influencerImg.png')] bg-center bg-cover">
+      <h2 className="font-bold mt-3 mb-5 text-xl text-white lg:text-[22px] lg:my-8">현재 인기있는 인플루언서</h2>
       <div className="lg:w-[50%] grid">
         {sortedInfUser.slice(0, 3).map((inf) => (
           <div

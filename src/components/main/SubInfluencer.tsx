@@ -35,7 +35,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
   };
 
   return (
-    <div className="w-full h-[205px] lg:h-auto mx-auto p-4">
+    <div className="w-full h-[220px] lg:h-auto mx-auto px-4 py-8">
       <h2 className="font-bold text-xl mb-5 lg:text-[22px] lg:my-8">내가 구독한 인플루언서</h2>
       <div className="flex flex-row overflow-x-auto flex-nowrap scrollbar scrollbar-hide">
         {subscribeIds.length === 0 ? (

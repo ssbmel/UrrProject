@@ -36,7 +36,7 @@ function ReviewList() {
   };
 
   return (
-    <div className="w-full mx-auto p-4">
+    <div className="w-full mx-auto px-4 py-8">
       <h2 className="font-bold mb-5 text-xl lg:text-[22px] lg:my-8">후기</h2>
       <div className="w-full h-[340px] lg:h-[450px] overflow-y-auto flex flex-col gap-y-4 scrollbar">
         {reviewData.length === 0 ? (

@@ -1,7 +1,6 @@
-import ProductReview from "@/components/products/detail/ProductReview";
-
+import MyReview from "@/components/mypage/my-review/MyReview";
 
 function Review() {
-  return <ProductReview/>;
+  return <MyReview/>;
 }
 export default Review

@@ -34,10 +34,10 @@ body {
 .gradient-border {
   position: relative;
   border: 2px solid transparent;
-  border-radius: 10px;
+  border-radius: 8px;
   background: linear-gradient(#0068e5, #9aec5b);
   background-clip: padding-box;
-  padding: 4px;
+  padding: 3px;
 }
 
 .gradient-border::after {

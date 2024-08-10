@@ -13,7 +13,11 @@ export default function BottomNav() {
   const liStyle =
     "font-[600] flex justify-center px-[6px] w-[44px] text-[14px] whitespace-nowrap transition-colors hover:text-blue-600";
 
-  if (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) {
+  if (
+    (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup")
+  ) {
     return null;
   }
 
@@ -75,5 +79,4 @@ export default function BottomNav() {
       </div>
     </>
   );
-  
 }

@@ -31,13 +31,14 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
 
   return (
     <>
-      <div className="p-5 h-[700px]">
+      {/* 높이 안주면 하단 적용안됨 적용하면 망했음 ;; */}
+      <div className="p-5 h-screen bg-slate-300">
         <div className="flex flex-col justify-center h-24">
           <h4 className="text-lg font-medium mb-1">어떤 회원으로 서비스를 이용하실건가요?</h4>
-          <p className="text-sm text-[#575757]">인플루언서라면 유튜브, 인스타 계정을 통해 인증해야합니다.</p>
+          <p className="text-sm text-[#575757] mb-[36px]">인플루언서라면 유튜브, 인스타 계정을 통해 인증해야합니다.</p>
         </div>
         {selectUser === "인플루언서" ? (
-          <div className="flex flex-col mb-5 display">
+          <div className="flex flex-col display mb-[60px]">
             <p className="text-sm">링크 또는 계정 아이디</p>
             <input
               type="text"
@@ -50,11 +51,11 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
           <div></div>
         )}
 
-        <div className="flex gap-4 mb-3">
+        <div className="flex justify-between mb-3">
           <button
             onClick={infChooseMember}
             className={`${
-              selectUser === "인플루언서" ? "bg-[#1A82FF] text-white" : "text-[#0068E5] border border-[#1A82FF]"
+              selectUser === "인플루언서" ? "bg-primarynormal text-white" : "text-primarystrong border border-[#1A82FF]"
             } w-[166px] h-[88px] text-lg rounded-xl font-medium`}
           >
             인플루언서
@@ -65,23 +66,23 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             className={`${
               selectUser === "인플루언서"
                 ? "bg-[#F2F2F2] border border-[##DADDDD] text-[#CDCFD0]"
-                : "text-[#0068E5] border border-[#1A82FF]"
+                : "text-primarystrong border border-primarynormal"
             } w-[166px] h-[88px] text-lg rounded-xl font-medium`}
           >
             일반
           </button>
         </div>
+      </div>
 
-        <div className="flex">
-          <button
-            onClick={infNextSignUpPage}
-            className={`${
-              selectUser === "인플루언서" ? "bg-[#1A82FF] text-white" : "bg-[#F2F2F2] text-[#CDCFD0]"
-            } w-full h-[47px] rounded-xl font-medium`}
-          >
-            다음
-          </button>
-        </div>
+      <div className="pb-[28px] sticky bottom-0 mb-7 p-5">
+        <button
+          onClick={infNextSignUpPage}
+          className={`${
+            selectUser === "인플루언서" ? "bg-primarynormal text-white" : "bg-[#F2F2F2] text-[#CDCFD0]"
+          } w-full h-[47px] rounded-xl font-medium`}
+        >
+          다음
+        </button>
       </div>
     </>
   );

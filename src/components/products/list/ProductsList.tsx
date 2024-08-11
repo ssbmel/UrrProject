@@ -96,8 +96,8 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
             </div>
           </div>
           {isMenuOpen && (
-            <div className="absolute right-0 mt-2 bg-white bg-opacity-80 rounded-md shadow-lg z-10 py-2">
-              <ul className="list-none w-[102px] text-[#4C4F52] flex flex-col ">
+            <div className="absolute right-0 bg-white rounded-md shadow-lg z-10 p-1">
+              <ul className="list-none w-[102px] text-[#4C4F52] flex flex-col divide-y-2 divide-[#F4F4F4]">
                 <li>
                   <p
                     className="block w-full text-sm px-3 py-1 cursor-pointer"
@@ -155,18 +155,22 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                     className={`rounded-md object-cover ${expired ? "opacity-50" : ""}`}
                   />
                   {expired && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
-                      <p className="text-white text-lg ">판매 종료</p>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-md">
+                      <p className="text-[#FFFFFE] text-[18px] ">판매 종료</p>
                     </div>
                   )}
                 </div>
               </Link>
-              <div className="ml-3">
+              <div className={`ml-3 ${expired ? "text-[#B2B5B8]" : ""}`}>
                 <p className="text-[#B2B5B8] text-[12px]">{product.nickname}</p>
-                <p className="text-sm text-gray-600 truncate w-[165px]">{product.title}</p>
+                <p className={`text-sm truncate w-[165px] ${expired ? "text-[#B2B5B8]" : "text-gray-600"}`}>
+                  {product.title}
+                </p>
                 <div className="flex items-center">
-                  <p className="text-sm text-red-500">{discountRate}%</p>
-                  <p className="text-md font-bold ml-1">{price.toLocaleString()}원</p>
+                  <p className={`text-sm ${expired ? "text-[#B2B5B8]" : "text-red-500"}`}>{discountRate}%</p>
+                  <p className={`text-md font-bold ml-1 ${expired ? "text-[#B2B5B8]" : ""}`}>
+                    {price.toLocaleString()}원
+                  </p>
                 </div>
               </div>
             </div>

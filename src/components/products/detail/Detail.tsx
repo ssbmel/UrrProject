@@ -98,7 +98,7 @@ export default function Detail({ params }: detailProps) {
               />
               {isExpired && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
-                  <p className="text-white text-3xl ">판매 종료된 상품입니다</p>
+                  <p className="text-[#FFFFFE] text-[20px] ">판매 종료</p>
                 </div>
               )}
             </>
@@ -125,27 +125,30 @@ export default function Detail({ params }: detailProps) {
         <div className="m-4 mx-auto w-[343px] flex flex-col items-center">
           <div className="flex flex-col gap-[14px] my-2 ">
             <p className="flex">
-              <span className="w-[105px]">진행기간</span>
+              <span className="w-[105px] text-[#4C4F52]">진행기간</span>
               <span>
                 {data?.start} ~ {data?.end}
               </span>
             </p>
             <p className="flex">
-              <span className="w-[105px]">배송 예정일</span>
+              <span className="w-[105px] text-[#4C4F52]">배송 예정일</span>
               <span>08.07 순차적으로 출고</span>
             </p>
             <p className="flex">
-              <span className="w-[105px]">택배사</span>
+              <span className="w-[105px] text-[#4C4F52]">택배사</span>
               <span>cj 대한통운</span>
             </p>
             <p className="flex">
-              <span className="w-[105px]">배송비</span>
-              <span>3,000 원</span>
+              <span className="w-[105px] text-[#4C4F52]">배송비</span>
+              <p className="flex flex-col">
+                <span className="text-[16px]">3,000원</span>
+                <span className="text-[14px] text-[#989C9F]">제주 5,000 원 / 도서산간 5,000 원</span>
+              </p>
             </p>
 
-            <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4">
-              <p className="my-2 text-lg font-semibold text-[#0051B2]">주문 전 확인해주세요!</p>
-              <p className="text-md text-[#4C4F52]">{data?.text}</p>
+            <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4 gap-[12px] px-[14px] py-[12px]">
+              <p className="text-[16px] font-semibold text-[#0051B2]">주문 전 확인해주세요!</p>
+              <p className="text-[14px] text-[#4C4F52]">{data?.text}</p>
             </div>
           </div>
         </div>
@@ -180,23 +183,26 @@ export default function Detail({ params }: detailProps) {
             )}
           </div>
         </div>
-        {!isExpired && (
-          <div className="paybar sticky bottom-0 bg-white left-0 w-full z-50">
-            <div className="flex justify-evenly py-2">
-              <div onClick={() => setShowModal(true)}>
-                <Image src={cart} alt="장바구니로고" width={52} height={52} />
-              </div>
-              <div>
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md"
-                >
-                  구매하기
-                </button>
-              </div>
+        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-50">
+          <div className="flex justify-evenly py-2">
+            <div className={`${isExpired ? "cursor-not-allowed opacity-50" : ""}`}>
+              <Image src={cart} alt="장바구니로고" width={52} height={52} />
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  if (!isExpired) setShowModal(true);
+                }}
+                className={`w-[278px] h-[52px] text-white text-[18px] rounded-md ${
+                  isExpired ? "bg-[#F2F2F2] text-[#CDCFD0]  cursor-not-allowed" : "bg-[#1A82FF]"
+                }`}
+                disabled={isExpired}
+              >
+                구매하기
+              </button>
             </div>
           </div>
-        )}
+        </div>
       </div>
       <CountModal
         id={params.id}

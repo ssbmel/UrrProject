@@ -61,7 +61,8 @@ export default function Chat({ params }: detailProps) {
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
-        .eq("channel_id", channel_id);
+        .eq("channel_id", channel_id)
+        .order('created_at', { ascending: true });
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -81,7 +82,8 @@ export default function Chat({ params }: detailProps) {
         .from("chat_messages")
         .select("*")
         .in("user_id", [user_id, influ_id])
-        .eq("channel_id", channel_id);
+        .eq("channel_id", channel_id)
+        .order('created_at', { ascending: true });
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {

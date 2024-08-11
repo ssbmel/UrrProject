@@ -18,9 +18,9 @@ const Review = ({ props }: { props: ReviewProps }) => {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
   const formattedDate = formatDate(props.created_at);
   return (
-    <div className="w-[343px] py-6 px-4">
+    <div className="w-[343px] py-6">
       <div className="flex divide-x-2 my-2">
-        <div className="pr-2 text-[14px] ">{props.user_nickname}</div>
+        <div className="pr-2 text-[14px] text-[#1B1C1D] ">{props.user_nickname}</div>
         <div className="pl-2 text-blue-600 text-[14px] flex items-center">
           {Array(fullStars)
             .fill(null)

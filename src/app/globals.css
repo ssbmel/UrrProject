@@ -30,6 +30,9 @@ body {
   flex-direction: column;
   width: 100%;
 }
+textarea {
+  outline-color: #1a82ff;
+}
 
 .gradient-border {
   position: relative;

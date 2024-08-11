@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import rec from "../../../../public/icon/rec.png";
+import openFilter from "../../../../public/icon/rec.png";
+import checkedImg from "../../../../public/icon/checkAfter.png";
+import uncheckedImg from "../../../../public/icon/checkBefore.png";
+import closeFilter from "../../../../public/icon/closeFilter.png";
 
 interface PostData {
   id: string;
@@ -26,7 +29,7 @@ interface ProductsListProps {
 export default function ProductsList({ selectedCategory }: ProductsListProps) {
   const [products, setProducts] = useState<PostData[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [sortOption, setSortOption] = useState<string>("기본");
+  const [sortOption, setSortOption] = useState<string>("최신순");
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [excludeExpired, setExcludeExpired] = useState<boolean>(false);
 
@@ -86,18 +89,35 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
 
   return (
     <>
-      <div className="flex justify-between px-6 pt-6 items-center ">
-        <p className="text-[16px] text-[#4C4F52]">총 {totalProducts}개</p>
+      <div className="flex justify-between px-6 pt-3 items-center">
+        <div className="flex items-center cursor-pointer" onClick={handleExcludeExpiredChange}>
+          <Image
+            src={excludeExpired ? checkedImg : uncheckedImg}
+            alt={excludeExpired ? "판매 종료 제외" : "판매 종료 포함"}
+            width={20}
+            height={20}
+            className="mr-2"
+          />
+          <label htmlFor="excludeExpired" className="text-[16px] text-[#4C4F52]">
+            판매 종료 제외
+          </label>
+        </div>
         <div className="relative">
-          <div className="flex items-center cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <div className="flex items-center cursor-pointer">
             <p className="mx-2 text-[16px] text-[#4C4F52]">{sortOption}</p>
-            <div className="relative w-[20px] h-[20px]">
-              <Image src={rec} alt="정렬 아이콘" fill sizes="20px" className="object-cover" />
+            <div className="relative w-[20px] h-[20px] " onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <Image
+                src={isMenuOpen ? closeFilter : openFilter}
+                alt="정렬 아이콘"
+                fill
+                sizes="20px"
+                className="object-cover"
+              />
             </div>
           </div>
           {isMenuOpen && (
-            <div className="absolute right-0 bg-white rounded-md shadow-lg z-10 p-1">
-              <ul className="list-none w-[102px] text-[#4C4F52] flex flex-col divide-y-2 divide-[#F4F4F4]">
+            <div className="absolute right-0 bg-white rounded-md shadow-[0px_1px_8px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)] z-10 p-1">
+              <ul className="list-none w-[90px] text-[#4C4F52] flex flex-col divide-y-2 divide-[#F4F4F4]">
                 <li>
                   <p
                     className="block w-full text-sm px-3 py-1 cursor-pointer"
@@ -122,60 +142,59 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                     마감임박 순
                   </p>
                 </li>
-                <li>
-                  <p className="block w-full text-sm px-3 py-1 cursor-pointer" onClick={handleExcludeExpiredChange}>
-                    {excludeExpired ? "판매종료 포함" : "판매종료 제외"}
-                  </p>
-                </li>
               </ul>
             </div>
           )}
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-[36px] p-[17px] gap-x-2">
-        {sortedProducts.map((product, index) => {
-          const cost = parseFloat(product.cost);
-          const price = parseFloat(product.price);
-          const discountRate = Math.round(((cost - price) / cost) * 100);
-          const expired = isExpired(product.end);
+      <div className="border-[#F4F4F4] border-[1px] w-full mt-3" />
+      <div>
+        <p className="text-[16px] text-[#4C4F52] ml-6 mt-4">총 {totalProducts}개</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-[36px] p-[17px] gap-x-4">
+          {sortedProducts.map((product, index) => {
+            const cost = parseFloat(product.cost);
+            const price = parseFloat(product.price);
+            const discountRate = Math.round(((cost - price) / cost) * 100);
+            const expired = isExpired(product.end);
 
-          return (
-            <div
-              key={index}
-              className="bg-white rounded-md flex flex-col justify-center items-center w-[166px] mx-auto"
-            >
-              <Link href={`/products/detail/${product.id}`}>
-                <div className="relative w-[165px] h-[178px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
-                  <Image
-                    src={product.main_img}
-                    alt={product.title}
-                    fill
-                    priority
-                    sizes="165px"
-                    className={`rounded-md object-cover ${expired ? "opacity-50" : ""}`}
-                  />
-                  {expired && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-md">
-                      <p className="text-[#FFFFFE] text-[18px] ">판매 종료</p>
-                    </div>
-                  )}
-                </div>
-              </Link>
-              <div className={`ml-3 ${expired ? "text-[#B2B5B8]" : ""}`}>
-                <p className="text-[#B2B5B8] text-[12px]">{product.nickname}</p>
-                <p className={`text-sm truncate w-[165px] ${expired ? "text-[#B2B5B8]" : "text-gray-600"}`}>
-                  {product.title}
-                </p>
-                <div className="flex items-center">
-                  <p className={`text-sm ${expired ? "text-[#B2B5B8]" : "text-red-500"}`}>{discountRate}%</p>
-                  <p className={`text-md font-bold ml-1 ${expired ? "text-[#B2B5B8]" : ""}`}>
-                    {price.toLocaleString()}원
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-md flex flex-col justify-center items-center w-[166px] mx-auto"
+              >
+                <Link href={`/products/detail/${product.id}`}>
+                  <div className="relative w-[165px] h-[178px] md:w-[220px] md:h-[230px] cursor-pointer mb-2">
+                    <Image
+                      src={product.main_img}
+                      alt={product.title}
+                      fill
+                      priority
+                      sizes="165px"
+                      className={`rounded-md object-cover ${expired ? "opacity-50" : ""}`}
+                    />
+                    {expired && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-md">
+                        <p className="text-[#FFFFFE] text-[18px]">판매 종료</p>
+                      </div>
+                    )}
+                  </div>
+                </Link>
+                <div className={`ml-3 ${expired ? "text-[#B2B5B8]" : ""}`}>
+                  <p className="text-[#B2B5B8] text-[12px]">{product.nickname}</p>
+                  <p className={`text-sm truncate w-[165px] ${expired ? "text-[#B2B5B8]" : "text-gray-600"}`}>
+                    {product.title}
                   </p>
+                  <div className="flex items-center">
+                    <p className={`text-sm ${expired ? "text-[#B2B5B8]" : "text-red-500"}`}>{discountRate}%</p>
+                    <p className={`text-md font-bold ml-1 ${expired ? "text-[#B2B5B8]" : ""}`}>
+                      {price.toLocaleString()}원
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </>
   );

@@ -21,8 +21,12 @@ export function WebHeader() {
           <Link href={"/"}>
             <Image src={Logo} alt="Urr logo" width={121} height={66} className="mr-[71px]" />
           </Link>
-          <li className="text-xl mr-10 cursor-pointer">Store</li>
-          <li className="text-xl cursor-pointer">Influencers</li>
+          <Link href={"/products/list"}>
+            <li className="text-xl mr-10 cursor-pointer">Store</li>
+          </Link>
+          <Link href={"/influencer"}>
+            <li className="text-xl cursor-pointer">Influencers</li>
+          </Link>
         </ul>
 
         <div className="flex flex-row gap-6">

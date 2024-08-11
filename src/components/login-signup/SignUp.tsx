@@ -3,8 +3,8 @@
 import { userSignUp } from "@/services/users/users.service";
 import { Dispatch, SetStateAction, useState } from "react";
 import { nicknameCheck } from "@/services/users/users.service";
-import { useRouter } from "next/navigation";
 import { StepType } from "@/app/(provider)/(root)/signup/page";
+import WebLoginBg from "../../../public/images/web_login_bg.svg";
 
 interface SignUpProps {
   confirmRef: string | undefined;
@@ -14,7 +14,7 @@ interface SignUpProps {
 
 export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps) {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5 outline-none";
-  const stLabel = "text-xs text-[#575757] mt-[8px]";
+  const stLabel = "text-xs text-destructive mt-[8px]";
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -33,7 +33,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
   const [isNicknameConfirm, setIsNicknameConfirm] = useState<boolean>(false);
   const [isEmailConfirm, setIsEmailConfirm] = useState<boolean>(false);
 
-  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const onSignUpHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -44,13 +44,13 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
       return;
     }
 
+    setIsSubmitting(true);
+
     if (selectUser === "인플루언서") {
       if (email && password && nickname && confirm) {
         try {
           await userSignUp({ email, password, nickname, confirm, selectUser, approve: false });
-          // alert("회원가입이 완료되었습니다!");
           setStep("완료");
-          // router.push("/login");
         } catch (error) {
           alert("회원가입 실패");
           console.log(error);
@@ -60,9 +60,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
       if (email && password && nickname) {
         try {
           const response = await userSignUp({ email, password, nickname, selectUser, approve: false });
-          // alert("회원가입이 완료되었습니다!");
           setStep("완료");
-          // router.push("/login");
         } catch (error) {
           alert("회원가입 실패");
           console.log(error);
@@ -73,9 +71,13 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
 
   // 닉네임 중복확인
   const onChangeNicknameCheck = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-    if (nickname) {
-      const overlapNickname = await nicknameCheck(nickname);
+    const nicknameCurrent = e.target.value;
+
+    setNickname(nicknameCurrent);
+
+    if (nicknameCurrent) {
+      const overlapNickname = await nicknameCheck(nicknameCurrent);
+
       if (overlapNickname.length !== 0) {
         setNicknameConfirmMessage("이미 사용중인 닉네임입니다");
         setIsNicknameConfirm(false);
@@ -139,48 +141,61 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
 
   return (
     <>
-      <div className="h-screen w-[375px] mx-auto whitespace-nowrap pt-[58px]">
-        <form className="flex flex-col gap-9">
-          <div>
+      <div className="lg:flex lg:flex-row">
+        <div className="hidden lg:block w-[50%] bg-cover bg-center">
+          <WebLoginBg className="max-w-full max-h-full" />
+        </div>
+
+        <div className="h-screen w-[375px] mx-auto whitespace-nowrap pt-[58px]">
+          <h2 className="hidden lg:block text-[28px] font-bold text-center mb-[32px]">회원가입</h2>
+          <form className="flex flex-col gap-9">
+            <div>
+              <label className="flex flex-col">
+                닉네임 *
+                <input type="text" placeholder="닉네임" onChange={onChangeNicknameCheck} className={stInput} />
+                <p className={stLabel}>{nicknameConfirmMessage}</p>
+              </label>
+            </div>
+
             <label className="flex flex-col">
-              닉네임 *
-              <input type="text" placeholder="닉네임" onChange={onChangeNicknameCheck} className={stInput} />
-              <p className={stLabel}>{nicknameConfirmMessage}</p>
+              이메일 *
+              <input type="text" placeholder="이메일" onChange={onChangeEmail} className={stInput} />
+              <p className={stLabel}>{emailConfirmMessage}</p>
+              {/* <p className={stLabel}>이메일은 수정이 불가하니 정확하게 입력하세요.</p> */}
             </label>
+
+            <label className="flex flex-col">
+              비밀번호 *
+              <input type="password" onChange={onChangePassword} placeholder="비밀번호" className={stInput} />
+              <p className={stLabel}>{passwordMessage}</p>
+            </label>
+
+            <label className="flex flex-col">
+              비밀번호 확인 *
+              <input
+                type="password"
+                onChange={onChangeConfirmPassword}
+                placeholder="비밀번호 확인"
+                className={stInput}
+              />
+              <p className={stLabel}>{confirmPasswordMessage}</p>
+            </label>
+          </form>
+
+          <div className="flex sticky bottom-0 mb-7">
+            <button
+              onClick={onSignUpHandler}
+              disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
+              className={`${
+                isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm
+                  ? "bg-primarynormal text-white"
+                  : "bg-[#F2F2F2] text-[#CDCFD0]"
+              } w-full h-[47px] rounded-xl font-medium`}
+            >
+              회원가입
+            </button>
           </div>
-
-          <label className="flex flex-col">
-            이메일 *
-            <input type="text" placeholder="asdf123@asdf.vqsd" onChange={onChangeEmail} className={stInput} />
-            <p className={stLabel}>{emailConfirmMessage}</p>
-            {/* <p className={stLabel}>이메일은 수정이 불가하니 정확하게 입력하세요.</p> */}
-          </label>
-
-          <label className="flex flex-col">
-            비밀번호 *
-            <input type="password" onChange={onChangePassword} placeholder="비밀번호" className={stInput} />
-            <p className={stLabel}>{passwordMessage}</p>
-          </label>
-
-          <label className="flex flex-col">
-            비밀번호 확인 *
-            <input type="password" onChange={onChangeConfirmPassword} placeholder="비밀번호 확인" className={stInput} />
-            <p className={stLabel}>{confirmPasswordMessage}</p>
-          </label>
-        </form>
-      </div>
-      <div className="flex sticky bottom-0 mb-7 p-5">
-        <button
-          onClick={onSignUpHandler}
-          disabled={!(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)} // 나중에 풀기
-          className={`${
-            isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm
-              ? "bg-primarynormal text-white"
-              : "bg-[#F2F2F2] text-[#CDCFD0]"
-          } w-full h-[47px] rounded-xl font-medium`}
-        >
-          회원가입
-        </button>
+        </div>
       </div>
     </>
   );

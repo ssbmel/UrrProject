@@ -44,11 +44,15 @@ export const userLogin = async ({ email, password }: { email: string; password: 
       body: JSON.stringify({ email, password })
     });
 
+    if (!response.ok) {
+      throw new Error("로그인 요청 실패: " + response.statusText);
+    }
+
     const data = await response.json();
 
     return data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 

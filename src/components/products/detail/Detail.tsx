@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import cart from "../../../../public/icon/장바구니.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
 import ProductInquiry from "./ProductInquiry";
@@ -14,6 +14,7 @@ import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 
 import DetailInflu from "./DetailInflu";
+import LoadingUrr from "@/components/common/loading/LoadingUrr";
 
 interface detailProps {
   params: { id: string };
@@ -22,7 +23,8 @@ interface detailProps {
 type CompoStateType = "상품정보" | "상품후기" | "상품문의";
 
 export default function Detail({ params }: detailProps) {
-  const { data } = useGetProductDetail({ id: params.id });
+  const { data, isLoading } = useGetProductDetail({ id: params.id });
+  const [loading, setLoading] = useState<boolean>(true);
   const [compoState, setCompoState] = useState<CompoStateType>("상품정보");
   const [restart, setRestart] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -33,6 +35,12 @@ export default function Detail({ params }: detailProps) {
   const discountPercentage = ((cost - price) / cost) * 100;
   const discountPercentageInteger = Math.floor(discountPercentage);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading) {
+      setLoading(false); // 데이터가 로드되면 로딩 상태를 false로 변경
+    }
+  }, [isLoading]);
 
   const getClassNames = (state: any) => {
     return `w-[113px] p-4 flex justify-center items-center border-b-4 ${
@@ -66,6 +74,10 @@ export default function Detail({ params }: detailProps) {
         console.error("URL 복사 실패:", error);
       });
   };
+
+  if (loading) {
+    return <LoadingUrr />;
+  }
 
   return (
     <>

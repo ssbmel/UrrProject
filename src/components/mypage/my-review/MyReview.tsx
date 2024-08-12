@@ -4,7 +4,7 @@ import { useUserData } from "@/hooks/useUserData";
 import Image from "next/image";
 import { createClient } from "../../../../supabase/client";
 import { useEffect, useRef, useState } from "react";
-import { OrderType, Product, Review } from "../../../../types/common";
+import { Product, Review } from "../../../../types/common";
 import ReviewImage from "./ReviewImage";
 import { useParams, useRouter } from "next/navigation";
 import defaultImg from "../../../../public/images/default.png";
@@ -155,6 +155,29 @@ const MyReview = () => {
       router.push("/mypage");
     }
   };
+
+  const deleteReview = async (data:Review) => {
+    const response = await fetch("/api/product_review", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  };
+
+  const { mutate: deleteReviewMutation } = useMutation<Review, unknown, Review>({
+    mutationFn: (data) => deleteReview(data)
+  });
+
+  // const handleDelete = async (id: string) => {
+  //   if (!window.confirm("해당 상품을 삭제하시겠습니까?"))
+  //     return;
+  //   deleteReviewMutation({id});
+  //       router.push("/mypage");
+  //   }
 
   return (
     <div className="w-full xl:w-[60%] p-4 mx-auto">

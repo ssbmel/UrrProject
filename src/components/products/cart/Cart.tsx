@@ -24,7 +24,7 @@ export type DataType = {
 function Cart() {
   const { data: userData } = useUserData();
   const userId = userData?.id;
-  const saveCartItems = useUserCartItems(userId);
+  const { data: saveCartItems, isFetching } = useUserCartItems(userId);
   const [allCartItems, setAllCartItems] = useState<DataType[]>([]);
   const { setProductList } = useAddrStore();
   const [allChecked, setAllChecked] = useState<boolean>(true);
@@ -130,7 +130,7 @@ function Cart() {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full xl:w-[1132px] xl:mx-auto p-4">
       <div className="flex items-center gap-2 p-2 border-b-2 border-[#EAECEC]">
         <label>
           <input
@@ -155,6 +155,7 @@ function Cart() {
           CheckboxChangeHandler={CheckboxChangeHandler}
           updateItemQuantity={updateItemQuantity}
           removeItemFromState={removeItemFromState}
+          isFetching={isFetching}
         />
       ))}
 

@@ -10,8 +10,7 @@ import { usePathname } from "next/navigation";
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const liStyle =
-    "font-[600] flex justify-center px-[6px] w-[44px] text-[14px] whitespace-nowrap transition-colors hover:text-blue-600";
+  const liStyle = "font-[600] flex justify-center px-[6px] w-[44px] text-[14px] whitespace-nowrap transition-colors";
 
   if (
     (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) ||
@@ -35,6 +34,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/mypage"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -45,6 +45,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/products/list"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -55,6 +56,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/influencer"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -65,6 +67,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/chatlist"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">

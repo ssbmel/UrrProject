@@ -141,37 +141,36 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
 
   return (
     <>
-      <div className="lg:flex lg:flex-row">
-        <div className="hidden lg:block w-[50%] bg-cover bg-center">
+      <div className="xl:flex xl:flex-row">
+        <div className="hidden xl:block bg-cover bg-center">
           <WebLoginBg className="max-w-full max-h-full" />
         </div>
 
-        <div className="h-screen w-[375px] mx-auto whitespace-nowrap pt-[58px]">
-          <h2 className="hidden lg:block text-[28px] font-bold text-center mb-[32px]">회원가입</h2>
+        <div className="flex flex-col justify-between h-screen xl:h-[783px] w-[375px] mx-auto whitespace-nowrap pt-[58px]  p-4">
+          <h2 className="hidden xl:block text-[28px] font-bold text-center mb-[32px]">회원가입</h2>
           <form className="flex flex-col gap-9">
             <div>
               <label className="flex flex-col">
-                닉네임 *
+                닉네임
                 <input type="text" placeholder="닉네임" onChange={onChangeNicknameCheck} className={stInput} />
                 <p className={stLabel}>{nicknameConfirmMessage}</p>
               </label>
             </div>
 
             <label className="flex flex-col">
-              이메일 *
+              이메일
               <input type="text" placeholder="이메일" onChange={onChangeEmail} className={stInput} />
               <p className={stLabel}>{emailConfirmMessage}</p>
-              {/* <p className={stLabel}>이메일은 수정이 불가하니 정확하게 입력하세요.</p> */}
             </label>
 
             <label className="flex flex-col">
-              비밀번호 *
+              비밀번호
               <input type="password" onChange={onChangePassword} placeholder="비밀번호" className={stInput} />
               <p className={stLabel}>{passwordMessage}</p>
             </label>
 
             <label className="flex flex-col">
-              비밀번호 확인 *
+              비밀번호 확인
               <input
                 type="password"
                 onChange={onChangeConfirmPassword}

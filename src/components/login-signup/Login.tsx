@@ -53,16 +53,16 @@ const Login = () => {
 
   return (
     <>
-      <div className="lg:flex lg:flex-row">
-        <div className="hidden lg:block lg:w-[50%] lg:bg-cover lg:bg-center">
-          <WebLoginBg className="lg:max-w-full lg:max-h-full" />
+      <div className="xl:flex xl:flex-row">
+        <div className="hidden xl:block xl:bg-cover xl:bg-center">
+          <WebLoginBg className="xl:max-w-full xl:max-h-full" />
         </div>
 
-        <div className="flex flex-col h-[700px] w-[375px] mx-auto lg:justify-center">
-          <div className="flex justify-center items-center h-[35%] lg:hidden">
+        <div className="flex flex-col h-[700px] w-[375px] mx-auto xl:justify-center p-4">
+          <div className="flex justify-center items-center h-[35%] xl:hidden">
             <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
           </div>
-          <h2 className="hidden lg:block text-[28px] font-bold mx-auto mb-[43px]">로그인</h2>
+          <h2 className="hidden xl:block text-[28px] font-bold mx-auto mb-[43px]">로그인</h2>
 
           <form onSubmit={loginHandler} className="flex flex-col h-[35%]">
             <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
@@ -78,7 +78,9 @@ const Login = () => {
 
           <div className="flex flex-col items-center h-[25%]">
             <div className="flex justify-center bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg cursor-pointer">
-              {/* <Image src={Kakao} alt="카카오톡 로고" width={20} height={20} /> 이상함 */}
+              <div className="h-[20px] w-[20px] relative flex items-center my-auto mr-1">
+                <Image src={Kakao} alt="카카오톡 로고" layout="fill" objectFit="cover" />
+              </div>
               <button onClick={kakaoLoginHandler}>카카오 로그인</button>
             </div>
             <div className="flex">

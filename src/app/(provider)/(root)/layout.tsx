@@ -16,10 +16,10 @@ export const metadata = {
 const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
-      <div className="lg:hidden">
+      <div className="xl:hidden">
         <MobileHeader />
       </div>
-      <div className="hidden lg:block">
+      <div className="hidden xl:block">
         <WebHeader />
       </div>
       <main className="grow overflow-auto">
@@ -28,7 +28,7 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
         <Footer />
       </main>
       <UpButton />
-      <div className="lg:hidden">
+      <div className="xl:hidden">
         <BottomNav />
       </div>
     </>

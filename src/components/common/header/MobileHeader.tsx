@@ -9,12 +9,14 @@ import CartIcon from "../../../../public/icon/cartIcon.svg";
 import XIcon from "../../../../public/icon/XIcon.svg";
 import { useState } from "react";
 import SearchModal from "../search/SearchModal";
+import { useAddrStore } from "@/zustand/addrStore";
 
-const Header = () => {
+const MobileHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+  // const {setRefContent}=useAddrStore();
 
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
@@ -45,7 +47,7 @@ const Header = () => {
   if (HOME || ADMIN || MY_PAGE || PRODUCTS_LIST || CHATLIST || INFLUENCER) {
     leftIcon = (
       <Link href={"/"}>
-        <Image src={logo} alt="urr_logo" width={62} />
+        <Image src={logo} alt="urr_logo" width={62} priority />
       </Link>
     );
   } else if (LOGIN) {
@@ -66,7 +68,7 @@ const Header = () => {
         <button
           onClick={() => {
             setIsModalOpen(true);
-            setTimeout(() => setIsModalVisible(true), 100); // Slight delay to trigger animation
+            setTimeout(() => setIsModalVisible(true), 100);
           }}
         >
           <SearchIcon />
@@ -97,20 +99,21 @@ const Header = () => {
         <div className="font-semibold text-xl">{headerTitle}</div>
         <div className="flex gap-2 p-[4px]">{rightIcon}</div>
       </header>
-
+      <div>
+      </div>
       {isModalOpen && (
         <div
           className={`modal-overlay ${isModalVisible ? "visible" : ""}`}
           onClick={() => {
             setIsModalVisible(false);
-            setTimeout(() => setIsModalOpen(false), 300); // Delay to match the animation duration
+            setTimeout(() => setIsModalOpen(false), 300);
           }}
         >
           <div className={`modal-content ${isModalVisible ? "slide-down" : ""}`} onClick={(e) => e.stopPropagation()}>
             <SearchModal
               closeModal={() => {
                 setIsModalVisible(false);
-                setTimeout(() => setIsModalOpen(false), 300); // Delay to match the animation duration
+                setTimeout(() => setIsModalOpen(false), 300);
               }}
             />
           </div>
@@ -120,4 +123,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default MobileHeader;

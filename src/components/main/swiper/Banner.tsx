@@ -29,7 +29,7 @@ export default function Banner() {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
+        className="mySwiper w-full h-[330px] xl:w-full xl:h-[850px]"
       >
         <SwiperSlide><Image src={urrMainImg} alt="mainImg" fill quality={100}></Image></SwiperSlide>
         <SwiperSlide><Image src={product1} alt="mainImg" fill quality={100}></Image></SwiperSlide>

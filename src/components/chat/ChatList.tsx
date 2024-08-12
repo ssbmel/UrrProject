@@ -3,9 +3,7 @@
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import StartChat from "./StartChat";
 import { useRouter } from "next/navigation";
 
 export default function ChatList() {
@@ -13,9 +11,9 @@ export default function ChatList() {
   const supabase = createClient();
   const router = useRouter();
 
-  const [chatListData, setChatListData] = useState<({ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; } | undefined)[] | null>(null);
-  const [channelList, setChannelList] = useState<number[] | null>(null);
+  const [chatListData, setChatListData] = useState<({ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; } | undefined)[]>([]);
   const [myChannel, setMyChannel] = useState<{ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; } | null>(null);
+  const [channelIdList, setChannelIdList] = useState<number[]>([]);
 
   const getMyChannel = async () => {
     //나의 채팅 채널 불러오기
@@ -37,6 +35,12 @@ export default function ChatList() {
           message: response?.message
         }
         setMyChannel(channel_data);
+        setChannelIdList((pre) => {
+          return [
+            ...pre,
+            data.channel_id
+          ]
+        })
       }
 
     }
@@ -48,50 +52,54 @@ export default function ChatList() {
 
   const getChatList = async () => {
     //유저의 대화구독목록 불러오기
-    const user_id = userdata.id
+    const user_id = userdata.id;
+    const approve = userdata.approve;
+    if (approve) {
+      await getMyChannel();
+    }
     const { data, error } = await supabase
       .from('chat_subscribe')
-      .select('*')
+      .select(`
+        created_at,
+        channel_id,
+        chat_channels(
+          *
+        )
+        `)
       .eq('user_id', user_id)
+
     if (data) {
-      const channelListData = data.map((channel) => {
-        return channel.channel_id
-      })
-      setChannelList(channelListData)
+      const channelListDatas = await Promise.all(data.map(async (subscribe) => {
+        if (subscribe.chat_channels) {
+          const response = await getlastMessage(subscribe.channel_id, subscribe.chat_channels.owner_id);
+          if (response?.time != undefined && response.message != undefined) {
+            setChannelIdList((pre) => {
+              return [
+                ...pre,
+                subscribe.channel_id
+              ]
+            })
+            return {
+              channel_id: subscribe.channel_id,
+              channel_name: subscribe.chat_channels.channel_name,
+              owner_id: subscribe.chat_channels.owner_id,
+              owner_profile_url: subscribe.chat_channels.owner_profile_url,
+              created_at: response.time,
+              message: response.message
+            }
+          }
+        }
+
+      }))
+      setChatListData(channelListDatas);
     }
   }
 
-  const getChatListData = async (chatlist: number[] | null) => {
-    //구독리스트의 정보 불러오기
-    if (channelList) {
-      const { data, error } = await supabase
-        .from('chat_channels')
-        .select('*')
-        .in('channel_id', [...channelList])
-      if (data) {
-        const channelListDatas = await Promise.all(data.map(async (channel) => {
-          const response = await getlastMessage(channel.channel_id, channel.owner_id);
-          if (response?.time != undefined && response?.message != undefined) {
-            return {
-              channel_id: channel.channel_id,
-              channel_name: channel.channel_name,
-              owner_id: channel.owner_id,
-              owner_profile_url: channel.owner_profile_url,
-              created_at: response?.time,
-              message: response?.message
-            }
-          }
-        }))
-        setChatListData(channelListDatas);
-      }
-    }
-  }
+
 
   const getlastMessage = async (channel_id: number, owner_id: string): Promise<{ time: string, message: string } | null> => {
     //유저의 마지막 대화 불러오기
-    //실시간
     const user_id = await userdata.id;
-    const approve = await userdata.approve;
     if (owner_id === user_id) {
       //채널주
       const { data, error } = await supabase
@@ -125,24 +133,53 @@ export default function ChatList() {
         const time = data.created_at.slice(11, 16) as string;
         return { time, message }
       }
-
-
-      // if (owner_id == user_id) {
-      //   setMyMessages({
-      //     created_at: time,
-      //     message: message
-      //   })
-      // } else {
-      //   setMessages((pre) => {
-      //     if (pre == null) {
-      //       return [{ created_at: time, message: message }];
-      //     } else {
-      //       return [...pre, { created_at: time, message: message }];
-      //     }
-      //   })
-      // }
     }
   }
+
+  //실시간
+  const receiveChatMessage = async () => {
+    const user_id = await userdata.id;
+    const channels = supabase
+      .channel("changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_messages",
+          filter: `channel_id=in.(${channelIdList})`
+        },
+        (payload) => {
+          const newMessage = payload.new;
+          const message = JSON.parse(JSON.stringify(newMessage.content)).message as string;
+          const time = newMessage.created_at.slice(11, 16) as string;
+          if (myChannel && newMessage.channel_id === myChannel.channel_id) {
+            setMyChannel({
+              ...myChannel,
+              created_at: time,
+              message: message
+            })
+          } else {
+            if (chatListData) {
+              setChatListData(chatListData?.map((pre) => {
+                if (pre) {
+                  if (pre?.channel_id === newMessage.channel_id && (newMessage.user_id === user_id || newMessage.user_id === pre?.owner_id)) {
+                    return {
+                      ...pre,
+                      created_at: time,
+                      message: message
+                    }
+                  } else {
+                    return pre;
+                  }
+                }
+              }))
+            }
+          }
+        }
+      )
+      .subscribe();
+  };
 
   const clickChat = (channel_id: number) => {
     const id = channel_id.toString()
@@ -152,23 +189,19 @@ export default function ChatList() {
   useEffect(() => {
     if (userdata != undefined) {
       getChatList();
-      const approve = userdata.approve
-      if (approve) {
-        getMyChannel();
-      }
     }
   }, [userdata])
-  useEffect(() => {
-    getChatListData(channelList);
-  }, [channelList])
 
+  useEffect(() => {
+    if (userdata != undefined) {
+      receiveChatMessage();
+    }
+  }, [channelIdList])
 
 
   return (
     <div className="mt-[6px] flex flex-col">
       {(myChannel != undefined) ?
-
-
         <div className="">
           <p className="w-[343px] mx-auto font-bold text-[20px] mt-[18px] mb-[12px]">내가 만든 톡방</p>
           <div className="w-[343px] mx-auto flex flex-col justify-center">

@@ -1,6 +1,10 @@
 import { create } from "zustand";
+import { Dispatch, RefObject, SetStateAction } from "react"
+
 import { Addr, PaymentData, ProductList } from "../../types/addr.type";
 import { persist } from "zustand/middleware";
+
+type refContent = RefObject<HTMLDivElement> | null; 
 
 interface AddrStore {
   addrData: Addr | null;
@@ -9,6 +13,8 @@ interface AddrStore {
   setPaymentData: (data: PaymentData) => void;
   productList: ProductList[] | null;
   setProductList: (data: ProductList[]) => void;
+  refContent : refContent
+  setRefContent: (data: RefObject<HTMLDivElement> | null) => void;
   clearData: () => void;
 }
 
@@ -21,10 +27,18 @@ export const useAddrStore = create(
       setPaymentData: (data: PaymentData) => set({ paymentData: data }),
       productList: null,
       setProductList: (data: ProductList[]) => set({ productList: data }),
+      refContent: null,
+      setRefContent: (data: refContent) => set({ refContent: data }),
       clearData: () => set({ paymentData: null, productList: null }) // Implement clearData method
     }),
     {
-      name: "AddrStore"
+      name: "AddrStore",
+      //@ts-ignore
+      partialize: (state) => ({
+        addrData: state.addrData,
+        paymentData: state.paymentData,
+        productList: state.productList,
+      }),
     }
   )
 );

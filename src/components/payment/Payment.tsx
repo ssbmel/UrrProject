@@ -1,9 +1,8 @@
 import usePayment from "@/hooks/usePayment";
-import { useUserData } from "@/hooks/useUserData";
 import { useAddrStore } from "@/zustand/addrStore";
-import PortOne from "@portone/browser-sdk/v2";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import InfoOnEditAddress from "../mypage/edit/InfoOnEditAddress";
 
 export default function Payment() {
   const paymentFunc = usePayment();
@@ -11,7 +10,7 @@ export default function Payment() {
   const { productList } = useAddrStore();
   const [fullName, setFullName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [address, setAddress] = useState<{ zipCode: string; detail: string }>({ zipCode: "", detail: "" });
+  const [address, setAddress] = useState<string | null>("");
   const [request, setRequest] = useState<string>("");
 
   const price = productList?.reduce((acc: any, cur: any) => {
@@ -20,7 +19,7 @@ export default function Payment() {
 
   const handleSubmit = async () => {
     try {
-      if (!fullName || !phoneNumber || !address.zipCode || !address.detail) {
+      if (!fullName || !phoneNumber || !address) {
         alert("이름, 휴대폰 번호, 주소를 모두 입력해 주세요.");
         return;
       }
@@ -31,7 +30,7 @@ export default function Payment() {
           orderCount: 2,
           orderName: "sample test", // 주문상품 이름
           price: price, // 상품 전체 가격
-          address: `${address.zipCode} ${address.detail}`,
+          address,
           phoneNumber: phoneNumber,
           productList: productList,
           request: request
@@ -53,14 +52,14 @@ export default function Payment() {
   return (
     <>
       <div className="bg-gray-100 flex justify-center">
-        <div className="w-full flex flex-col items-start gap-[20px] bg-white p-[16px] shadow-md">
+        <div className="w-full flex flex-col items-start gap-[8px] bg-white p-[16px] shadow-md">
           <p className="text-[20px] mb-[4px]">주문자 정보</p>
           <p>
             <span>주문자</span>
             <span className="text-red-600">*</span>
           </p>
           <input
-            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px] mb-2"
             type="text"
             placeholder="이름"
             value={fullName}
@@ -71,18 +70,19 @@ export default function Payment() {
             <span className="text-red-600">*</span>
           </p>
           <input
-            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px] mb-2"
             type="text"
             placeholder="휴대폰 번호"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
-          <p>
+          {/* <p>
             <span>주소</span>
             <span className="text-red-600">*</span>
-            {/* <button className="w-12 ml-4 border border-blue-400 rounded-md">검색</button> */}
-          </p>
-          <input
+          </p> */}
+          <InfoOnEditAddress address={address ? address.split(",") : ""} setAddress={setAddress} required={true} />
+
+          {/* <input
             className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
             type="text"
             placeholder="우편번호 및 도로명 주소를 입력하세요"
@@ -95,8 +95,8 @@ export default function Payment() {
             placeholder="상세주소를 입력하세요"
             value={address.detail}
             onChange={(e) => setAddress({ ...address, detail: e.target.value })}
-          />
-          <p>배송 요청사항</p>
+          /> */}
+          <p className="mt-2">배송 요청사항</p>
           <input
             className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
             type="text"

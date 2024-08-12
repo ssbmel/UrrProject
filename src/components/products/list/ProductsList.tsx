@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import openFilter from "../../../../public/icon/rec.png";
 import checkedImg from "../../../../public/icon/checkAfter.png";
@@ -28,6 +28,7 @@ interface ProductsListProps {
 }
 
 export default function ProductsList({ selectedCategory }: ProductsListProps) {
+  const testRef = useRef<HTMLDivElement>(null);
   const [products, setProducts] = useState<PostData[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [sortOption, setSortOption] = useState<string>("최신순");

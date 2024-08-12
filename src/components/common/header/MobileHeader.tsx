@@ -47,7 +47,7 @@ const MobileHeader = () => {
   if (HOME || ADMIN || MY_PAGE || PRODUCTS_LIST || CHATLIST || INFLUENCER) {
     leftIcon = (
       <Link href={"/"}>
-        <Image src={logo} alt="urr_logo" width={62} />
+        <Image src={logo} alt="urr_logo" width={62} priority />
       </Link>
     );
   } else if (LOGIN) {

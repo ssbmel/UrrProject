@@ -8,6 +8,8 @@ import { useProductComment } from "@/hooks/useProductComment";
 import { deleteComment, updateComment } from "@/services/comment/comment.service";
 import Image from "next/image";
 import lock from "../../../../public/icon/lock.png";
+import beforeCheck from "../../../../public/icon/checkBefore.png";
+import afterCheck from "../../../../public/icon/checkAfter.png";
 
 type NewComment = {
   content: string;
@@ -31,7 +33,7 @@ type CommentType = {
 };
 
 export default function ProductInquiry({ id, restart, setRestart }: StateType) {
-  const commentRef = useRef<HTMLInputElement>(null);
+  const commentRef = useRef<HTMLTextAreaElement>(null);
   const editCommentRef = useRef<HTMLInputElement>(null);
   const { data: userId } = useUserData();
 
@@ -113,37 +115,57 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
     <>
       <div className="">
         <div className="p-4">
-          <p className="py-3 text-[16px] text-[#4C4F52]">문의 남기기</p>
+          <p className="pb-3 pl-1 text-[16px] text-[#4C4F52]">문의 남기기</p>
           <form onSubmit={(e) => addCommentHandler(e)} className="flex flex-col space-y-2">
-            <input
-              type="text"
-              placeholder="문의 사항을 입력해주세요."
-              className={`border rounded-md w-full h-[84px] transition-all ${
-                commentValue ? "bg-white border-gray-300" : "bg-gray-100 border-black"
+            <textarea
+              placeholder="글 작성하기"
+              className={`border border-[#E6E6E6]  rounded-md w-full transition-all p-2 ${
+                commentValue ? "bg-white border-gray-300 text-black" : "bg-[#F2F2F2] border-[#E6E6E6] text-[#CDCFD0] "
               }`}
               ref={commentRef}
               value={commentValue}
               onChange={(e) => setCommentValue(e.target.value)}
+              style={{
+                minHeight: "84px",
+                lineHeight: "1.5",
+                whiteSpace: "pre-wrap",
+                overflowWrap: "break-word",
+                resize: "none"
+              }}
             />
-            <div className="flex justify-between items-center">
+
+            <div className="flex justify-between items-center mt-4">
               <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2 h-4 w-4 rounded border-gray-300 text-[#1A82FF] focus:ring-[#1A82FF]"
-                  checked={isPrivate}
-                  onChange={(e) => setIsPrivate(e.target.checked)}
-                />
-                <span>비밀글</span>
+                <div
+                  className="relative w-[20px] h-[20px] "
+                  onClick={() => {
+                    setIsPrivate(!isPrivate);
+                  }}
+                >
+                  <Image
+                    src={isPrivate ? afterCheck : beforeCheck}
+                    alt="정렬 아이콘"
+                    fill
+                    sizes="20px"
+                    className="object-cover"
+                  />
+                </div>
+
+                <span className="text-[14px] text-[#4C4F52] ml-2">비밀글</span>
               </div>
-              <button className="border border-[#1A82FF] text-[#1A82FF] p-3 w-[59px] h-[32px] flex justify-center items-center rounded-md ">
-                입력
+              <button
+                className={`border border-[#BFC4C4] text-[#CDCFD0] p-3 w-[59px] h-[32px] flex justify-center items-center rounded-md ${
+                  commentValue ? "bg-[#F2F2F2] border-none text-primarynormal" : "bg-white border-[#BFC4C4]"
+                }`}
+              >
+                등록
               </button>
             </div>
           </form>
         </div>
         <div className="border-[#F4F4F4] border-[1px] w-full mt-3" />
 
-        <div className="p-4">
+        <div className="px-4">
           {commentList?.map((comment: CommentType) => (
             <div key={comment.id} className="border-b-2 border-gray-200 flex justify-between">
               {editingCommentId === comment.id ? (
@@ -157,9 +179,9 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
                   <p>{formatDate(comment.created_at.substring(0, 10))}</p>
                 </div>
               ) : (
-                <div className="flex flex-col gap-4 p-2 my-2">
-                  <p className="text-md font-semibold">{comment.users?.nickname}</p>
-                  <p className="text-[#4C4F52] flex justify-center">
+                <div className="flex flex-col gap-[12px] p-2 my-2">
+                  <p className="text-[14px] text-[#1B1C1D] font-semibold">{comment.users?.nickname}</p>
+                  <p className="text-[#4C4F52] text-[14px] flex justify-center items-center">
                     {comment.private && userId?.id !== comment.user_id ? (
                       <>
                         <Image
@@ -175,15 +197,15 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
                       comment.content
                     )}
                   </p>
-                  <p className="text-sm text-[#989898]">{formatDate(comment.created_at.substring(0, 10))}</p>
+                  <p className="text-[12px] text-[#989898]">{formatDate(comment.created_at.substring(0, 10))}</p>
                 </div>
               )}
 
               {userId?.id === comment.user_id && (
-                <div className="w-28 h-6 flex gap-2">
+                <div className="w-28 h-6 flex gap-2 mt-4">
                   {editingCommentId !== comment.id ? (
                     <button
-                      className="w-12 bg-[#0068E5] text-white rounded-md"
+                      className="w-12 bg-primarynormal text-white rounded-md"
                       onClick={() => setEditingCommentId(comment.id)}
                     >
                       수정

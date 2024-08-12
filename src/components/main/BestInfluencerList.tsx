@@ -3,7 +3,6 @@
 import Image from "next/image";
 import defaultImg from "../../../public/images/default.png";
 import RightArrowIcon from "../../../public/icon/rightArrow.svg";
-import InfluencerImg from "../../../public/bgImg/influencerImg.png";
 import "./style.css";
 import { User } from "../../../types/common";
 import { useEffect, useState } from "react";
@@ -69,7 +68,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
                   <p className="text-[16px] font-bold text-left truncate">{inf.nickname}</p>
                   <span className="mx-2">|</span>
                   <p className="text-[16px] font-bold text-left truncate">
-                    {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "Loading..."}
+                    {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
                   </p>
                 </div>
                 <p className="w-[100%] text-[#989C9F] text-[14px]">{inf.intro}</p>

@@ -138,7 +138,7 @@ function InfluencerList() {
                       )}
                     </div>
                   </div>
-                  <p className="text-sm mb-2">{inf.nickname}</p>
+                  <p className="text-[13px] mb-2">{inf.nickname}</p>
                 </div>
               ))}
           </div>
@@ -179,7 +179,7 @@ function InfluencerList() {
                   )}
                 </div>
               </div>
-              <p className="text-[#4C4F52] text-[16px] mb-6">{inf.nickname}</p>
+              <p className="text-[#4C4F52] mb-6">{inf.nickname}</p>
             </div>
           ))}
         </div>

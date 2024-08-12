@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
 
-const OrderedProduct = () => {
+import Link from "next/link";
+
+const OrderedProduct = ({ id, paymentId }: { id : string, paymentId : string}) => {
   const active = "text-[#0068E5]";
 
   return (
@@ -11,9 +13,11 @@ const OrderedProduct = () => {
             <span className="text-[#4C4F52]">운송장 번호</span>
             <span className="font-bold">0000000000</span>
           </div>
-          <span className="text-gray-400">후기 쓰기 &gt;</span>
+          <Link href={`/mypage/review/${paymentId}/${id}`}>
+            <span className="text-gray-400">후기 쓰기 &gt;</span>
+          </Link>
         </div>
-        <div className="text-[14px] text-gray-400 border border-[#0068E5] bg-[#fffffe] rounded-[4px] p-[6px] w-full flex justify-center items-center gap-[4px]">
+        <div className="text-[14px] text-gray-400 border border-[#596473] bg-[#fffffe] rounded-[4px] p-[6px] w-full flex justify-center items-center gap-[4px]">
           <span className={active}>상품 발송</span>
           <span>&gt;</span>
           <span>택배사 도착</span>

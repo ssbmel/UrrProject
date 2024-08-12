@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import useScrollIntoView from "@/hooks/useScrollIntoView";
 
 interface PostData {
   id: string;
@@ -22,8 +23,10 @@ interface ProductsListProps {
 }
 
 export default function ProductsList({ selectedCategory }: ProductsListProps) {
+  const testRef = useRef<HTMLDivElement>(null);
   const [products, setProducts] = useState<PostData[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const testing = useScrollIntoView({scrollRef:testRef})
 
   useEffect(() => {
     async function getData() {
@@ -49,7 +52,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
 
   return (
     <>
-      <div className="flex justify-between px-6 pt-6">
+      <div ref={testRef} className="flex justify-between px-6 pt-6">
         <p className="text-lg">총 {totalProducts}개</p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-[36px] p-[17px] gap-x-2 ">

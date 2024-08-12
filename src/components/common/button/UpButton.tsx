@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import "./style.css";
-import UpArrow from "../../../../public/icon/upArrow.svg";
-import { usePathname } from "next/navigation";
+import { useAddrStore } from "@/zustand/addrStore";
+import UpIcon from "../../../../public/icon/upArrow.png"
+import Image from "next/image";
 
 function UpButton() {
   const [upButton, setUpButton] = useState(false);
-  const pathname = usePathname();
+  const {refContent} = useAddrStore();
 
   useEffect(() => {
     const handleShowButton = () => {
@@ -24,25 +25,16 @@ function UpButton() {
     };
   }, []);
 
-  const scrollToTop = () => {
-    window.scroll({
-      top: 0,
-      behavior: "smooth"
-    });
-  };
-
-  if (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) {
-    return null;
+  const test = () => {
+    if(refContent?.current){
+      refContent.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    }
   }
 
   return (
-    <>
-      {upButton && (
-        <button className="abcd btnEffect fixed bottom-[124px] right-[16px] z-50" onClick={scrollToTop} aria-label="Scroll to top">
-          <UpArrow />
-        </button>
-      )}
-    </>
+      <div onClick={test} className="fixed bottom-[124px] right-[16px] z-50 bg-white w-[50px] h-[50px] rounded-[50%]" >
+        <Image src={UpIcon} alt="up" width={50} height={50}/>
+      </div>
   );
 }
 

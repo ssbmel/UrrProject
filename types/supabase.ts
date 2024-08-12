@@ -89,22 +89,28 @@ export type Database = {
           channel_id: number
           channel_name: string | null
           created_at: string
+          last_time: string
           owner_id: string
           owner_profile_url: string | null
+          update_data: string
         }
         Insert: {
           channel_id?: number
           channel_name?: string | null
           created_at?: string
+          last_time?: string
           owner_id: string
           owner_profile_url?: string | null
+          update_data?: string
         }
         Update: {
           channel_id?: number
           channel_name?: string | null
           created_at?: string
+          last_time?: string
           owner_id?: string
           owner_profile_url?: string | null
+          update_data?: string
         }
         Relationships: [
           {
@@ -163,18 +169,24 @@ export type Database = {
           channel_id: number
           chat_subscribe_id: number
           created_at: string
+          last_time: string
+          update_data: string
           user_id: string
         }
         Insert: {
           channel_id: number
           chat_subscribe_id?: number
           created_at?: string
+          last_time?: string
+          update_data?: string
           user_id: string
         }
         Update: {
           channel_id?: number
           chat_subscribe_id?: number
           created_at?: string
+          last_time?: string
+          update_data?: string
           user_id?: string
         }
         Relationships: [
@@ -280,37 +292,48 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          inf_name: string | null
+          inf_name: string
+          payment_id: string | null
           product_id: string | null
-          review_content: string | null
+          review_content: string
           review_images: string[] | null
-          review_score: number | null
+          review_score: number
           title: string | null
           user_nickname: string | null
         }
         Insert: {
           created_at?: string
           id?: string
-          inf_name?: string | null
+          inf_name: string
+          payment_id?: string | null
           product_id?: string | null
-          review_content?: string | null
+          review_content: string
           review_images?: string[] | null
-          review_score?: number | null
+          review_score: number
           title?: string | null
           user_nickname?: string | null
         }
         Update: {
           created_at?: string
           id?: string
-          inf_name?: string | null
+          inf_name?: string
+          payment_id?: string | null
           product_id?: string | null
-          review_content?: string | null
+          review_content?: string
           review_images?: string[] | null
-          review_score?: number | null
+          review_score?: number
           title?: string | null
           user_nickname?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "product_review_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "order"
+            referencedColumns: ["paymentId"]
+          },
+        ]
       }
       products: {
         Row: {

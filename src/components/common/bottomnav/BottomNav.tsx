@@ -10,16 +10,19 @@ import { usePathname } from "next/navigation";
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const liStyle =
-    "font-[600] flex justify-center px-[6px] w-[44px] text-[14px] whitespace-nowrap transition-colors hover:text-blue-600";
+  const liStyle = "font-[600] flex justify-center px-[6px] w-[44px] text-[14px] whitespace-nowrap transition-colors";
 
-  if (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) {
+  if (
+    (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup")
+  ) {
     return null;
   }
 
   return (
     <>
-      <div className="bg-[#FAFAFF] pb-[42px] h-[93px] pt-[8px] w-full sticky bottom-0 shrink-0 md:hidden">
+      <div className="bg-[#FAFAFF] pb-[42px] h-[93px] pt-[8px] w-full sticky bottom-0 shrink-0">
         <div className="flex justify-between items-center mx-[20px]">
           <Link href={"/"}>
             <div className={liStyle}>
@@ -31,6 +34,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/mypage"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -41,6 +45,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/products/list"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -51,6 +56,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/influencer"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -61,6 +67,7 @@ export default function BottomNav() {
               </div>
             </div>
           </Link>
+
           <Link href={"/chatlist"}>
             <div className={liStyle}>
               <div className="flex flex-col items-center gap-[4px] px-[6px]">
@@ -75,5 +82,4 @@ export default function BottomNav() {
       </div>
     </>
   );
-  
 }

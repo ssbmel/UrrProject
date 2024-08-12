@@ -1,5 +1,3 @@
-import { ProductList } from "@/components/mypage/my-review/MyReview"
-
 export type Json =
   | string
   | number
@@ -94,6 +92,7 @@ export type Database = {
           last_time: string
           owner_id: string
           owner_profile_url: string | null
+          update_data: string
         }
         Insert: {
           channel_id?: number
@@ -102,6 +101,7 @@ export type Database = {
           last_time?: string
           owner_id: string
           owner_profile_url?: string | null
+          update_data?: string
         }
         Update: {
           channel_id?: number
@@ -110,6 +110,7 @@ export type Database = {
           last_time?: string
           owner_id?: string
           owner_profile_url?: string | null
+          update_data?: string
         }
         Relationships: [
           {
@@ -169,6 +170,7 @@ export type Database = {
           chat_subscribe_id: number
           created_at: string
           last_time: string
+          update_data: string
           user_id: string
         }
         Insert: {
@@ -176,6 +178,7 @@ export type Database = {
           chat_subscribe_id?: number
           created_at?: string
           last_time?: string
+          update_data?: string
           user_id: string
         }
         Update: {
@@ -183,6 +186,7 @@ export type Database = {
           chat_subscribe_id?: number
           created_at?: string
           last_time?: string
+          update_data?: string
           user_id?: string
         }
         Relationships: [
@@ -246,7 +250,7 @@ export type Database = {
           paymentId: string
           phoneNumber: number | null
           price: number
-          product_list: ProductList[]
+          product_list: Json[]
           request: string | null
           userId: string
         }
@@ -258,7 +262,7 @@ export type Database = {
           paymentId: string
           phoneNumber?: number | null
           price: number
-          product_list: ProductList[]
+          product_list: Json[]
           request?: string | null
           userId: string
         }
@@ -270,7 +274,7 @@ export type Database = {
           paymentId?: string
           phoneNumber?: number | null
           price?: number
-          product_list?: ProductList[]
+          product_list?: Json[]
           request?: string | null
           userId?: string
         }

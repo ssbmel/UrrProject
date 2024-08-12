@@ -18,6 +18,7 @@ interface ModalProps {
   cost: number;
   main_img: string;
   nickname: string;
+  end: number;
 }
 
 export type CartItemsProps = {
@@ -28,6 +29,7 @@ export type CartItemsProps = {
   quantity: number;
   main_img: string;
   nickname: string;
+  end: number;
 };
 
 const CountModal = ({
@@ -41,7 +43,8 @@ const CountModal = ({
   price,
   cost,
   main_img,
-  nickname
+  nickname,
+  end
 }: ModalProps) => {
   const totalPrice = quantity * price;
   const totalCost = quantity * cost;
@@ -62,7 +65,8 @@ const CountModal = ({
           amount: price,
           quantity,
           main_img,
-          nickname
+          nickname,
+          end
         });
         const cart = confirm("장바구니로 이동하시겠습니까?");
         if (cart === true) {

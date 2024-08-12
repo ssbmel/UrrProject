@@ -52,14 +52,14 @@ export default function Payment() {
   return (
     <>
       <div className="bg-gray-100 flex justify-center">
-        <div className="w-full flex flex-col items-start gap-[20px] bg-white p-[16px] shadow-md">
+        <div className="w-full flex flex-col items-start gap-[8px] bg-white p-[16px] shadow-md">
           <p className="text-[20px] mb-[4px]">주문자 정보</p>
           <p>
             <span>주문자</span>
             <span className="text-red-600">*</span>
           </p>
           <input
-            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px] mb-2"
             type="text"
             placeholder="이름"
             value={fullName}
@@ -70,7 +70,7 @@ export default function Payment() {
             <span className="text-red-600">*</span>
           </p>
           <input
-            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
+            className="border border-gray-200 rounded-md w-full h-[48px] p-[8px] mb-2"
             type="text"
             placeholder="휴대폰 번호"
             value={phoneNumber}
@@ -80,7 +80,7 @@ export default function Payment() {
             <span>주소</span>
             <span className="text-red-600">*</span>
           </p> */}
-          <InfoOnEditAddress address={address ? address.split(",") : ""} setAddress={setAddress} />
+          <InfoOnEditAddress address={address ? address.split(",") : ""} setAddress={setAddress} required={true} />
 
           {/* <input
             className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
@@ -96,7 +96,7 @@ export default function Payment() {
             value={address.detail}
             onChange={(e) => setAddress({ ...address, detail: e.target.value })}
           /> */}
-          <p>배송 요청사항</p>
+          <p className="mt-2">배송 요청사항</p>
           <input
             className="border border-gray-200 rounded-md w-full h-[48px] p-[8px]"
             type="text"

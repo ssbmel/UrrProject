@@ -8,9 +8,10 @@ import AddrPagination from "./AddrPagination";
 interface Props {
   address: string | string[];
   setAddress: React.Dispatch<React.SetStateAction<string | null>>;
+  required?: boolean;
 }
 
-const InfoOnEditAddress = ({ address, setAddress }: Props) => {
+const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
@@ -89,7 +90,10 @@ const InfoOnEditAddress = ({ address, setAddress }: Props) => {
 
   return (
     <div className="flex flex-col gap-[8px] w-full">
-      <p className="">주소</p>
+      <p className="">
+        <span>주소</span>
+        {required && <span className="text-red-600">*</span>}
+      </p>
       <div className="flex flex-col gap-[12px]">
         <div className="flex gap-[8px]">
           <input

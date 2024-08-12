@@ -72,7 +72,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
     <>
       <div className="flex flex-col items-center">
         <form onSubmit={SearchProducts} className="relative">
-          <div className="h-12 font-semibold text-xl text-center">검색</div>
+          <div className="h-12 font-semibold text-xl text-center xl:hidden">검색</div>
           <input
             type="text"
             ref={searchWordRef}
@@ -80,7 +80,13 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
             className="w-[343px] h-[48px] border border-[#EAECEC] rounded-md indent-3 mb-2"
           />
           <button>
-            <Image src={searchGray} alt="돋보기" width={28} height={28} className="absolute top-[57px] right-3" />
+            <Image
+              src={searchGray}
+              alt="돋보기"
+              width={28}
+              height={28}
+              className="absolute top-[57px] xl:top-[10px] right-3"
+            />
           </button>
 
           {filteringTitle.length > 0 ? (
@@ -100,7 +106,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
           )}
           <div>
             <div className="flex justify-between">
-              <h2 className="text-xl">최근 검색어</h2>
+              <h2 className="text-xl mb-[18px]">최근 검색어</h2>
               {keywords.length ? (
                 <button type="button" onClick={handleClearKeywords} className="text-[#0068E5]">
                   모두 삭제

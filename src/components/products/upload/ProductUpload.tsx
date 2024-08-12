@@ -134,7 +134,7 @@ function ProductUpload() {
     const productData: Product = {
       category: radioCheckedValue,
       start: startDateRef.current?.value || null,
-      end: endDateRef.current?.value || null,
+      end: endDateRef.current?.value as string,
       cost: parseInt(costRef.current?.value!),
       price: parseInt(priceRef.current?.value!),
       product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,

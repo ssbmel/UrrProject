@@ -1,7 +1,9 @@
 import BottomNav from "@/components/common/bottomnav/BottomNav";
 import UpButton from "@/components/common/button/UpButton";
 import Footer from "@/components/common/footer/Footer";
-import Header from "@/components/common/header/Header";
+import Test from "@/components/common/header/Test";
+import MobileHeader from "@/components/common/header/MobileHeader";
+import { WebHeader } from "@/components/common/header/WebHeader";
 
 import React, { PropsWithChildren } from "react";
 
@@ -15,14 +17,21 @@ export const metadata = {
 const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
-      <Header />
+      <div className="xl:hidden">
+        <MobileHeader />
+      </div>
+      <div className="hidden xl:block">
+        <WebHeader />
+      </div>
       <main className="grow overflow-auto">
+        <Test/>
         {children}
-
         <Footer />
       </main>
       <UpButton />
-      <BottomNav />
+      <div className="xl:hidden">
+        <BottomNav />
+      </div>
     </>
   );
 };

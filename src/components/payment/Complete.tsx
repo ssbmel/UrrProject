@@ -115,7 +115,7 @@ export default function Complete() {
           </div>
         </div>
         <div className="border-[#F4F4F4] border mx-3" />
-        <div className="p-5 flex justify-between  bottom-[80px] w-full  text-lg">
+        <div className="p-5 flex justify-between bottom-[80px] w-full text-lg">
           <div>최종 결제 금액</div>
           <div>{products?.price.toLocaleString()} 원</div>
         </div>

@@ -36,35 +36,35 @@ function ReviewList() {
   };
 
   return (
-    <div className="w-full mx-auto p-5">
-      <h2 className="font-bold mb-5 text-xl">후기</h2>
-      <div className="w-full h-[400px] overflow-y-auto flex flex-col gap-y-4 scrollbar">
+    <div className="w-full mx-auto px-4 py-8">
+      <h2 className="font-bold mb-5 text-lg xl:text-[22px] xl:my-8">후기</h2>
+      <div className="w-full h-[340px] xl:h-[450px] overflow-y-auto flex flex-col gap-y-4 scrollbar">
         {reviewData.length === 0 ? (
           <p>후기가 없습니다.</p>
         ) : (
           reviewData.map((review) => (
             <div key={review.id} className="flex gap-3">
               <Link href={`/products/detail/${review.product_id}`}>
-                <div className="w-[120px] h-[120px] relative">
+                <div className="w-[100px] h-[100px] xl:w-[150px] xl:h-[150px] relative">
                   <Image
                     src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                     alt="img"
                     fill
-                    sizes="120px"
+                    sizes="100px xl:150px"
                     className="rounded-md object-cover"
                   />
                 </div>
               </Link>
-              <div className="flex-col w-[60%]">
+              <div className="w-[65%] flex-col">
                 <div className="flex text-[#989C9F] gap-1">
                   <div className="mt-[2px]">
                     <InfluencerIcon />
                   </div>
-                  <p className="w-[100%] truncate">
+                  <p className="truncate">
                     {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
                   </p>
                 </div>
-                <p className="text-[#1B1C1D] font-medium mb-2">{review.review_content}</p>
+                <p className="text-[#1B1C1D] font-medium mb-2 truncate">{review.review_content}</p>
                 <div className="flex items-center">
                   {Array(Math.floor(review.review_score!))
                     .fill(1)

@@ -4,12 +4,13 @@ import { userLogin } from "@/services/users/users.service";
 import { useRef } from "react";
 import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
+import LoginBar from "../../../public/images/login_bar.png";
+import Kakao from "../../../public/logo/Logo_kakao.png";
+import WebLoginBg from "../../../public/images/web_login_bg.svg";
 import Link from "next/link";
 import { createClient } from "../../../supabase/client";
-import { useRouter } from "next/navigation";
 
 const Login = () => {
-  const router = useRouter();
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -27,6 +28,7 @@ const Login = () => {
       const response = await userLogin({ email, password });
       window.location.href = "/mypage";
     } catch (error) {
+      alert("아이디와 비빌번호를 확인해주세요.");
       console.log(error);
     }
   };
@@ -51,30 +53,42 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex flex-col p-5 h-[700px]">
-        <div className="flex justify-center items-center h-[35%]">
-          <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
+      <div className="xl:flex xl:flex-row">
+        <div className="hidden xl:block xl:bg-cover xl:bg-center">
+          <WebLoginBg className="xl:max-w-full xl:max-h-full" />
         </div>
 
-        <form onSubmit={loginHandler} className="flex flex-col h-[30%]">
-          <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
-          <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
-          {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}
-          <div className="mb-[40px]"></div>
-          <button type="submit" className="bg-[#1A82FF] text-white h-[50px] rounded-md text-lg">
-            로그인하기
-          </button>
-        </form>
+        <div className="flex flex-col h-[700px] w-[375px] mx-auto xl:justify-center p-4">
+          <div className="flex justify-center items-center h-[35%] xl:hidden">
+            <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
+          </div>
+          <h2 className="hidden xl:block text-[28px] font-bold mx-auto mb-[43px]">로그인</h2>
 
-        <div className="flex flex-col items-center h-[25%]">
-          <button onClick={kakaoLoginHandler} className="bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg">
-            카카오 로그인
-          </button>
-          <div className="flex">
-            <p>아직 회원이 아니신가요?</p>
-            <Link href={"/signup"}>
-              <p className="font-medium underline underline-offset-2 ml-1">회원가입</p>
-            </Link>
+          <form onSubmit={loginHandler} className="flex flex-col h-[35%]">
+            <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
+            <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
+            {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}
+            <div className="mb-[40px]"></div>
+            <button type="submit" className="bg-[#1A82FF] text-white h-[50px] rounded-md text-lg">
+              로그인하기
+            </button>
+          </form>
+
+          <Image src={LoginBar} alt="or" className="mb-[36px]" />
+
+          <div className="flex flex-col items-center h-[25%]">
+            <div className="flex justify-center bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg cursor-pointer">
+              <div className="h-[20px] w-[20px] relative flex items-center my-auto mr-1">
+                <Image src={Kakao} alt="카카오톡 로고" layout="fill" objectFit="cover" />
+              </div>
+              <button onClick={kakaoLoginHandler}>카카오 로그인</button>
+            </div>
+            <div className="flex">
+              <p>아직 회원이 아니신가요?</p>
+              <Link href={"/signup"}>
+                <p className="font-medium underline underline-offset-2 ml-1">회원가입</p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

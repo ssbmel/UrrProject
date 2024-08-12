@@ -95,6 +95,7 @@ export default function Detail({ params }: detailProps) {
           title={data?.title}
           main_img={data?.main_img}
           nickname={data?.nickname}
+          end={data?.end}
         />
         <div className="lg:hidden">
           <div className="flex justify-center w-full relative">

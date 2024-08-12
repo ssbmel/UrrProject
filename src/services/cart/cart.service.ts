@@ -7,14 +7,15 @@ export const addCartItems = async ({
   amount,
   quantity,
   main_img,
-  nickname
+  nickname,
+  end
 }: CartItemsProps) => {
   const response = await fetch(`/api/auth/cart/${product_id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ user_id, product_id, name, amount, quantity, main_img, nickname })
+    body: JSON.stringify({ user_id, product_id, name, amount, quantity, main_img, nickname, end })
   });
   const data = await response.json();
 

@@ -137,7 +137,7 @@ const MyReview = () => {
       created_at: new Date().toDateString(),
       product_id: Ids.id as string,
       user_nickname: user.nickname,
-      review_score: scoreRef.current?.value as string,
+      review_score: Number(scoreRef.current?.value),
       review_images: reviewImagesId,
       review_content: contentRef.current?.value as string,
       title: orderData?.name as string,
@@ -157,7 +157,7 @@ const MyReview = () => {
   };
 
   return (
-    <div className="w-full p-4 mx-auto">
+    <div className="w-full xl:w-[60%] p-4 mx-auto">
       <div key={orderData?.id} className="w-full h-[100px] p-4 flex gap-3">
         <div className="w-[70px] h-[70px] rounded-md relative">
           <Image
@@ -214,7 +214,7 @@ const MyReview = () => {
           setReviewImages={setReviewImages}
           uploadedReviewImages={uploadedReviewImages}
         />
-        <button className="w-[330px] h-[52px] pl-[14px] mx-auto bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
+        <button className="w-full h-[52px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
           등록하기
         </button>
       </form>

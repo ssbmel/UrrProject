@@ -37,20 +37,20 @@ function ReviewList() {
 
   return (
     <div className="w-full mx-auto px-4 py-8">
-      <h2 className="font-bold mb-5 text-xl lg:text-[22px] lg:my-8">후기</h2>
-      <div className="w-full h-[340px] lg:h-[450px] overflow-y-auto flex flex-col gap-y-4 scrollbar">
+      <h2 className="font-bold mb-5 text-lg xl:text-[22px] xl:my-8">후기</h2>
+      <div className="w-full h-[340px] xl:h-[450px] overflow-y-auto flex flex-col gap-y-4 scrollbar">
         {reviewData.length === 0 ? (
           <p>후기가 없습니다.</p>
         ) : (
           reviewData.map((review) => (
             <div key={review.id} className="flex gap-3">
               <Link href={`/products/detail/${review.product_id}`}>
-                <div className="w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] relative">
+                <div className="w-[100px] h-[100px] xl:w-[150px] xl:h-[150px] relative">
                   <Image
                     src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                     alt="img"
                     fill
-                    sizes="100px lg:150px"
+                    sizes="100px xl:150px"
                     className="rounded-md object-cover"
                   />
                 </div>

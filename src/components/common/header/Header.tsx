@@ -7,14 +7,18 @@ import BackIcon from "../../../../public/icon/backIcon.svg";
 import SearchIcon from "../../../../public/icon/searchIcon.svg";
 import CartIcon from "../../../../public/icon/cartIcon.svg";
 import XIcon from "../../../../public/icon/XIcon.svg";
-import { useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import SearchModal from "../search/SearchModal";
+import { useAddrStore } from "@/zustand/addrStore";
 
 const Header = () => {
+
+  // const upButtonRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+  // const {setRefContent}=useAddrStore();
 
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
@@ -97,7 +101,8 @@ const Header = () => {
         <div className="font-semibold text-xl">{headerTitle}</div>
         <div className="flex gap-2 p-[4px]">{rightIcon}</div>
       </header>
-
+      <div>
+      </div>
       {isModalOpen && (
         <div
           className={`modal-overlay ${isModalVisible ? "visible" : ""}`}

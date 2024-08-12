@@ -2,6 +2,7 @@ import BottomNav from "@/components/common/bottomnav/BottomNav";
 import UpButton from "@/components/common/button/UpButton";
 import Footer from "@/components/common/footer/Footer";
 import Header from "@/components/common/header/Header";
+import Test from "@/components/common/header/Test";
 
 import React, { PropsWithChildren } from "react";
 
@@ -17,8 +18,8 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
     <>
       <Header />
       <main className="grow overflow-auto">
+        <Test/>
         {children}
-
         <Footer />
       </main>
       <UpButton />

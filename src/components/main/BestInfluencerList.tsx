@@ -46,19 +46,19 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
 
   return (
     <div className="w-full mx-auto px-4 py-8 bg-[url('../../public/bgImg/influencerImg.png')] bg-center bg-cover">
-      <h2 className="font-bold mt-3 mb-5 text-xl text-white lg:text-[22px] lg:my-8">현재 인기있는 인플루언서</h2>
-      <div className="lg:w-[50%] grid">
+      <h2 className="font-bold mt-3 mb-5 text-xl text-white xl:text-[22px] xl:my-8">현재 인기있는 인플루언서</h2>
+      <div className="xl:w-[50%] grid">
         {sortedInfUser.slice(0, 3).map((inf) => (
           <div
             key={inf.id}
             className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full mx-auto py-[8px] px-[10px] flex mb-4"
           >
-            <div className="relative w-[90px] h-[87px] lg:w-[120px] lg:h-[120px] mr-2">
+            <div className="relative w-[90px] h-[87px] xl:w-[120px] xl:h-[120px] mr-2">
               <Image
                 src={inf.profile_url || defaultImg}
                 alt="인플루언서이미지"
                 fill
-                sizes="90px lg:120px"
+                sizes="90px xl:120px"
                 className="gradient-border object-cover"
               />
             </div>

@@ -293,7 +293,7 @@ export type Database = {
           product_id: string | null
           review_content: string
           review_images: string[] | null
-          review_score: string
+          review_score: number
           title: string | null
           user_nickname: string | null
         }
@@ -305,7 +305,7 @@ export type Database = {
           product_id?: string | null
           review_content: string
           review_images?: string[] | null
-          review_score: string
+          review_score: number
           title?: string | null
           user_nickname?: string | null
         }
@@ -317,7 +317,7 @@ export type Database = {
           product_id?: string | null
           review_content?: string
           review_images?: string[] | null
-          review_score?: string
+          review_score?: number
           title?: string | null
           user_nickname?: string | null
         }

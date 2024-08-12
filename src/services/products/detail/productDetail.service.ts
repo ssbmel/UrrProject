@@ -10,7 +10,7 @@ export async function getProductDetail({ id }: { id: string }) {
 }
 
 export async function getProductDetailByUserId(id: string) {
-  const res = await fetch(`/api/products/detail/influencer/${id}`);
+  const res = await fetch(`http://localhost:3000/api/products/detail/influencer/${id}`);
   if (!res.ok) {
     console.log(`ERROR STATUS : ${res.status}`);
     return;

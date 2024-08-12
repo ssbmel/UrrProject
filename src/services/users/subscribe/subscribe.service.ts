@@ -7,7 +7,7 @@ export const getSubscribeData = async (
   try {
     const response = await fetch(`/api/subscribe?user_id=${userId}`);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP ERROR status: ${response.status}`);
     }
     const data: InfSubscribe[] = await response.json();
     subscribeIdSetter(data.map((subscribe) => subscribe.infuser_id));

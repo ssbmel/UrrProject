@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import { InfSubscribe, User } from "../../../../types/common";
 import { MouseEvent, useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -17,11 +16,12 @@ interface Props {
 
 const SubscribeButton = ({ inf }: Props) => {
   const { data: user } = useUserData();
-
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
 
   useEffect(() => {
-    getSubscribeData(user?.id, setSubscribeIds);
+    if (user?.id) {
+      getSubscribeData(user?.id, setSubscribeIds);
+    }
   }, [user]); /* 구독 여부 데이터 로드시 표시 */
 
   const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: User) => {
@@ -31,7 +31,7 @@ const SubscribeButton = ({ inf }: Props) => {
       infuser_id: inf.id
     };
     subscribedMutation(newInfUser);
-  }; /* 구독 핸들러 */
+  };
 
   const subscribedInfUser = async (data: InfSubscribe) => {
     const response = await fetch("/api/subscribe", {
@@ -45,7 +45,7 @@ const SubscribeButton = ({ inf }: Props) => {
 
   const { mutate: subscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
     mutationFn: (data) => subscribedInfUser(data)
-  }); /* '구독' 으로 서버의 구독 상태 업데이트 */
+  });
 
   const cancelSubscribedInfUser = async (data: InfSubscribe) => {
     if (!data.user_id || !data.infuser_id) return;
@@ -56,11 +56,11 @@ const SubscribeButton = ({ inf }: Props) => {
     });
     await getSubscribeData(user.id, setSubscribeIds);
     return response.json();
-  }; /* 구독취소로 데이터 업데이트 */
+  };
 
   const { mutate: cancelSubscribedMutation } = useMutation<InfSubscribe, unknown, InfSubscribe>({
     mutationFn: (data) => cancelSubscribedInfUser(data)
-  }); /* '구독 취소' 로 서버의 구독 상태 업데이트 */
+  });
 
   return (
     <>

@@ -1,4 +1,4 @@
-export default async function getProductDetail({ id }: { id: string }) {
+export async function getProductDetail({ id }: { id: string }) {
   const response = await fetch(`/api/products/detail/${id}`, {
     headers: {
       "Content-Type": "application/json"
@@ -6,5 +6,15 @@ export default async function getProductDetail({ id }: { id: string }) {
   });
   const { data } = await response.json();
 
+  return data;
+}
+
+export async function getProductDetailByUserId(id: string) {
+  const res = await fetch(`http://localhost:3000/api/products/detail/influencer/${id}`);
+  if (!res.ok) {
+    console.log(`ERROR STATUS : ${res.status}`);
+    return;
+  }
+  const data = await res.json();
   return data;
 }

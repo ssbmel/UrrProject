@@ -42,7 +42,7 @@ const DetailInflu = ({ userId }: { userId: string }) => {
           <div className="text-[#4C4F52] text-[16px] ml-2">{influ?.nickname}</div>
         </div>
         <Link href={`/influencer/profile/${userId}`}>
-          <div className="relative w-[60px] h-[20px]">
+          <div className="relative w-[60px] h-[20px] lg:hidden">
             <Image src={more} alt="더보기" fill sizes="60px" className="object-cover" />
           </div>
         </Link>

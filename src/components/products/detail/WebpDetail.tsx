@@ -16,6 +16,7 @@ interface WebpDetailProps {
   title: string;
   main_img: string;
   nickname: string;
+  end: number;
 }
 
 export default function WebpDetail({
@@ -25,7 +26,8 @@ export default function WebpDetail({
   setQuantity,
   title,
   main_img,
-  nickname
+  nickname,
+  end
 }: WebpDetailProps) {
   const { data } = useGetProductDetail({ id });
   const { data: user } = useUserData();
@@ -63,7 +65,8 @@ export default function WebpDetail({
           amount: price,
           quantity,
           main_img,
-          nickname
+          nickname,
+          end
         });
         const cart = confirm("장바구니로 이동하시겠습니까?");
         if (cart === true) {

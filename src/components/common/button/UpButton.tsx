@@ -5,8 +5,10 @@ import "./style.css";
 import { useAddrStore } from "@/zustand/addrStore";
 import UpIcon from "../../../../public/icon/upArrow.png"
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 function UpButton() {
+  const pathname = usePathname();
   const [upButton, setUpButton] = useState(false);
   const {refContent} = useAddrStore();
 
@@ -29,6 +31,14 @@ function UpButton() {
     if(refContent?.current){
       refContent.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }
+  }
+
+  if (
+    (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup")
+  ) {
+    return null;
   }
 
   return (

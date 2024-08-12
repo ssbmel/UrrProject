@@ -10,17 +10,18 @@ const userCartList = async (userId: string) => {
     },
     body: JSON.stringify({ user_id: userId })
   });
-  const data = response.json();
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const data = await response.json();
   return data;
 };
 
 export const useUserCartItems = (userId: string) => {
-  const { data, error } = useQuery({
+  return useQuery({
     queryKey: ["allCartItems", userId],
     queryFn: () => userCartList(userId)
   });
-  if (error) {
-    console.log(error);
-  }
-  return data;
 };

@@ -10,6 +10,7 @@ import QuantityCount from "./QuantityCount";
 export type DataType = {
   amount: number;
   created_at: string;
+  end: number;
   id: number;
   main_img: string;
   name: string;
@@ -23,7 +24,7 @@ export type DataType = {
 function Cart() {
   const { data: userData } = useUserData();
   const userId = userData?.id;
-  const saveCartItems = useUserCartItems(userId);
+  const { data: saveCartItems, isFetching } = useUserCartItems(userId);
   const [allCartItems, setAllCartItems] = useState<DataType[]>([]);
   const { setProductList } = useAddrStore();
   const [allChecked, setAllChecked] = useState<boolean>(true);
@@ -40,11 +41,8 @@ function Cart() {
   }, [saveCartItems]);
 
   const handleBuy = () => {
-    //allCartItems isChecked true 인것만
-    // map돌면서 ItemType 배열 생성
-
     const test = allCartItems
-      .filter((item) => item.isChecked === true)
+      .filter((item) => item.isChecked === true && !isEndDate(item))
       ?.map((item: DataType) => ({
         id: item.product_id,
         name: item.name,
@@ -88,10 +86,16 @@ function Cart() {
     );
   };
 
+  const isEndDate = (item: DataType) => {
+    const today = new Date().getTime();
+    const end = new Date(item.end).getTime();
+    return end < today;
+  };
+
   useEffect(() => {
     if (!allCartItems || !allCartItems.length) return;
     let checked = true;
-    if (allCartItems.some((item) => !item.isChecked)) {
+    if (allCartItems.some((item) => !item.isChecked || isEndDate(item))) {
       checked = false;
     }
     setAllChecked(checked);
@@ -121,12 +125,12 @@ function Cart() {
   /** 주문 총금액 확인 함수 */
   const getTotalAmount = () => {
     return allCartItems
-      ?.filter((item) => item.isChecked)
+      ?.filter((item) => item.isChecked && !isEndDate(item))
       .reduce((total, item) => total + item.amount * item.quantity, 0);
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full xl:w-[1132px] xl:mx-auto p-4">
       <div className="flex items-center gap-2 p-2 border-b-2 border-[#EAECEC]">
         <label>
           <input
@@ -151,6 +155,7 @@ function Cart() {
           CheckboxChangeHandler={CheckboxChangeHandler}
           updateItemQuantity={updateItemQuantity}
           removeItemFromState={removeItemFromState}
+          isFetching={isFetching}
         />
       ))}
 

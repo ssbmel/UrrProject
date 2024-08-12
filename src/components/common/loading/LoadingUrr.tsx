@@ -5,8 +5,8 @@ import dot from "../../../../public/icon/loadingDot.png";
 export default function LoadingUrr() {
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="relative w-36 h-36 mb-[80px]">
+      <div className="flex justify-center items-center min-h-screen overflow-hidden">
+        <div className="relative w-36 h-36 mb-[93px]">
           <Image src={loading} alt="로딩" fill sizes="144px" className="object-contain mt-2" />
           <div className="absolute inset-0 flex items-center p-2 m-5">
             <div className="relative w-3 h-3 flex space-x-3">

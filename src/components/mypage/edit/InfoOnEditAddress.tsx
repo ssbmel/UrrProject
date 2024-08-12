@@ -8,9 +8,10 @@ import AddrPagination from "./AddrPagination";
 interface Props {
   address: string | string[];
   setAddress: React.Dispatch<React.SetStateAction<string | null>>;
+  required?: boolean;
 }
 
-const InfoOnEditAddress = ({ address, setAddress }: Props) => {
+const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
@@ -88,8 +89,11 @@ const InfoOnEditAddress = ({ address, setAddress }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-[8px]">
-      <p className="font-bold">주소</p>
+    <div className="flex flex-col gap-[8px] w-full">
+      <p className="">
+        <span>주소</span>
+        {required && <span className="text-red-600">*</span>}
+      </p>
       <div className="flex flex-col gap-[12px]">
         <div className="flex gap-[8px]">
           <input
@@ -97,12 +101,12 @@ const InfoOnEditAddress = ({ address, setAddress }: Props) => {
             ref={zipNoRef}
             defaultValue={address[0]}
             readOnly
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] w-1/3 outline-none"
+            className="h-[48px] border rounded-[6px] p-[4px] pr-[8px] pl-[8px] w-1/3 outline-none"
             placeholder="우편번호"
           />
           <button
             onClick={openAddressForm}
-            className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5] h-[40px]"
+            className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5] h-[48px]"
           >
             주소 검색
           </button>
@@ -208,7 +212,7 @@ const InfoOnEditAddress = ({ address, setAddress }: Props) => {
                       type="text"
                       ref={userAddrInsert}
                       placeholder="상세 주소"
-                      className="h-[40px] w-full border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
+                      className="h-[48px] w-full border rounded-[6px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
                     />
                   </div>
                 </div>
@@ -234,14 +238,14 @@ const InfoOnEditAddress = ({ address, setAddress }: Props) => {
             ref={roadAddrRef}
             defaultValue={address[1]}
             readOnly
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px] outline-none"
+            className="h-[48px] border rounded-[6px] p-[4px] pr-[8px] pl-[8px] indent-[4px] outline-none"
           />
           <input
             type="text"
             ref={userAddrRef}
             defaultValue={address[2]}
             readOnly
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px] outline-none"
+            className="h-[48px] border rounded-[6px] p-[4px] pr-[8px] pl-[8px] indent-[4px] outline-none"
           />
         </div>
       </div>

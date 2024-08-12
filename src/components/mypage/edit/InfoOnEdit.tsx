@@ -12,6 +12,7 @@ import {
 import { User } from "../../../../types/common";
 import { nicknameCheck } from "@/services/users/users.service";
 import { useRouter } from "next/navigation";
+import WriteIcon from "../../../../public/icon/writeIcon.svg";
 
 interface Props {
   user: User;
@@ -37,9 +38,9 @@ const InfoOnEdit = ({ user }: Props) => {
   const nicknameRef = useRef<HTMLInputElement>(null);
 
   const nicknameUnable =
-    "h-[38px] border-b-2 border-b-[#CDCFD0]  flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
+    "h-[38px] border-b-2 border-b-[#CDCFD0] flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
   const nicknameAble =
-    "h-[38px] border-b-2 border-b-[#0068E5]  flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
+    "h-[38px] border-b-2 border-b-[#0068E5] flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
 
   useEffect(() => {
     setUserImg(user?.profile_url);
@@ -64,6 +65,14 @@ const InfoOnEdit = ({ user }: Props) => {
     }
 
     const fileObj = e.currentTarget.files[0];
+
+    const fileType = fileObj.type;
+
+    if (!fileType.includes("image")) {
+      setErrorMsg("프로필 이미지에는 이미지 파일(JPG,JPEG,GIF,PNG 등)만 적용 가능합니다.");
+      return;
+    }
+
     const objectUrl = URL.createObjectURL(fileObj);
     setUserImg(objectUrl);
 
@@ -90,33 +99,39 @@ const InfoOnEdit = ({ user }: Props) => {
   };
 
   function phonenumCheck(phonenum: string) {
-    const regex = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+    const regex = /^(01[016789]{1})-?[0-9]{4}-?[0-9]{4}$/;
     return regex.test(phonenum);
   }
 
   const validCheck = async () => {
     if (!nickname.trim()) {
       setErrorMsg("닉네임을 입력해주세요");
-      return;
+      return false;
     } else {
       const duplicateData = await nicknameCheck(nickname);
       if (duplicateData.length !== 0 && duplicateData[0]?.nickname !== user.nickname) {
         console.log(duplicateData[0]?.nickname, user.nickname);
         setErrorMsg("이미 사용중인 닉네임입니다");
-        return;
+        return false;
       }
     }
 
     if (phonenum && phonenum?.length > 0) {
       if (!phonenumCheck(phonenum)) {
         setErrorMsg("올바른 형식의 휴대전화 번호를 입력해주세요");
-        return;
+        return false;
       }
     }
 
-    if (name && name?.length > 0) {
-      if (name.length < 2) setErrorMsg("이름은 두 글자 이상이여야 합니다.");
-      return;
+    if (name && name.length > 0) {
+      if (!isNaN(+name)) {
+        setErrorMsg("올바른 형식의 이름을 입력해주세요");
+        return false;
+      }
+      if (name.length < 2) {
+        setErrorMsg("이름은 두 글자 이상이여야 합니다.");
+        return false;
+      }
     }
 
     return true;
@@ -129,10 +144,13 @@ const InfoOnEdit = ({ user }: Props) => {
 
     const signal = await validCheck();
 
-    if (signal) {
-      if (!confirm("작성된 내용을 적용하시겠습니까?")) {
-        return;
-      }
+    if (signal === false) {
+      return;
+    }
+
+    if (!confirm("작성된 내용을 적용하시겠습니까?")) {
+      return;
+    } else {
     }
 
     if (user.profile_url === userImg) {
@@ -151,8 +169,6 @@ const InfoOnEdit = ({ user }: Props) => {
     };
 
     const data = await patchUserFromUserId(editUserData);
-
-    console.log(data);
 
     alert("개인정보가 업데이트되었습니다.");
 
@@ -199,9 +215,9 @@ const InfoOnEdit = ({ user }: Props) => {
               setIsAble(true);
               nicknameRef.current?.focus();
             }}
-            className="p-[5px]"
+            className=""
           >
-            ✏️
+            <WriteIcon />
           </button>
         </div>
       </section>
@@ -266,6 +282,7 @@ const InfoOnEdit = ({ user }: Props) => {
         <div className="flex flex-col gap-[8px]">
           <p className="font-bold">전화번호</p>
           <input
+            maxLength={13}
             type="text"
             placeholder="ex) 01X-XXXX-XXXX"
             value={phonenum || ""}
@@ -292,7 +309,7 @@ const InfoOnEdit = ({ user }: Props) => {
               name === user.name &&
               phonenum === user.phonenum
             }
-            className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF] disabled:"
+            className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF] disabled:bg-[#F2F2F2] disabled:text-[#CDCFD0]"
           >
             완료
           </button>

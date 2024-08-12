@@ -5,9 +5,10 @@ import { productListType, orderType } from "./MyOrderedList";
 interface MyOrderCompoType {
   item: productListType | null;
   delivery: string | null;
+  paymentId: string
 }
 
-const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery }) => {
+const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -25,7 +26,7 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery }) => {
           {isOpen ? "🔺" : "🔻"}
         </button>
       </div>
-      {isOpen ? <OrderedProduct /> : null}
+      {isOpen ? <OrderedProduct id={item!.id} paymentId={paymentId}/> : null}
     </li>
   );
 };

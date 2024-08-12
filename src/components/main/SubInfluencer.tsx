@@ -35,22 +35,22 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
   };
 
   return (
-    <div className="w-full h-[200px] mx-auto p-5">
-      <h2 className="font-bold text-xl mb-5">내가 구독한 인플루언서</h2>
-      <div className="flex flex-row p-1 overflow-x-auto flex-nowrap scrollbar">
+    <div className="w-full h-[220px] xl:h-auto mx-auto px-4 py-8">
+      <h2 className="font-bold text-xl mb-5 xl:text-[22px] xl:my-8">내가 구독한 인플루언서</h2>
+      <div className="flex flex-row overflow-x-auto flex-nowrap scrollbar scrollbar-hide">
         {subscribeIds.length === 0 ? (
           <p className="text-[#4C4F52] text-[16px] mx-auto mt-6 whitespace-nowrap">구독중인 인플루언서가 없습니다.</p>
         ) : (
-          <div className="w-auto flex overflow-x-auto gap-5">
+          <div className="w-full flex overflow-x-auto gap-5 xl:gap-10 scrollbar-hide">
             {infUser?.filter(inf => subscribeIds.includes(inf.id)).map((inf) => (
-              <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
+              <div key={inf.id} className="flex flex-col items-center justify-center text-center">
                 <Link href={`influencer/profile/${inf.id}`} >
-                <div className="relative w-[100px] h-[100px] mb-2">
+                <div className="relative w-[90px] h-[90px] xl:w-[150px] xl:h-[150px] mb-2">
                   <Image
                     src={inf.profile_url || defaultImg}
                     alt="img"
                     fill
-                    sizes="100px"
+                    sizes="90px xl:150px"
                     className="rounded-md object-cover gradient-border"
                   />
                   <div className="absolute bottom-1 right-2">
@@ -65,7 +65,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
                     )}
                   </div>
                 </div>
-                <p className="text-sm">{inf.nickname}</p>
+                <p className="text-sm text-[#4C4F52] mb-6 truncate xl:text-[16px]">{inf.nickname}</p>
                 </Link>
               </div>
             ))}

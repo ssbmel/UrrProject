@@ -6,6 +6,8 @@ interface Props {
 }
 
 const SalesList = ({ user }: Props) => {
+  /*  */
+
   return (
     <div className="flex flex-col gap-[20px] pl-[16px] pr-[16px] pt-[32px] pb-[32px]">
       <div>

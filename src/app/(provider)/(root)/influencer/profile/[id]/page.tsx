@@ -9,7 +9,6 @@ const page = async ({ params }: { params: { id: string } }) => {
   return (
     <>
       <IntroSection user={data} />
-      <AnnounceSection user={data} />
       <hr className="border-[4px] bg-[#F4F4F4]" />
       <SalesSection user={data} />
     </>

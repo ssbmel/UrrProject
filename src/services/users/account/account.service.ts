@@ -43,7 +43,9 @@ export const uploadProfile = async ({ profileData }: { profileData: { file: File
 
   const ext = file.type.split("/").pop();
 
-  const { data, error } = await supabase.storage.from("profile").upload(`${userId}/${uuidv4()}.${ext}`, file);
+  const { data, error } = await supabase.storage.from("profile").upload(`${userId}/${uuidv4()}.${ext}`, file, {
+    upsert: true
+  });
 
   if (error) {
     console.log(error);

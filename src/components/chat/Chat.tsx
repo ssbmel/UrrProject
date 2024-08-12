@@ -45,13 +45,6 @@ export default function Chat({ params }: detailProps) {
     }
   };
 
-  const createChatRoom = () => {
-    //유저의 대화 시작하기
-  };
-  const enterChatChannel = () => {
-    //유저의 대화방 입장하기
-  };
-
   const getChatMessages = async () => {
     const user_id = await userdata.id;
     const approve = await userdata.approve;
@@ -61,7 +54,8 @@ export default function Chat({ params }: detailProps) {
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
-        .eq("channel_id", channel_id);
+        .eq("channel_id", channel_id)
+        .order('created_at', { ascending: true });
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -75,13 +69,17 @@ export default function Chat({ params }: detailProps) {
         });
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
+      updateMyChannelLastTime();
     } else {
       //팬
+      const created_at_time = await checkMySubCreatedAtTime();
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
         .in("user_id", [user_id, influ_id])
-        .eq("channel_id", channel_id);
+        .eq("channel_id", channel_id)
+        .order('created_at', { ascending: true })
+        .gt('created_at', created_at_time);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -95,6 +93,7 @@ export default function Chat({ params }: detailProps) {
         });
         if (preMessageDataList != undefined) setPreMessages(preMessageDataList);
       }
+      updateMySubLastTime();
     }
   };
 
@@ -136,6 +135,75 @@ export default function Chat({ params }: detailProps) {
     }
   };
 
+  const checkMySubCreatedAtTime = async (): Promise<String | null> => {
+    const user_id = await userdata.id;
+    const { data, error } = await supabase
+      .from("chat_subscribe")
+      .select("created_at")
+      .eq("channel_id", channel_id)
+      .eq("user_id", user_id)
+      .single();
+    if (error) {
+      console.log(error);
+      return null;
+    } else {
+      return data.created_at;
+    }
+  };
+
+  const checkMySubLastTime = async (): Promise<String | null> => {
+    const user_id = await userdata.id;
+    const { data, error } = await supabase
+      .from("chat_subscribe")
+      .select("last_time")
+      .eq("channel_id", channel_id)
+      .eq("user_id", user_id)
+      .single();
+    if (error) {
+      console.log(error);
+      return null;
+    } else {
+      return data.last_time;
+    }
+  };
+
+  //수정 필
+  const checkMyChannelLastTime = async (): Promise<String | null> => {
+    const user_id = await userdata.id;
+    const { data, error } = await supabase
+      .from("chat_subscribe")
+      .select("last_time")
+      .eq("channel_id", channel_id)
+      .eq("user_id", user_id)
+      .single();
+    if (error) {
+      console.log(error);
+      return null;
+    } else {
+      return data.last_time;
+    }
+  };
+
+  const updateMySubLastTime = async () => {
+    const user_id = await userdata.id;
+    const { data, error } = await supabase
+      .from("chat_subscribe")
+      .update({"update_data" : ""})
+      .eq("channel_id", channel_id)
+      .eq("user_id", user_id);
+    if (error)
+      console.log(error);
+  };
+
+  const updateMyChannelLastTime = async () => {
+    const { data, error } = await supabase
+      .from("chat_channels")
+      .update({"update_data" : ""})
+      .eq("channel_id", channel_id)
+    if (error)
+      console.log(error);
+  };
+
   const receiveChatMessage = async () => {
     const user_id = await userdata.id;
     const owner_id = await checkChannelOwner();
@@ -153,6 +221,7 @@ export default function Chat({ params }: detailProps) {
           },
           (payload) => {
             const newMessage = payload.new;
+            updateMyChannelLastTime();
             setPreMessages((pre) => {
               return [
                 ...pre,
@@ -183,6 +252,7 @@ export default function Chat({ params }: detailProps) {
           (payload) => {
             const newMessage = payload.new;
             if (newMessage.user_id == user_id || newMessage.user_id == owner_id) {
+              updateMySubLastTime();
               setPreMessages((pre) => {
                 return [
                   ...pre,

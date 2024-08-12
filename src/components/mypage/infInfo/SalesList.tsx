@@ -1,11 +1,15 @@
+"use client";
+
 import React from "react";
-import { PublicUser } from "../../../../types/auth.type";
+import { Product } from "../../../../types/common";
 
 interface Props {
-  user: PublicUser;
+  products: Product[];
 }
 
-const SalesList = ({ user }: Props) => {
+const SalesList = ({ products }: Props) => {
+  /* 필터된 products를 spread한다. */
+
   return (
     <div className="flex flex-col gap-[20px] pl-[16px] pr-[16px] pt-[32px] pb-[32px]">
       <div>

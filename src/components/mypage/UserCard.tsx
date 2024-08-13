@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DefaultImage from "../../../public/images/default.png";
+import RightArrowB from "../../../public/icon/rightArrowB.svg";
+import SettingIcon from "../../../public/icon/settingIcon.svg";
 
 const UserCard = () => {
   const { data: user } = useUserData();
@@ -31,7 +33,7 @@ const UserCard = () => {
     "absolute rounded-[16px] overflow-hidden border border-transparent p-[4px] object-cover gradient-border";
 
   return (
-    <div className="flex w-full gap-[12px] pb-[16px] pt-[4px] px-[24px]">
+    <div className="flex w-full gap-[12px] p-[16px] pb-[36px] ">
       <div className="w-[80px] h-[80px] rounded-[16px] relative">
         <Image
           src={user?.profile_url || DefaultImage}
@@ -46,14 +48,21 @@ const UserCard = () => {
         <div>
           <div className="flex justify-between items-center">
             <p className="text-[20px] font-bold">{user?.nickname}</p>
-            <p className="text-[20px]">
-              <Link href={"/mypage/edit"}>⚙️</Link>
+            <p className="text-[20px] flex justify-center items-center">
+              <Link href={"/mypage/edit"} className="flex justify-center items-center">
+                <SettingIcon />
+              </Link>
             </p>
           </div>
           <p className="text-gray-300">{user?.email}</p>
         </div>
         <p>
-          <button onClick={logoutHandler}>로그아웃 &gt;</button>
+          <button className="flex items-center" onClick={logoutHandler}>
+            <span>로그아웃</span>
+            <span className="block w-[20px] h-[20px] flex justify-center items-center">
+              <RightArrowB />
+            </span>
+          </button>
         </p>
       </div>
     </div>

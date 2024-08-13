@@ -3,6 +3,9 @@ import React from "react";
 import { PublicUser } from "../../../../types/auth.type";
 import SubscribeButton from "./SubscribeButton";
 import StartChat from "@/components/chat/StartChat";
+import YoutubeIcon from "../../../../public/icon/youtubeIcon.svg";
+import InstaIcon from "../../../../public/icon/instaIcon.svg";
+import Link from "next/link";
 interface Props {
   user: PublicUser;
 }
@@ -10,18 +13,18 @@ interface Props {
 const IntroSection = ({ user }: Props) => {
   const { profile_url, intro, nickname, account_link, id } = user;
 
-  let domainSrc = "";
+  let domainSrc = null;
 
   const domainCheck = (link: string) => {
     const YOUTUBE_DOMAIN = "youtube.com";
     const INSTAGRAM_DOMAIN = "instagram.com";
 
     if (link.includes(YOUTUBE_DOMAIN)) {
-      domainSrc = "Y";
+      domainSrc = <YoutubeIcon />;
     } else if (link.includes(INSTAGRAM_DOMAIN)) {
-      domainSrc = "I";
+      domainSrc = <InstaIcon />;
     } else {
-      domainSrc = "Pf";
+      domainSrc = "🌐";
     }
   };
 
@@ -46,13 +49,13 @@ const IntroSection = ({ user }: Props) => {
             <SubscribeButton inf={user} />
           </div>
           <p className="text-[14px] h-[21px] border-r-[8px] border-r-transparent scrollbar-hide text-[#4C4F52] whitespace-nowrap overflow-x-scroll">
-            {intro || ""}
+            {intro || `안녕하세요 ${nickname}입니다!`}
           </p>
         </div>
         <div className="flex justify-between items-center">
-          <div className="px-[14px] py-[7px] flex border border=[#EAECEC] rounded-[4px] text-[#0068E5]">
+          <Link href={account_link || "#"} className="w-[20px] h-[20px] flex text-[#0068E5]">
             {domainSrc}
-          </div>
+          </Link>
           <div className="">
             <StartChat owner_id={id} />
           </div>

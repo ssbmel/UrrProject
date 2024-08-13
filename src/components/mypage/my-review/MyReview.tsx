@@ -30,7 +30,6 @@ const MyReview = () => {
   const [uploadedReviewImages, setUploadedReviewImages] = useState("");
   const [rating, setRating] = useState<number>(0);
   const Ids = useParams();
-  // const scoreRef = useRef<HTMLSelectElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const supabase = createClient();
   const router = useRouter();
@@ -144,42 +143,20 @@ const MyReview = () => {
       review_content: contentRef.current?.value as string,
       title: orderData?.name as string,
       inf_name: productsData?.nickname as string,
-      payment_id: Ids.paymentId as string
+      payment_id: Ids.paymentId as string,
+      userId : user.id
     };
 
     const { data, error } = await supabase.from("product_review").insert([newReviewData]).select();
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("상품등록이 완료되었습니다.");
+      alert("후기가 등록되었습니다.");
       console.log("Data inserted:", data);
       saveReviewMutation(newReviewData);
       router.push("/mypage");
     }
   };
-
-  const deleteReview = async (data:Review) => {
-    const response = await fetch("/api/product_review", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  };
-
-  const { mutate: deleteReviewMutation } = useMutation<Review, unknown, Review>({
-    mutationFn: (data) => deleteReview(data)
-  });
-
-  // const handleDelete = async (id: string) => {
-  //   if (!window.confirm("해당 상품을 삭제하시겠습니까?"))
-  //     return;
-  //   deleteReviewMutation({id});
-  //       router.push("/mypage");
-  //   }
 
   return (
     <div className="w-full xl:w-[60%] p-4 mx-auto">

@@ -1,0 +1,48 @@
+/* Base style for stars */
+label {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  cursor: pointer; /* Indicate that the element is clickable */
+}
+
+/* Container for the full star and half-star */
+.star-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+/* Full star styling */
+.full-star {
+  display: block;
+}
+
+/* Half star styling */
+.half-star {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 1; /* Ensure half-star overlays the full star */
+}
+
+/* Hide half-star if not needed */
+.star-container:not(.has-half-star) .half-star {
+  display: none;
+}
+
+/* Optional: Visual feedback for selected and hovered states */
+.rating-field label:hover img,
+.rating-field input:checked ~ label img {
+  opacity: 0.8; /* Slightly dim the star for hover/checked states */
+}
+
+/* Style for the span showing the rating */
+.rating-field + span {
+  font-size: 1.25rem; /* Slightly larger font size for readability */
+  margin-left: 1rem; /* Add space between stars and rating display */
+}

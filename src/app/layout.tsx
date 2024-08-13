@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   openGraph: {
     images: "/main.png"
   },
+  icons: {
+    icon: "/urrIcon.jpg"
+  },
   metadataBase: new URL("https://urr-final.vercel.app")
 } as const;
 

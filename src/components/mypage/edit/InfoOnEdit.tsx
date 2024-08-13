@@ -187,7 +187,7 @@ const InfoOnEdit = ({ user }: Props) => {
                 sizes="100px"
                 fill
                 priority
-                className="absolute rounded-[16px] overflow-hidden"
+                className="absolute rounded-[16px] overflow-hidden object-cover"
               />
             </div>
           )}

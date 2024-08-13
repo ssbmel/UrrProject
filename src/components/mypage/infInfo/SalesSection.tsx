@@ -1,6 +1,5 @@
 import React from "react";
 import SalesList from "./SalesList";
-import ProductsDetail from "@/app/(provider)/(root)/products/detail/[id]/page";
 import { Product } from "../../../../types/common";
 
 interface Props {
@@ -8,7 +7,6 @@ interface Props {
 }
 
 const SalesSection = async ({ products }: Props) => {
-  /* 날짜 비교 함수 */
   const isOnGoing = (product: Product) => {
     const now = new Date();
     const productEndDate = new Date(product.end!);
@@ -18,18 +16,14 @@ const SalesSection = async ({ products }: Props) => {
     return true;
   };
 
-  /* 필터 */
   const onGoingProducts = products.filter((product) => isOnGoing(product));
   const endProducts = products.filter((product) => !isOnGoing(product));
 
-  /* console.log(`진행중인 판매상품 : ${onGoingProducts}`);
-  console.log(`지나간 판매상품 : ${endProducts}`); */
-
   return (
     <section className="flex flex-col">
-      <SalesList products={onGoingProducts} />
+      <SalesList products={onGoingProducts} sectionName="진행중인 공구" />
       <hr className="border-[4px] bg-[#F4F4F4]" />
-      <SalesList products={endProducts} />
+      <SalesList products={endProducts} sectionName="지나간 공구" />
     </section>
   );
 };

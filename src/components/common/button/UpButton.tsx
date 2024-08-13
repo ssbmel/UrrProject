@@ -13,19 +13,24 @@ function UpButton() {
   const { refContent } = useAddrStore();
 
   useEffect(() => {
-    const handleShowButton = () => {
-      if (window.scrollY > 200) {
-        setUpButton(true);
-      } else {
-        setUpButton(false);
-      }
-    };
+    if (refContent?.current) {
+      console.log(refContent);
+      const handleShowButton = () => {
+        if (refContent.current!.clientHeight > 200) {
+          console.log("200넘음");
+          setUpButton(true);
+        } else {
+          console.log("200미만");
+          setUpButton(false);
+        }
+      };
 
-    window.addEventListener("scroll", handleShowButton);
-    return () => {
-      window.removeEventListener("scroll", handleShowButton);
-    };
-  }, []);
+      refContent?.current!.addEventListener("scroll", handleShowButton);
+      return () => {
+        refContent?.current!.removeEventListener("scroll", handleShowButton);
+      };
+    }
+  }, [refContent]);
 
   const scrollToTop = () => {
     if (refContent?.current) {

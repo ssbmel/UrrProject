@@ -10,6 +10,13 @@ import { useParams, useRouter } from "next/navigation";
 import defaultImg from "../../../../public/images/default.png";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@tanstack/react-query";
+import OneStar from "../../../../public/icon/onestar.png"
+import TwoStar from "../../../../public/icon/twostar.png"
+import ThreeStar from "../../../../public/icon/threestar.png"
+import FourStar from "../../../../public/icon/fourstar.png"
+import FiveStar from "../../../../public/icon/fivestar.png"
+import StarRating from "./star/Rating";
+import Rating from "./star/Rating";
 
 export type ReviewImgGroup = { file: File | null; url: string };
 
@@ -27,6 +34,7 @@ const MyReview = () => {
   const [productsData, setProductsData] = useState<Product>();
   const [reviewImages, setReviewImages] = useState<ReviewImgGroup[]>([]);
   const [uploadedReviewImages, setUploadedReviewImages] = useState("");
+  const [rating, setRating] = useState<number>(0);
   const Ids = useParams();
   const scoreRef = useRef<HTMLSelectElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -200,6 +208,7 @@ const MyReview = () => {
       <hr />
       <div className="w-full py-4">
         <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
+        <Rating value={rating} onChange={setRating} />
         <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
       </div>
       <form className="w-full" onSubmit={onSubmit}>
@@ -212,7 +221,8 @@ const MyReview = () => {
             높일 수 있습니다
           </p>
         </div>
-        <div className="flex items-center my-4">
+        
+        {/* <div className="flex items-center my-4">
           <label className="font-bold mr-2">별점</label>
           <select className="p-2 rounded-md border" ref={scoreRef}>
             <option value="1">1</option>
@@ -225,7 +235,7 @@ const MyReview = () => {
             <option value="4.5">4.5</option>
             <option value="5">5</option>
           </select>
-        </div>
+        </div> */}
         <textarea
           name="review-text"
           className="resize-none border w-full h-[300px] rounded-md p-3"

@@ -9,12 +9,14 @@ import FullHeartIcon from "../../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
 import { PublicUser } from "../../../../types/auth.type";
 import { getSubscribeData } from "@/services/users/subscribe/subscribe.service";
+import { useRouter } from "next/navigation";
 
 interface Props {
   inf: PublicUser;
 }
 
 const SubscribeButton = ({ inf }: Props) => {
+  const router = useRouter();
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
 
@@ -26,6 +28,9 @@ const SubscribeButton = ({ inf }: Props) => {
 
   const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: User) => {
     e.stopPropagation();
+    if (!user) {
+      router.push("/login");
+    }
     const newInfUser: InfSubscribe = {
       user_id: user.id,
       infuser_id: inf.id

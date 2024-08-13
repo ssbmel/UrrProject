@@ -9,6 +9,7 @@ import QuantityCount from "./QuantityCount";
 
 export type DataType = {
   amount: number;
+  cost: number;
   created_at: string;
   end: number;
   id: number;
@@ -56,7 +57,6 @@ function Cart() {
     setProductList(test);
 
     router.push(`/payment`);
-    // console.log(`구매 수량: ${quantity}`);
   };
 
   const addItems = (newItem: DataType) => {
@@ -122,22 +122,31 @@ function Cart() {
   const removeItemFromState = (product_id: string) => {
     setAllCartItems((prevItems) => prevItems.filter((item) => item.product_id !== product_id));
   };
+
   /** 주문 총금액 확인 함수 */
   const getTotalAmount = () => {
     return allCartItems
-      ?.filter((item) => item.isChecked && !isEndDate(item))
+      .filter((item) => item.isChecked && !isEndDate(item))
       .reduce((total, item) => total + item.amount * item.quantity, 0);
   };
 
+  /** 상품 할인금액 계산 함수 */
+  const getTotalDiscount = () => {
+    return allCartItems
+      .filter((item) => item.isChecked && !isEndDate(item))
+      .reduce((total, item) => total + (item.cost - item.amount) * item.quantity, 0);
+  };
+
   return (
-    <div className="w-full xl:w-[1132px] xl:mx-auto p-4">
-      <div className="flex items-center gap-2 p-2 border-b-2 border-[#EAECEC]">
+    <div className=" w-full xl:w-[1132px] xl:mx-auto p-4">
+      <h2 className="hidden xl:block text-[28px] font-bold text-center mb-[32px]">장바구니</h2>
+      <div className="flex justify-between items-center gap-2 pb-5 border-b-2 border-[#EAECEC]">
         <label>
           <input
             type="checkbox"
             readOnly
             name="product-all"
-            className="mr-1"
+            className="mr-4"
             checked={allChecked}
             onClick={(e: any) => {
               selectAllHandler(e.target.checked);
@@ -145,7 +154,7 @@ function Cart() {
           />
           전체상품
         </label>
-        <button className="ml-auto mb-[20px] px-2 py-1 rounded text-[#1A82FF]">삭제</button>
+        <button className=" text-primarynormal">삭제</button>
       </div>
 
       {allCartItems?.map((item: DataType) => (
@@ -159,21 +168,28 @@ function Cart() {
         />
       ))}
 
-      <div className=" w-full p-4">
+      <div className="flex flex-col w-full p-4">
         <div className="flex justify-between mb-2">
           <p>상품 금액</p>
-          <p>{getTotalAmount()?.toLocaleString()}</p>
+          <p>{`${getTotalAmount()?.toLocaleString()}원`}</p>
+        </div>
+        <div className="flex justify-between mb-2">
+          <p>상품 할인금액</p>
+          <p>{`-${getTotalDiscount()?.toLocaleString()}`}원</p>
         </div>
         <div className="flex justify-between">
           <p>배송비</p>
           <p>3,000원</p>
         </div>
         <hr className="my-5" />
-        <div className="flex justify-between">
-          <p>결제 예정 금액</p>
-          <p>{(getTotalAmount() + 3000)?.toLocaleString()}원</p>
+        <div className="flex justify-between mb-[45px] xl:mb-[112px]">
+          <p className="font-semibold">결제 예정 금액</p>
+          <p className="font-semibold">{(getTotalAmount() + 3000)?.toLocaleString()}원</p>
         </div>
-        <button onClick={handleBuy} className="w-full mt-4 py-2 rounded-md bg-[#1A82FF] text-white">
+        <button
+          onClick={handleBuy}
+          className="w-full xl:w-[268px] xl:mx-auto mt-4 py-2 rounded-md bg-[#1A82FF] text-white"
+        >
           구매하기
         </button>
       </div>

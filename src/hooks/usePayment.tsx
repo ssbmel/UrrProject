@@ -53,7 +53,7 @@ const usePayment = () => {
           phoneNumber: req.phoneNumber
         },
         orderName: req.orderName,
-        totalAmount: req.price,
+        totalAmount: req.price + 3000,
         currency: "CURRENCY_KRW",
         products: req.productList, // 상품 목록
         payMethod: "CARD",

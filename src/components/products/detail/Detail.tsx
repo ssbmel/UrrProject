@@ -49,7 +49,7 @@ export default function Detail({ params }: detailProps) {
   }, [isLoading]);
 
   const getClassNames = (state: any) => {
-    return `w-[120px] px-3 py-4 flex justify-center items-center border-b-4 ${
+    return `w-[120px] xl:w-[182px] text-[16px] xl:text-[20px] px-3 py-4 flex justify-center items-center border-b-4 ${
       compoState === state ? "border-blue-500 text-blue-500" : "border-gray-200"
     }`;
   };
@@ -86,7 +86,7 @@ export default function Detail({ params }: detailProps) {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen lg:w-full">
+      <div className="flex flex-col min-h-screen xl:w-full">
         <WebpDetail
           id={params.id}
           handleBuy={handleBuy}
@@ -97,7 +97,7 @@ export default function Detail({ params }: detailProps) {
           nickname={data?.nickname}
           end={data?.end}
         />
-        <div className="lg:hidden">
+        <div className="xl:hidden">
           <div className="flex justify-center w-full relative">
             {data && (
               <>
@@ -120,6 +120,7 @@ export default function Detail({ params }: detailProps) {
           </div>
 
           <DetailInflu userId={data?.user_id} />
+          <div className="border-[#F4F4F4] border-[1px] w-full" />
 
           <div className="my-[20px] mx-4">
             <div className="flex justify-between items-cente py-2">
@@ -137,7 +138,7 @@ export default function Detail({ params }: detailProps) {
             </p>
           </div>
           <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
-          <div className="m-4 mx-auto w-[343px] flex flex-col items-center">
+          <div className="m-4 mx-auto w-[375px] flex flex-col items-center">
             <div className="flex flex-col gap-[14px] my-2">
               <div className="flex">
                 <span className="w-[105px] text-[#4C4F52]">진행기간</span>
@@ -161,7 +162,7 @@ export default function Detail({ params }: detailProps) {
                 </div>
               </div>
 
-              <div className="w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4 gap-[12px] px-[14px] py-[12px]">
+              <div className="w-[375px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4 gap-[12px] px-[14px] py-[12px]">
                 <div className="text-[16px] font-semibold text-[#0051B2]">주문 전 확인해주세요!</div>
                 <div className="text-[14px] text-[#4C4F52]">{data?.text}</div>
               </div>
@@ -199,7 +200,7 @@ export default function Detail({ params }: detailProps) {
             )}
           </div>
         </div>
-        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-50 lg:hidden">
+        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-30 xl:hidden">
           <div className="flex justify-evenly py-2">
             <div>
               <Image

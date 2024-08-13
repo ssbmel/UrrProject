@@ -181,9 +181,6 @@ const MyReview = () => {
   //       router.push("/mypage");
   //   }
 
-  console.log(rating);
-  
-
   return (
     <div className="w-full xl:w-[60%] p-4 mx-auto">
       <div key={orderData?.id} className="w-full h-[100px] p-4 flex gap-3">

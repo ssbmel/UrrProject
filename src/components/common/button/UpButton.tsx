@@ -15,12 +15,14 @@ function UpButton() {
   useEffect(() => {
     if (refContent?.current) {
       console.log(refContent);
+      console.log(upButton);
       const handleShowButton = () => {
         if (refContent.current!.clientHeight > 200) {
-          console.log("200넘음");
+          console.log(refContent.current!.clientHeight);
+          console.log(refContent.current!.scrollHeight);
           setUpButton(true);
         } else {
-          console.log("200미만");
+          console.log(refContent.current!.clientHeight);
           setUpButton(false);
         }
       };
@@ -36,8 +38,6 @@ function UpButton() {
     if (refContent?.current) {
       refContent.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }
-
-
   };
 
   if (

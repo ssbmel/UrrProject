@@ -57,7 +57,7 @@ const DetailImg = ({ id }: { id: string }) => {
                 width={500}
                 height={500}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover xl:w-[1262px] w-[500px]"
+                className="object-cover xl:w-[1000px] w-[500px]"
                 priority
               />
             )}

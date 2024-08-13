@@ -26,7 +26,7 @@ const DetailInflu = ({ userId }: { userId: string }) => {
 
   return (
     <>
-      <div className="w-full h-[64px] border-b border-[#EAECEC] py-[12px] px-[16px] flex items-center justify-between">
+      <div className="w-full h-[64px] py-[12px] px-[16px] xl:px-0 flex items-center justify-between">
         <div className="flex items-center">
           <div className="relative w-[40px] h-[40px] m-2">
             {influ?.profile_url && (
@@ -39,7 +39,7 @@ const DetailInflu = ({ userId }: { userId: string }) => {
               />
             )}
           </div>
-          <div className="text-[#4C4F52] text-[16px] ml-2">{influ?.nickname}</div>
+          <div className="text-[#4C4F52] text-[16px] xl:text-[18px] ml-2 xl:ml-4">{influ?.nickname}</div>
         </div>
         <Link href={`/influencer/profile/${userId}`}>
           <div className="relative w-[60px] h-[20px] lg:hidden">

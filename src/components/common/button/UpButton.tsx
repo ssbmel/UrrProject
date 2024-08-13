@@ -36,6 +36,8 @@ function UpButton() {
     if (refContent?.current) {
       refContent.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }
+
+
   };
 
   if (

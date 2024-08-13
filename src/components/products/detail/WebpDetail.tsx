@@ -7,6 +7,11 @@ import cart from "../../../../public/icon/장바구니.png";
 import { addCartItems, userCartItems } from "@/services/cart/cart.service";
 import { useUserData } from "@/hooks/useUserData";
 import { useRouter } from "next/navigation";
+import plusGray from "../../../../public/icon/plusGray.png";
+import plusBlue from "../../../../public/icon/plusBlue.png";
+import minGray from "../../../../public/icon/minGray.png";
+import minBlue from "../../../../public/icon/minBlue.png";
+import { useState } from "react";
 
 interface WebpDetailProps {
   id: string;
@@ -40,6 +45,8 @@ export default function WebpDetail({
   const discountPercentageInteger = Math.floor(discountPercentage);
   const totalPrice = quantity * price;
   const router = useRouter();
+  const [plusImage, setPlusImage] = useState(plusGray);
+  const [minImage, setMinImage] = useState(minGray);
   const handleShare = () => {
     const url = window.location.href;
     navigator.clipboard
@@ -79,12 +86,27 @@ export default function WebpDetail({
     }
   };
 
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);
+    setPlusImage(plusBlue);
+  };
+
+  const handleDecrease = () => {
+    setQuantity(Math.max(1, quantity - 1));
+    setMinImage(minBlue);
+  };
+
+  const handleMouseOut = () => {
+    setPlusImage(plusGray);
+    setMinImage(minGray);
+  };
+
   return (
     <>
-      <div className="hidden lg:block">
-        <div className="flex justify-center items-center">
-          <div className="flex gap-8 my-8">
-            <div className="flex flex-col gap-4  w-[476px] relative">
+      <div className="hidden xl:block bg-[url('../../public/bgImg/backCircle.png')] bg-center bg-[length:685px_685px] bg-no-repeat ">
+        <div className="flex justify-center items-center ">
+          <div className="flex gap-12 my-8">
+            <div className="flex flex-col gap-2  w-[476px] relative">
               {data && (
                 <>
                   <div className="w-[476px] h-[460px] relative">
@@ -109,7 +131,7 @@ export default function WebpDetail({
                 <p className="text-[18px] text-[#4C4F52]">{data?.text}</p>
               </div>
             </div>
-            <div className="w-[612px] h-[843px] py-[48px] px-[54px] divide-y-2 shadow-[0px_1px_8px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)] rounded-xl">
+            <div className="bg-white w-[612px] h-[843px] py-[48px] px-[54px] divide-y-4 divide-[#F4F4F4] shadow-[0px_1px_8px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)] rounded-xl">
               <div className="my-[20px] mx-4">
                 <DetailInflu userId={data?.user_id} />
                 <div className="flex justify-between items-cente py-4">
@@ -129,7 +151,7 @@ export default function WebpDetail({
                 </p>
               </div>
 
-              <div className="m-4 mx-auto w-full flex flex-col p-4">
+              <div className=" mt-4 w-full flex flex-col py-4 px-8">
                 <div className="flex flex-col gap-[14px] my-2 text-[20px] ">
                   <div className="flex">
                     <span className="w-[120px] text-[#4C4F52]">진행기간</span>
@@ -155,22 +177,27 @@ export default function WebpDetail({
                 </div>
                 <div className="flex justify-between mt-8 text-[20px]">
                   <p>주문수량</p>
-                  <div className="flex items-center justify-center border rounded-md border-gray-400 bg-white w-[80px] h-[35px]">
-                    <button
-                      className="w-1/3 h-full hover:text-gray-400"
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  <div className="flex items-center justify-center border rounded-md border-[#CDCFD0] bg-white w-[72px] h-[28px] xl:w-[81px] xl:h-[31px]">
+                    <div
+                      className="relative w-[20px] h-[20px] cursor-pointer"
+                      onClick={handleDecrease}
+                      onMouseOut={handleMouseOut}
                     >
-                      -
-                    </button>
+                      <Image src={minImage} alt="Decrease" fill sizes="20px" className="object-cover" />
+                    </div>
                     <input
                       type="text"
-                      className="w-1/3 h-full text-center border-none outline-none bg-white"
+                      className="w-1/3 h-full text-[#1B1C1D] text-center border-none outline-none"
                       value={quantity}
                       readOnly
                     />
-                    <button className="w-1/3 h-full hover:text-gray-400" onClick={() => setQuantity(quantity + 1)}>
-                      +
-                    </button>
+                    <div
+                      className=" relative w-[20px] h-[20px] cursor-pointer"
+                      onClick={handleIncrease}
+                      onMouseOut={handleMouseOut}
+                    >
+                      <Image src={plusImage} alt="Increase" fill sizes="20px" className="object-cover" />
+                    </div>
                   </div>
                 </div>
               </div>

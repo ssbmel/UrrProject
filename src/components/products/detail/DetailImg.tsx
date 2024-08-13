@@ -44,7 +44,7 @@ const DetailImg = ({ id }: { id: string }) => {
     <div className="relative">
       <div
         className={`flex flex-col py-2 w-full transition-all duration-500 ease-in-out relative ${
-          isExpanded ? "max-h-full" : "max-h-[500px] lg:max-h-full"
+          isExpanded ? "max-h-full" : "max-h-[500px] xl:max-h-full"
         } overflow-hidden`}
         ref={contentRef}
       >
@@ -56,20 +56,21 @@ const DetailImg = ({ id }: { id: string }) => {
                 alt={`Image ${index}`}
                 width={500}
                 height={500}
-                className="object-cover lg:w-[1262px] w-[500px]"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover xl:w-[1262px] w-[500px]"
                 priority
               />
             )}
           </div>
         ))}
         {!isExpanded && showMore && (
-          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent lg:hidden"></div>
+          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent xl:hidden"></div>
         )}
       </div>
       {showMore && !isExpanded && (
         <button
           onClick={handleToggle}
-          className="absolute bottom-[calc(100%-480px)] left-1/2 transform -translate-x-1/2 w-[343px] h-[52px] bg-white text-[#1A82FF] rounded mt-4 cursor-pointer text-[14px] flex justify-center items-center lg:hidden"
+          className="absolute bottom-[calc(100%-480px)] left-1/2 transform -translate-x-1/2 w-[343px] h-[52px] bg-white text-[#1A82FF] rounded mt-4 cursor-pointer text-[14px] flex justify-center items-center xl:hidden"
         >
           상품정보 더보기
           <Image src={more} alt="상품정보더보기" width={20} height={20} />

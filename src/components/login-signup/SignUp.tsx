@@ -184,14 +184,14 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           <div className="flex sticky bottom-0 mb-7">
             <button
               onClick={onSignUpHandler}
-              disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
+              // disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
               className={`${
                 isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm
                   ? "bg-primarynormal text-white"
                   : "bg-[#F2F2F2] text-[#CDCFD0]"
               } w-full h-[47px] rounded-xl font-medium`}
             >
-              회원가입
+              다음
             </button>
           </div>
         </div>

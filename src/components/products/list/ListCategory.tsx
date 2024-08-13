@@ -26,26 +26,28 @@ export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
   };
 
   return (
-    <div className="container mx-auto bg-[#F2F4F8]">
-      <div className="flex h-[105px] overflow-x-auto space-x-2 justify-between p-3">
+    <div className="container mx-auto bg-[#F2F4F8] xl:w-[1132px]">
+      <div className="flex h-[105px] xl:h-[151px] xl:px-[24px] xl:py-[18px] overflow-x-auto space-x-2 justify-between p-3 ">
         {categories.map((category) => (
           <div
             key={category.name}
-            className={`category-item text-center min-w-[75px] cursor-pointer flex flex-col ${
+            className={`category-item text-center items-center min-w-[75px] h-[90px] xl:w-[120px] xl:h-[125px] cursor-pointer flex flex-col gap-2 ${
               selectedCategory === category.name ? "shadow-inner scale-95" : ""
             } transition-transform duration-200 ease-in-out`}
             onClick={() => handleCategoryClick(category.name)}
           >
-            <Image
-              src={category.image}
-              alt={category.name}
-              width={52}
-              height={52}
-              className={`mx-auto mb-2 border rounded-lg ${
-                selectedCategory === category.name ? "shadow-inner" : ""
-              } transition-colors duration-200 ease-in-out`}
-            />
-            <p className="text-[14px] font-normal">{category.name}</p>
+            <div className="relative w-[52px] h-[52px] xl:w-[88px] xl:h-[88px]">
+              <Image
+                src={category.image}
+                alt={category.name}
+                fill
+                sizes="52px xl:88px"
+                className={`object-cover mx-auto mb-2 border rounded-lg ${
+                  selectedCategory === category.name ? "shadow-inner" : ""
+                } transition-colors duration-200 ease-in-out`}
+              />
+            </div>
+            <p className="text-[14px] xl:text-[20px] font-normal">{category.name}</p>
           </div>
         ))}
       </div>

@@ -46,9 +46,6 @@ const Rating: React.FC<RatingProps> = ({ count = 5, value = 0, onChange }) => {
     }
   };
 
-  console.log(currentValue);
-  
-
   return (
     <div className="flex justify-center my-5">
       {[...Array(count)].map((_, index) => (

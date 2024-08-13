@@ -44,7 +44,7 @@ function UpButton() {
   return (
     <div
       onClick={scrollUpToHeader}
-      className="fixed bottom-[124px] right-[16px] z-50 bg-white w-[50px] h-[50px] rounded-[50%]"
+      className="fixed bottom-[124px] right-[16px] z-50 bg-white w-[50px] h-[50px] rounded-[50%] cursor-pointer"
     >
       <Image src={UpIcon} alt="up" width={50} height={50} />
     </div>

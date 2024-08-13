@@ -167,14 +167,11 @@ export default function Chat({ params }: detailProps) {
     }
   };
 
-  //수정 필
   const checkMyChannelLastTime = async (): Promise<String | null> => {
-    const user_id = await userdata.id;
     const { data, error } = await supabase
-      .from("chat_subscribe")
+      .from("chat_channels")
       .select("last_time")
       .eq("channel_id", channel_id)
-      .eq("user_id", user_id)
       .single();
     if (error) {
       console.log(error);

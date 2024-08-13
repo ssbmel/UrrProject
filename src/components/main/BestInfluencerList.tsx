@@ -11,38 +11,26 @@ import Link from "next/link";
 function BestInfluencerList({ infUser }: { infUser: User[] }) {
   const [subscriptionCounts, setSubscriptionCounts] = useState<{ [key: string]: number }>({});
 
-  const getSubscribeCount = async (infuserId: string) => {
-    try {
-      const response = await fetch(`/api/subscribe/subscribe-count?infuser_id=${infuserId}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.count;
-    } catch (error) {
-      console.log("Failed to fetch subscription count:", error);
-      return 0;
-    }
-  };
-
   useEffect(() => {
     const fetchSubscriptionCounts = async () => {
-      const counts: { [key: string]: number } = {};
-      for (const inf of infUser) {
-        const count = await getSubscribeCount(inf.id);
-        counts[inf.id] = count;
-      }
-      setSubscriptionCounts(counts);
+      const counts = await Promise.all(
+        infUser.map(async (inf) => {
+          const response = await fetch(`/api/subscribe/subscribe-count?infuser_id=${inf.id}`);
+          if (response.ok) {
+            const data = await response.json();
+            return { [inf.id]: data.count };
+          }
+          console.error(`Failed to fetch subscription count for ${inf.id}`);
+          return { [inf.id]: 0 };
+        })
+      );
+      setSubscriptionCounts(Object.assign({}, ...counts));
     };
 
     fetchSubscriptionCounts();
   }, [infUser]);
 
-  const sortedInfUser = [...infUser].sort((a, b) => {
-    const countA = subscriptionCounts[a.id] || 0;
-    const countB = subscriptionCounts[b.id] || 0;
-    return countB - countA;
-  });
+  const sortedInfUser = infUser.sort((a, b) => (subscriptionCounts[b.id] || 0) - (subscriptionCounts[a.id] || 0));
 
   return (
     <div className="w-full mx-auto px-4 py-8 bg-[url('../../public/bgImg/influencerImg.png')] bg-center bg-cover">
@@ -58,27 +46,22 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
                 src={inf.profile_url || defaultImg}
                 alt="인플루언서이미지"
                 fill
-                sizes="90px xl:120px"
                 className="gradient-border object-cover"
               />
             </div>
-            <div className="w-[60%] flex">
-              <div className="flex flex-col">
-                <div className="flex py-2">
-                  <p className="text-[16px] font-bold text-left truncate">{inf.nickname}</p>
-                  <span className="mx-2">|</span>
-                  <p className="text-[16px] font-bold text-left truncate">
-                    {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
-                  </p>
-                </div>
-                <p className="w-[100%] text-[#989C9F] text-[14px]">{inf.intro}</p>
+            <div className="flex flex-col w-[60%]">
+              <div className="flex items-center py-2">
+                <p className="text-[16px] font-bold truncate">{inf.nickname}</p>
+                <span className="mx-2">|</span>
+                <p className="text-[16px] font-bold">
+                  {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
+                </p>
               </div>
+              <p className="text-[#989C9F] text-[14px]">{inf.intro}</p>
             </div>
-            <button className="self-center ml-auto">
-              <Link href={`influencer/profile/${inf.id}`}>
-                <RightArrowIcon />
-              </Link>
-            </button>
+            <Link href={`influencer/profile/${inf.id}`} className="self-center ml-auto">
+              <RightArrowIcon />
+            </Link>
           </div>
         ))}
       </div>

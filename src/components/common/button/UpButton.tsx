@@ -9,35 +9,28 @@ import { usePathname } from "next/navigation";
 
 function UpButton() {
   const pathname = usePathname();
-  const [upButton, setUpButton] = useState<boolean>(false);
+  const [upButton, setUpButton] = useState(false);
   const { refContent } = useAddrStore();
 
+  const handleShowButton = () => {
+    if (window.scrollY > 150) {
+      setUpButton(true);
+    } else {
+      setUpButton(false);
+    }
+  };
+
   useEffect(() => {
+    window.addEventListener("scroll", handleShowButton);
+    return () => {
+      window.removeEventListener("scroll", handleShowButton);
+    };
+  }, []);
+
+  const scrollUpToHeader = () => {
     if (refContent?.current) {
-      console.log(refContent);
-      const handleShowButton = () => {
-        if (refContent.current!.clientHeight > 200) {
-          console.log("200넘음");
-          setUpButton(true);
-        } else {
-          console.log("200미만");
-          setUpButton(false);
-        }
-      };
-
-      refContent?.current!.addEventListener("scroll", handleShowButton);
-      return () => {
-        refContent?.current!.removeEventListener("scroll", handleShowButton);
-      };
+      refContent.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }
-  }, [refContent]);
-
-  const scrollToTop = () => {
-    if (refContent?.current) {
-      refContent.current.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
-
-
   };
 
   if (
@@ -49,16 +42,12 @@ function UpButton() {
   }
 
   return (
-    <>
-      {upButton && (
-        <div
-          onClick={scrollToTop}
-          className="fixed bottom-[18%] right-[5%] z-50 bg-white w-[50px] h-[50px] rounded-[50%] opacity-70 transition"
-        >
-          <Image src={UpIcon} alt="up" width={50} height={50} />
-        </div>
-      )}
-    </>
+    <div
+      onClick={scrollUpToHeader}
+      className="fixed bottom-[124px] right-[16px] z-50 bg-white w-[50px] h-[50px] rounded-[50%]"
+    >
+      <Image src={UpIcon} alt="up" width={50} height={50} />
+    </div>
   );
 }
 

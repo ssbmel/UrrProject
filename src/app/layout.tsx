@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     images: "/main.png"
   },
   icons: {
-    icon: "/urrIcon.jpg"
+    icon: "/urrIcon.png"
   },
   metadataBase: new URL("https://urr-final.vercel.app")
 } as const;

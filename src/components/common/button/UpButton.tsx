@@ -27,6 +27,14 @@ function UpButton() {
     };
   }, []);
 
+  // 특정위치 보다 내려갈 경우 upButton 보이기.
+    
+  // 1. 스크롤 위치 파악.
+  // 2. 스크롤 위치를 정해둔 위치와 비교
+  // 3. if문으로 2번을 작성 후 state 값 boolean으로 변경
+
+
+
   const test = () => {
     if(refContent?.current){
       refContent.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });

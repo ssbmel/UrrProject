@@ -22,7 +22,7 @@ export const useUserData = () => {
   useEffect(() => {
     const fetchSessionData = async () => {
       const data = await getUserData();
-      setSessionData(data);
+      setSessionData(data.session);
     };
 
     fetchSessionData();

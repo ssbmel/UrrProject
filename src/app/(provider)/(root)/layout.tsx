@@ -1,3 +1,4 @@
+import AlertMessage from "@/components/common/alert/AlertMessage";
 import BottomNav from "@/components/common/bottomnav/BottomNav";
 import UpButton from "@/components/common/button/UpButton";
 import Footer from "@/components/common/footer/Footer";
@@ -21,6 +22,7 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
         {children}
         <Footer />
         <UpButton />
+        <AlertMessage />
       </main>
       <div className="xl:hidden">
         <BottomNav />

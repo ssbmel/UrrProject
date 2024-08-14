@@ -37,7 +37,7 @@ export default function ChatList() {
           countMessages
         }
         setMyChannel(channel_data);
-        setMyChannelIdList((pre) => {
+        setMyChannelIdList((pre)=>{
           return [...pre, data.channel_id]
         })
       }
@@ -67,12 +67,13 @@ export default function ChatList() {
       }
     } else {
       //팬
-      const { data, count, error } = await supabase
+      const { count, error } = await supabase
         .from('chat_messages')
         .select('*', { count: 'exact', head: true })
         .eq("channel_id", channel_id)
         .in("user_id", [user_id, owner_id])
         .gt('created_at', last_time);
+
       if (error) {
         console.log(error)
         return 0;
@@ -98,7 +99,6 @@ export default function ChatList() {
       .select(`
         created_at,
         channel_id,
-        last_time,
         chat_channels(
           *
         )
@@ -109,12 +109,12 @@ export default function ChatList() {
     if (data) {
       const channelListDatas = await Promise.all(data.map(async (subscribe) => {
         if (subscribe.chat_channels) {
-          const countMessages = await countUnreadMessages(subscribe.last_time, subscribe.channel_id, subscribe.chat_channels.owner_id);
+          setMyChannelIdList((pre)=>{
+            return [...pre, subscribe.channel_id]
+          })
+          const countMessages = await countUnreadMessages(subscribe.chat_channels.last_time, subscribe.channel_id, subscribe.chat_channels.owner_id);
           const response = await getlastMessage(subscribe.channel_id, subscribe.chat_channels.owner_id);
           if (response?.time != undefined && response.message != undefined) {
-            setMyChannelIdList((pre) => {
-              return [...pre, subscribe.channel_id]
-            })
             return {
               channel_id: subscribe.channel_id,
               channel_name: subscribe.chat_channels.channel_name,
@@ -198,7 +198,7 @@ export default function ChatList() {
               countMessages: ++myChannel.countMessages
             })
           } else {
-            if(chatListData){
+            if (chatListData) {
               setChatListData(chatListData?.map((pre) => {
                 if (pre) {
                   if (pre?.channel_id === newMessage.channel_id && (newMessage.user_id === user_id || newMessage.user_id === pre?.owner_id)) {
@@ -214,7 +214,6 @@ export default function ChatList() {
                 }
               }))
             }
-
           }
         }
       )
@@ -257,8 +256,8 @@ export default function ChatList() {
                   <div className="flex flex-row items-center h-[27px]">
                     <label className="truncate text-[18px] font-medium">{myChannel.channel_name}</label>
                     <label className={(myChannel.countMessages > 0) ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-gradient-to-br from-[#0068e5] to-[#9aec5b] text-center text-[14px] font-medium" : "hidden"}>
-                      {(myChannel.countMessages < 100) ? `${myChannel.countMessages}` : `99+`}
-                    </label>
+                      {(myChannel.countMessages < 100) ? `${myChannel.countMessages}` : `99+` }
+                      </label>
                   </div>
                   <label className="truncate text-[16px] font-light">{myChannel.message}</label>
                   <label className="text-[12px] font-normal text-[#989C9F]">{myChannel?.created_at}</label>
@@ -286,7 +285,7 @@ export default function ChatList() {
                     <div className="flex flex-row items-center h-[27px]">
                       <label className="truncate text-[18px] font-medium">{channel.channel_name}</label>
                       <label className={(channel.countMessages > 0) ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-[#FF5E5E] text-center text-[14px] font-medium" : "hidden"}>
-                        {(channel.countMessages < 100) ? `${channel.countMessages}` : `99+`}
+                      {(channel.countMessages < 100) ? `${channel.countMessages}` : `99+` }
                       </label>
                     </div>
                     <label className="truncate text-[16px] font-light">{channel.message}</label>

@@ -1,5 +1,3 @@
-import { ProductList } from "@/components/mypage/my-review/MyReview"
-
 export type Json =
   | string
   | number
@@ -14,6 +12,7 @@ export type Database = {
       cart: {
         Row: {
           amount: number
+          cost: number | null
           created_at: string
           end: string | null
           id: number
@@ -26,6 +25,7 @@ export type Database = {
         }
         Insert: {
           amount: number
+          cost?: number | null
           created_at?: string
           end?: string | null
           id?: number
@@ -38,6 +38,7 @@ export type Database = {
         }
         Update: {
           amount?: number
+          cost?: number | null
           created_at?: string
           end?: string | null
           id?: number
@@ -82,7 +83,7 @@ export type Database = {
       chat_channels: {
         Row: {
           channel_id: number
-          channel_name: string | null
+          channel_name: string
           created_at: string
           last_time: string
           owner_id: string
@@ -91,7 +92,7 @@ export type Database = {
         }
         Insert: {
           channel_id?: number
-          channel_name?: string | null
+          channel_name: string
           created_at?: string
           last_time?: string
           owner_id: string
@@ -100,7 +101,7 @@ export type Database = {
         }
         Update: {
           channel_id?: number
-          channel_name?: string | null
+          channel_name?: string
           created_at?: string
           last_time?: string
           owner_id?: string
@@ -245,7 +246,7 @@ export type Database = {
           paymentId: string
           phoneNumber: number | null
           price: number
-          product_list: ProductList[]
+          product_list: Json[]
           request: string | null
           userId: string
         }
@@ -257,7 +258,7 @@ export type Database = {
           paymentId: string
           phoneNumber?: number | null
           price: number
-          product_list: ProductList[]
+          product_list: Json[]
           request?: string | null
           userId: string
         }
@@ -269,7 +270,7 @@ export type Database = {
           paymentId?: string
           phoneNumber?: number | null
           price?: number
-          product_list?: ProductList[]
+          product_list?: Json[]
           request?: string | null
           userId?: string
         }

@@ -1,3 +1,4 @@
+import AlertMessage from "@/components/common/alert/AlertMessage";
 import BottomNav from "@/components/common/bottomnav/BottomNav";
 import Footer from "@/components/common/footer/Footer";
 import MobileHeader from "@/components/common/header/MobileHeader";
@@ -17,6 +18,7 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
       <main className="grow overflow-auto">
         {children}
         <Footer />
+        <AlertMessage />
       </main>
       <div className="xl:hidden">
         <BottomNav />

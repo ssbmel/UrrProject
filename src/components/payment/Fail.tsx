@@ -39,11 +39,6 @@ export default function Fail() {
           </div>
           <p className="text-[#4C4F52]">확인 후 다시 주문해주세요</p>
         </div>
-        <div className="w-full px-3 ">
-          <Link href={"/products/list"}>
-            <button className="w-full h-[52px] mt-2 rounded-md text-[18px] text-white bg-[#1A82FF]">구매하기</button>
-          </Link>
-        </div>
       </div>
     </div>
   );

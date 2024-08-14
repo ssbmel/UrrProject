@@ -194,7 +194,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                             />
                             {expired && (
                               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-md">
-                                <p className="text-[#FFFFFE] text-[18px]">판매 종료</p>
+                                <p className="text-[#FFFFFE] text-[18px] xl:text-[24px]">판매 종료</p>
                               </div>
                             )}
                           </div>
@@ -218,6 +218,9 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                               }`}
                             >
                               {price.toLocaleString()}원
+                            </p>
+                            <p className="hidden ml-2 xl:block text-[18px] text-gray-300 line-through font-light">
+                              {cost.toLocaleString()}
                             </p>
                           </div>
                         </div>

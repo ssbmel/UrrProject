@@ -29,8 +29,8 @@ const Login = () => {
     }
     try {
       const response = await userLogin({ email, password });
-      // window.location.href = "/mypage";
-      router.replace("/mypage");
+      window.location.href = "/mypage";
+      // router.replace("/mypage");
     } catch (error) {
       alert("아이디와 비빌번호를 확인해주세요.");
       console.log(error);
@@ -66,7 +66,7 @@ const Login = () => {
           <div className="flex justify-center items-center h-[35%] xl:hidden">
             <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
           </div>
-          <h2 className="hidden xl:block text-[28px] font-bold mx-auto mb-[43px]">로그인</h2>
+          <h2 className="hidden xl:block text-[24px] font-bold mx-auto mb-[43px]">로그인</h2>
 
           <form onSubmit={loginHandler} className="flex flex-col h-[35%]">
             <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />

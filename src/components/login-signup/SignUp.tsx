@@ -147,7 +147,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
         </div>
 
         <div className="flex flex-col justify-between h-screen xl:h-[783px] w-[375px] mx-auto whitespace-nowrap pt-[58px]  p-4">
-          <h2 className="hidden xl:block text-[28px] font-bold text-center mb-[32px]">회원가입</h2>
+          <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
           <form className="flex flex-col gap-9">
             <div>
               <label className="flex flex-col">

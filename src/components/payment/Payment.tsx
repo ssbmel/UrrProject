@@ -51,11 +51,11 @@ export default function Payment() {
 
   return (
     <>
-      <div className="xl:flex xl:flex-col xl:justify-center xl:items-center xl:py-12 xl:bg-center xl:bg-cover xl:bg-[url('../../public/bgImg/paymentBgImg.png')] xl:bg-no-repeat xl:bg-[background-size:cover] xl:bg-[background-position:center]">
+      <div className="xl:flex xl:flex-col xl:justify-center xl:items-center xl:pt-12 xl:pb-16 xl:bg-center xl:bg-cover xl:bg-[url('../../public/bgImg/paymentBgImg.png')] xl:bg-no-repeat xl:bg-[background-size:cover] xl:bg-[background-position:center]">
         <p className="hidden xl:block text-[28px] font-semibold pb-8">결제하기</p>
         <div className="xl:flex gap-8">
           <div className="bg-[gray-100] flex justify-center xl:w-[376px]">
-            <div className="w-full flex flex-col items-start gap-[8px] text-[14px] xl:text-[18px] p-[16px]">
+            <div className="w-full flex flex-col items-start gap-[8px] bg-white rounded-2xl text-[14px] xl:text-[18px] p-[16px]">
               <p className="text-[20px] xl:text-[24px] font-semibold mb-[4px]">주문자 정보</p>
               <p>
                 <span>주문자</span>

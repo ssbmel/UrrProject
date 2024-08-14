@@ -14,6 +14,9 @@ const nextConfig = {
       },
       {
         hostname: "plus.unsplash.com"
+      },
+      {
+        hostname: "t1.gstatic.com"
       }
     ]
   },

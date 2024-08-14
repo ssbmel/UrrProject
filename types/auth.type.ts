@@ -14,6 +14,7 @@ export type editUserData = {
   address: string | null;
   phonenum: string | null;
   name: string | null;
+  intro?: string | null;
 };
 
 export type PublicUser = {

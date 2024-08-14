@@ -10,24 +10,11 @@ import EmptyHeartIcon from "../../../public/icon/emptyheart.svg";
 import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
+import { getInfluencerData } from "@/services/users/influencer/influencer.service";
 
 function InfluencerList() {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
-
-  const getUserData = async () => {
-    try {
-      const response = await fetch("/api/auth/users/infuser/allinfuser");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      const user: User[] = await data.data;
-      return user;
-    } catch (error) {
-      console.log("Failed to fetch user data:", error);
-    }
-  };
 
   const getSubscribeData = async () => {
     try {
@@ -46,7 +33,7 @@ function InfluencerList() {
 
   const { data: infUser } = useQuery({
     queryKey: ["user"],
-    queryFn: () => getUserData()
+    queryFn: () => getInfluencerData()
   });
 
   useEffect(() => {
@@ -109,15 +96,16 @@ function InfluencerList() {
               .map((inf) => (
                 <div className="grid text-center" key={inf.id}>
                   <div className="relative w-[90px] h-[90px] mb-2">
-                    <Link href={`influencer/profile/${inf.id}`} >
-                    <div className="relative w-[90px] h-[90px]">
-                      <Image
-                        src={inf.profile_url || defaultImg}
-                        alt="img"
-                        fill
-                        sizes="90px"
-                        className="rounded-md object-cover gradient-border"
-                      /></div>
+                    <Link href={`influencer/profile/${inf.id}`}>
+                      <div className="relative w-[90px] h-[90px]">
+                        <Image
+                          src={inf.profile_url || defaultImg}
+                          alt="img"
+                          fill
+                          sizes="90px"
+                          className="rounded-md object-cover gradient-border"
+                        />
+                      </div>
                     </Link>
                     <div className="absolute bottom-0.5 right-1">
                       {subscribeIds.includes(inf.id) ? (
@@ -133,7 +121,7 @@ function InfluencerList() {
                         </button>
                       ) : (
                         <button onClick={(e) => subscribedHandler(e, inf)}>
-                          <EmptyHeartIcon/>
+                          <EmptyHeartIcon />
                         </button>
                       )}
                     </div>
@@ -153,12 +141,13 @@ function InfluencerList() {
                 <Link href={`influencer/profile/${inf.id}`} key={inf.id}>
                   <div className="relative w-[106px] h-[106px]">
                     <Image
-                    src={inf.profile_url || defaultImg}
-                    alt="img"
-                    fill
-                    sizes="106px"
-                    className="rounded-md object-cover gradient-border"
-                  /></div>
+                      src={inf.profile_url || defaultImg}
+                      alt="img"
+                      fill
+                      sizes="106px"
+                      className="rounded-md object-cover gradient-border"
+                    />
+                  </div>
                 </Link>
                 <div className="absolute bottom-0.5 right-2">
                   {subscribeIds.includes(inf.id) ? (

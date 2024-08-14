@@ -33,15 +33,15 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
   return (
     <>
       <div className="xl:flex xl:flex-row">
-        <div className="hidden xl:flex xl:w-[50%] xl:bg-cover xl:bg-center ">
+        <div className="hidden xl:flex xl:bg-cover xl:bg-center ">
           <WebLoginBg className="xl:max-w-full xl:max-h-full" />
         </div>
 
         <div className="flex flex-col justify-between h-screen xl:h-[783px] w-[375px] mx-auto p-4">
           <div>
-            <h2 className="hidden xl:block text-[28px] font-bold text-center mb-[32px]">회원가입</h2>
-            <div className="flex flex-col justify-center h-24">
-              <h3 className="text-xl font-medium mb-1">어떤 회원으로 서비스를 이용하실건가요?</h3>
+            <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
+            <div className="flex flex-col xl:items-center justify-center h-24">
+              <h3 className="text-lg font-medium mb-1">어떤 회원으로 서비스를 이용하실건가요?</h3>
               <p className="text-sm text-[#575757] mb-[36px]">
                 인플루언서라면 유튜브, 인스타 계정을 통해 인증해야합니다.
               </p>
@@ -65,7 +65,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
                 onClick={infChooseMember}
                 className={`${
                   selectUser === "인플루언서"
-                    ? "bg-primarynormal text-white"
+                    ? "bg-primarynormal text-white xl:hidden"
                     : "text-primarystrong border border-[#1A82FF]"
                 } w-[166px] h-[88px] text-lg rounded-xl font-medium`}
               >
@@ -76,7 +76,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
                 disabled={selectUser === "인플루언서"}
                 className={`${
                   selectUser === "인플루언서"
-                    ? "bg-[#F2F2F2] border border-[##DADDDD] text-[#CDCFD0]"
+                    ? "bg-[#F2F2F2] border border-[##DADDDD] text-[#CDCFD0] xl:hidden"
                     : "text-primarystrong border border-primarynormal"
                 } w-[166px] h-[88px] text-lg rounded-xl font-medium`}
               >

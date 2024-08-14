@@ -53,13 +53,13 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
               </div>
               <div className="flex flex-col w-[60%]">
                 <div className="flex">
-                  <p className="text-[16px] font-bold truncate">{inf.nickname}</p>
+                  <p className="text-[15px] font-medium truncate">{inf.nickname}</p>
                   <span className="mx-2">|</span>
-                  <p className="text-[16px] font-bold">
+                  <p className="text-[15px] font-medium">
                     {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
                   </p>
                 </div>
-                <p className="text-[#4C4F52] text-[14px] truncate mt-[10%]">{inf.intro}</p>
+                <p className="text-[#4C4F52] text-[14px] font-light truncate mt-3 xl:mt-10">{inf.intro}</p>
               </div>
               <Link href={`influencer/profile/${inf.id}`} className="self-center ml-auto">
                 <RightArrowIcon />

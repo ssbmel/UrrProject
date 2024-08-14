@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "../../../../../../supabase/server";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-  console.log(params.id);
-
   const supabase = createClient();
   const { id } = params;
 
@@ -19,11 +17,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
 export async function PATCH(req: NextRequest) {
   const supabase = createClient();
-  const { id, nickname, profile_url, address, phonenum, name } = await req.json();
+  const { id, nickname, profile_url, address, phonenum, name, intro } = await req.json();
 
   const { data, error } = await supabase
     .from("users")
-    .update({ nickname, profile_url, address, phonenum, name })
+    .update({ nickname, profile_url, address, phonenum, name, intro })
     .eq("id", id)
     .select();
 

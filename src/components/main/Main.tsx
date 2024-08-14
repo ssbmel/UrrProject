@@ -37,7 +37,7 @@ function Main() {
       console.log("Failed to fetch user data:", error);
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -49,12 +49,12 @@ function Main() {
   }, []);
 
   if (isLoading) {
-    return <LoadingUrr/>;
+    return <LoadingUrr />;
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto flex flex-col gap-y-2 ">
-      <Banner/>
+    <div className="overflow-auto max-w-[1200px] mx-auto flex flex-col gap-y-2 ">
+      <Banner />
       <SubInfluencer infUser={infUser} />
       <hr />
       <BestProductsList productsList={productsList} />

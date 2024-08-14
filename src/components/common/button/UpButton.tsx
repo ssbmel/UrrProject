@@ -12,32 +12,29 @@ function UpButton() {
   const [upButton, setUpButton] = useState<boolean>(false);
   const { refContent } = useAddrStore();
 
+  const handleShowButton = () => {
+    if (refContent!.current!.scrollTop > 200) {
+      setUpButton(true);
+    } else {
+      setUpButton(false);
+    }
+  };
+
   useEffect(() => {
     if (refContent?.current) {
-      console.log(refContent);
-      console.log(upButton);
-      const handleShowButton = () => {
-        if (refContent.current!.clientHeight > 200) {
-          console.log(refContent.current!.clientHeight);
-          console.log(refContent.current!.scrollHeight);
-          setUpButton(true);
-        } else {
-          console.log(refContent.current!.clientHeight);
-          setUpButton(false);
-        }
-      };
-
-      refContent?.current!.addEventListener("scroll", handleShowButton);
-      return () => {
-        refContent?.current!.removeEventListener("scroll", handleShowButton);
-      };
+      console.log("이벤트 리스너 장착");
+      refContent!.current!.addEventListener("scroll", handleShowButton);
     }
+    return () => {
+      if (refContent?.current) {
+        console.log("이벤트 리스너 해제");
+        refContent!.current!.removeEventListener("scroll", handleShowButton);
+      }
+    };
   }, [refContent]);
 
   const scrollToTop = () => {
-    if (refContent?.current) {
-      refContent.current.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
+    refContent!.current!.scrollIntoView({ behavior: "smooth" });
   };
 
   if (

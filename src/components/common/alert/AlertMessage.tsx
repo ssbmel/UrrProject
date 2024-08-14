@@ -81,8 +81,6 @@ function AlertMessage() {
       const user_id = await userdata.id;
       const approve = await userdata.approve;
       const channelIdList = channelList.map((channel) => { return channel.channel_id })
-      console.log('receive 시작')
-      console.log(channelIdList)
       const channelsMessage = supabase
         .channel("changes")
         .on(
@@ -95,18 +93,12 @@ function AlertMessage() {
           },
           (payload) => {
             const newMessage = payload.new;
-            console.log(newMessage);
-            console.log(channelIdList);
             const message = JSON.parse(JSON.stringify(newMessage.content)).message as string;
             const time = newMessage.created_at.slice(11, 16) as string;
-            console.log(isAlert);
             if (isAlert) {
               clearData();
-              console.log('클리어')
             }
-            console.log(myChannelId)
             if (approve && newMessage.channel_id === myChannelId) {
-              console.log('인플루')
               setAlertData({
                 created_at: time,
                 message: message,
@@ -115,12 +107,10 @@ function AlertMessage() {
                 channel_id: newMessage.channel_id
               })
               setIsAlert(true);
-              console.log('셋데이타인플루')
             } else {
               const channel_data = channelList.find((channel) => channel.channel_id === newMessage.channel_id)
               if (channel_data)
                 if (newMessage.user_id === user_id || newMessage.user_id === channel_data.owner_id) {
-                  console.log('유저')
                   setAlertData({
                     created_at: time,
                     message: message,
@@ -129,7 +119,6 @@ function AlertMessage() {
                     channel_id: newMessage.channel_id
                   })
                   setIsAlert(true);
-                  console.log('셋데이타유저')
                 }
             }
           }
@@ -146,7 +135,6 @@ function AlertMessage() {
 
   const handleButton = () => {
     clearData();
-    console.log('클리어')
   }
 
   useEffect(() => {

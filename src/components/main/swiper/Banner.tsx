@@ -29,32 +29,35 @@ export default function Banner() {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper xl:w-[1920px] xl:h-[688px]"
+        className="mySwiper xl:w-full xl:h-[688px]"
       >
         <SwiperSlide>
-          <div className="xl:w-[1920px] relative">
-            <Image src={banner1} alt="mainImg" width={1920} height={688} className="object-cover" />
+          <div className="xl:w-full xl:h-[800px] relative">
+            <Image src={banner1} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
+          </div>
+          {/* <div className="xl:w-[1920px] relative">
+            <Image src={banner1} alt="mainImg" width={1920} height={688} className="object-contain" />
+          </div> */}
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className="xl:w-full xl:h-[800px] relative">
+            <Image src={banner2} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="xl:w-[1920px] relative">
-            <Image src={banner2} alt="mainImg" width={1920} height={688} className="object-cover" />
+          <div className="xl:w-full xl:h-[800px] relative">
+            <Image src={banner3} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="xl:w-[1920px] relative">
-            <Image src={banner3} alt="mainImg" width={1920} height={688} className="object-cover" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="xl:w-[1920px] relative">
-            <Image src={banner4} alt="mainImg" width={1920} height={688} className="object-cover" />
+          <div className="xl:w-full xl:h-[800px] relative">
+            <Image src={banner4} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <Link href={"/influencer"}>
-            <div className="xl:w-[1920px] relative">
-              <Image src={banner5} alt="mainImg" width={1920} height={688} className="object-cover" />
+            <div className="xl:w-full xl:h-[800px] relative">
+              <Image src={banner5} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
             </div>
           </Link>
         </SwiperSlide>

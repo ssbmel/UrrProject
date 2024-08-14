@@ -33,40 +33,44 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
   const sortedInfUser = infUser.sort((a, b) => (subscriptionCounts[b.id] || 0) - (subscriptionCounts[a.id] || 0));
 
   return (
-    <div className="w-full mx-auto px-4 py-8 bg-[url('../../public/bgImg/influencerImg.png')] bg-center bg-cover">
-      <h2 className="font-bold mt-3 mb-5 text-xl text-white xl:text-[22px] xl:my-8">현재 인기있는 인플루언서</h2>
-      <div className="xl:w-[50%] grid">
-        {sortedInfUser.slice(0, 3).map((inf) => (
-          <div
-            key={inf.id}
-            className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] w-full mx-auto py-[8px] px-[10px] flex mb-4"
-          >
-            <div className="relative w-[90px] h-[87px] xl:w-[120px] xl:h-[120px] mr-2">
-              <Image
-                src={inf.profile_url || defaultImg}
-                alt="인플루언서이미지"
-                fill
-                className="gradient-border object-cover"
-              />
-            </div>
-            <div className="flex flex-col w-[60%]">
-              <div className="flex items-center py-2">
-                <p className="text-[16px] font-bold truncate">{inf.nickname}</p>
-                <span className="mx-2">|</span>
-                <p className="text-[16px] font-bold">
-                  {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
-                </p>
+    <div className="px-4 py-6 bg-[url('../../public/bgImg/influencerImg.png')] xl:bg-[url('../../public/bgImg/bestInf.png')] xl:bg-center bg-cover bg-no-repeat flex w-full xl:w-[1133px] xl:h-[572px] xl:justify-end">
+      <div className="">
+        <h2 className="font-bold mt-3 mb-5 text-xl text-white xl:text-[22px] xl:my-8 xl:hidden">현재 인기있는 인플루언서</h2>
+        <div className="grid mt-4">
+          {sortedInfUser.slice(0, 3).map((inf) => (
+            <div
+              key={inf.id}
+              className="border-2 bg-[#ffffff] bg-opacity-[86%] border-[#FFFFFF] rounded-[12px] py-[8px] px-[10px] flex mb-4 min-w-[330px] h-[92px] xl:w-[484px] xl:h-[152px] items-center xl:mr-[55px]"
+            >
+              <div className="relative w-[80px] h-[77px] xl:w-[120px] xl:h-[120px] mr-2">
+                <Image
+                  src={inf.profile_url || defaultImg}
+                  alt="인플루언서이미지"
+                  fill
+                  sizes="80px"
+                  className="gradient-border object-cover"
+                />
               </div>
-              <p className="text-[#989C9F] text-[14px]">{inf.intro}</p>
+              <div className="flex flex-col w-[60%]">
+                <div className="flex">
+                  <p className="text-[16px] font-bold truncate">{inf.nickname}</p>
+                  <span className="mx-2">|</span>
+                  <p className="text-[16px] font-bold">
+                    {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
+                  </p>
+                </div>
+                <p className="text-[#4C4F52] text-[14px] truncate mt-[10%]">{inf.intro}</p>
+              </div>
+              <Link href={`influencer/profile/${inf.id}`} className="self-center ml-auto">
+                <RightArrowIcon />
+              </Link>
             </div>
-            <Link href={`influencer/profile/${inf.id}`} className="self-center ml-auto">
-              <RightArrowIcon />
-            </Link>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
+  
 }
 
 export default BestInfluencerList;

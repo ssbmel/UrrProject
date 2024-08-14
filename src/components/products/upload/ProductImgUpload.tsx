@@ -87,10 +87,10 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
 
   return (
     <div>
-      <div className="w-full p-5 contents-box my-3">
-        <h3 className="font-bold text-lg py-3">썸네일 등록하기</h3>
+      <div className="w-full p-4 contents-box my-2">
+        <h3 className="font-bold text-xl py-3">썸네일 등록하기</h3>
         {!mainImgUrl && (
-          <div className="w-full border min-h-[300px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
+          <div className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
             <Image src={camera} alt="img" width={50} className="mb-2"></Image>
             <p>파일 미리보기</p>
           </div>
@@ -101,15 +101,15 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
             <img src={mainImgUrl} alt="Main Image" width="auto" height="auto" className="mb-5" />
           </div>
         )}
-        <label htmlFor="file" className="btn-upload">
+        <label htmlFor="file" className="btn-upload h-[52px]">
           썸네일 파일 첨부하기
         </label>
       </div>
 
       <div className="w-full p-5 contents-box">
-        <h3 className="font-bold text-lg py-3">상세설명 파일 등록하기</h3>
+        <h3 className="font-bold text-lg py-2">상세설명 파일 등록하기</h3>
         {!detailImgUrls || detailImgUrls.length === 0 ? (
-          <div className="w-full border min-h-[300px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
+          <div className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
             <Image src={camera} alt="img" width={50} className="mb-2"></Image>
             <p>파일 미리보기</p>
           </div>
@@ -137,7 +137,7 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
           </div>
           <p className="text-sm text-[#989C9F]">사진은 최대 10장까지 업로드 가능합니다.</p>
         </div>
-        <label htmlFor="files" className="btn-upload">
+        <label htmlFor="files" className="btn-upload h-[52px]">
           상세설명 파일 첨부하기
         </label>
       </div>

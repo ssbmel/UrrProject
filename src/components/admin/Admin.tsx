@@ -13,8 +13,7 @@ export default function AdminPage() {
   const { data: influencerApproveList, isSuccess } = useQuery({
     queryKey: ["infApprove", restart],
     queryFn: infUserApprove
-  }); // 커스텀훅으로 만들기
-
+  });
   const mutation = useMutation({
     mutationFn: updateUserApprove,
     onSuccess: () => {

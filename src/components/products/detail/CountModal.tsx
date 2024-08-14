@@ -35,6 +35,7 @@ export type CartItemsProps = {
   main_img: string;
   nickname: string;
   end: number;
+  cost: number;
 };
 
 const CountModal = ({
@@ -73,7 +74,8 @@ const CountModal = ({
           quantity,
           main_img,
           nickname,
-          end
+          end,
+          cost
         });
         const cart = confirm("장바구니로 이동하시겠습니까?");
         if (cart === true) {
@@ -122,7 +124,7 @@ const CountModal = ({
             >
               <Image src={closeIcon} alt="Close" width={24} height={24} />
             </button>
-            <h2 className="text-xl font-semibold flex-grow text-center my-4 ">주문 수량</h2>
+            <h2 className="text-xl font-semibold flex-grow text-center my-4">주문 수량</h2>
             <h2 className="text-lg font-semibold mb-8 ">{title}</h2>
             <div className="border-[#F4F4F4] border-[1px] w-full my-4" />
             <div className="flex items-center justify-between my-4">

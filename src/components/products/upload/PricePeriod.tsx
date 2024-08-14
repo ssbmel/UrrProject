@@ -1,6 +1,7 @@
 "use client";
 
 import { RefObject } from "react";
+import ArrowRight from "../../../../public/icon/arrowR.svg"
 
 interface PricePeriodProps {
   startDateRef: RefObject<HTMLInputElement>;
@@ -27,42 +28,42 @@ const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, cos
   };
 
   return (
-    <details open className="w-full px-5 contents-box">
-      <summary className="font-bold text-lg">기간 및 가격 설정</summary>
+    <details open className="w-full px-4 contents-box">
+      <summary className="font-bold text-xl">기간 및 가격 설정</summary>
       <hr />
-      <div className="space-x-4 my-5">
-        <span>기간</span>
-        <input type="date" min={today.toISOString().substring(0, 10)} ref={startDateRef} className="w-[120px] border" />
-        <span>-</span>
-        <input type="date" min={today.toISOString().substring(0, 10)} ref={endDateRef} className="w-[120px] border" />
+      <div className="my-5 mx-auto flex gap-2 items-center">
+        <span className="whitespace-nowrap w-[70px]">진행 기간</span>
+        <input type="date" min={today.toISOString().substring(0, 10)} ref={startDateRef} className="w-[110px] border" />
+        <span className="mx-1">~</span>
+        <input type="date" min={today.toISOString().substring(0, 10)} ref={endDateRef} className="w-[110px] border" />
       </div>
-      <div className="space-x-4 mb-5">
-        <span>가격</span>
+      <div className="my-5 mx-auto flex gap-2 items-center">
+        <span className="whitespace-nowrap w-[70px]">가격</span>
         <input
           type="number"
-          className="w-[120px] border"
-          placeholder="정가"
+          className="w-[110px] border"
+          placeholder="원가"
           ref={costRef}
           onKeyDown={preventInvalidInput}
           onInput={enforcePositiveValue}
         />
-        <span>-</span>
+        <ArrowRight/>
         <input
           type="number"
           min={0}
-          className="w-[120px] border"
+          className="w-[110px] border"
           placeholder="판매가"
           ref={priceRef}
           onKeyDown={preventInvalidInput}
           onInput={enforcePositiveValue}
         />
       </div>
-      <div className="space-x-4 mb-5">
-        <span>수량</span>
+      <div className="my-5 mx-auto flex gap-2 items-center">
+        <span className="whitespace-nowrap w-[70px]">수량</span>
         <input
           type="number"
           min={0}
-          className="w-[120px] border"
+          className="w-[110px] border"
           ref={productCountRef}
           onKeyDown={preventInvalidInput}
           onInput={enforcePositiveValue}

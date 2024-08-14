@@ -9,7 +9,6 @@ import CartIcon from "../../../../public/icon/cartIcon.svg";
 import XIcon from "../../../../public/icon/XIcon.svg";
 import { useState } from "react";
 import SearchModal from "../search/SearchModal";
-import { useAddrStore } from "@/zustand/addrStore";
 
 const MobileHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -91,6 +90,13 @@ const MobileHeader = () => {
       </Link>
     );
   }
+  // else if(PRODUCTS_UPLOAD){
+  //   rightIcon = (
+  //     <button type="submit" className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3">
+  //       {id === "new" ? "올리기" : "수정완료"}
+  //     </button>
+  //   )
+  // }
 
   return (
     <>
@@ -99,8 +105,7 @@ const MobileHeader = () => {
         <div className="font-semibold text-xl">{headerTitle}</div>
         <div className="flex gap-2 p-[4px]">{rightIcon}</div>
       </header>
-      <div>
-      </div>
+      <div></div>
       {isModalOpen && (
         <div
           className={`modal-overlay ${isModalVisible ? "visible" : ""}`}

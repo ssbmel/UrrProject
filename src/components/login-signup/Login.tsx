@@ -9,11 +9,14 @@ import Kakao from "../../../public/logo/Logo_kakao.png";
 import WebLoginBg from "../../../public/images/web_login_bg.svg";
 import Link from "next/link";
 import { createClient } from "../../../supabase/client";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const stInput = "border border-[#D9D9D9] mb-1 h-[45px] rounded-md indent-2.5";
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
 
   const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,7 +29,8 @@ const Login = () => {
     }
     try {
       const response = await userLogin({ email, password });
-      window.location.href = "/mypage";
+      // window.location.href = "/mypage";
+      router.replace("/mypage");
     } catch (error) {
       alert("아이디와 비빌번호를 확인해주세요.");
       console.log(error);

@@ -9,7 +9,6 @@ import CartIcon from "../../../../public/icon/cartIcon.svg";
 import XIcon from "../../../../public/icon/XIcon.svg";
 import { useState } from "react";
 import SearchModal from "../search/SearchModal";
-import { useAddrStore } from "@/zustand/addrStore";
 
 const MobileHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -99,8 +98,7 @@ const MobileHeader = () => {
         <div className="font-semibold text-xl">{headerTitle}</div>
         <div className="flex gap-2 p-[4px]">{rightIcon}</div>
       </header>
-      <div>
-      </div>
+      <div></div>
       {isModalOpen && (
         <div
           className={`modal-overlay ${isModalVisible ? "visible" : ""}`}

@@ -76,7 +76,19 @@ function Cart() {
   };
 
   const addAllItems = () => {
-    setAllCartItems((item) => item.map((item) => ({ ...item, isChecked: true })));
+    let isAllChecked = true;
+    const newAllCartItems = allCartItems.map((item) => {
+      const isEnd = isEndDate(item);
+      if (isEnd) {
+        isAllChecked = false;
+        return { ...item, isChecked: false };
+      } else {
+        return { ...item, isChecked: true };
+      }
+    });
+    setAllCartItems(newAllCartItems);
+
+    return isAllChecked;
   };
 
   const updateItemQuantity = (updateItem: DataType, count: number) => {
@@ -92,19 +104,19 @@ function Cart() {
     return end < today;
   };
 
-  useEffect(() => {
-    if (!allCartItems || !allCartItems.length) return;
-    let checked = true;
-    if (allCartItems.some((item) => !item.isChecked || isEndDate(item))) {
-      checked = false;
-    }
-    setAllChecked(checked);
-  }, [allCartItems]);
+  // useEffect(() => {
+  //   if (!allCartItems || !allCartItems.length) return;
+  //   let checked = true;
+  //   if (allCartItems.some((item) => !item.isChecked || isEndDate(item))) {
+  //     checked = false;
+  //   }
+  //   setAllChecked(checked);
+  // }, [allCartItems]);
 
   // 전체선택
   const selectAllHandler = (checked: boolean) => {
     if (checked) {
-      addAllItems();
+      checked = addAllItems();
     } else {
       removeAllItems();
     }

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useAlertchatStore } from "@/zustand/alertchatStore";
 
 interface setDataType {
-  owner_id: string
+  owner_id: string;
 }
 
 export default function StartChat(props: setDataType) {
@@ -29,7 +29,7 @@ export default function StartChat(props: setDataType) {
       return null;
     }
     if (!data) {
-      console.log('채널이 존재하지 않습니다.')
+      console.log("채널이 존재하지 않습니다.");
       return null;
     } else {
       return data.channel_id;
@@ -38,21 +38,21 @@ export default function StartChat(props: setDataType) {
 
   const startChat = async () => {
     //유저의 대화구독목록 불러오기
-    const user_id = userdata.id
+    const user_id = userdata.id;
     const channel_id = await checkOwnerChannel();
     if (channel_id && user_id != undefined) {
       const { data, error } = await supabase
-        .from('chat_subscribe')
-        .select('chat_subscribe_id')
-        .eq('channel_id', channel_id)
-        .eq('user_id', user_id)
+        .from("chat_subscribe")
+        .select("chat_subscribe_id")
+        .eq("channel_id", channel_id)
+        .eq("user_id", user_id)
         .maybeSingle();
       if (!data) {
-        createNewSubscribe(channel_id, user_id)
+        createNewSubscribe(channel_id, user_id);
       }
     }
-    router.push(`/chatlist/[${channel_id}]`)
-  }
+    router.push(`/chatlist/[${channel_id}]`);
+  };
 
   const createNewSubscribe = async (channel_id: number, user_id: string) => {
     const { data, error } = await supabase
@@ -70,16 +70,19 @@ export default function StartChat(props: setDataType) {
 
   return (
     <div>
-      {(userdata !== undefined) ?
-        <button className="flex flex-row cursor-pointer items-center justify-center text-center w-[86px] h-[32px] text-[12px] mr-0 ml-auto text-primarystrong border border-primarynormal rounded bg-white]" onClick={startChat}>
-          채팅하기
-          <div className="ml-1">
+      {userdata !== undefined ? (
+        <button
+          className="flex cursor-pointer items-center gap-[4px] justify-center text-center w-[86px] h-[32px] text-[12px] rounded-[4px] text-primarystrong border-[1px] border-primarynormal rounded]"
+          onClick={startChat}
+        >
+          <span className="font-[600]">채팅하기</span>
+          <div className="">
             <ChatStart />
           </div>
         </button>
-        : <></>
-      }
-
+      ) : (
+        <></>
+      )}
     </div>
-  )
+  );
 }

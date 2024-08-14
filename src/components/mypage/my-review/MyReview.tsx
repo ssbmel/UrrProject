@@ -4,12 +4,13 @@ import { useUserData } from "@/hooks/useUserData";
 import Image from "next/image";
 import { createClient } from "../../../../supabase/client";
 import { useEffect, useRef, useState } from "react";
-import { OrderType, Product, Review } from "../../../../types/common";
+import { Product, Review } from "../../../../types/common";
 import ReviewImage from "./ReviewImage";
 import { useParams, useRouter } from "next/navigation";
 import defaultImg from "../../../../public/images/default.png";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@tanstack/react-query";
+import Rating from "./star/Rating";
 
 export type ReviewImgGroup = { file: File | null; url: string };
 
@@ -27,8 +28,8 @@ const MyReview = () => {
   const [productsData, setProductsData] = useState<Product>();
   const [reviewImages, setReviewImages] = useState<ReviewImgGroup[]>([]);
   const [uploadedReviewImages, setUploadedReviewImages] = useState("");
+  const [rating, setRating] = useState<number>(0);
   const Ids = useParams();
-  const scoreRef = useRef<HTMLSelectElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const supabase = createClient();
   const router = useRouter();
@@ -137,19 +138,20 @@ const MyReview = () => {
       created_at: new Date().toDateString(),
       product_id: Ids.id as string,
       user_nickname: user.nickname,
-      review_score: Number(scoreRef.current?.value),
+      review_score: rating,
       review_images: reviewImagesId,
       review_content: contentRef.current?.value as string,
       title: orderData?.name as string,
       inf_name: productsData?.nickname as string,
-      payment_id: Ids.paymentId as string
+      payment_id: Ids.paymentId as string,
+      userId : user.id
     };
 
     const { data, error } = await supabase.from("product_review").insert([newReviewData]).select();
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("상품등록이 완료되었습니다.");
+      alert("후기가 등록되었습니다.");
       console.log("Data inserted:", data);
       saveReviewMutation(newReviewData);
       router.push("/mypage");
@@ -177,10 +179,11 @@ const MyReview = () => {
       <hr />
       <div className="w-full py-4">
         <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
+        <Rating value={rating} onChange={setRating} />
         <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
       </div>
       <form className="w-full" onSubmit={onSubmit}>
-        <div className="bg-[#E1EEFE] py-3 px-4 rounded-[12px]">
+        <div className="bg-[#E1EEFE] py-3 px-4 rounded-[12px] mb-5">
           <p className="font-bold mb-3">후기는 이렇게 작성해보세요!</p>
           <p className="text-[12px]">
             제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
@@ -188,20 +191,6 @@ const MyReview = () => {
             <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더
             높일 수 있습니다
           </p>
-        </div>
-        <div className="flex items-center my-4">
-          <label className="font-bold mr-2">별점</label>
-          <select className="p-2 rounded-md border" ref={scoreRef}>
-            <option value="1">1</option>
-            <option value="1.5">1.5</option>
-            <option value="2">2</option>
-            <option value="2.5">2.5</option>
-            <option value="3">3</option>
-            <option value="3.5">3.5</option>
-            <option value="4">4</option>
-            <option value="4.5">4.5</option>
-            <option value="5">5</option>
-          </select>
         </div>
         <textarea
           name="review-text"
@@ -214,7 +203,7 @@ const MyReview = () => {
           setReviewImages={setReviewImages}
           uploadedReviewImages={uploadedReviewImages}
         />
-        <button className="w-full h-[52px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
+        <button className="w-full h-[40px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
           등록하기
         </button>
       </form>

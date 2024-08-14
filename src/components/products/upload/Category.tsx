@@ -25,10 +25,10 @@ function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {
   }
   
   return (
-      <details open className="w-full px-5 contents-box mt-3">
-        <summary className="font-bold text-lg">카테고리</summary>
+      <details open className="w-full px-4 contents-box mt-2">
+        <summary className="font-bold text-xl">카테고리 선택</summary>
         <hr />
-        <div className="grid grid-cols-3 gap-3 my-5">
+        <div className="grid grid-cols-3 gap-3 my-2 p-2">
           {category.map((c) => {
             return (
               <label key={c.id} className="flex items-center whitespace-nowrap">
@@ -37,7 +37,7 @@ function Category({radioCheckedValue, setRadioCheckedValue}: CategoryProps) {
                   name="radioCheckedList"
                   value={c.title}
                   onChange={handleRadioChange}
-                  className="mr-1 cursor-pointer"
+                  className="mr-2 cursor-pointer text-[#1B1C1D]"
                   checked={radioCheckedValue === c.title}
                 />
                 {c.title}

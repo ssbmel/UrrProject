@@ -4,6 +4,7 @@ import { productListType } from "./MyOrderedList";
 import TopArrowBlue from "../../../public/icon/topArrowBlue.svg";
 import BottomArrow from "../../../public/icon/bottomArrow.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 interface MyOrderCompoType {
   item: productListType | null;
@@ -18,12 +19,13 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
     <li className="pt-[18px] pb-[18px] text-[12px] border-b flex flex-col gap-[18px]">
       <div className="flex justify-between items-center">
         <div className="w-[48px] h-[48px] relative rounded-[4px]">
+          <Link href={`/products/detail/${item?.id}`}>
           <Image
             src={item?.imgUrl || ""}
             alt="ordered_product_image"
             fill
             className="w-[48px] h-[48px] bg-slate-300 rounded-[4px] object-cover"
-          />
+          /></Link>
         </div>
         <div
           className={

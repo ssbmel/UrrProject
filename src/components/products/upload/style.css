@@ -3,7 +3,7 @@ summary::-webkit-details-marker {
 }
 summary {
   display: block;
-  padding: 2rem 3rem 2rem 0;
+  padding: 22px 0;
   cursor: pointer;
   position: relative;
 }
@@ -11,11 +11,11 @@ summary::before,
 summary::after {
   content: "";
   position: absolute;
-  width: 1rem;
+  width: 14px;
   height: 2px;
   background-color: #222;
   right: 1rem;
-  top: 2.5rem;
+  top: 2rem;
 }
 summary::after {
   transform: rotateZ(90deg);

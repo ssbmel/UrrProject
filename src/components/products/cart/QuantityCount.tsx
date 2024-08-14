@@ -6,8 +6,6 @@ import xIcon from "../../../../public/icon/xIcon.png";
 import { createClient } from "../../../../supabase/client";
 import Link from "next/link";
 import CartSkeleton from "@/components/common/SkeletonLoader/CartSkeleton";
-import { useUserData } from "@/hooks/useUserData";
-import { useUserCartItems } from "@/hooks/useUserCartItems";
 
 type PropsType = {
   item: DataType;
@@ -44,13 +42,12 @@ const QuantityCount = ({
   };
 
   const quantityMul = item.amount * item.quantity;
+  const cost = item.cost;
 
   const today = new Date();
   const end = new Date(item.end);
 
   const isPastEndDate = end < today;
-
-  // if (isLoading) return <ProductSkeleton />;
 
   return (
     <>
@@ -71,26 +68,37 @@ const QuantityCount = ({
               name="product"
               disabled={isPastEndDate}
             />
-            <div className="w-[72px] h-[72px] relative">
+
+            <div className="w-[72px] h-[72px] xl:w-[124px] xl:h-[124px] relative">
               <Link href={`/products/detail/${item.product_id}`}>
                 <Image
                   src={item.main_img}
                   alt="상품 사진"
                   fill
-                  sizes="72px"
+                  sizes="72px xl:124px"
                   className={`object-cover rounded ${isPastEndDate ? "opacity-55" : ""}`}
                 />
+                {isPastEndDate && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
+                    <p className="text-[#FFFFFE] text-[16px] xl:text-[18px] ">판매 종료</p>
+                  </div>
+                )}
               </Link>
             </div>
+
             <div className="flex flex-col gap-1">
-              <p className="text-sm text-[#989898]">{item.nickname}</p>
+              <p className="text-sm xl:text-lg text-[#989898]">{item.nickname}</p>
               <Link href={`/products/detail/${item.product_id}`}>
-                <p className={`text-base ${isPastEndDate ? "text-[#989898]" : ""}`}>{item.name}</p>
+                <p className={`text-base ${isPastEndDate ? "text-[#989898]" : ""}  xl:text-xl`}>{item.name}</p>
               </Link>
-              <p className={`ext-sm font-semibold ${isPastEndDate ? "text-[#989898]" : ""}`}>
-                {quantityMul.toLocaleString()}
-              </p>
+              <div className="flex flex-row gap-1 xl:text-lg">
+                <p className={`ext-sm font-semibold ${isPastEndDate ? "text-[#989898]" : ""}`}>
+                  {`${quantityMul.toLocaleString()}원`}
+                </p>
+                <p className="text-[#989C9F] line-through">{cost?.toLocaleString()}</p>
+              </div>
             </div>
+
             <div className="grid ml-auto gap-5">
               <Image
                 src={xIcon}
@@ -100,12 +108,13 @@ const QuantityCount = ({
                 className="absolute top-[22px] right-[11px]"
                 onClick={() => deleteItem(item)}
               />
+
               <div className="absolute bottom-[12px] right-[11px] border flex w-[60px] rounded px-2 justify-center gap-2">
                 <button onClick={minusCount} disabled={isPastEndDate}>
                   -
                 </button>
                 <p>{item.quantity}</p>
-                <button onClick={addCount} disabled={isPastEndDate}>
+                <button onClick={addCount} disabled={isPastEndDate} className="text-primarynormal">
                   +
                 </button>
               </div>

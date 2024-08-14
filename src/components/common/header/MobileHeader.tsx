@@ -10,8 +10,6 @@ import XIcon from "../../../../public/icon/XIcon.svg";
 import AddProductIcon from "../../../../public/icon/addProductIcon.svg";
 import { useState } from "react";
 import SearchModal from "../search/SearchModal";
-import { useAddrStore } from "@/zustand/addrStore";
-import { useUserData } from "@/hooks/useUserData";
 
 const MobileHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

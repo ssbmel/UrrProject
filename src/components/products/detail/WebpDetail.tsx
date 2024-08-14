@@ -109,7 +109,7 @@ export default function WebpDetail({
             <div className="flex flex-col gap-2  w-[476px] relative">
               {data && (
                 <>
-                  <div className="w-[476px] h-[460px] relative">
+                  <div className="w-[476px] h-[460px] relative bg-white">
                     <Image
                       src={data?.main_img}
                       alt={data?.title}
@@ -120,7 +120,7 @@ export default function WebpDetail({
                     />
                     {isExpired && (
                       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
-                        <p className="text-[#FFFFFE] text-[20px] ">판매 종료</p>
+                        <p className="text-[#FFFFFE] text-[20px] xl:text-[24px] ">판매 종료</p>
                       </div>
                     )}
                   </div>

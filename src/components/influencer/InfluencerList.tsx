@@ -133,10 +133,10 @@ function InfluencerList() {
         )}
       </div>
       <div className="w-full h-[70%] p-4 my-2 bg-[#FFFFFE]">
-        <h1 className="font-bold text-lg mb-5">인플루언서</h1>
-        <div className="w-full gap-1 grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar mx-auto">
+        <h1 className="font-bold text-lg mb-4">인플루언서</h1>
+        <div className="w-full grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar">
           {infUser?.map((inf) => (
-            <div key={inf.id} className="flex flex-col items-center justify-center w-[100px] text-center mx-auto">
+            <div key={inf.id} className="flex flex-col items-center justify-center w-[106px] text-center mx-auto">
               <div className="relative w-[106px] h-[106px] mb-2">
                 <Link href={`influencer/profile/${inf.id}`} key={inf.id}>
                   <div className="relative w-[106px] h-[106px]">

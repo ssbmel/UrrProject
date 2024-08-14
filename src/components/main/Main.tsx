@@ -7,12 +7,13 @@ import BestInfluencerList from "./BestInfluencerList";
 import ReviewList from "./ReviewList";
 import Banner from "./swiper/Banner";
 import "./style.css";
-import { Product, User } from "../../../types/common";
+import { Product, Review, User } from "../../../types/common";
 import LoadingUrr from "../common/loading/LoadingUrr";
 
 function Main() {
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [infUser, setInfUser] = useState<User[]>([]);
+  const [ratingCount, setRatingCount] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getPostData = async () => {
@@ -38,10 +39,23 @@ function Main() {
     }
   };
 
+  const getRatingData = async () => {
+    try {
+      const response = await fetch("/api/product_review");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setRatingCount(data);
+    } catch (error) {
+      console.log("Failed to fetch user data:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      await Promise.all([getPostData(), getUserData()]);
+      await Promise.all([getPostData(), getUserData(), getRatingData()]);
       setIsLoading(false);
     };
 
@@ -53,15 +67,19 @@ function Main() {
   }
 
   return (
-    <div className="overflow-auto max-w-[1200px] mx-auto flex flex-col gap-y-2 ">
+    <>
       <Banner />
-      <SubInfluencer infUser={infUser} />
-      <hr />
-      <BestProductsList productsList={productsList} />
-      <BestInfluencerList infUser={infUser} />
-      <ReviewList />
-    </div>
+      <div className="flex flex-col items-center xl:items-stretch xl:w-[1200px] w-full mx-auto gap-2 xl:px-0">
+        <SubInfluencer infUser={infUser} />
+        <hr className="w-full" />
+        <BestProductsList productsList={productsList} ratingCount={ratingCount} />
+        <BestInfluencerList infUser={infUser} />
+        <ReviewList />
+      </div>
+    </>
   );
+  
+  
 }
 
 export default Main;

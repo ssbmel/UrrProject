@@ -23,11 +23,11 @@ const Contents: React.FC<ContentsProps> = ({
 }) => {
   return (
     <div>
-      <div className="w-full p-5 contents-box">
-        <p className="font-bold text-lg py-3">글 작성하기</p>
-        <input type="text" placeholder="[제품사명]제품명" className="border w-full my-5" ref={titleRef} />
+      <div className="w-full px-4 contents-box">
+        <h1 className="font-bold text-xl pt-5">글 작성하기</h1>
+        <input type="text" placeholder="[제품사명]제품명" className="border w-full my-5 h-[48px]" ref={titleRef} />
         <textarea
-          className="border w-full min-h-[300px] resize-none"
+          className="border w-full min-h-[300px] resize-none mb-8"
           placeholder="내용을 입력하세요."
           ref={textRef}
         ></textarea>

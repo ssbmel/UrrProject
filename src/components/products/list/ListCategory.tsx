@@ -27,11 +27,11 @@ export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
 
   return (
     <div className="container mx-auto bg-[#F2F4F8] xl:w-[1132px]">
-      <div className="flex h-[105px] xl:h-[151px] xl:px-[24px] xl:py-[18px] overflow-x-auto space-x-2 justify-between p-3 ">
+      <div className="flex h-[105px] xl:h-[158px] xl:px-[24px] xl:py-[16px] overflow-x-auto space-x-2 justify-between items-center p-2 ">
         {categories.map((category) => (
           <div
             key={category.name}
-            className={`category-item text-center items-center min-w-[75px] h-[90px] xl:w-[120px] xl:h-[125px] cursor-pointer flex flex-col gap-2 ${
+            className={`category-item text-center items-center min-w-[75px] h-[80px] xl:w-[120px] xl:h-[125px] cursor-pointer flex flex-col gap-1 ${
               selectedCategory === category.name ? "shadow-inner scale-95" : ""
             } transition-transform duration-200 ease-in-out`}
             onClick={() => handleCategoryClick(category.name)}

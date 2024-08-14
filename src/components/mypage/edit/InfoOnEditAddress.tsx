@@ -92,7 +92,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
     <div className="flex flex-col gap-[8px] w-full">
       <p className="">
         <span>주소</span>
-        {required && <span className="text-red-600">*</span>}
+        {required && <span className="text-red-600"> *</span>}
       </p>
       <div className="flex flex-col gap-[12px]">
         <div className="flex gap-[8px]">

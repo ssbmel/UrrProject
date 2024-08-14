@@ -106,7 +106,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
           />
           <button
             onClick={openAddressForm}
-            className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5] h-[48px]"
+            className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5] h-[48px] transition-colors hover:bg-[#E1EEFE]"
           >
             주소 검색
           </button>

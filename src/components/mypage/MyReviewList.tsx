@@ -93,7 +93,6 @@ const MyReviewList = () => {
                       <p className="text-[12px] text-[#B2B5B8]">{formatDate(review.created_at)}</p>
                     </div>
                   </Link>
-
                   <button onClick={() => handleDelete(review)} className="p-[9px]">
                     <TrashCan />
                   </button>
@@ -103,9 +102,9 @@ const MyReviewList = () => {
           </ul>
         </div>
       ) : (
-        <Error>
+        <div>
           <span>리뷰 작성 내역이 없습니다.</span>
-        </Error>
+        </div>
       )}
     </>
   );

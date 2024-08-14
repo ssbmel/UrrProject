@@ -90,6 +90,13 @@ const MobileHeader = () => {
       </Link>
     );
   }
+  // else if(PRODUCTS_UPLOAD){
+  //   rightIcon = (
+  //     <button type="submit" className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3">
+  //       {id === "new" ? "올리기" : "수정완료"}
+  //     </button>
+  //   )
+  // }
 
   return (
     <>

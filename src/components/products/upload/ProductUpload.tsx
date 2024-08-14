@@ -199,8 +199,18 @@ function ProductUpload() {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="max-w-[1200px] mx-auto grid gap-3 bg-[#F4F4F4]">
-        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
+        <div className="flex justify-end">
+          {id === "new" ? null : (
+            <button type="button" onClick={()=>handleDelete(id as string)} className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5">
+              삭제하기
+            </button>
+          )}
+          <button type="submit" className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3">
+            {id === "new" ? "올리기" : "수정완료"}
+          </button>
+        </div>
+      <div className="max-w-[1200px] mx-auto grid gap-2 bg-[#F4F4F4]">
+        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} /> 
         <PricePeriod
           startDateRef={startDateRef}
           endDateRef={endDateRef}
@@ -216,16 +226,6 @@ function ProductUpload() {
           uploadedMainImg={uploadedMainImg}
           setMainImg={setMainImg}
         />
-        <div className="flex justify-end">
-          {id === "new" ? null : (
-            <button type="button" onClick={()=>handleDelete(id as string)} className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5">
-              삭제하기
-            </button>
-          )}
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-sm my-2 mr-5">
-            {id === "new" ? "등록하기" : "수정완료"}
-          </button>
-        </div>
       </div>
     </form>
   );

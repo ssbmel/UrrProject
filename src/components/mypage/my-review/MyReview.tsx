@@ -153,16 +153,13 @@ const MyReview = () => {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("후기가 등록되었습니다.");
-      console.log("Data inserted:", data);
+      swal("후기가 등록되었습니다.");
       saveReviewMutation(newReviewData);
       router.push("/mypage");
     }
   };
 
   const handleClose = () => setIsOpen(false);
-
-  const handleOpen = () => setIsOpen(true);
 
   return (
     <div>

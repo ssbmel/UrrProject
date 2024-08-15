@@ -11,6 +11,7 @@ import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
 import { getInfluencerData } from "@/services/users/influencer/influencer.service";
+import InfGuidModal from "./InfGuidModal";
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -80,6 +81,7 @@ function InfluencerList() {
 
   return (
     <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
+      <InfGuidModal/>
       <div className="w-full min-h-[200px] h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {subscribeIds.length === 0 ? (
@@ -128,7 +130,7 @@ function InfluencerList() {
                       )}
                     </div>
                   </div>
-                  <p className="text-[13px] mb-2">{inf.nickname}</p>
+                  <p className="text-[14px] mb-2 xl:text-[16px]">{inf.nickname}</p>
                 </div>
               ))}
           </div>

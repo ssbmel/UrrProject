@@ -59,7 +59,7 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
     setDetailImg((prevFiles) => {
       const totalFiles = prevFiles.length + newDetailImgGroups.length;
       if (totalFiles > 10) {
-        alert("사진은 최대 10장까지 업로드 가능합니다.");
+        swal("사진은 최대 10장까지 업로드 가능합니다.");
         return prevFiles;
       }
       return [...prevFiles, ...newDetailImgGroups];

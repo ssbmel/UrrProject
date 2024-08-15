@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams, useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
 import { useMutation } from "@tanstack/react-query";
+import swal from "sweetalert";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 
@@ -158,7 +159,7 @@ function ProductUpload() {
       !productData.title ||
       !productData.text
     ) {
-      alert("상품 정보를 입력해주세요.");
+      swal("상품 정보를 입력해주세요.");
       return;
     }
 
@@ -166,8 +167,8 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("상품등록이 완료되었습니다.");
-      console.log("Data inserted:", data);
+      swal("상품");
+      swal("상품등록 성공!", "등록이 완료되었습니다.", "닫기");
       saveMutation(productData);
       router.push("/products/list");
     }

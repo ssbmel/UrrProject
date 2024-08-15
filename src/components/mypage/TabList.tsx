@@ -5,7 +5,9 @@ interface ComponentProps {
 }
 
 const TabList = ({ children }: ComponentProps) => {
-  return <ul className="pr-[16px] pl-[16px] border-t-[6px] border-t-gray-100">{children}</ul>;
+  return (
+    <ul className="px-[16px] border-t-[6px] border-t-gray-100 xl:border-0 xl:flex xl:gap-[4px] xl:px-0">{children}</ul>
+  );
 };
 
 export default TabList;

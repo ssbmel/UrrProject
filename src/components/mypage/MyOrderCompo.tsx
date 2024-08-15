@@ -18,29 +18,23 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
   return (
     <li className="pt-[18px] pb-[18px] text-[12px] border-b flex flex-col gap-[18px]">
       <div className="flex justify-between items-center">
-        <div className="w-[48px] h-[48px] relative rounded-[4px]">
-          <Link href={`/products/detail/${item?.id}`}>
-            <Image
-              src={item?.imgUrl || ""}
-              alt="ordered_product_image"
-              fill
-              className="w-[48px] h-[48px] bg-slate-300 rounded-[4px] object-cover"
-            />
-          </Link>
+        <div className="flex items-center gap-[20px]">
+          <div className="w-[48px] h-[48px] relative rounded-[4px]">
+            <Link href={`/products/detail/${item?.id}`}>
+              <Image
+                src={item?.imgUrl || ""}
+                alt="ordered_product_image"
+                fill
+                className="w-[48px] h-[48px] bg-slate-300 rounded-[4px] object-cover"
+              />
+            </Link>
+          </div>
+          <p className="truncate w-[110px]">{item?.name.split("] ")[1]}</p>
         </div>
-        <div
-          className={
-            isOpen
-              ? "flex justify-center gap-[10px] font-[400] text-[#0068E5] transition-colors"
-              : "flex justify-center gap-[10px] font-[400] transition-colors"
-          }
-        >
-          <p className="w-[110px] truncate">{item?.name.split("] ")[1]}</p>
-          <p className="font-[500]">{delivery}</p>
-          <p className="font-[500]">
-            <span>{item?.amount.toLocaleString()}</span>원
-          </p>
-        </div>
+        <p className="font-[500]">{delivery}</p>
+        <p className="font-[500]">
+          <span>{item?.amount.toLocaleString()}</span>원
+        </p>
         <button onClick={() => setIsOpen(!isOpen)} className="p-[9px]">
           {isOpen ? <TopArrowBlue /> : <BottomArrow />}
         </button>

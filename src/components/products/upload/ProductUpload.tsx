@@ -166,14 +166,14 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("상품등록이 완료되었습니다.")
+      alert("상품등록이 완료되었습니다.");
       console.log("Data inserted:", data);
       saveMutation(productData);
       router.push("/products/list");
     }
   };
 
-  const deletePost = async (data: {id:string}) => {
+  const deletePost = async (data: { id: string }) => {
     const response = await fetch("/api/products", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -185,39 +185,50 @@ function ProductUpload() {
     return response.json();
   };
 
-  const { mutate: deleteMutation } = useMutation<Product, unknown, {id : string}>({
+  const { mutate: deleteMutation } = useMutation<Product, unknown, { id: string }>({
     mutationFn: (data) => deletePost(data)
   });
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("해당 상품을 삭제하시겠습니까?"))
-      return;
-        deleteMutation({id});
-        router.push("/products/list");
-    }
-  
+    if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
+    deleteMutation({ id });
+    router.push("/products/list");
+  };
 
   return (
     <form onSubmit={onSubmit}>
-        <div className="flex justify-end">
+       <div className="w-full bg-[#fffffe] flex justify-end xl:max-w-[1200px] xl:mx-auto">
           {id === "new" ? null : (
-            <button type="button" onClick={()=>handleDelete(id as string)} className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5">
+            <button
+              type="button"
+              onClick={() => handleDelete(id as string)}
+              className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5"
+            >
               삭제하기
             </button>
           )}
-          <button type="submit" className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3">
+          <button
+            type="submit"
+            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3 xl:hidden"
+          >
             {id === "new" ? "올리기" : "수정완료"}
+          </button>
+          <button
+            type="submit"
+            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[18px] rounded-lg py-[14px] px-[36px] font-semibold hidden xl:block "
+          >
+            {id === "new" ? "글 올리기" : "수정완료"}
           </button>
         </div>
       <div className="max-w-[1200px] mx-auto grid gap-2 bg-[#F4F4F4]">
-        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} /> 
+        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
           startDateRef={startDateRef}
           endDateRef={endDateRef}
           costRef={costRef}
           priceRef={priceRef}
           productCountRef={productCountRef}
-        />
+        /> 
         <Contents
           titleRef={titleRef}
           textRef={textRef}
@@ -226,6 +237,7 @@ function ProductUpload() {
           uploadedMainImg={uploadedMainImg}
           setMainImg={setMainImg}
         />
+       
       </div>
     </form>
   );

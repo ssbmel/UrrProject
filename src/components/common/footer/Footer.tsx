@@ -2,8 +2,10 @@
 
 const Footer = () => {
   return (
-    <div className="relative bg-[url('../../public/bgImg/footer.png')] w-full h-[420px] hidden xl:block bg-center bg-cover bg-no-repeat">
-        <p className="text-[13px] right-20 bottom-20 absolute">Copyright ⒸA4와르르</p>
+    <div className="relative bg-[url('../../public/bgImg/footer.png')] w-full h-[500px] bg-center bg-cover bg-no-repeat hidden xl:block">
+      <p className="absolute right-20 bottom-20 text-[13px] primarynormal">
+        Copyright ⒸA4와르르
+      </p>
     </div>
   );
 };

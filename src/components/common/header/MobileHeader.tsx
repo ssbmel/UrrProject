@@ -24,7 +24,7 @@ const MobileHeader = () => {
   const PRODUCTS_LIST = pathname === "/products/list";
   const MY_PAGE = pathname === "/mypage";
   const SIGN_UP = pathname === "/signup";
-  const PRODUCTS_UPLOAD = pathname === "/products/upload";
+  const PRODUCTS_UPLOAD = pathname === "/products/upload/new";
   const SEARCH = pathname === "/search";
   const PAYMENT = pathname === "/payment";
   const CHATLIST = pathname === "/chatlist";

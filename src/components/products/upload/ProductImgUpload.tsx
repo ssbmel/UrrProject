@@ -89,30 +89,45 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
     <div>
       <div className="w-full p-4 contents-box my-2">
         <h3 className="font-bold text-xl py-3">썸네일 등록하기</h3>
-        {!mainImgUrl && (
-          <div className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
-            <Image src={camera} alt="img" width={50} className="mb-2"></Image>
-            <p>파일 미리보기</p>
-          </div>
-        )}
-        <input type="file" name="file" id="file" accept="image/*" onChange={readMainImg} />
-        {mainImgUrl && (
-          <div>
+        {!mainImgUrl ? (
+          <label
+            htmlFor="file"
+            className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center cursor-pointer xl:w-[364px] mb-5"
+          >
+            <Image src={camera} alt="img" width={50} className="mb-2" />
+            <p>파일 첨부하기</p>
+          </label>
+        ) : (
+          <label htmlFor="file" className="cursor-pointer">
             <img src={mainImgUrl} alt="Main Image" width="100%" className="mb-5" />
-          </div>
+          </label>
         )}
-        <label htmlFor="file" className="btn-upload h-[52px]">
-          썸네일 파일 첨부하기
-        </label>
+        <input
+          type="file"
+          name="file"
+          id="file"
+          accept="image/*"
+          onChange={readMainImg}
+          className="hidden"
+        />
       </div>
-
+  
       <div className="w-full p-5 contents-box">
-        <h3 className="font-bold text-lg py-2">상세설명 파일 등록하기</h3>
-        {!detailImgUrls || detailImgUrls.length === 0 ? (
-          <div className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center">
-            <Image src={camera} alt="img" width={50} className="mb-2"></Image>
-            <p>파일 미리보기</p>
+        <h3 className="font-bold text-xl py-3">상세설명 파일 등록하기</h3>
+        <div className="flex my-2">
+          <div className="mr-1 mt-[2px]">
+            <AccentIcon />
           </div>
+          <p className="text-sm text-[#989C9F] mb-3">사진은 최대 10장까지 업로드 가능합니다.</p>
+        </div>
+        {!detailImgUrls || detailImgUrls.length === 0 ? (
+          <label
+            htmlFor="files"
+            className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center cursor-pointer xl:w-[364px] mb-5"
+          >
+            <Image src={camera} alt="img" width={50} className="mb-2" />
+            <p>파일 첨부하기</p>
+          </label>
         ) : (
           <div className="space-y-4">
             {detailImgUrls &&
@@ -125,24 +140,26 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
                   >
                     ✖︎
                   </button>
-                  <img src={item.url} alt="img" width="100%" className="mb-5" />
+                  <label htmlFor="files" className="cursor-pointer">
+                    <img src={item.url} alt="img" width="100%" className="mb-5" />
+                  </label>
                 </div>
               ))}
           </div>
         )}
-        <input type="file" multiple accept="image/*" id="files" onChange={readDetailImages} />
-        <div className="flex my-2">
-          <div className="mr-1 mt-[2px]">
-            <AccentIcon />
-          </div>
-          <p className="text-sm text-[#989C9F]">사진은 최대 10장까지 업로드 가능합니다.</p>
-        </div>
-        <label htmlFor="files" className="btn-upload h-[52px]">
-          상세설명 파일 첨부하기
-        </label>
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          id="files"
+          onChange={readDetailImages}
+          className="hidden"
+        />
+       
       </div>
     </div>
   );
+  
 };
 
 export default ProductImgUpload;

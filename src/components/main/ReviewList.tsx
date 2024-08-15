@@ -42,8 +42,8 @@ function ReviewList() {
 
   return (
     <div className="w-full py-8">
-      <h2 className="font-bold mb-5 text-lg xl:text-[22px] xl:my-8">후기</h2>
-      <div className="xl:hidden">
+      <h2 className="font-bold text-lg xl:text-[22px] xl:my-8 px-4">후기</h2>
+      <div className="xl:hidden p-4">
         <div className="grid gap-4 scrollbar" style={{ height: "400px", overflowY: "auto", overflowX: "hidden" }}>
           {reviewData.length === 0 ? (
             <p>후기가 없습니다.</p>

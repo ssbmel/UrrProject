@@ -37,50 +37,50 @@ export default function Banner() {
         className="mySwiper xl:w-full xl:h-[900px] w-full h-[328px]"
       >
         <SwiperSlide>
-          <div className="xl:w-full xl:h-[900px] relative">
-            <Image src={banner1} alt="mainImg" fill sizes="1280px" priority className="object-cover" />
+        <div className="xl:w-full xl:h-[900px] relative hidden xl:block">
+            <Image src={banner1} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
           </div>
           <div className="w-full h-[328px] relative xl:hidden ">
-            <Image src={minibanner1} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
+            <Image src={minibanner1} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-full xl:h-[900px] relative">
             <Link href={"products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
-              <Image src={banner2} alt="mainImg" fill sizes="1280px" priority className="object-cover" />
+              <Image src={banner2} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
             </Link>
           </div>
           <div className="w-full h-[328px] relative xl:hidden">
             <Link href={"products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
-              <Image src={minibanner2} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
+              <Image src={minibanner2} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
             </Link>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-full xl:h-[900px] relative">
-            <Image src={banner3} alt="mainImg" fill sizes="1280px" priority className="object-cover" />
+            <Image src={banner3} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
           </div>
           <div className="w-full h-[328px] relative xl:hidden">
-            <Image src={minibanner3} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
+            <Image src={minibanner3} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-full xl:h-[900px] relative">
-            <Image src={banner4} alt="mainImg" fill sizes="1280px" priority className="object-cover" />
+            <Image src={banner4} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
           </div>
           <div className="w-full h-[328px] relative xl:hidden">
-            <Image src={minibanner4} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
+            <Image src={minibanner4} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-full xl:h-[900px] relative">
             <Link href={"/influencer"}>
-              <Image src={banner5} alt="mainImg" fill sizes="1280px" priority className="object-cover" />
+              <Image src={banner5} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
             </Link>
           </div>
           <div className="w-full h-[328px] relative xl:hidden">
             <Link href={"/influencer"}>
-              <Image src={minibanner5} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
+              <Image src={minibanner5} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
             </Link>
           </div>
         </SwiperSlide>

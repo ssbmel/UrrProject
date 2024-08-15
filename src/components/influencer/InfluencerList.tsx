@@ -133,7 +133,10 @@ function InfluencerList() {
         )}
       </div>
       <div className="w-full h-[70%] p-4 my-2 bg-[#FFFFFE]">
+        <div className="flex">
         <h1 className="font-bold text-lg mb-4">인플루언서</h1>
+        <p className="ml-auto font-semibold text mb-4 mt-1">총 {infUser?.length}명</p>
+        </div>
         <div className="w-full grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar">
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[106px] text-center mx-auto">

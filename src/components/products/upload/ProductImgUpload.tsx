@@ -98,7 +98,7 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
         <input type="file" name="file" id="file" accept="image/*" onChange={readMainImg} />
         {mainImgUrl && (
           <div>
-            <img src={mainImgUrl} alt="Main Image" width="auto" height="auto" className="mb-5" />
+            <img src={mainImgUrl} alt="Main Image" width="100%" className="mb-5" />
           </div>
         )}
         <label htmlFor="file" className="btn-upload h-[52px]">
@@ -114,18 +114,18 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
             <p>파일 미리보기</p>
           </div>
         ) : (
-          <div>
+          <div className="space-y-4">
             {detailImgUrls &&
               detailImgUrls.map((item) => (
-                <div key={item.url} className="static">
+                <div key={item.url} className="relative w-full">
                   <button
                     type="button"
                     onClick={() => handleDeleteImage(item)}
-                    className="border w-7 rounded-sm absolute bg-white"
+                    className="border w-7 h-7 rounded-sm absolute top-2 right-2 bg-white flex items-center justify-center text-black"
                   >
                     ✖︎
                   </button>
-                  <img src={item.url} alt="img" width="auto" height="auto" className="mb-5" />
+                  <img src={item.url} alt="img" width="100%" className="mb-5" />
                 </div>
               ))}
           </div>

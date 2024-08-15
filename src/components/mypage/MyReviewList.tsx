@@ -64,7 +64,7 @@ const MyReviewList = () => {
 
   return (
     <>
-      {reviewData ? (
+      {reviewData?.length > 0 ? (
         <div>
           <ul>
             {reviewData.map((review) => (
@@ -102,9 +102,9 @@ const MyReviewList = () => {
           </ul>
         </div>
       ) : (
-        <div>
+        <Error>
           <span>리뷰 작성 내역이 없습니다.</span>
-        </div>
+        </Error>
       )}
     </>
   );

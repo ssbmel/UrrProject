@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import SalesList from "./SalesList";
 import { Product } from "../../../../types/common";
@@ -6,18 +8,21 @@ interface Props {
   products: Product[];
 }
 
-const SalesSection = async ({ products }: Props) => {
+const SalesSection = ({ products }: Props) => {
   const isOnGoing = (product: Product) => {
     const now = new Date();
-    const productEndDate = new Date(product.end!);
+    const productEndDate = new Date(product?.end);
     if (productEndDate < now) {
       return false;
     }
     return true;
   };
 
-  const onGoingProducts = products.filter((product) => isOnGoing(product));
-  const endProducts = products.filter((product) => !isOnGoing(product));
+  const onGoingProducts = products?.filter((product) => isOnGoing(product));
+  const endProducts = products?.filter((product) => !isOnGoing(product));
+
+  console.log(products);
+  console.log(onGoingProducts);
 
   return (
     <section className="flex flex-col">

@@ -20,12 +20,13 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
       <div className="flex justify-between items-center">
         <div className="w-[48px] h-[48px] relative rounded-[4px]">
           <Link href={`/products/detail/${item?.id}`}>
-          <Image
-            src={item?.imgUrl || ""}
-            alt="ordered_product_image"
-            fill
-            className="w-[48px] h-[48px] bg-slate-300 rounded-[4px] object-cover"
-          /></Link>
+            <Image
+              src={item?.imgUrl || ""}
+              alt="ordered_product_image"
+              fill
+              className="w-[48px] h-[48px] bg-slate-300 rounded-[4px] object-cover"
+            />
+          </Link>
         </div>
         <div
           className={
@@ -34,8 +35,8 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
               : "flex justify-center gap-[10px] font-[400] transition-colors"
           }
         >
-          <p className="w-[110px] truncate">{item?.name}</p>
-          <p>{delivery}</p>
+          <p className="w-[110px] truncate">{item?.name.split("] ")[1]}</p>
+          <p className="font-[500]">{delivery}</p>
           <p className="font-[500]">
             <span>{item?.amount.toLocaleString()}</span>원
           </p>

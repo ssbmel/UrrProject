@@ -35,26 +35,27 @@ const MyOrderedList = () => {
     <>
       {items && items.length > 0 ? (
         <div>
-          <h3 className="text-[14px] border-b-2 pb-[8px]">00월 00일</h3>
           <ul>
-            {items &&
-              items.map((payment, index) => {
-                return (
-                  <div key={index}>
-                    {payment?.product_list?.map((item) => {
-                      const test = item as productListType;
-                      return (
-                        <MyOrderCompo
-                          key={test?.id}
-                          item={item as productListType}
-                          delivery={payment.delivery!}
-                          paymentId={payment.paymentId}
-                        />
-                      );
-                    })}
-                  </div>
-                );
-              })}
+            {items.map((payment, index) => {
+              return (
+                <div key={index}>
+                  <h3 className="text-[14px] border-b-2 pb-[8px]">{`${
+                    payment?.created_at.split("-")[1]
+                  }월 ${payment?.created_at.split("-")[2].slice(0, 2)}일 `}</h3>
+                  {payment?.product_list?.map((item) => {
+                    const test = item as productListType;
+                    return (
+                      <MyOrderCompo
+                        key={test?.id}
+                        item={item as productListType}
+                        delivery={payment.delivery!}
+                        paymentId={payment.paymentId}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
           </ul>
         </div>
       ) : (

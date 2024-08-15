@@ -28,8 +28,8 @@ export default function BottomNav() {
               <Link href={menu.link}>
                 <div className={liStyle}>
                   <div className="flex flex-col items-center gap-[4px] px-[6px]">
-                    <div className="">{activeMenu !== menu.id ? menu.icon : menu.blueIcon}</div>
-                    <p className={activeMenu !== menu.id ? "" : "text-primarystrong"}>{menu.label}</p>
+                    <div className="">{activeMenu !== menu.link ? menu.icon : menu.blueIcon}</div>
+                    <p className={activeMenu !== menu.link ? "" : "text-primarystrong"}>{menu.label}</p>
                   </div>
                 </div>
               </Link>

@@ -32,7 +32,14 @@ const QuantityCount = ({
 
   const deleteItem = async (item: DataType) => {
     const supabase = createClient();
+    const isConfirmed = confirm("해당상품을 장바구니 목록에서 삭제하시겠습니까?");
+
+    if (!isConfirmed) {
+      return;
+    }
+
     const { data, error } = await supabase.from("cart").delete().eq("product_id", item.product_id);
+
     if (error) {
       console.error("Error deleting item:", error);
     } else {
@@ -87,11 +94,11 @@ const QuantityCount = ({
             </div>
 
             <div className="flex flex-col gap-1">
-              <p className="text-sm xl:text-lg text-[#989898]">{item.nickname}</p>
+              <p className="text-sm xl:text-base text-[#989898]">{item.nickname}</p>
               <Link href={`/products/detail/${item.product_id}`}>
-                <p className={`text-base ${isPastEndDate ? "text-[#989898]" : ""}  xl:text-xl`}>{item.name}</p>
+                <p className={`text-base ${isPastEndDate ? "text-[#989898]" : ""}  xl:text-lg`}>{item.name}</p>
               </Link>
-              <div className="flex flex-row gap-1 xl:text-lg">
+              <div className="flex flex-row gap-1 xl:text-base">
                 <p className={`ext-sm font-semibold ${isPastEndDate ? "text-[#989898]" : ""}`}>
                   {`${quantityMul.toLocaleString()}원`}
                 </p>
@@ -106,7 +113,9 @@ const QuantityCount = ({
                 width={16}
                 height={16}
                 className="absolute top-[22px] right-[11px]"
-                onClick={() => deleteItem(item)}
+                onClick={() => {
+                  deleteItem(item);
+                }}
               />
 
               <div className="absolute bottom-[12px] right-[11px] border flex w-[60px] rounded px-2 justify-center gap-2">

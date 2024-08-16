@@ -34,7 +34,7 @@ const MobileHeader = () => {
   const { setActiveMenu } = useMenuStore();
 
   const isInfluncer = () => {
-    if (user?.approve) {
+    if (user?.approve === true) {
       return true;
     }
     return false;

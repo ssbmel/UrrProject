@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import LoadingUrr from "@/components/common/loading/LoadingUrr";
 import IntroSection from "@/components/mypage/infInfo/IntroSection";
 import SalesSection from "@/components/mypage/infInfo/SalesSection";
-import { useUserData } from "@/hooks/useUserData";
 import { getProductDetailByUserId } from "@/services/products/detail/productDetail.service";
 import { useEffect, useState } from "react";
 import { Product } from "../../../../../../../types/common";
@@ -12,8 +10,6 @@ import { getUserFromUserId } from "@/services/users/account/account.service";
 import { PublicUser } from "../../../../../../../types/auth.type";
 
 const InfProfilePage = ({ params }: { params: { id: string } }) => {
-  const data = useUserData();
-  const { data: user } = data;
   const [infProductData, setInfProductData] = useState<Product[]>([]);
   const [infUserData, setInfUserData] = useState<PublicUser | null>(null);
 
@@ -27,11 +23,7 @@ const InfProfilePage = ({ params }: { params: { id: string } }) => {
     if (params?.id) {
       fetchData();
     }
-  }, [user]);
-
-  if (data.isPending) {
-    return <LoadingUrr />;
-  }
+  }, []);
 
   return (
     <>

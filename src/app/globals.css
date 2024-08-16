@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer utilities {
   @keyframes slide-up {
     from {
@@ -53,23 +54,6 @@ textarea {
   content: "";
   z-index: -1;
   border-radius: 10px;
-}
-
-html,
-body {
-  height: 100%;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/*일부 드래그 허용*/
-.draggable {
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-user-select: all;
-  user-select: all;
 }
 
 button {

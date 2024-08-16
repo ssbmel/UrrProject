@@ -46,12 +46,12 @@ export default function Banner() {
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-full xl:h-[900px] relative">
-            <Link href={"products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
+            <Link href={"/products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
               <Image src={banner2} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
             </Link>
           </div>
           <div className="w-full h-[328px] relative xl:hidden">
-            <Link href={"products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
+            <Link href={"/products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
               <Image src={minibanner2} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
             </Link>
           </div>

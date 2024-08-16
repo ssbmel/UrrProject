@@ -167,7 +167,7 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      swal("상품등록 성공!", "등록이 완료되었습니다.", "닫기");
+      swal("상품등록 성공!", "등록이 완료되었습니다.", "success");
       saveMutation(productData);
       router.push("/products/list");
     }

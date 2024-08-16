@@ -12,7 +12,7 @@ import { getSubscribeData } from "@/services/users/subscribe/subscribe.service";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  inf: PublicUser;
+  inf: PublicUser | null;
 }
 
 const SubscribeButton = ({ inf }: Props) => {
@@ -26,14 +26,14 @@ const SubscribeButton = ({ inf }: Props) => {
     }
   }, [user]); /* 구독 여부 데이터 로드시 표시 */
 
-  const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: User) => {
+  const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: PublicUser | null) => {
     e.stopPropagation();
     if (!user) {
       router.push("/login");
     }
     const newInfUser: InfSubscribe = {
       user_id: user.id,
-      infuser_id: inf.id
+      infuser_id: inf?.id ?? ""
     };
     subscribedMutation(newInfUser);
   };
@@ -69,11 +69,11 @@ const SubscribeButton = ({ inf }: Props) => {
 
   return (
     <>
-      {subscribeIds.includes(inf.id) ? (
+      {subscribeIds.includes(inf?.id ?? "") ? (
         <button
           onClick={() =>
             cancelSubscribedMutation({
-              infuser_id: inf.id,
+              infuser_id: inf?.id ?? "",
               user_id: user.id
             })
           }

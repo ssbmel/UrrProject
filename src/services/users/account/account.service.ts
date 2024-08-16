@@ -4,7 +4,7 @@ import { editUserData } from "../../../../types/auth.type";
 import { v4 as uuidv4 } from "uuid";
 
 export const getUserFromUserId = async (id: string) => {
-  const res = await fetch(`https://urr-final.vercel.app/api/auth/users/${id}`);
+  const res = await fetch(`/api/auth/users/${id}`);
   if (!res.ok) {
     console.log("Error: service error");
     return;

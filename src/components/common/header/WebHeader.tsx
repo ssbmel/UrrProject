@@ -26,10 +26,10 @@ export function WebHeader() {
     } else {
       setIsChatModalOpen(true);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     setIsChatModalOpen(false);
-  },[pathname])
+  }, [pathname]);
 
   return (
     <>
@@ -72,12 +72,11 @@ export function WebHeader() {
             </button>
           </div>
 
-          {isChatModalOpen &&
-            <div className='border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] bg-white justify-center'>
+          {isChatModalOpen && (
+            <div className="border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] bg-white justify-center">
               <ChatList />
             </div>
-          }
-
+          )}
         </div>
       </header>
 

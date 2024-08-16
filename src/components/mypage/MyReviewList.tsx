@@ -34,7 +34,7 @@ const MyReviewList = () => {
     if (user) {
       getReviewData();
     }
-  }, [reviewData]);
+  }, []);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

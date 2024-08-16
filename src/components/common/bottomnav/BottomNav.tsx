@@ -22,7 +22,7 @@ export default function BottomNav() {
 
   return (
     <>
-      <div className="bg-[#FFFFFE] pb-[28px] h-[93px] pt-[8px] w-full bottom-0 shrink-0 shadow-[0_1px_8px_0px_rgba(0,0,0,0.25)]">
+      <div className="bg-[#FFFFFE] pb-[28px] h-[93px] pt-[8px] w-full sticky bottom-0 shrink-0 shadow-[0_1px_8px_0px_rgba(0,0,0,0.25)]">
         <div className="flex justify-between items-center mx-[20px]">
           {bottomMenu.map((menu) => (
             <div key={menu.id} onClick={() => setActiveMenu(menu.link)}>

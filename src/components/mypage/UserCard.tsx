@@ -58,7 +58,7 @@ const UserCard = () => {
         <p>
           <button className="flex items-center" onClick={logoutHandler}>
             <span>로그아웃</span>
-            <span className="block w-[20px] h-[20px] flex justify-center items-center">
+            <span className="w-[20px] h-[20px] flex justify-center items-center">
               <RightArrowB />
             </span>
           </button>

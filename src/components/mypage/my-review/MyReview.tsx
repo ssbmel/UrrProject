@@ -11,6 +11,7 @@ import defaultImg from "../../../../public/images/default.png";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@tanstack/react-query";
 import Rating from "./star/Rating";
+import Link from "next/link";
 
 export type ReviewImgGroup = { file: File | null; url: string };
 
@@ -33,6 +34,7 @@ const MyReview = () => {
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const supabase = createClient();
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -157,62 +159,135 @@ const MyReview = () => {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("후기가 등록되었습니다.");
-      console.log("Data inserted:", data);
+      swal("후기가 등록되었습니다.");
       saveReviewMutation(newReviewData);
       router.push("/mypage");
     }
   };
 
+  const handleClose = () => setIsOpen(false);
+
   return (
-    <div className="w-full xl:w-[60%] p-4 mx-auto">
-      <div key={orderData?.id} className="w-full h-[100px] p-4 flex gap-3">
-        <div className="w-[70px] h-[70px] rounded-md relative">
-          <Image
-            src={orderData?.imgUrl || defaultImg}
-            alt="상품이미지"
-            fill
-            sizes="70px"
-            className="object-cover rounded-md"
+    <div>
+      <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">
+        <div key={orderData?.id} className="w-full h-[100px] p-4 flex gap-3">
+          <div className="w-[70px] h-[70px] rounded-md relative">
+            <Image
+              src={orderData?.imgUrl || defaultImg}
+              alt="상품이미지"
+              fill
+              sizes="70px"
+              className="object-cover rounded-md"
+            />
+          </div>
+          <div className="grid">
+            <p>{orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}</p>
+            <p className="text-[14px] text-[#989C9F]">{orderData && orderData.amount * orderData.quantity}원 구매</p>
+          </div>
+        </div>
+
+        <hr />
+        <div className="w-full py-4">
+          <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
+          <Rating value={rating} onChange={setRating} />
+          <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
+        </div>
+        <form className="w-full" onSubmit={onSubmit}>
+          <div className="bg-[#E1EEFE] py-3 px-4 rounded-[12px] mb-5">
+            <p className="font-bold mb-3">후기는 이렇게 작성해보세요!</p>
+            <p className="text-[12px]">
+              제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
+              <br />
+              <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를
+              더 높일 수 있습니다
+            </p>
+          </div>
+          <textarea
+            name="review-text"
+            className="resize-none border w-full h-[300px] rounded-md p-3"
+            placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
+            ref={contentRef}
+          ></textarea>
+          <ReviewImage
+            reviewImages={reviewImages}
+            setReviewImages={setReviewImages}
+            uploadedReviewImages={uploadedReviewImages}
           />
-        </div>
-        <div className="grid">
-          <p>{orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}</p>
-          <p className="text-[14px] text-[#989C9F]">{orderData && orderData.amount * orderData.quantity}원 구매</p>
-        </div>
+          <button className="w-full h-[40px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
+            등록하기
+          </button>
+        </form>
       </div>
 
-      <hr />
-      <div className="w-full py-4">
-        <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
-        <Rating value={rating} onChange={setRating} />
-        <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
-      </div>
-      <form className="w-full" onSubmit={onSubmit}>
-        <div className="bg-[#E1EEFE] py-3 px-4 rounded-[12px] mb-5">
-          <p className="font-bold mb-3">후기는 이렇게 작성해보세요!</p>
-          <p className="text-[12px]">
-            제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
-            <br />
-            <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더
-            높일 수 있습니다
-          </p>
+      <div className="hidden xl:block">
+        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+          <div className="relative p-4 w-[726px] bg-white rounded-lg shadow-lg">
+            <Link href={"/mypage"}>
+              <button onClick={handleClose} className="absolute top-4 right-4 text-xl font-bold">
+                &times;
+              </button>
+            </Link>
+
+            <div key={orderData?.id} className="w-full h-[150px] p-4 flex gap-3 mt-[42px]">
+              <div className="w-[124px] h-[124px] rounded-md relative">
+                <Image
+                  src={orderData?.imgUrl || defaultImg}
+                  alt="상품이미지"
+                  fill
+                  sizes="124px"
+                  className="object-cover rounded-md"
+                />
+              </div>
+              <div className="grid">
+                <p className="text-[18px]">
+                  {orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}
+                </p>
+                <p className="text-[14px] text-[#989C9F] mt-auto">
+                  {orderData && orderData.amount * orderData.quantity}원 구매
+                </p>
+              </div>
+            </div>
+
+            <hr />
+            <div className="w-full py-4">
+              <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
+              <Rating value={rating} onChange={setRating} />
+              <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
+            </div>
+            <form className="w-full" onSubmit={onSubmit}>
+              <div className="bg-[#E1EEFE] py-5 px-6 rounded-[12px] mb-5">
+                <p className="font-bold mb-3 text-[20px]">후기는 이렇게 작성해보세요!</p>
+                <p className="text-[16px]">
+                  제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을
+                  설명해주세요
+                  <br />
+                  <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한
+                  신뢰도를 더 높일 수 있습니다
+                </p>
+              </div>
+              <textarea
+                name="review-text"
+                className="resize-none border w-full h-[300px] rounded-md p-3"
+                placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
+                ref={contentRef}
+              ></textarea>
+              <ReviewImage
+                reviewImages={reviewImages}
+                setReviewImages={setReviewImages}
+                uploadedReviewImages={uploadedReviewImages}
+              />
+              <div className="flex justify-center gap-5 my-4">
+                <Link href={"/mypage"}>
+                  <button className="w-[174px] h-[52px] border border-[#1A82FF] bg-[#FFFFFE] text-[#1A82FF] rounded-[8px]">
+                    돌아가기
+                  </button>
+                </Link>
+                <button className="w-[174px] h-[52px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px]">등록하기</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <textarea
-          name="review-text"
-          className="resize-none border w-full h-[300px] rounded-md p-3"
-          placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
-          ref={contentRef}
-        ></textarea>
-        <ReviewImage
-          reviewImages={reviewImages}
-          setReviewImages={setReviewImages}
-          uploadedReviewImages={uploadedReviewImages}
-        />
-        <button className="w-full h-[40px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
-          등록하기
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

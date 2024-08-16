@@ -33,7 +33,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
   const sortedInfUser = infUser.sort((a, b) => (subscriptionCounts[b.id] || 0) - (subscriptionCounts[a.id] || 0));
 
   return (
-    <div className="px-4 py-6 bg-[url('../../public/bgImg/influencerImg.png')] xl:bg-[url('../../public/bgImg/bestInf.png')] xl:bg-center bg-cover bg-no-repeat flex w-full xl:w-[1133px] xl:h-[572px] xl:justify-end">
+    <div className="mx-auto px-4 py-6 bg-[url('../../public/bgImg/influencerImg.png')] xl:bg-[url('../../public/bgImg/bestInf.png')] xl:bg-center bg-cover bg-no-repeat flex w-full xl:w-[1133px] xl:h-[572px] xl:justify-end">
       <div className="">
         <h2 className="font-bold mt-3 mb-5 text-xl text-white xl:text-[22px] xl:my-8 xl:hidden">현재 인기있는 인플루언서</h2>
         <div className="grid mt-4">
@@ -53,13 +53,13 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
               </div>
               <div className="flex flex-col w-[60%]">
                 <div className="flex">
-                  <p className="text-[15px] font-medium truncate">{inf.nickname}</p>
+                  <p className="xl:text-[20px] font-medium truncate">{inf.nickname}</p>
                   <span className="mx-2">|</span>
-                  <p className="text-[15px] font-medium">
+                  <p className="xl:text-[20px] font-medium">
                     {subscriptionCounts[inf.id] !== undefined ? `${subscriptionCounts[inf.id]}명` : "..."}
                   </p>
                 </div>
-                <p className="text-[#4C4F52] text-[14px] font-light truncate mt-3 xl:mt-10">{inf.intro}</p>
+                <p className="text-[#4C4F52] xl:text-[18px] font-light truncate mt-3 xl:mt-10">{inf.intro}</p>
               </div>
               <Link href={`influencer/profile/${inf.id}`} className="self-center ml-auto">
                 <RightArrowIcon />

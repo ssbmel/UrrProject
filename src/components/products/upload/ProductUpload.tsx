@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams, useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
 import { useMutation } from "@tanstack/react-query";
+import swal from "sweetalert";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 
@@ -132,20 +133,20 @@ function ProductUpload() {
     const detailImgId = await uploadDetailImages(postId);
 
     const productData: Product = {
-      category: radioCheckedValue,
-      start: startDateRef.current?.value || null,
-      end: endDateRef.current?.value as string,
-      cost: parseInt(costRef.current?.value!),
-      price: parseInt(priceRef.current?.value!),
-      product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,
-      title: titleRef.current?.value || null,
-      text: textRef.current?.value || null,
-      detail_img: detailImgId,
-      main_img: mainImgId,
-      user_id: user.id,
+      category: radioCheckedValue || "", // Ensure category is a string
+      start: startDateRef.current?.value as string, // Use null if the value is an empty string
+      end: endDateRef.current?.value as string, // Use null if the value is an empty string
+      cost: parseInt(costRef.current?.value || "0"), // Ensure cost is a number
+      price: parseInt(priceRef.current?.value || "0"), // Ensure price is a number
+      product_count: parseInt(productCountRef.current?.value || "0"), // Ensure product_count is a number
+      title: titleRef.current?.value || "", // Ensure title is a string
+      text: textRef.current?.value || "", // Ensure text is a string
+      detail_img: detailImgId || [], // Ensure detail_img is an array of strings
+      main_img: mainImgId || "", // Ensure main_img is a string
+      user_id: user.id || "", // Ensure user_id is a string
       created_at: new Date().toISOString(),
-      id: id === "new" ? postId : (id as string),
-      nickname: user.nickname
+      id: id === "new" ? postId : id as string,  // Ensure id is a string
+      nickname: user.nickname || "" // Ensure nickname is a string
     };
 
     if (
@@ -158,7 +159,7 @@ function ProductUpload() {
       !productData.title ||
       !productData.text
     ) {
-      alert("상품 정보를 입력해주세요.");
+      swal("상품 정보를 입력해주세요.");
       return;
     }
 
@@ -166,58 +167,37 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("상품등록이 완료되었습니다.")
-      console.log("Data inserted:", data);
+      swal("상품등록 성공!", "등록이 완료되었습니다.", "닫기");
       saveMutation(productData);
       router.push("/products/list");
     }
   };
 
-  const deletePost = async (data: {id:string}) => {
-    const response = await fetch("/api/products", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  };
-
-  const { mutate: deleteMutation } = useMutation<Product, unknown, {id : string}>({
-    mutationFn: (data) => deletePost(data)
-  });
-
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("해당 상품을 삭제하시겠습니까?"))
-      return;
-        deleteMutation({id});
-        router.push("/products/list");
-    }
-  
-
   return (
     <form onSubmit={onSubmit}>
-        <div className="flex justify-end">
-          {id === "new" ? null : (
-            <button type="button" onClick={()=>handleDelete(id as string)} className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5">
-              삭제하기
-            </button>
-          )}
-          <button type="submit" className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3">
+       <div className="w-full bg-[#fffffe] flex justify-end xl:max-w-[1200px] xl:mx-auto">
+          <button
+            type="submit"
+            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3 xl:hidden"
+          >
             {id === "new" ? "올리기" : "수정완료"}
+          </button>
+          <button
+            type="submit"
+            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[18px] rounded-lg py-[14px] px-[36px] font-semibold hidden xl:block"
+          >
+            {id === "new" ? "글 올리기" : "수정완료"}
           </button>
         </div>
       <div className="max-w-[1200px] mx-auto grid gap-2 bg-[#F4F4F4]">
-        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} /> 
+        <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
           startDateRef={startDateRef}
           endDateRef={endDateRef}
           costRef={costRef}
           priceRef={priceRef}
           productCountRef={productCountRef}
-        />
+        /> 
         <Contents
           titleRef={titleRef}
           textRef={textRef}
@@ -226,6 +206,7 @@ function ProductUpload() {
           uploadedMainImg={uploadedMainImg}
           setMainImg={setMainImg}
         />
+       
       </div>
     </form>
   );

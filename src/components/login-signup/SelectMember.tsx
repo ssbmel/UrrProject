@@ -1,7 +1,7 @@
 "use client";
 
 import { StepType } from "@/app/(provider)/(root)/signup/page";
-import WebLoginBg from "../../../public/images/web_login_bg.svg";
+import WebSignupBg1 from "../../../public/images/web_signup_bg1.svg";
 import { Dispatch, RefObject, SetStateAction } from "react";
 
 interface SelectMemberProps {
@@ -34,7 +34,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
     <>
       <div className="xl:flex xl:flex-row">
         <div className="hidden xl:flex xl:bg-cover xl:bg-center ">
-          <WebLoginBg className="xl:max-w-full xl:max-h-full" />
+          <WebSignupBg1 className="xl:max-w-full xl:max-h-full" />
         </div>
 
         <div className="flex flex-col justify-between h-screen xl:h-[783px] w-[375px] mx-auto p-4">

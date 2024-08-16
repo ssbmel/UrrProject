@@ -19,8 +19,13 @@ export default function Payment() {
 
   const handleSubmit = async () => {
     try {
+      const phoneNumberRegex = /^\d+$/;
       if (!fullName || !phoneNumber || !address) {
         alert("이름, 휴대폰 번호, 주소를 모두 입력해 주세요.");
+        return;
+      }
+      if (!phoneNumberRegex.test(phoneNumber)) {
+        alert("휴대폰 번호는 숫자만 입력해야 합니다.");
         return;
       }
 
@@ -45,7 +50,7 @@ export default function Payment() {
       }
     } catch (error) {
       alert("구매하시려면 로그인 해주세요");
-      router.push("/login");
+      // router.push("/login");
     }
   };
 

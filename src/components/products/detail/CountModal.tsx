@@ -104,7 +104,7 @@ const CountModal = ({
   };
   return (
     <>
-      <div className="md:hidden">
+      <div className="xl:hidden">
         <div
           className={`fixed inset-0 bg-gray-600 bg-opacity-50 z-40 ${
             showModal ? "opacity-100" : "opacity-0 pointer-events-none"

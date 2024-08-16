@@ -26,9 +26,9 @@ export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
   };
 
   return (
-    <div className="xl:flex xl:flex-col xl:items-center">
+    <div className="xl:flex xl:flex-col xl:items-center ">
       <p className="hidden xl:block xl:py-8 text-[24px] ">스토어</p>
-      <div className="container mx-auto bg-[#F5F7FA] xl:w-[1132px]">
+      <div className="container mx-auto bg-[#F5F7FA] xl:w-[1132px] w-[400px]">
         <div className="flex h-[105px] xl:h-[158px] xl:px-[24px] xl:py-[16px] overflow-x-auto space-x-2 justify-between items-center p-2 ">
           {categories.map((category) => (
             <div

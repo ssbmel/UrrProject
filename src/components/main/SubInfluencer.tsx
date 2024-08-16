@@ -39,7 +39,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
       <h2 className="font-bold text-xl mb-5 xl:text-[22px] xl:my-8">내가 구독한 인플루언서</h2>
       <div className="flex flex-row overflow-x-auto flex-nowrap scrollbar">
         {subscribeIds.length === 0 ? (
-          <p className="text-[#4C4F52] text-[16px] h-[142px] mx-auto mt-6 whitespace-nowrap">구독중인 인플루언서가 없습니다.</p>
+          <p className="text-[#4C4F52] text-[16px] h-[142px] mx-auto flex items-center whitespace-nowrap">구독중인 인플루언서가 없습니다.</p>
         ) : (
           <div className="w-full flex overflow-x-auto gap-[3px] xl:gap-10 scrollbar-hide">
             {infUser?.filter(inf => subscribeIds.includes(inf.id)).map((inf) => (

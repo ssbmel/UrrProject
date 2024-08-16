@@ -111,7 +111,7 @@ function ReviewList() {
           ) : (
             reviewData.map((review) => (
               <SwiperSlide key={review.id}>
-                <div className="grid h-[380px] mx-auto border rounded-[20px] p-3 mr-8 shadow-lg">
+                <div className="grid h-[380px] mx-auto border rounded-[20px] p-3 mr-8 shadow-sm">
                   <Link href={`/products/detail/${review.product_id}`}>
                     <div className="flex justify-center">
 

@@ -25,7 +25,7 @@ export type ProductList = {
 
 const MyReview = () => {
   const { data: user } = useUserData();
-  const [orderData, setOrderData] = useState<ProductList>();
+  const [orderData, setOrderData] = useState<ProductList | null>(null);
   const [productsData, setProductsData] = useState<Product>();
   const [reviewImages, setReviewImages] = useState<ReviewImgGroup[]>([]);
   const [uploadedReviewImages, setUploadedReviewImages] = useState("");
@@ -57,9 +57,15 @@ const MyReview = () => {
       .single();
     if (error) {
       console.error("Error fetching review data:", error);
-    } else {
-      setOrderData(data.product_list.find((value) => value.id === Ids.id));
+      return;
     }
+    const handledJsonData = data.product_list.map((value) => {
+      const stringified = JSON.stringify(value);
+      const result = JSON.parse(stringified);
+      return result;
+    }); /* 데이터가 직렬화 이외의 방법이 사용된 Json 타입으로 들어오므로 stringify와 parse 작업을 한 번 거친다.  */
+    const matchedProduct = handledJsonData.find((value) => value.id === Ids.id);
+    setOrderData(matchedProduct);
   };
 
   useEffect(() => {

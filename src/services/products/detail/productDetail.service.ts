@@ -5,12 +5,11 @@ export async function getProductDetail({ id }: { id: string }) {
     }
   });
   const { data } = await response.json();
-
   return data;
 }
 
 export async function getProductDetailByUserId(id: string) {
-  const res = await fetch(`https://urr-final.vercel.app/api/products/detail/influencer/${id}`);
+  const res = await fetch(`/api/products/detail/influencer/${id}`);
   if (!res.ok) {
     console.log(`ERROR STATUS : ${res.status}`);
     return;

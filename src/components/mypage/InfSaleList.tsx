@@ -10,7 +10,6 @@ import Image from "next/image";
 import WriteIcon from "../../../public/icon/writeIcon.svg";
 import TrashCanIcon from "../../../public/icon/trashcanIcon.svg";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 interface Props {
   user: PublicUser;
@@ -21,7 +20,6 @@ const InfSaleList = ({ user }: Props) => {
   const onGoingStyle =
     "min-w-[58px] text-center bg-[#80BAFF] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]";
   const endStyle = "min-w-[58px] text-center bg-[#CDCFD0] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]";
-  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,19 +38,24 @@ const InfSaleList = ({ user }: Props) => {
       body: JSON.stringify(data)
     });
     if (!response.ok) {
-      console.log(`파일이 업로드 되지 않습니다.${response.status}`);
+      console.log(`삭제되지 않습니다.${response.status}`);
+      return false;
     }
-    return response.json();
+    return true;
   };
 
-  const { mutate: deleteMutation } = useMutation<Product, unknown, { id: string }>({
-    mutationFn: (data) => deletePost(data)
+  const { mutate: deleteMutation } = useMutation<boolean, unknown, { id: string }>({
+    mutationFn: (data) => deletePost(data),
+    onSuccess: (success, variables) => {
+      if (success) {
+        setItems((prevItems) => prevItems.filter(item => item.id !== variables.id));
+      }
+    }
   });
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
     deleteMutation({ id });
-    router.push("/mypage");
   };
 
   return (
@@ -79,7 +82,7 @@ const InfSaleList = ({ user }: Props) => {
                         <span className="whitespace-nowrap text-ellipsis overflow-hidden font-[400]">
                           {item.title?.split("]")[1]}
                         </span>
-                        <span className="min-w-[58px] text-center bg-[#80BAFF] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]">
+                        <span className={new Date() > new Date(item.end) ? endStyle : onGoingStyle}>
                           {new Date() > new Date(item.end) ? "종료" : "진행 중"}
                         </span>
                       </div>
@@ -91,16 +94,12 @@ const InfSaleList = ({ user }: Props) => {
                   <div className="flex items-center">
                     {new Date() > new Date(item.end) ? null : (
                       <Link href={`/products/upload/${item.id}`}>
-                      <button  
-                      
-              className="">
-                        <WriteIcon />
-                      </button>
+                        <button className="">
+                          <WriteIcon />
+                        </button>
                       </Link>
                     )}
-                    <button className=""
-                    type="button"
-              onClick={() => handleDelete(item.id)}>
+                    <button className="" type="button" onClick={() => handleDelete(item.id)}>
                       <TrashCanIcon />
                     </button>
                   </div>

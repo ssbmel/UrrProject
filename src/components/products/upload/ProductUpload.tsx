@@ -149,19 +149,19 @@ function ProductUpload() {
       nickname: user.nickname || "" // Ensure nickname is a string
     };
 
-    // if (
-    //   !productData.category ||
-    //   !productData.start ||
-    //   !productData.end ||
-    //   !productData.cost ||
-    //   !productData.price ||
-    //   !productData.product_count ||
-    //   !productData.title ||
-    //   !productData.text
-    // ) {
-    //   swal("상품 정보를 입력해주세요.");
-    //   return;
-    // }
+    if (
+      !productData.category ||
+      !productData.start ||
+      !productData.end ||
+      !productData.cost ||
+      !productData.price ||
+      !productData.product_count ||
+      !productData.title ||
+      !productData.text
+    ) {
+      swal("상품 정보를 입력해주세요.");
+      return;
+    }
 
     const { data, error } = await supabase.from("products").upsert([productData]).select();
     if (error) {
@@ -172,28 +172,6 @@ function ProductUpload() {
       router.push("/products/list");
     }
   };
-
-  // const deletePost = async (data: { id: string }) => {
-  //   const response = await fetch("/api/products", {
-  //     method: "DELETE",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data)
-  //   });
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! status: ${response.status}`);
-  //   }
-  //   return response.json();
-  // };
-
-  // const { mutate: deleteMutation } = useMutation<Product, unknown, { id: string }>({
-  //   mutationFn: (data) => deletePost(data)
-  // });
-
-  // const handleDelete = async (id: string) => {
-  //   if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
-  //   deleteMutation({ id });
-  //   router.push("/products/list");
-  // };
 
   return (
     <form onSubmit={onSubmit}>

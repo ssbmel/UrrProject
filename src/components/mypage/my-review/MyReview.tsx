@@ -24,7 +24,7 @@ export type ProductList = {
 
 const MyReview = () => {
   const { data: user } = useUserData();
-  const [orderData, setOrderData] = useState<ProductList>();
+  const [orderData, setOrderData] = useState<ProductList | null>(null);
   const [productsData, setProductsData] = useState<Product>();
   const [reviewImages, setReviewImages] = useState<ReviewImgGroup[]>([]);
   const [uploadedReviewImages, setUploadedReviewImages] = useState("");
@@ -55,9 +55,15 @@ const MyReview = () => {
       .single();
     if (error) {
       console.error("Error fetching review data:", error);
-    } else {
-      setOrderData(data.product_list.find((value) => value.id === Ids.id));
+      return;
     }
+    const handledJsonData = data.product_list.map((value) => {
+      const stringified = JSON.stringify(value);
+      const result = JSON.parse(stringified);
+      return result;
+    }); /* 데이터가 직렬화 이외의 방법이 사용된 Json 타입으로 들어오므로 stringify와 parse 작업을 한 번 거친다.  */
+    const matchedProduct = handledJsonData.find((value) => value.id === Ids.id);
+    setOrderData(matchedProduct);
   };
 
   useEffect(() => {
@@ -84,29 +90,29 @@ const MyReview = () => {
     if (!reviewImages.length) {
       return null;
     }
-  
+
     const uploads = reviewImages.map(async (review) => {
       if (!review.file) return review.url;
-  
+
       const ext = review.file.name.split(".").pop();
       const newFileName = `${uuidv4()}.${ext}`;
       console.log(`Uploading to path: ${reviewId}/reviewImages/${newFileName}`);
-  
+
       const { data, error } = await supabase.storage
         .from("product_review")
         .upload(`${reviewId}/reviewImages/${newFileName}`, review.file);
-  
+
       if (error) {
         console.error("File upload failed:", error);
         return null;
       }
-  
+
       const res = await supabase.storage.from("product_review").getPublicUrl(data.path);
       console.log("Public URL response:", res);
-  
+
       return res.data.publicUrl;
     });
-  
+
     const resList = await Promise.all(uploads);
     return resList.filter((url): url is string => url !== null);
   };
@@ -132,7 +138,7 @@ const MyReview = () => {
     const reviewId = uuidv4();
     const reviewImagesId = await uploadImages(reviewId);
     console.log(reviewImagesId);
-    
+
     const newReviewData: Review = {
       id: reviewId,
       created_at: new Date().toDateString(),
@@ -144,7 +150,7 @@ const MyReview = () => {
       title: orderData?.name as string,
       inf_name: productsData?.nickname as string,
       payment_id: Ids.paymentId as string,
-      userId : user.id
+      userId: user.id
     };
 
     const { data, error } = await supabase.from("product_review").insert([newReviewData]).select();

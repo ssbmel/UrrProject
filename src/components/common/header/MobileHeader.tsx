@@ -17,7 +17,7 @@ const MobileHeader = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
-  // const {setRefContent}=useAddrStore();
+  const { data: user } = useUserData();
 
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
@@ -32,7 +32,6 @@ const MobileHeader = () => {
   const INFLUENCER = pathname === "/influencer";
 
   const isInfluncer = () => {
-    const { data: user } = useUserData();
     if (user?.approve) {
       return true;
     }

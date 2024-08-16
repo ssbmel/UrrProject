@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import { PublicUser } from "../../../../types/auth.type";
 import SubscribeButton from "./SubscribeButton";
 import StartChat from "@/components/chat/StartChat";
@@ -54,7 +54,7 @@ const IntroSection = ({ user }: Props) => {
               className="object-cover p-[1px]"
             />
           </Link>
-          <div className="">
+          <div>
             <StartChat owner_id={id} />
           </div>
         </div>

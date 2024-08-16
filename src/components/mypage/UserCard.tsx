@@ -27,14 +27,13 @@ const UserCard = () => {
     return;
   };
 
-  const commonUser = "absolute rounded-[16px] overflow-hidden border border-transparent p-[4px] object-cover";
-  const adminUser = "absolute rounded-[16px] overflow-hidden border border-[#2267CE] p-[4px] object-cover";
-  const infUser =
-    "absolute rounded-[16px] overflow-hidden border border-transparent p-[4px] object-cover gradient-border";
+  const commonUser = "absolute overflow-hidden border border-transparent p-[4px] object-cover";
+  const adminUser = "absolute overflow-hidden border border-[#2267CE] p-[4px] object-cover";
+  const infUser = "absolute overflow-hidden border border-transparent p-[4px] object-cover gradient-border";
 
   return (
-    <div className="flex w-full gap-[12px] p-[16px] pb-[36px] ">
-      <div className="w-[80px] h-[80px] rounded-[16px] relative">
+    <div className="flex w-full gap-[12px] p-[16px] pb-[36px] xl:w-[1129px] xl:h-[201px] xl:mx-[auto] xl:shadow-md xl:p-[36px] xl:my-[48px] xl:rounded-[24px]">
+      <div className="w-[80px] h-[80px] xl:w-[129px] xl:h-[129px] rounded-[16px] relative">
         <Image
           src={user?.profile_url || DefaultImage}
           alt="profile_image"
@@ -44,7 +43,7 @@ const UserCard = () => {
           className={user?.role === "인플루언서" ? infUser : user?.role === "관리자" ? adminUser : commonUser}
         />
       </div>
-      <div className="w-[calc(100%-80px)] flex flex-col justify-between text-[12px]">
+      <div className="w-[calc(100%-80px)] xl:w-[calc(100%-129px)] flex flex-col justify-between text-[12px] xl:py-[7px]">
         <div>
           <div className="flex justify-between items-center">
             <p className="text-[20px] font-bold">{user?.nickname}</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, RefObject, useEffect, useRef, useState } from "react";
 import InfoOnEditAddress from "./InfoOnEditAddress";
 import Image from "next/image";
 import {
@@ -29,6 +29,7 @@ const InfoOnEdit = ({ user }: Props) => {
   const [name, setName] = useState<string | null>(""); /* 해당 column에서 nullish 해제 필요  */
   const [email, setEmail] = useState<string | null>(""); /* 해당 column에서 nullish 해제 필요  */
   const [phonenum, setPhonenum] = useState<string | null>();
+  const [intro, setIntro] = useState<string | null>();
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isAble, setIsAble] = useState<boolean>(false);
@@ -37,11 +38,6 @@ const InfoOnEdit = ({ user }: Props) => {
 
   const nicknameRef = useRef<HTMLInputElement>(null);
 
-  const nicknameUnable =
-    "h-[38px] border-b-2 border-b-[#CDCFD0] flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
-  const nicknameAble =
-    "h-[38px] border-b-2 border-b-[#0068E5] flex justify-center items-center pr-[8px] pl-[8px] gap-[8px]";
-
   useEffect(() => {
     setUserImg(user?.profile_url);
     setNickname(user?.nickname);
@@ -49,6 +45,9 @@ const InfoOnEdit = ({ user }: Props) => {
     setName(user?.name);
     setEmail(user?.email);
     setPhonenum(user?.phonenum);
+    if (user?.approve === true) {
+      setIntro(user?.intro);
+    }
   }, []);
 
   const changePasswordHandler = async () => {
@@ -116,6 +115,10 @@ const InfoOnEdit = ({ user }: Props) => {
       }
     }
 
+    if (user?.approve === true && user?.intro === null) {
+      setIntro(`안녕하세요, ${user.nickname}입니다!`);
+    }
+
     if (phonenum && phonenum?.length > 0) {
       if (!phonenumCheck(phonenum)) {
         setErrorMsg("올바른 형식의 휴대전화 번호를 입력해주세요");
@@ -165,7 +168,8 @@ const InfoOnEdit = ({ user }: Props) => {
       profile_url: image,
       address,
       phonenum: phonenum!,
-      name
+      name,
+      intro
     };
 
     const data = await patchUserFromUserId(editUserData);
@@ -177,50 +181,71 @@ const InfoOnEdit = ({ user }: Props) => {
 
   return (
     <>
-      <section className="flex flex-col gap-[18px] items-center mt-[44px] mb-[20px]">
-        <div className="relative">
-          {userImg && (
-            <div className="w-[100px] h-[100px] rounded-[16px] relative shadow-md">
-              <Image
-                src={userImg || ""}
-                alt="profile_image"
-                sizes="100px"
-                fill
-                priority
-                className="absolute rounded-[16px] overflow-hidden object-cover"
+      <section className="px-[25px] my-[20px] flex flex-col gap-[31px]">
+        <div className="flex gap-[21px] items-center">
+          <div className="relative">
+            {userImg && (
+              <div className="w-[100px] h-[100px] rounded-[16px] relative shadow-md">
+                <Image
+                  src={userImg || ""}
+                  alt="profile_image"
+                  sizes="100px"
+                  fill
+                  priority
+                  className="absolute rounded-[16px] overflow-hidden object-cover"
+                />
+              </div>
+            )}
+            <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full text-center border border-[#FFFFFE] bg-[#E1EEFE] bg-[url('../../public/icon/cameraIcon.png')] bg-no-repeat bg-center bg-[length:24px_24px] flex justify-center items-center">
+              <input
+                onChange={(e) => handleImageChange(e)}
+                type="file"
+                accept="image/*"
+                className="w-full h-full opacity-0 cursor-pointer file:cursor-pointer"
               />
             </div>
-          )}
-          <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full text-center  bg-[#E1EEFE] bg-[url('../../public/icon/cameraIcon.png')] bg-no-repeat bg-center bg-[length:24px_24px] flex justify-center items-center">
-            <input
-              onChange={(e) => handleImageChange(e)}
-              type="file"
-              accept="image/*"
-              className="w-full h-full opacity-0 cursor-pointer file:cursor-pointer"
-            />
+          </div>
+          <div className="flex flex-col gap-[4px] w-full">
+            <h3 className="font-[600]">닉네임</h3>
+            <div className=" h-[38px] border-[#CDCFD0] flex justify-between items-center">
+              <input
+                type="text"
+                ref={nicknameRef}
+                disabled={isAble === false}
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder="닉네임"
+                className="indent-[4px] border font-bold w-[calc(100%-52px)] h-[40px] py-[4px] px-[8px] rounded-[6px] disabled:bg-transparent disabled:text-[#CDCFD0]"
+              />
+              <button
+                onClick={() => {
+                  setIsAble(true);
+                  nicknameRef.current!.focus();
+                }}
+                className="border rounded-[4px] transition-colors hover:bg-[#F2F2F2]"
+              >
+                <WriteIcon color="#1B1C1D" />
+              </button>
+            </div>
           </div>
         </div>
-        <div className={isAble ? nicknameAble : nicknameUnable}>
-          <input
-            type="text"
-            ref={nicknameRef}
-            disabled={isAble === false}
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="닉네임"
-            className="indent-[7px] font-bold text-[20px] w-[80px] outline-none disabled:bg-transparent disabled:text-[#CDCFD0]"
-          />
-          <button
-            onClick={() => {
-              setIsAble(true);
-              nicknameRef.current?.focus();
-            }}
-            className=""
-          >
-            <WriteIcon />
-          </button>
-        </div>
+        {user?.approve === true && (
+          <div>
+            <div className="flex flex-col gap-[4px]">
+              <h3 className="font-[600]">한 줄 소개</h3>
+              <input
+                type="text"
+                maxLength={30}
+                value={intro ?? ""}
+                onChange={(e) => setIntro(e.target.value)}
+                placeholder="한 줄 소개 (30자까지 입력 가능합니다.)"
+                className="indent-[4px] border w-full h-[40px] py-[4px] px-[8px] rounded-[6px] disabled:bg-transparent disabled:text-[#CDCFD0]"
+              />
+            </div>
+          </div>
+        )}
       </section>
+
       <hr className="border-4" />
       <section className="p-[16px] pt-[24px] pb-[24px] flex flex-col gap-[20px]">
         <div className="text-[14px] rounded-[12px] py-[12px] px-[14px] bg-[#E1EEFE] tracking-[-0.05em]">
@@ -242,7 +267,7 @@ const InfoOnEdit = ({ user }: Props) => {
             <p className="font-bold">비밀번호</p>
             <button
               onClick={changePasswordHandler}
-              className="border px-[12px] py-[4px] text-[14px] rounded-[4px] text-[#0068E5]"
+              className="border px-[12px] py-[4px] text-[14px] rounded-[4px] text-[#0068E5] transition-colors hover:bg-[#E1EEFE]"
             >
               변경하기
             </button>
@@ -307,7 +332,8 @@ const InfoOnEdit = ({ user }: Props) => {
               nickname === user.nickname &&
               address === user.address &&
               name === user.name &&
-              phonenum === user.phonenum
+              phonenum === user.phonenum &&
+              intro === user.intro
             }
             className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF] disabled:bg-[#F2F2F2] disabled:text-[#CDCFD0]"
           >

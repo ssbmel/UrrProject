@@ -20,18 +20,18 @@ const SalesList = ({ products, sectionName }: Props) => {
       <div>
         <h2 className="text-[20px] font-bold">{sectionName === "진행중인 공구" ? "진행중인 공구" : "지나간 공구"}</h2>
       </div>
-      {products?.length > 0 ? (
+      {products.length > 0 ? (
         <ul className="flex items-center gap-[12px] overflow-x-auto scrollbar-styled">
-          {products.map((product) => (
-            <Link key={product.id} href={`/products/detail/${product.id}`}>
+          {products?.map((product) => (
+            <Link key={product?.id} href={`/products/detail/${product.id}`}>
               <li className="flex flex-col gap-[8px] w-[88px]">
                 <div className="w-[88px] h-[96px] rounded-[6px] bg-slate-300 relative">
                   <div className={sectionName === "진행중인 공구" ? "hidden" : outdateMask}>
                     <p>판매 종료</p>
                   </div>
                   <Image
-                    src={product.main_img || ""}
-                    alt={product.title || "product_main_img"}
+                    src={product?.main_img || ""}
+                    alt={product?.title || "product_main_img"}
                     sizes="88px"
                     fill
                     priority
@@ -39,7 +39,7 @@ const SalesList = ({ products, sectionName }: Props) => {
                   />
                 </div>
                 <div>
-                  <p className="text-[12px] text-[#B2B5B8]">{product.nickname}</p>
+                  <p className="text-[12px] text-[#B2B5B8]">{product?.nickname}</p>
                   <h3
                     className={
                       sectionName === "진행중인 공구"
@@ -47,7 +47,7 @@ const SalesList = ({ products, sectionName }: Props) => {
                         : "text-[#B2B5B8] text-[14px] overflow-x-hidden whitespace-nowrap text-ellipsis"
                     }
                   >
-                    {product.title}
+                    {product?.title}
                   </h3>
                   <p className="text-[12px] flex gap-[4px]">
                     <span
@@ -55,14 +55,14 @@ const SalesList = ({ products, sectionName }: Props) => {
                         sectionName === "진행중인 공구" ? "text-[#F03F33] font-[600]" : "text-[#B2B5B8] font-[600]"
                       }
                     >
-                      {Math.trunc(+(product.price / product.cost).toFixed(2) * 100)}%
+                      {Math.trunc(+(product?.price / product?.cost).toFixed(2) * 100)}%
                     </span>
                     <span
                       className={
                         sectionName === "진행중인 공구" ? "text-[#020303] font-[500]" : "text-[#B2B5B8] font-[500]"
                       }
                     >
-                      {product.price}원
+                      {product?.price}원
                     </span>
                   </p>
                 </div>

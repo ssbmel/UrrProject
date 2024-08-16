@@ -50,15 +50,17 @@ function ReviewList() {
           ) : (
             reviewData.map((review) => (
               <div key={review.id} className="flex w-full">
-                <div className="w-[100px] h-[100px] sm:w-[80px] sm:h-[80px] relative mr-2 flex-shrink-0">
+                <div className="w-[100px] h-[100px] sm:w-[80px] sm:h-[80px] mr-2 flex-shrink-0">
                   <Link href={`/products/detail/${review.product_id}`}>
+                    <div className="relative w-[100px] h-[100px]">
                     <Image
                       src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                       alt="img"
                       fill
-                      sizes="100px"
+                      sizes="120px"
                       className="rounded-md object-cover"
                     />
+                    </div>
                   </Link>
                 </div>
 

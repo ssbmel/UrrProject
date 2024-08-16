@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { bottomMenu } from "./BottomMenu";
 import { useState } from "react";
+import AlertMessage from "../alert/AlertMessage";
 
 export default function BottomNav() {
   const pathname = usePathname();

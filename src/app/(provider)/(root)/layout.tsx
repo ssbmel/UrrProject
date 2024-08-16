@@ -18,7 +18,6 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
       <main className="grow overflow-auto">
         {children}
         <Footer />
-        <AlertMessage />
       </main>
       <div className="xl:hidden">
         <BottomNav />

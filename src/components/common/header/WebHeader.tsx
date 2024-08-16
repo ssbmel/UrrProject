@@ -2,17 +2,34 @@
 
 import Image from "next/image";
 import Logo from "../../../../public/logo/logo_big.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchModal from "../search/SearchModal";
 import CartIcon from "../../../../public/icon/cartIcon.svg";
 import SearchIcon from "../../../../public/icon/searchIcon.svg";
 import MypageIcon from "../../../../public/icon/mypageIcon.svg";
 import ChatIcon from "../../../../public/icon/chatIcon.svg";
 import Link from "next/link";
+import ChatList from "@/components/chat/ChatList";
+import { useAlertchatStore } from "@/zustand/alertchatStore";
+import { usePathname } from "next/navigation";
 
 export function WebHeader() {
+  const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const { isChatModalOpen, setIsChatModalOpen } = useAlertchatStore();
+
+  const handleChatButton = () => {
+    if (isChatModalOpen) {
+      setIsChatModalOpen(false);
+    } else {
+      setIsChatModalOpen(true);
+    }
+  }
+  useEffect(()=>{
+    setIsChatModalOpen(false);
+  },[pathname])
 
   return (
     <>
@@ -49,9 +66,18 @@ export function WebHeader() {
             <MypageIcon />
           </Link>
 
-          <Link href={"/chatlist"}>
-            <ChatIcon />
-          </Link>
+          <div>
+            <button onClick={handleChatButton}>
+              <ChatIcon />
+            </button>
+          </div>
+
+          {isChatModalOpen &&
+            <div className='border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] bg-white justify-center'>
+              <ChatList />
+            </div>
+          }
+
         </div>
       </header>
 

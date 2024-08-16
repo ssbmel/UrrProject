@@ -32,7 +32,7 @@ const UserCard = () => {
   const infUser = "absolute overflow-hidden border border-transparent p-[4px] object-cover gradient-border";
 
   return (
-    <div className="flex w-full gap-[12px] p-[16px] pb-[36px] xl:w-[1129px] xl:h-[201px] xl:mx-[auto] xl:shadow-md xl:p-[36px] xl:my-[48px] xl:rounded-[24px]">
+    <div className="flex w-[375px] mx-auto gap-[12px] p-[16px] pb-[36px] xl:w-[1129px] xl:h-[201px] xl:mx-[auto] xl:shadow-md xl:p-[36px] xl:my-[48px] xl:rounded-[24px]">
       <div className="w-[80px] h-[80px] xl:w-[129px] xl:h-[129px] rounded-[16px] relative">
         <Image
           src={user?.profile_url || DefaultImage}
@@ -58,7 +58,7 @@ const UserCard = () => {
         <p>
           <button className="flex items-center" onClick={logoutHandler}>
             <span>로그아웃</span>
-            <span className="block w-[20px] h-[20px] flex justify-center items-center">
+            <span className="w-[20px] h-[20px] flex justify-center items-center">
               <RightArrowB />
             </span>
           </button>

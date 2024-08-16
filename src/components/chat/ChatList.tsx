@@ -5,7 +5,8 @@ import { createClient } from "../../../supabase/client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAlertchatStore } from "@/zustand/alertchatStore";
+import { useAlertchatStore } from "@/zustand/alertchatStore"; 
+import Link from "next/link";
 
 export default function ChatList() {
   const userdata = useUserData().data;
@@ -15,7 +16,7 @@ export default function ChatList() {
   const [chatListData, setChatListData] = useState<({ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; countMessages: number; } | undefined)[]>([]);
   const [myChannel, setMyChannel] = useState<{ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; countMessages: number; } | null>(null);
   const [myChannelIdList, setMyChannelIdList] = useState<number[]>([]);
-  const { setIsAlert } = useAlertchatStore();
+  const { setIsChatModalOpen, setIsAlert } = useAlertchatStore();
 
   const getMyChannel = async () => {
     //나의 채팅 채널 불러오기
@@ -246,6 +247,22 @@ export default function ChatList() {
     router.push(`/chatlist/[${id}]`)
   }
 
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const resizeListener = () => {
+    setInnerWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", resizeListener);
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 설정
+  const openWindow = (channel_id: number, channel_name: string | null) => {
+    const id = channel_id.toString()
+    setIsChatModalOpen(false);
+    window.open(`/chatlist/[${id}]`, "_blank",'popup=yes,width=375,height=812,resizable=0,location=no');
+  }
+
   useEffect(() => {
     setIsAlert(false);
     if (userdata != undefined) {
@@ -261,20 +278,20 @@ export default function ChatList() {
 
 
   return (
-    <div className="mt-[6px] flex flex-col">
+    <div className="mt-[6px] flex flex-col xl:mx-2 xl:my-3">
       {(myChannel != undefined) ?
         <div className="">
-          <p className="w-[343px] mx-auto font-bold text-[20px] mt-[18px] mb-[12px]">내가 만든 톡방</p>
-          <div className="w-[343px] mx-auto flex flex-col justify-center">
-            <div onClick={() => clickChat(myChannel.channel_id)}>
-              <div key={myChannel.channel_id} className={(myChannel != null) ? "w-[343px] h-[73px] relative flex flex-row items-center" : 'hidden'}>
+          <p className="w-[343px] xl:w-[285px] mx-auto font-bold text-[20px] xl:px-3 mb-[12px]">나의 채팅방</p>
+          <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col justify-center">
+            <div onClick={innerWidth<1280 ? () => clickChat(myChannel.channel_id) : () => openWindow(myChannel.channel_id, myChannel.channel_name)}>
+              <div key={myChannel.channel_id} className={(myChannel != null) ? "w-[343px] xl:w-[285px] xl:px-3 xl:py-2 h-[73px] relative flex flex-row items-center" : 'hidden'}>
 
-                <div className="relative flex-none w-[68px] h-[68px]">
+                <div className="relative flex-none w-[68px] h-[68px] xl:w-[60px] xl:y-[60px]">
                   {myChannel.owner_profile_url && (
                     <Image fill priority={true} src={myChannel.owner_profile_url} alt="owner profile" className="object-cover rounded-[6px]" />
                   )}
                 </div>
-                <div className="w-[255px] flex flex-col ml-[8px] mr-[12px]">
+                <div className="w-[255px] xl:w-[193px] flex flex-col ml-[8px] mr-[12px] xl:mr-0">
                   <div className="flex flex-row items-center h-[27px]">
                     <label className="truncate text-[18px] font-medium">{myChannel.channel_name}</label>
                     <label className={(myChannel.countMessages > 0) ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-gradient-to-br from-[#0068e5] to-[#9aec5b] text-center text-[14px] font-medium" : "hidden"}>
@@ -288,22 +305,22 @@ export default function ChatList() {
             </div>
           </div>
           <div className="mt-[20px] h-2 w-auto bg-[#F4F4F4]" />
-          <p className="w-[343px] mx-auto font-bold text-[20px] mt-[20px] mb-[-2px]">내가 참여한 톡방</p>
+          <p className="w-[343px] xl:w-[285px] mx-auto font-bold text-[20px] xl:px-3 mt-[20px] mb-[-2px]">내가 참여한 채팅방</p>
         </div>
         : <></>}
 
-      <div className="w-[343px] mx-auto flex flex-col divide-y-2 divide-[#F4F4F4] justify-center">
+      <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col divide-y-2 divide-[#F4F4F4] justify-center">
         {(chatListData != undefined) ? chatListData.map((channel) => (
           <div key={channel?.channel_id} className="">
             {(channel != undefined) ?
-              <div onClick={() => clickChat(channel.channel_id)}>
-                <div className="w-[343px] h-[73px] my-[18px] relative flex flex-row items-center">
-                  <div className="relative flex-none w-[68px] h-[68px] ">
+              <div onClick={innerWidth<1280 ? () => clickChat(channel.channel_id) : () => openWindow(channel.channel_id, channel.channel_name)}>
+                <div className="w-[343px] xl:w-[285px] h-[73px] my-[18px] xl:px-3 xl:py-2 xl:my-2 relative flex flex-row items-center">
+                  <div className="relative flex-none w-[68px] h-[68px] xl:w-[60px] xl:y-[60px]">
                     {channel?.owner_profile_url && (
                       <Image fill priority={true} src={channel.owner_profile_url} alt="owner profile" className="object-cover rounded-[6px]" />
                     )}
                   </div>
-                  <div className="w-[255px] flex flex-col ml-[8px] mr-[12px]">
+                  <div className="w-[255px] xl:w-[193px] flex flex-col ml-[8px] mr-[12px]">
                     <div className="flex flex-row items-center h-[27px]">
                       <label className="truncate text-[18px] font-medium">{channel.channel_name}</label>
                       <label className={(channel.countMessages > 0) ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-[#FF5E5E] text-center text-[14px] font-medium" : "hidden"}>

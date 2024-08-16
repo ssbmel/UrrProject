@@ -52,7 +52,7 @@ const InfSaleList = ({ user }: Props) => {
                     <div className="flex flex-col w-[calc(100%-68px)]">
                       <div className="flex items-center w-full gap-[4px]">
                         <span className="whitespace-nowrap text-ellipsis overflow-hidden font-[400]">
-                          {item.title?.split("] ")[1]}
+                          {item.title?.split("]")[1]}
                         </span>
                         <span className="min-w-[58px] text-center bg-[#80BAFF] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]">
                           {new Date() > new Date(item.end) ? "종료" : "진행 중"}

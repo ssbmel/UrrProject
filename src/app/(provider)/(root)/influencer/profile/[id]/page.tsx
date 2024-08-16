@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import LoadingUrr from "@/components/common/loading/LoadingUrr";
 import IntroSection from "@/components/mypage/infInfo/IntroSection";
 import SalesSection from "@/components/mypage/infInfo/SalesSection";
@@ -8,7 +9,7 @@ import { getProductDetailByUserId } from "@/services/products/detail/productDeta
 import { useEffect, useState } from "react";
 import { Product } from "../../../../../../../types/common";
 
-const page = () => {
+const InfProfilePage = () => {
   const data = useUserData();
   const { data: user } = data;
   const [infProductData, setInfProductData] = useState<Product[]>([]);
@@ -37,4 +38,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default InfProfilePage;

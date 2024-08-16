@@ -36,6 +36,9 @@ const MyReview = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(contentRef.current?.value);
+  
+
   useEffect(() => {
     if (user) {
       getOrderData();
@@ -159,7 +162,7 @@ const MyReview = () => {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      swal("후기가 등록되었습니다.");
+      alert("후기가 등록되었습니다.");
       saveReviewMutation(newReviewData);
       router.push("/mypage");
     }

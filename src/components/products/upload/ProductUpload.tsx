@@ -11,7 +11,6 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams, useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
 import { useMutation } from "@tanstack/react-query";
-import swal from "sweetalert";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 
@@ -133,20 +132,20 @@ function ProductUpload() {
     const detailImgId = await uploadDetailImages(postId);
 
     const productData: Product = {
-      category: radioCheckedValue || "", // Ensure category is a string
-      start: startDateRef.current?.value as string, // Use null if the value is an empty string
-      end: endDateRef.current?.value as string, // Use null if the value is an empty string
-      cost: parseInt(costRef.current?.value || "0"), // Ensure cost is a number
-      price: parseInt(priceRef.current?.value || "0"), // Ensure price is a number
-      product_count: parseInt(productCountRef.current?.value || "0"), // Ensure product_count is a number
-      title: titleRef.current?.value || "", // Ensure title is a string
-      text: textRef.current?.value || "", // Ensure text is a string
-      detail_img: detailImgId || [], // Ensure detail_img is an array of strings
-      main_img: mainImgId || "", // Ensure main_img is a string
-      user_id: user.id || "", // Ensure user_id is a string
+      category: radioCheckedValue || "",
+      start: startDateRef.current?.value as string,
+      end: endDateRef.current?.value as string,
+      cost: parseInt(costRef.current?.value || "0"),
+      price: parseInt(priceRef.current?.value || "0"),
+      product_count: parseInt(productCountRef.current?.value || "0"),
+      title: titleRef.current?.value || "",
+      text: textRef.current?.value || "",
+      detail_img: detailImgId || [],
+      main_img: mainImgId || "",
+      user_id: user.id || "",
       created_at: new Date().toISOString(),
-      id: id === "new" ? postId : id as string,  // Ensure id is a string
-      nickname: user.nickname || "" // Ensure nickname is a string
+      id: id === "new" ? postId : id as string,
+      nickname: user.nickname || ""
     };
 
     if (
@@ -159,7 +158,7 @@ function ProductUpload() {
       !productData.title ||
       !productData.text
     ) {
-      swal("상품 정보를 입력해주세요.");
+      alert("상품 정보를 입력해주세요.");
       return;
     }
 
@@ -167,7 +166,12 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      swal("상품등록 성공!", "등록이 완료되었습니다.", "success");
+      alert({
+        title: "상품등록 성공!",
+        text: "등록이 완료되었습니다.",
+        icon: "success",
+        width: "40%",
+      });
       saveMutation(productData);
       router.push("/products/list");
     }

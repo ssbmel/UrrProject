@@ -7,14 +7,12 @@ import { createClient } from "../../../supabase/client";
 import { Review } from "../../../types/common";
 import defaultImg from "../../../public/images/default.png";
 import { useMutation } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 const MyReviewList = () => {
   const [reviewData, setReviewData] = useState<Review[]>([]);
   const { data: user } = useUserData();
   const supabase = createClient();
-  const { id } = useParams();
 
   const getReviewData = async () => {
     if (!user || !user.id) {

@@ -35,10 +35,10 @@ const ModalComponent: React.FC = () => {
           contentLabel="Influencer Subscription Modal"
           style={{
             content: {
-              width: '90%', // 모바일을 고려해 너비를 퍼센트로 설정
-              maxWidth: '500px', // 최대 너비를 400px로 제한
-              height: 'auto', // 높이를 내용에 따라 자동 조절
-              maxHeight: '600px', // 최대 높이 600px
+              width: '90%',
+              maxWidth: '500px',
+              height: 'auto',
+              maxHeight: '600px',
               top: '50%',
               left: '50%',
               right: 'auto',

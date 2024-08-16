@@ -37,10 +37,10 @@ function Category({ radioCheckedValue, setRadioCheckedValue }: CategoryProps) {
                 <input
                   type="radio"
                   name="radioCheckedList"
-                  value={c.name} // Use `name` for consistency
+                  value={c.title}
                   onChange={handleRadioChange}
                   className="mr-2 cursor-pointer text-[#1B1C1D]"
-                  checked={radioCheckedValue === c.name} // Check with `name`
+                  checked={radioCheckedValue === c.title}
                 />
                 {c.title}
               </label>

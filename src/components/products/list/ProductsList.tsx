@@ -38,6 +38,8 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState("최신순");
 
+  const menuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
@@ -94,6 +96,24 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
   const handleExcludeExpiredChange = () => {
     setExcludeExpired(!excludeExpired);
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   if (isLoading) {
     return <LoadingUrr />;
   }
@@ -116,7 +136,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                 판매 종료 제외
               </label>
             </div>
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               <div className="flex items-center cursor-pointer">
                 <p className="mx-2 text-[16px] xl:text-[18px] text-[#4C4F52]">{sortOption}</p>
                 <div

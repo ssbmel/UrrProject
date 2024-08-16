@@ -1,14 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import cart from "../../../../public/icon/장바구니.png";
 import { useEffect, useState } from "react";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
 import ProductInquiry from "./ProductInquiry";
 import DetailImg from "./DetailImg";
 import share from "../../../../public/icon/share.png";
-import expiredCart from "../../../../public/icon/cartGray.png";
 import CountModal from "./CountModal";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";

@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 const inter = Inter({ subsets: ["latin"] });
 
 const pretendard = localFont({
-  src: "../../public/fonts/PretendardVariable.woff2",
+  src: "../../public/fonts/PretendardVariable.ttf",
   display: "swap",
   weight: "45 920",
   variable: "--font-pretendard"

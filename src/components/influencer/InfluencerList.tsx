@@ -12,6 +12,7 @@ import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
 import { getInfluencerData } from "@/services/users/influencer/influencer.service";
 import InfGuidModal from "./InfGuidModal";
+import swal from 'sweetalert';
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -47,6 +48,7 @@ function InfluencerList() {
       user_id: user.id,
       infuser_id: inf.id
     };
+    swal(`${inf.nickname}님을 구독하였습니다.`);
     subscribedMutation(newInfUser);
   };
 
@@ -71,6 +73,7 @@ function InfluencerList() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
+    swal("구독이 취소되었습니다.");
     await getSubscribeData();
     return response.json();
   };
@@ -82,7 +85,7 @@ function InfluencerList() {
   return (
     <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
       <InfGuidModal/>
-      <div className="w-full min-h-[200px] h-[30%] p-4 bg-[#FFFFFE]">
+      <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {subscribeIds.length === 0 ? (
           <div className="flex flex-col items-center mx-auto">
@@ -141,7 +144,7 @@ function InfluencerList() {
           <h1 className="font-bold text-lg mb-4 xl:mt-[52px]">인플루언서</h1>
           <p className="ml-auto text mt-1 xl:text-lg mb-4 xl:mt-[52px]">총 {infUser?.length}명</p>
         </div>
-        <div className="w-full grid grid-cols-3 overflow-y-auto scrollbar xl:grid-cols-5">
+        <div className="w-full grid grid-cols-3 xl:grid-cols-5">
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[106px] text-center mx-auto">
               <div className="relative w-[106px] h-[106px] mb-2 xl:w-[207px] xl:h-[207px]">

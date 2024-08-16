@@ -6,7 +6,7 @@ import SignupImg from "../../../public/images/signup_img.svg";
 export default function SuccessfulSignUp() {
   return (
     <>
-      <div className="h-[783px]">
+      <div className="h-[783px] p-4 box-border">
         <div className="flex flex-col justify-center items-center h-[783px] xl:h-[783px]">
           <SignupImg />
           <h3 className="text-lg mb-2 mt-8">우르르 회원가입을 환영합니다!</h3>
@@ -15,7 +15,7 @@ export default function SuccessfulSignUp() {
 
           <div className="flex justify-center w-full xl:hidden">
             <Link href={"/login"} className="w-full">
-              <button className="bg-primarynormal text-white h-[47px] w-full rounded-xl font-medium fixed bottom-[28px]">
+              <button className="bg-primarynormal text-white h-[47px] w-[360px] rounded-xl font-medium fixed transform -translate-x-1/2 left-[50%] bottom-[28px]">
                 시작하기
               </button>
             </Link>

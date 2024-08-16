@@ -78,13 +78,16 @@ const QuantityCount = ({
 
             <div className="w-[72px] h-[72px] xl:w-[124px] xl:h-[124px] relative">
               <Link href={`/products/detail/${item.product_id}`}>
-                <Image
-                  src={item.main_img}
-                  alt="상품 사진"
-                  fill
-                  sizes="72px xl:124px"
-                  className={`object-cover rounded ${isPastEndDate ? "opacity-55" : ""}`}
-                />
+                <div className="w-[72px] h-[72px] relative">
+                  <Image
+                    src={item.main_img}
+                    alt="상품 사진"
+                    priority
+                    fill
+                    sizes="72px xl:124px"
+                    className={`object-cover rounded ${isPastEndDate ? "opacity-55" : ""}`}
+                  />
+                </div>
                 {isPastEndDate && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
                     <p className="text-[#FFFFFE] text-[16px] xl:text-[18px] ">판매 종료</p>

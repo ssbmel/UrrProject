@@ -11,6 +11,7 @@ import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
 import { getInfluencerData } from "@/services/users/influencer/influencer.service";
+import InfGuidModal from "./InfGuidModal";
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -79,30 +80,33 @@ function InfluencerList() {
   });
 
   return (
-    <div className="w-full bg-[#F4F4F4] mx-auto">
+    <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
+      <InfGuidModal/>
       <div className="w-full min-h-[200px] h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {subscribeIds.length === 0 ? (
           <div className="flex flex-col items-center mx-auto">
-            <div className="relative w-[150px] h-[100px] my-3">
+            <div className="relative w-[150px] h-[100px] my-3 xl:mt-[48px] xl:mb-6">
               <Image src={emptyImg} alt="empty" fill sizes="100px" className="mx-auto my-5 object-cover" />
             </div>
-            <p className="text-[#4C4F52] text-[16px] my-5">현재 구독중인 인플루언서가 없습니다.</p>
+            <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px]">
+              현재 구독중인 인플루언서가 없습니다.
+            </p>
           </div>
         ) : (
-          <div className="w-auto flex overflow-x-auto mt-5 gap-3  scrollbar-hide">
+          <div className="w-auto flex overflow-x-auto mt-5 gap-3 scrollbar-hide p-2">
             {infUser
               ?.filter((inf) => subscribeIds.includes(inf.id))
               .map((inf) => (
                 <div className="grid text-center" key={inf.id}>
-                  <div className="relative w-[90px] h-[90px] mb-2">
+                  <div className="relative w-[90px] h-[90px] mb-2 xl:w-[140px] xl:h-[140px]">
                     <Link href={`influencer/profile/${inf.id}`}>
-                      <div className="relative w-[90px] h-[90px]">
+                      <div className="relative w-[90px] h-[90px] xl:w-[140px] xl:h-[140px]">
                         <Image
                           src={inf.profile_url || defaultImg}
                           alt="img"
                           fill
-                          sizes="90px"
+                          sizes="90px xl:w-[140px]"
                           className="rounded-md object-cover gradient-border"
                         />
                       </div>
@@ -126,25 +130,28 @@ function InfluencerList() {
                       )}
                     </div>
                   </div>
-                  <p className="text-[13px] mb-2">{inf.nickname}</p>
+                  <p className="text-[14px] mb-2 xl:text-[16px]">{inf.nickname}</p>
                 </div>
               ))}
           </div>
         )}
       </div>
       <div className="w-full h-[70%] p-4 my-2 bg-[#FFFFFE]">
-        <h1 className="font-bold text-lg mb-4">인플루언서</h1>
-        <div className="w-full grid grid-cols-3 auto-rows-max overflow-y-auto scrollbar">
+        <div className="flex items-center">
+          <h1 className="font-bold text-lg mb-4 xl:mt-[52px]">인플루언서</h1>
+          <p className="ml-auto text mt-1 xl:text-lg mb-4 xl:mt-[52px]">총 {infUser?.length}명</p>
+        </div>
+        <div className="w-full grid grid-cols-3 overflow-y-auto scrollbar xl:grid-cols-5">
           {infUser?.map((inf) => (
             <div key={inf.id} className="flex flex-col items-center justify-center w-[106px] text-center mx-auto">
-              <div className="relative w-[106px] h-[106px] mb-2">
+              <div className="relative w-[106px] h-[106px] mb-2 xl:w-[207px] xl:h-[207px]">
                 <Link href={`influencer/profile/${inf.id}`} key={inf.id}>
-                  <div className="relative w-[106px] h-[106px]">
+                  <div className="relative w-[106px] h-[106px] xl:w-[207px] xl:h-[207px]">
                     <Image
                       src={inf.profile_url || defaultImg}
                       alt="img"
                       fill
-                      sizes="106px"
+                      sizes="106px xl:w-[207px]"
                       className="rounded-md object-cover gradient-border"
                     />
                   </div>
@@ -168,7 +175,7 @@ function InfluencerList() {
                   )}
                 </div>
               </div>
-              <p className="text-[#4C4F52] mb-6">{inf.nickname}</p>
+              <p className="text-[#4C4F52] mb-6 xl:text-[20px] whitespace-nowrap">{inf.nickname}</p>
             </div>
           ))}
         </div>

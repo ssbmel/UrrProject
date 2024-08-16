@@ -35,7 +35,7 @@ const ReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImages, upl
     setReviewImages((prevFiles) => {
       const totalFiles = prevFiles.length + newReviewImgGroups.length;
       if (totalFiles > 3) {
-        alert("사진은 최대 3장까지 업로드 가능합니다.");
+        swal("사진은 최대 3장까지 업로드 가능합니다.");
         return prevFiles;
       }
       return [...prevFiles, ...newReviewImgGroups];

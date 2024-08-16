@@ -27,6 +27,7 @@
     "react-modal": "^3.16.1",
     "sharp": "^0.33.4",
     "supabase": "^1.190.0",
+    "sweetalert": "^2.1.2",
     "swiper": "^11.1.5",
     "tailwind-scrollbar-hide": "^1.1.7",
     "uuidv4": "^6.2.13",

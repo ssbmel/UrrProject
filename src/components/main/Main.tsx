@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import BestProductsList from "./BestProductsList";
 import SubInfluencer from "./SubInfluencer";
 import BestInfluencerList from "./BestInfluencerList";
-import ReviewList from "./ReviewList";
-import Banner from "./swiper/Banner";
 import "./style.css";
 import { Product, Review, User } from "../../../types/common";
 import LoadingUrr from "../common/loading/LoadingUrr";
+import ReviewList from "./ReviewList";
+import Banner from "./swiper/Banner";
+
 
 function Main() {
   const [productsList, setProductsList] = useState<Product[]>([]);

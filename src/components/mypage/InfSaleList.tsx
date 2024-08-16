@@ -9,6 +9,8 @@ import { Product } from "../../../types/common";
 import Image from "next/image";
 import WriteIcon from "../../../public/icon/writeIcon.svg";
 import TrashCanIcon from "../../../public/icon/trashcanIcon.svg";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 interface Props {
   user: PublicUser;
@@ -19,6 +21,7 @@ const InfSaleList = ({ user }: Props) => {
   const onGoingStyle =
     "min-w-[58px] text-center bg-[#80BAFF] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]";
   const endStyle = "min-w-[58px] text-center bg-[#CDCFD0] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]";
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +32,28 @@ const InfSaleList = ({ user }: Props) => {
       fetchData();
     }
   }, []);
+
+  const deletePost = async (data: { id: string }) => {
+    const response = await fetch("/api/products", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+      console.log(`파일이 업로드 되지 않습니다.${response.status}`);
+    }
+    return response.json();
+  };
+
+  const { mutate: deleteMutation } = useMutation<Product, unknown, { id: string }>({
+    mutationFn: (data) => deletePost(data)
+  });
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
+    deleteMutation({ id });
+    router.push("/mypage");
+  };
 
   return (
     <>
@@ -52,7 +77,7 @@ const InfSaleList = ({ user }: Props) => {
                     <div className="flex flex-col w-[calc(100%-68px)]">
                       <div className="flex items-center w-full gap-[4px]">
                         <span className="whitespace-nowrap text-ellipsis overflow-hidden font-[400]">
-                          {item.title?.split("] ")[1]}
+                          {item.title?.split("]")[1]}
                         </span>
                         <span className="min-w-[58px] text-center bg-[#80BAFF] rounded-[50px] text-[12px] px-[8px] py-[2px] text-[#FFFFFE]">
                           {new Date() > new Date(item.end) ? "종료" : "진행 중"}
@@ -65,11 +90,17 @@ const InfSaleList = ({ user }: Props) => {
                   </div>
                   <div className="flex items-center">
                     {new Date() > new Date(item.end) ? null : (
-                      <button className="">
+                      <Link href={`/products/upload/${item.id}`}>
+                      <button  
+                      
+              className="">
                         <WriteIcon />
                       </button>
+                      </Link>
                     )}
-                    <button className="">
+                    <button className=""
+                    type="button"
+              onClick={() => handleDelete(item.id)}>
                       <TrashCanIcon />
                     </button>
                   </div>

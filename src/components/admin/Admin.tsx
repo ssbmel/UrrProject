@@ -5,10 +5,12 @@ import { infUserApprove, updateUserApprove } from "@/services/users/users.servic
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { createClient } from "../../../supabase/client";
 
 export default function AdminPage() {
   const [restart, setRestart] = useState<boolean>(false);
   const router = useRouter();
+  const supabase = createClient();
 
   const { data: influencerApproveList, isSuccess } = useQuery({
     queryKey: ["infApprove", restart],
@@ -32,6 +34,34 @@ export default function AdminPage() {
     }
   }
 
+  const getInfluProfile = async (owner_id: string) : Promise<string | null> => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('profile_url')
+      .eq('id', owner_id)
+      .single();
+    if (error) {
+      console.log(error)
+      return null;
+    }
+    else
+      return data.profile_url;
+  }
+
+  const createNewChatChannel = async (owner_id: string, nickname: string) => {
+    const profile_url = await getInfluProfile(owner_id);
+    const { data, error } = await supabase
+      .from('chat_channels')
+      .insert({
+        owner_id: owner_id,
+        channel_name: nickname,
+        owner_profile_url: profile_url
+    })
+    if (error)
+      console.log(error)
+   
+  }
+
   return (
     <>
       <div className=" p-5 h-[700px] whitespace-nowrap">
@@ -43,7 +73,10 @@ export default function AdminPage() {
                 <div>닉네임: {inf.nickname} </div>
                 <div>확인 링크: {inf.account_link}</div>
                 <button
-                  onClick={() => influencerApproveHandler(inf.id)}
+                  onClick={() => {
+                    influencerApproveHandler(inf.id);
+                    createNewChatChannel(inf.id, inf.nickname)
+                  }}
                   className="w-10 bg-[#1A82FF] p-1 rounded-md ml-2"
                 >
                   승인

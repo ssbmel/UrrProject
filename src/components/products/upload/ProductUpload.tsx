@@ -134,14 +134,14 @@ function ProductUpload() {
 
     const productData: Product = {
       category: radioCheckedValue,
-      start: startDateRef.current?.value || null,
+      start: startDateRef.current?.value!,
       end: endDateRef.current?.value as string,
       cost: parseInt(costRef.current?.value!),
       price: parseInt(priceRef.current?.value!),
-      product_count: productCountRef.current?.value ? parseInt(productCountRef.current?.value) : null,
-      title: titleRef.current?.value || null,
-      text: textRef.current?.value || null,
-      detail_img: detailImgId,
+      product_count: parseInt(productCountRef.current?.value!),
+      title: titleRef.current?.value!,
+      text: textRef.current?.value!,
+      detail_img: detailImgId!,
       main_img: mainImgId,
       user_id: user.id,
       created_at: new Date().toISOString(),
@@ -167,47 +167,37 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      swal("상품");
       swal("상품등록 성공!", "등록이 완료되었습니다.", "닫기");
       saveMutation(productData);
       router.push("/products/list");
     }
   };
 
-  const deletePost = async (data: { id: string }) => {
-    const response = await fetch("/api/products", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  };
+  // const deletePost = async (data: { id: string }) => {
+  //   const response = await fetch("/api/products", {
+  //     method: "DELETE",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data)
+  //   });
+  //   if (!response.ok) {
+  //     throw new Error(`HTTP error! status: ${response.status}`);
+  //   }
+  //   return response.json();
+  // };
 
-  const { mutate: deleteMutation } = useMutation<Product, unknown, { id: string }>({
-    mutationFn: (data) => deletePost(data)
-  });
+  // const { mutate: deleteMutation } = useMutation<Product, unknown, { id: string }>({
+  //   mutationFn: (data) => deletePost(data)
+  // });
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
-    deleteMutation({ id });
-    router.push("/products/list");
-  };
+  // const handleDelete = async (id: string) => {
+  //   if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
+  //   deleteMutation({ id });
+  //   router.push("/products/list");
+  // };
 
   return (
     <form onSubmit={onSubmit}>
        <div className="w-full bg-[#fffffe] flex justify-end xl:max-w-[1200px] xl:mx-auto">
-          {id === "new" ? null : (
-            <button
-              type="button"
-              onClick={() => handleDelete(id as string)}
-              className="bg-red-500 text-white p-2 rounded-sm my-2 mr-5"
-            >
-              삭제하기
-            </button>
-          )}
           <button
             type="submit"
             className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3 xl:hidden"
@@ -216,7 +206,7 @@ function ProductUpload() {
           </button>
           <button
             type="submit"
-            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[18px] rounded-lg py-[14px] px-[36px] font-semibold hidden xl:block "
+            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[18px] rounded-lg py-[14px] px-[36px] font-semibold hidden xl:block"
           >
             {id === "new" ? "글 올리기" : "수정완료"}
           </button>

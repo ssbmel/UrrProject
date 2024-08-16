@@ -78,7 +78,7 @@ const QuantityCount = ({
 
             <div className="w-[72px] h-[72px] xl:w-[124px] xl:h-[124px] relative">
               <Link href={`/products/detail/${item.product_id}`}>
-                <div className="w-[72px] h-[72px] relative">
+                <div className="w-[72px] h-[72px] xl:w-[124px] xl:h-[124px] relative">
                   <Image
                     src={item.main_img}
                     alt="상품 사진"

@@ -63,16 +63,15 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col h-[700px] w-[375px] mx-auto xl:justify-center p-4">
-          <div className="flex justify-center items-center h-[35%] xl:hidden">
+          <div className="flex justify-center items-center h-[31%] xl:hidden">
             <Image src={logo} alt="URR 로고 이미지" width={134} height={65} />
           </div>
           <h2 className="hidden xl:block text-[24px] font-bold mx-auto mb-[43px]">로그인</h2>
 
-          <form onSubmit={loginHandler} className="flex flex-col h-[35%]">
+          <form onSubmit={loginHandler} className="flex flex-col h-[39%]">
             <input type="text" placeholder="이메일" className={stInput} ref={emailRef} />
             <input type="password" placeholder="비밀번호" className={stInput} ref={passwordRef} />
-            {/* <button className="flex justify-end mb-4">비밀번호 찾기</button> */}
-            <div className="mb-[40px]"></div>
+            <div className="mb-[62px]"></div>
             <button type="submit" className="bg-[#1A82FF] text-white h-[50px] rounded-md text-lg">
               로그인하기
             </button>

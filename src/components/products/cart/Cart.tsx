@@ -6,6 +6,7 @@ import { useUserCartItems } from "@/hooks/useUserCartItems";
 import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 import QuantityCount from "./QuantityCount";
+import { createClient } from "../../../../supabase/client";
 
 export type DataType = {
   amount: number;
@@ -104,15 +105,6 @@ function Cart() {
     return end < today;
   };
 
-  // useEffect(() => {
-  //   if (!allCartItems || !allCartItems.length) return;
-  //   let checked = true;
-  //   if (allCartItems.some((item) => !item.isChecked || isEndDate(item))) {
-  //     checked = false;
-  //   }
-  //   setAllChecked(checked);
-  // }, [allCartItems]);
-
   // 전체선택
   const selectAllHandler = (checked: boolean) => {
     if (checked) {
@@ -130,9 +122,15 @@ function Cart() {
       addItems(item);
     }
   };
+
   /** 아이템 삭제 업데이트 */
   const removeItemFromState = (product_id: string) => {
     setAllCartItems((prevItems) => prevItems.filter((item) => item.product_id !== product_id));
+  };
+
+  /** 아이템 전체 삭제 업데이트 */
+  const removeAllItemFromState = (userId: string) => {
+    setAllCartItems((prevItems) => prevItems.filter((item) => item.user_id !== userId));
   };
 
   /** 주문 총금액 확인 함수 */
@@ -149,9 +147,28 @@ function Cart() {
       .reduce((total, item) => total + (item.cost - item.amount) * item.quantity, 0);
   };
 
+  /** 아이템 전체 삭제 */
+  const allDeleteItem = async (userId: string) => {
+    const supabase = createClient();
+    const isConfirmed = confirm("전체상품을 장바구니 목록에서 삭제하시겠습니까?");
+
+    if (!isConfirmed) {
+      return;
+    }
+
+    const { data, error } = await supabase.from("cart").delete().eq("user_id", userId);
+
+    if (error) {
+      console.error("Error allDeleteItem item:", error);
+    } else {
+      console.log("Item allDeleteItem:", data);
+      removeAllItemFromState(userId);
+    }
+  };
+
   return (
     <div className=" w-full xl:w-[1132px] xl:mx-auto p-4">
-      <h2 className="hidden xl:block text-[28px] font-bold text-center mb-[32px]">장바구니</h2>
+      <h2 className="hidden xl:block text-2xl font-bold text-center mb-[32px]">장바구니</h2>
       <div className="flex justify-between items-center gap-2 pb-5 border-b-2 border-[#EAECEC]">
         <label>
           <input
@@ -166,7 +183,14 @@ function Cart() {
           />
           전체상품
         </label>
-        <button className=" text-primarynormal">삭제</button>
+        <button
+          onClick={() => {
+            allDeleteItem(userId);
+          }}
+          className=" text-primarynormal"
+        >
+          삭제
+        </button>
       </div>
 
       {allCartItems?.map((item: DataType) => (

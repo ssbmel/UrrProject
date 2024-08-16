@@ -17,6 +17,9 @@ const nextConfig = {
       },
       {
         hostname: "t1.gstatic.com"
+      },
+      {
+        hostname: "t1.kakaocdn.net"
       }
     ]
   },

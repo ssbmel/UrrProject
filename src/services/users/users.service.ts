@@ -99,3 +99,9 @@ export const nicknameCheck = async (nickname: string) => {
   const data = await response.json();
   return data;
 };
+
+export const emailCheck = async (email: string) => {
+  const response = await fetch(`/api/auth/signup/emailcheck?email=${email}`);
+  const data = await response.json();
+  return data;
+};

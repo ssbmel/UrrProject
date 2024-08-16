@@ -1,6 +1,6 @@
 "use client";
 
-import { userSignUp } from "@/services/users/users.service";
+import { emailCheck, userSignUp } from "@/services/users/users.service";
 import { Dispatch, SetStateAction, useState } from "react";
 import { nicknameCheck } from "@/services/users/users.service";
 import { StepType } from "@/app/(provider)/(root)/signup/page";
@@ -89,7 +89,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
   };
 
   // 이메일 유효성검사
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -97,11 +97,18 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailConfirmMessage("이메일 형식이 다시 확인해주세요!");
+      setEmailConfirmMessage("이메일 형식을 다시 확인해주세요!");
       setIsEmailConfirm(false);
     } else {
-      setEmailConfirmMessage("");
-      setIsEmailConfirm(true);
+      const overlapEmail = await emailCheck(emailCurrent);
+
+      if (overlapEmail.length !== 0) {
+        setEmailConfirmMessage("이미 사용중인 이메일입니다");
+        setIsEmailConfirm(false);
+      } else {
+        setEmailConfirmMessage("");
+        setIsEmailConfirm(true);
+      }
     }
   };
 

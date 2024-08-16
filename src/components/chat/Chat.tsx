@@ -547,7 +547,7 @@ export default function Chat({ params }: detailProps) {
         <div ref={textareadiv} className="flex flex-row w-full h-[40px] bottom-0 shrink-0 mt-2 mb-6 px-4">
           <textarea
             onKeyDown={pressEnter}
-            className="xl:scrollbar-hide flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
+            className="xl:scrollbar-hide resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
             value={message}
             onChange={handleTextarea}
             ref={textarea}

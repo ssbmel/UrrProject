@@ -101,21 +101,25 @@ export default function Payment() {
           <div className="hidden xl:block mt-20 w-[430px] h-[401px] bg-white p-[44px] rounded-3xl shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)]">
             <div className="flex flex-col gap-[28px]">
               <p className="text-[24px] font-semibold">결제비용</p>
-              <div className="text-[20px]  text-[#4C4F52]">
-                <div className="flex justify-between py-1">
-                  <p>주문 금액</p>
-                  <p>{price.toLocaleString()} 원</p>
+              {price > 0 && (
+                <div className="text-[20px] text-[#4C4F52]">
+                  <div className="flex justify-between py-1">
+                    <p>주문 금액</p>
+                    <p>{price.toLocaleString()} 원</p>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <p>배송비</p>
+                    <p>3,000 원</p>
+                  </div>
                 </div>
-                <div className="flex justify-between py-1">
-                  <p>배송비</p>
-                  <p>3,000 원</p>
-                </div>
+              )}
+            </div>
+            {totalAmount > 0 && (
+              <div className="flex justify-between text-[20px] py-[36px]">
+                <p>최종 결제 금액</p>
+                <p>{totalAmount.toLocaleString()} 원</p>
               </div>
-            </div>
-            <div className="flex justify-between text-[20px] py-[36px]">
-              <p>최종 결제 금액</p>
-              <p>{totalAmount.toLocaleString()} 원</p>
-            </div>
+            )}
             <button
               className="w-full  h-[50px] rounded-md bg-primarynormal text-white mt-[20px] text-[20px]"
               onClick={handleSubmit}

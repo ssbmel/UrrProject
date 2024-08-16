@@ -33,28 +33,28 @@ export default function Banner() {
       >
         <SwiperSlide>
           <div className="xl:w-[1920px] relative">
-            <Image src={banner1} alt="mainImg" width={1920} height={688} className="object-cover" />
+            <Image src={banner1} alt="mainImg" width={1920} height={688} className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-[1920px] relative">
-            <Image src={banner2} alt="mainImg" width={1920} height={688} className="object-cover" />
+            <Image src={banner2} alt="mainImg" width={1920} height={688} className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-[1920px] relative">
-            <Image src={banner3} alt="mainImg" width={1920} height={688} className="object-cover" />
+            <Image src={banner3} alt="mainImg" width={1920} height={688} className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-[1920px] relative">
-            <Image src={banner4} alt="mainImg" width={1920} height={688} className="object-cover" />
+            <Image src={banner4} alt="mainImg" width={1920} height={688} className="object-contain" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <Link href={"/influencer"}>
             <div className="xl:w-[1920px] relative">
-              <Image src={banner5} alt="mainImg" width={1920} height={688} className="object-cover" />
+              <Image src={banner5} alt="mainImg" width={1920} height={688} className="object-contain" />
             </div>
           </Link>
         </SwiperSlide>

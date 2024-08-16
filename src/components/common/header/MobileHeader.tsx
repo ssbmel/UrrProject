@@ -10,13 +10,14 @@ import XIcon from "../../../../public/icon/XIcon.svg";
 import AddProductIcon from "../../../../public/icon/addProductIcon.svg";
 import { useState } from "react";
 import SearchModal from "../search/SearchModal";
+import { useUserData } from "@/hooks/useUserData";
 
 const MobileHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
-  // const {setRefContent}=useAddrStore();
+  const { data: user } = useUserData();
 
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
@@ -31,7 +32,6 @@ const MobileHeader = () => {
   const INFLUENCER = pathname === "/influencer";
 
   const isInfluncer = () => {
-    const { data: user } = useUserData();
     if (user?.approve) {
       return true;
     }

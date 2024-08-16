@@ -7,7 +7,7 @@ export const POST = async (request: NextRequest) => {
 
   const { error } = await supabase.from("order").insert({
     userId: req.userId,
-    price: req.price,
+    price: req.price + 3000,
     name: req.name,
     address: req.address,
     phoneNumber: req.phoneNumber,

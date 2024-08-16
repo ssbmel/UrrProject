@@ -93,7 +93,6 @@ const MyReviewList = () => {
                       <p className="text-[12px] text-[#B2B5B8]">{formatDate(review.created_at)}</p>
                     </div>
                   </Link>
-
                   <button onClick={() => handleDelete(review)} className="p-[9px]">
                     <TrashCan />
                   </button>

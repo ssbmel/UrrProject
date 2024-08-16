@@ -343,51 +343,51 @@ export type Database = {
       }
       products: {
         Row: {
-          category: string | null
+          category: string
           cost: number
           created_at: string
-          detail_img: string[] | null
+          detail_img: string[]
           end: string
           id: string
-          main_img: string | null
-          nickname: string | null
+          main_img: string
+          nickname: string
           price: number
-          product_count: number | null
-          start: string | null
-          text: string | null
-          title: string | null
+          product_count: number
+          start: string
+          text: string
+          title: string
           user_id: string
         }
         Insert: {
-          category?: string | null
+          category: string
           cost: number
           created_at?: string
-          detail_img?: string[] | null
+          detail_img: string[]
           end: string
           id: string
-          main_img?: string | null
-          nickname?: string | null
+          main_img: string
+          nickname: string
           price: number
-          product_count?: number | null
-          start?: string | null
-          text?: string | null
-          title?: string | null
+          product_count: number
+          start: string
+          text: string
+          title: string
           user_id: string
         }
         Update: {
-          category?: string | null
+          category?: string
           cost?: number
           created_at?: string
-          detail_img?: string[] | null
+          detail_img?: string[]
           end?: string
           id?: string
-          main_img?: string | null
-          nickname?: string | null
+          main_img?: string
+          nickname?: string
           price?: number
-          product_count?: number | null
-          start?: string | null
-          text?: string | null
-          title?: string | null
+          product_count?: number
+          start?: string
+          text?: string
+          title?: string
           user_id?: string
         }
         Relationships: [

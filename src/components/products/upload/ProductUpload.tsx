@@ -133,35 +133,35 @@ function ProductUpload() {
     const detailImgId = await uploadDetailImages(postId);
 
     const productData: Product = {
-      category: radioCheckedValue,
-      start: startDateRef.current?.value!,
-      end: endDateRef.current?.value as string,
-      cost: parseInt(costRef.current?.value!),
-      price: parseInt(priceRef.current?.value!),
-      product_count: parseInt(productCountRef.current?.value!),
-      title: titleRef.current?.value!,
-      text: textRef.current?.value!,
-      detail_img: detailImgId!,
-      main_img: mainImgId,
-      user_id: user.id,
+      category: radioCheckedValue || "", // Ensure category is a string
+      start: startDateRef.current?.value as string, // Use null if the value is an empty string
+      end: endDateRef.current?.value as string, // Use null if the value is an empty string
+      cost: parseInt(costRef.current?.value || "0"), // Ensure cost is a number
+      price: parseInt(priceRef.current?.value || "0"), // Ensure price is a number
+      product_count: parseInt(productCountRef.current?.value || "0"), // Ensure product_count is a number
+      title: titleRef.current?.value || "", // Ensure title is a string
+      text: textRef.current?.value || "", // Ensure text is a string
+      detail_img: detailImgId || [], // Ensure detail_img is an array of strings
+      main_img: mainImgId || "", // Ensure main_img is a string
+      user_id: user.id || "", // Ensure user_id is a string
       created_at: new Date().toISOString(),
-      id: id === "new" ? postId : (id as string),
-      nickname: user.nickname
+      id: id === "new" ? postId : id as string,  // Ensure id is a string
+      nickname: user.nickname || "" // Ensure nickname is a string
     };
 
-    if (
-      !productData.category ||
-      !productData.start ||
-      !productData.end ||
-      !productData.cost ||
-      !productData.price ||
-      !productData.product_count ||
-      !productData.title ||
-      !productData.text
-    ) {
-      swal("상품 정보를 입력해주세요.");
-      return;
-    }
+    // if (
+    //   !productData.category ||
+    //   !productData.start ||
+    //   !productData.end ||
+    //   !productData.cost ||
+    //   !productData.price ||
+    //   !productData.product_count ||
+    //   !productData.title ||
+    //   !productData.text
+    // ) {
+    //   swal("상품 정보를 입력해주세요.");
+    //   return;
+    // }
 
     const { data, error } = await supabase.from("products").upsert([productData]).select();
     if (error) {

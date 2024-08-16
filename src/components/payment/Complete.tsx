@@ -52,7 +52,7 @@ export default function Complete() {
   return (
     <div className="w-100vw overflow-hidden">
       <div className="bg-white rounded-lg mb-[10px]">
-        <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
+        <div className="border-[#F4F4F4] border-[6px] w-full mt-3 hidden xl:block" />
         <div className="p-8 text-center">
           <h2 className="text-[16px] mb-[12px] text-red-600">저희 프로젝트에서 결제한 내역은 즉시 환불됩니다</h2>
           <div className="flex justify-center">

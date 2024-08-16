@@ -37,7 +37,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
           <WebSignupBg1 className="xl:max-w-full xl:max-h-full" />
         </div>
 
-        <div className="flex flex-col justify-between h-screen xl:h-[783px] w-[375px] mx-auto p-4">
+        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[783px] w-[375px] mx-auto p-4">
           <div>
             <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
             <div className="flex flex-col xl:items-center justify-center h-24">
@@ -85,7 +85,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             </div>
           </div>
 
-          <div className="pb-[28px] w-full mb-7">
+          <div className="pb-[28px] w-full">
             <button
               onClick={infNextSignUpPage}
               className={`${

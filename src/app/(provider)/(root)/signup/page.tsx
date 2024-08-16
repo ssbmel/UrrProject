@@ -13,13 +13,20 @@ const UrrSignUp = () => {
 
   return (
     <>
-      {step === "회원유형" && (
-        <SelectMember setStep={setStep} confirmRef={confirmRef} setSelectUser={setSelectUser} selectUser={selectUser} />
-      )}
-      {step === "회원가입" && (
-        <SignUp setStep={setStep} confirmRef={confirmRef.current?.value} selectUser={selectUser} />
-      )}
-      {step === "완료" && <SuccessfulSignUp />}
+      <div className="absolute w-full">
+        {step === "회원유형" && (
+          <SelectMember
+            setStep={setStep}
+            confirmRef={confirmRef}
+            setSelectUser={setSelectUser}
+            selectUser={selectUser}
+          />
+        )}
+        {step === "회원가입" && (
+          <SignUp setStep={setStep} confirmRef={confirmRef.current?.value} selectUser={selectUser} />
+        )}
+        {step === "완료" && <SuccessfulSignUp />}
+      </div>
     </>
   );
 };

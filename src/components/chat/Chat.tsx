@@ -91,8 +91,8 @@ export default function Chat({ params }: detailProps) {
         .from("chat_messages")
         .select("*")
         .eq("channel_id", channel_id)
-        .order('created_at', { ascending: true })
-        .lt('created_at', last_time);
+        .order("created_at", { ascending: true })
+        .lt("created_at", last_time);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -108,16 +108,16 @@ export default function Chat({ params }: detailProps) {
       }
     } else {
       //팬
-      const last_time = await checkMySubLastTime()
+      const last_time = await checkMySubLastTime();
       const created_at_time = await checkMySubCreatedAtTime();
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
         .in("user_id", [user_id, influ_id])
         .eq("channel_id", channel_id)
-        .order('created_at', { ascending: true })
-        .gt('created_at', created_at_time)
-        .lt('created_at', last_time);
+        .order("created_at", { ascending: true })
+        .gt("created_at", created_at_time)
+        .lt("created_at", last_time);
       if (error) console.log(error);
       else {
         const preMessageDataList = data?.map((message) => {
@@ -145,8 +145,8 @@ export default function Chat({ params }: detailProps) {
         .from("chat_messages")
         .select("*")
         .eq("channel_id", channel_id)
-        .order('created_at', { ascending: true })
-        .gt('created_at', last_time);
+        .order("created_at", { ascending: true })
+        .gt("created_at", last_time);
       if (error) console.log(error);
       else {
         const newMessageDataList = data?.map((message) => {
@@ -163,15 +163,15 @@ export default function Chat({ params }: detailProps) {
       updateMyChannelLastTime();
     } else {
       //팬
-      const last_time = await checkMySubLastTime()
+      const last_time = await checkMySubLastTime();
       const created_at_time = await checkMySubCreatedAtTime();
       const { data, error } = await supabase
         .from("chat_messages")
         .select("*")
         .in("user_id", [user_id, influ_id])
         .eq("channel_id", channel_id)
-        .order('created_at', { ascending: true })
-        .gt('created_at', last_time);
+        .order("created_at", { ascending: true })
+        .gt("created_at", last_time);
       if (error) console.log(error);
       else {
         const newMessageDataList = data?.map((message) => {
@@ -191,8 +191,8 @@ export default function Chat({ params }: detailProps) {
   };
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value)
-  }
+    setMessage(e.target.value);
+  };
 
   const sendChatMessage = async () => {
     const user_id = await userdata.id;
@@ -279,20 +279,18 @@ export default function Chat({ params }: detailProps) {
     const user_id = await userdata.id;
     const { data, error } = await supabase
       .from("chat_subscribe")
-      .update({ "update_data": "" })
+      .update({ update_data: "" })
       .eq("channel_id", channel_id)
       .eq("user_id", user_id);
-    if (error)
-      console.log(error);
+    if (error) console.log(error);
   };
 
   const updateMyChannelLastTime = async () => {
     const { data, error } = await supabase
       .from("chat_channels")
-      .update({ "update_data": "" })
-      .eq("channel_id", channel_id)
-    if (error)
-      console.log(error);
+      .update({ update_data: "" })
+      .eq("channel_id", channel_id);
+    if (error) console.log(error);
   };
 
   const receiveChatMessage = async () => {
@@ -377,10 +375,10 @@ export default function Chat({ params }: detailProps) {
     scrollToBottom();
   }, [newMessages, receiveMessages]);
 
-
   const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.nativeEvent.isComposing) { 	   // isComposing 이 true 이면 
-      return;				   // 조합 중이므로 동작을 막는다.
+    if (e.nativeEvent.isComposing) {
+      // isComposing 이 true 이면
+      return; // 조합 중이므로 동작을 막는다.
     }
 
     if (e.key === "Enter" && !e.shiftKey) {
@@ -397,8 +395,12 @@ export default function Chat({ params }: detailProps) {
   };
 
   return (
-    <div className="h-full overflow-hidden flex flex-col xl:w-[375px] xl:mx-auto">
-      <div key={channel_id} ref={scrollRef} className="relative overflow-y-scroll bg-[#E1EEFE] grow">
+    <div className="h-full w-[100vw] overflow-hidden flex flex-col xl:w-[375px] xl:mx-auto ">
+      <div
+        key={channel_id}
+        ref={scrollRef}
+        className="relative overflow-y-scroll h-[calc(100vh-124px)] bg-[#E1EEFE] grow"
+      >
         <div ref={scrollPreRef}>
           {preMessages?.map((preMessage) =>
             preMessage.isMine ? (
@@ -445,13 +447,17 @@ export default function Chat({ params }: detailProps) {
             )
           )}
         </div>
-        {newMessages.length !== 0 ?
+        {newMessages.length !== 0 ? (
           <div className="flex flex-row w-full h-[40px] items-center my-[30px]">
             <div className="h-[2px] ml-[15px] w-full bg-[#B2B5B8]"></div>
-            <div className="mx-[10px] text-[#989C9F] flex-none w-[150px] h-[24px] font-normal text-[16px] text-center">여기까지 읽었습니다</div>
+            <div className="mx-[10px] text-[#989C9F] flex-none w-[150px] h-[24px] font-normal text-[16px] text-center">
+              여기까지 읽었습니다
+            </div>
             <div className="h-[2px] mr-[15px] w-full bg-[#B2B5B8]"></div>
           </div>
-          : <></>}
+        ) : (
+          <></>
+        )}
 
         {newMessages?.map((newMessage) =>
           newMessage.isMine ? (
@@ -542,30 +548,27 @@ export default function Chat({ params }: detailProps) {
             </div>
           )
         )}
-
       </div>
-        <div ref={textareadiv} className="flex flex-row w-full h-[40px] bottom-0 shrink-0 mt-2 mb-6 px-4">
-          <textarea
-            onKeyDown={pressEnter}
-            className="xl:scrollbar-hide flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
-            value={message}
-            onChange={handleTextarea}
-            ref={textarea}
-            onInput={handleResizeHeight}
-          ></textarea>
-          <SendIcon
-            onClick={
-              message != ""
-                ? () => {
+      <div ref={textareadiv} className="flex flex-row w-full h-[40px] bottom-0 shrink-0 mt-2 mb-6 px-4">
+        <textarea
+          onKeyDown={pressEnter}
+          className="xl:scrollbar-hide flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
+          value={message}
+          onChange={handleTextarea}
+          ref={textarea}
+          onInput={handleResizeHeight}
+        ></textarea>
+        <SendIcon
+          onClick={
+            message != ""
+              ? () => {
                   sendChatMessage();
                   setMessage("");
                 }
-                : () => {
-                }
-            }
-          ></SendIcon>
-        </div>
+              : () => {}
+          }
+        ></SendIcon>
       </div>
-
+    </div>
   );
 }

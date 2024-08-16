@@ -15,11 +15,11 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
       <div className="hidden xl:block">
         <WebHeader />
       </div>
-      <main className="grow overflow-auto">
+      <main className="grow overflow-auto mb-[93px] xl:mb-0">
         {children}
         <Footer />
       </main>
-      <div className="xl:hidden">
+      <div className="xl:hidden fixed bottom-0 left-0 w-full">
         <BottomNav />
       </div>
     </>

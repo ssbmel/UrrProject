@@ -86,7 +86,7 @@ export default function Detail({ params }: detailProps) {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen xl:w-full">
+      <div className="flex flex-col min-h-screen xl:w-full ">
         <WebpDetail
           id={params.id}
           handleBuy={handleBuy}
@@ -119,26 +119,29 @@ export default function Detail({ params }: detailProps) {
             <div></div>
           </div>
 
-          <DetailInflu userId={data?.user_id} />
-          <div className="border-[#F4F4F4] border-[1px] w-full" />
+          <div>
+            <DetailInflu userId={data?.user_id} />
+            <div className="border-[#F4F4F4] border-[1px] w-full" />
 
-          <div className="my-[20px] mx-4">
-            <div className="flex justify-between items-cente py-2">
-              <p className="text-xl flex items-center font-normal text-[#1B1C1D]">{data?.title}</p>
-              <div>
-                <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
+            <div className="my-[20px] mx-4">
+              <div className="flex justify-between items-cente py-2">
+                <p className="text-xl flex items-center font-normal text-[#1B1C1D]">{data?.title}</p>
+                <div>
+                  <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
+                </div>
               </div>
+              <p className="text-gray-300 line-through font-light">{cost.toLocaleString()}</p>
+              <p className="my-1 text-[18px]">
+                <span className={`${isExpired ? "text-[#B2B5B8]" : "text-red-500"}`}>{discountPercentageInteger}%</span>
+                <span className={`ml-1 font-medium ${isExpired ? "text-[#B2B5B8]" : "text-[#1B1C1D]"}`}>
+                  {price.toLocaleString()} 원
+                </span>
+              </p>
             </div>
-            <p className="text-gray-300 line-through font-light">{cost.toLocaleString()}</p>
-            <p className="my-1 text-[18px]">
-              <span className={`${isExpired ? "text-[#B2B5B8]" : "text-red-500"}`}>{discountPercentageInteger}%</span>
-              <span className={`ml-1 font-medium ${isExpired ? "text-[#B2B5B8]" : "text-[#1B1C1D]"}`}>
-                {price.toLocaleString()} 원
-              </span>
-            </p>
           </div>
+
           <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
-          <div className="m-4 mx-auto w-[375px] flex flex-col items-center">
+          <div className="p-4 mx-auto w-[375px] flex flex-col items-center">
             <div className="flex flex-col gap-[14px] my-2 text-[16px]">
               <div className="flex">
                 <span className="w-[105px] text-[#4C4F52]">진행기간</span>
@@ -172,13 +175,25 @@ export default function Detail({ params }: detailProps) {
         <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
         <div className="flex flex-col w-full mx-auto">
           <div className="flex justify-center items-center">
-            <div onClick={() => setCompoState("상품정보")} className={getClassNames("상품정보")}>
+            <div
+              onClick={() => setCompoState("상품정보")}
+              className={getClassNames("상품정보")}
+              style={{ cursor: "pointer" }}
+            >
               상품 정보
             </div>
-            <div onClick={() => setCompoState("상품후기")} className={getClassNames("상품후기")}>
+            <div
+              onClick={() => setCompoState("상품후기")}
+              className={getClassNames("상품후기")}
+              style={{ cursor: "pointer" }}
+            >
               상품 후기 ({review?.length})
             </div>
-            <div onClick={() => setCompoState("상품문의")} className={getClassNames("상품문의")}>
+            <div
+              onClick={() => setCompoState("상품문의")}
+              className={getClassNames("상품문의")}
+              style={{ cursor: "pointer" }}
+            >
               상품 문의
             </div>
           </div>
@@ -201,22 +216,13 @@ export default function Detail({ params }: detailProps) {
           </div>
         </div>
         <div className="paybar sticky bottom-0 bg-white left-0 w-full z-30 xl:hidden">
-          <div className="flex justify-evenly py-2">
-            <div>
-              <Image
-                src={isExpired ? expiredCart : cart}
-                alt="장바구니로고"
-                width={52}
-                height={52}
-                className={isExpired ? "cursor-not-allowed" : ""}
-              />
-            </div>
+          <div className="flex justify-center p-2">
             <div>
               <button
                 onClick={() => {
                   if (!isExpired) setShowModal(true);
                 }}
-                className={`w-[278px] h-[52px] text-white text-[18px] rounded-md ${
+                className={`w-[375px] h-[52px] text-white text-[18px] rounded-md ${
                   isExpired ? "bg-[#F2F2F2] text-[#bcbebf]  cursor-not-allowed" : "bg-[#1A82FF]"
                 }`}
                 disabled={isExpired}

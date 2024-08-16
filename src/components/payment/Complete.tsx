@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { createClient } from "../../../supabase/client";
-import { Tables } from "../../../types/supabase";
 import orderCom from "../../../public/icon/orderComplete.png";
 import { refundPayment } from "@/services/payment/payment.service";
 import { useUserData } from "@/hooks/useUserData";
@@ -64,7 +63,7 @@ export default function Complete() {
               style={{ width: 24, height: 24 }}
               className=""
             />
-            <h2 className="text-[20px] py-3">주문이 완료되었습니다</h2>
+            <h2 className="text-[18px] py-3">주문이 완료되었습니다</h2>
           </div>
           <p className="text-gray-400 text-[16px]">
             <span>주문번호 </span>
@@ -75,8 +74,8 @@ export default function Complete() {
 
         <div className="flex flex-col mx-auto  xl:w-[1130px]">
           <div className="p-2 m-4 xl:my-4 xl:mx-2 xl:w-[450px]">
-            <p className="mb-4 text-[18px] xl:text-[24px]">배송정보</p>
-            <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px] xl:w-[480px] xl:text-[20px]">
+            <p className="mb-4 text-[18px] xl:text-[20px]">배송정보</p>
+            <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px] xl:w-[480px] xl:text-[18px]">
               <div className="text-[#4C4F52]">주문자</div>
               <div>{products?.name}</div>
 
@@ -94,7 +93,7 @@ export default function Complete() {
           <div className="border-[#F4F4F4] border-[6px] w-full mt-3 xl:hidden" />
           <div className="xl:w-full xl:mt-8 xl:rounded-2xl xl:shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)]">
             <div className="m-4">
-              <p className="m-3 text-lg xl:text-[24px] xl:p-2">주문상품</p>
+              <p className="m-3 text-lg xl:text-[240x] xl:p-2">주문상품</p>
               <div className="flex flex-col divide-y xl:divide-y-2">
                 {products?.product_list &&
                   (products.product_list as productList[]).map((product, index) => (
@@ -124,7 +123,7 @@ export default function Complete() {
               </div>
             </div>
             <div className="border-[#F4F4F4] border mx-3 xl:border-2" />
-            <div className="p-5 flex justify-between bottom-[80px] w-full text-lg xl:text-[24px] xl:p-7">
+            <div className="p-5 flex justify-between bottom-[80px] w-full text-lg xl:text-[20px] xl:px-8 xl:pt-[28px] xl:pb-[50px]">
               <div>최종 결제 금액</div>
               <div>{products?.price.toLocaleString()} 원</div>
             </div>

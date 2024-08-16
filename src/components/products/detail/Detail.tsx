@@ -139,7 +139,7 @@ export default function Detail({ params }: detailProps) {
           </div>
           <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
           <div className="m-4 mx-auto w-[375px] flex flex-col items-center">
-            <div className="flex flex-col gap-[14px] my-2">
+            <div className="flex flex-col gap-[14px] my-2 text-[16px]">
               <div className="flex">
                 <span className="w-[105px] text-[#4C4F52]">진행기간</span>
                 <span className="text-[#1B1C1D]">
@@ -157,7 +157,7 @@ export default function Detail({ params }: detailProps) {
               <div className="flex">
                 <span className="w-[105px] text-[#4C4F52]">배송비</span>
                 <div className="flex flex-col">
-                  <span className="text-[16px] text-[#1B1C1D]">3,000원</span>
+                  <span className="text-[#1B1C1D]">3,000원</span>
                   <span className="text-[14px] text-[#989C9F]">제주 5,000 원 / 도서산간 5,000 원</span>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { useUserData } from "@/hooks/useUserData";
 import Image from "next/image";
 import { createClient } from "../../../../supabase/client";
 import { useEffect, useRef, useState } from "react";
-import { Product, Review } from "../../../../types/common";
+import { OrderType, Product, Review } from "../../../../types/common";
 import ReviewImage from "./ReviewImage";
 import { useParams, useRouter } from "next/navigation";
 import defaultImg from "../../../../public/images/default.png";
@@ -36,9 +36,6 @@ const MyReview = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(contentRef.current?.value);
-  
-
   useEffect(() => {
     if (user) {
       getOrderData();
@@ -66,9 +63,9 @@ const MyReview = () => {
       const stringified = JSON.stringify(value);
       const result = JSON.parse(stringified);
       return result;
-    }); /* 데이터가 직렬화 이외의 방법이 사용된 Json 타입으로 들어오므로 stringify와 parse 작업을 한 번 거친다.  */
+    });
     const matchedProduct = handledJsonData.find((value) => value.id === Ids.id);
-    setOrderData(matchedProduct);
+    setOrderData(matchedProduct)
   };
 
   useEffect(() => {
@@ -169,6 +166,9 @@ const MyReview = () => {
   };
 
   const handleClose = () => setIsOpen(false);
+
+  console.log();
+  
 
   return (
     <div>

@@ -55,10 +55,9 @@ export default function Chat({ params }: detailProps) {
 
   const handleResizeHeight = () => {
     if (textarea.current && textareadiv.current) {
-      if (textarea.current.scrollHeight <= 112) {
+      if (textarea.current.scrollHeight >= 40 && textarea.current.scrollHeight <= 112) {
         textarea.current.style.height = textarea.current.scrollHeight + "px";
         textareadiv.current.style.height = textarea.current.scrollHeight + "px";
-
       }
     }
   };
@@ -66,7 +65,7 @@ export default function Chat({ params }: detailProps) {
   const resizeHeight = () => {
     if (textarea.current && textareadiv.current) {
       textarea.current.style.height = "40px";
-      textareadiv.current.style.height = "76px";
+      textareadiv.current.style.height = "40px";
     }
   };
 

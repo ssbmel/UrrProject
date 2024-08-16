@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { bottomMenu } from "./BottomMenu";
 import { useState } from "react";
+import AlertMessage from "../alert/AlertMessage";
 
 export default function BottomNav() {
   const pathname = usePathname();
@@ -27,8 +28,13 @@ export default function BottomNav() {
             <div key={menu.id} onClick={() => setActiveMenu(menu.id)}>
               <Link href={menu.link}>
                 <div className={liStyle}>
-                  <div className="flex flex-col items-center gap-[4px] px-[6px]">
-                    <div className="">{activeMenu !== menu.id ? menu.icon : menu.blueIcon}</div>
+                  <div className="flex flex-col items-center gap-[4px] px-[6px] relative">
+                    {menu.id == 5 ?
+                      <AlertMessage />
+                      : <></>}
+                    <div className="">
+                      {activeMenu !== menu.id ? menu.icon : menu.blueIcon}
+                    </div>
                     <p className={activeMenu !== menu.id ? "" : "text-primarystrong"}>{menu.label}</p>
                   </div>
                 </div>

@@ -5,6 +5,7 @@ import { createClient } from "../../../supabase/client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useAlertchatStore } from "@/zustand/alertchatStore";
 
 export default function ChatList() {
   const userdata = useUserData().data;
@@ -14,6 +15,7 @@ export default function ChatList() {
   const [chatListData, setChatListData] = useState<({ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; countMessages: number; } | undefined)[]>([]);
   const [myChannel, setMyChannel] = useState<{ channel_id: number; channel_name: string | null; owner_id: string; owner_profile_url: string | null; created_at: string; message: string | null; countMessages: number; } | null>(null);
   const [myChannelIdList, setMyChannelIdList] = useState<number[]>([]);
+  const { setIsAlert } = useAlertchatStore();
 
   const getMyChannel = async () => {
     //나의 채팅 채널 불러오기
@@ -155,12 +157,14 @@ export default function ChatList() {
       }
     } else {
       //팬
+      const created_at_time = await checkMySubCreatedAtTime(channel_id);
       const { data, error } = await supabase
         .from('chat_messages')
         .select('*')
         .eq("channel_id", channel_id)
         .in("user_id", [user_id, owner_id])
         .order('created_at', { ascending: false })
+        .gt('created_at', created_at_time)
         .limit(1)
         .maybeSingle();
       if (!data) {
@@ -172,6 +176,22 @@ export default function ChatList() {
       }
     }
   }
+
+  const checkMySubCreatedAtTime = async (channel_id: number): Promise<String | null> => {
+    const user_id = await userdata.id;
+    const { data, error } = await supabase
+      .from("chat_subscribe")
+      .select("created_at")
+      .eq("channel_id", channel_id)
+      .eq("user_id", user_id)
+      .single();
+    if (error) {
+      console.log(error);
+      return null;
+    } else {
+      return data.created_at;
+    }
+  };
 
   //실시간
   const receiveChatMessage = async () => {
@@ -227,6 +247,7 @@ export default function ChatList() {
   }
 
   useEffect(() => {
+    setIsAlert(false);
     if (userdata != undefined) {
       getChatList();
     }

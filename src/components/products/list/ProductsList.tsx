@@ -103,7 +103,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
         <div className="flex flex-col items-center">
           <div className="xl:w-[1132px]">
             <div className="flex justify-between pt-3 mx-2 items-center">
-              <div className="flex items-center cursor-pointer pt-4 pb-2">
+              <div className="flex items-center cursor-pointer xl:pt-4 xl:pb-2">
                 <Image
                   src={excludeExpired ? checkedImg : uncheckedImg}
                   alt={excludeExpired ? "판매 종료 제외" : "판매 종료 포함"}

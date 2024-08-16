@@ -21,9 +21,6 @@ const SalesSection = ({ products }: Props) => {
   const onGoingProducts = products?.filter((product) => isOnGoing(product));
   const endProducts = products?.filter((product) => !isOnGoing(product));
 
-  console.log(products);
-  console.log(onGoingProducts);
-
   return (
     <section className="flex flex-col">
       <SalesList products={onGoingProducts} sectionName="진행중인 공구" />

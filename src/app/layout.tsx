@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`overflow-hidden ${pretendard.className} ${inter.className}`}>{children}</body>
+      <body className={`overflow-auto ${pretendard.className} ${inter.className}`}>{children}</body>
     </html>
   );
 }

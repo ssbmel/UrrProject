@@ -103,21 +103,22 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
         <div className="flex flex-col items-center">
           <div className="xl:w-[1132px]">
             <div className="flex justify-between pt-3 mx-2 items-center">
-              <div className="flex items-center cursor-pointer" onClick={handleExcludeExpiredChange}>
+              <div className="flex items-center cursor-pointer pt-4 pb-2">
                 <Image
                   src={excludeExpired ? checkedImg : uncheckedImg}
                   alt={excludeExpired ? "판매 종료 제외" : "판매 종료 포함"}
                   width={20}
                   height={20}
                   className="mr-2"
+                  onClick={handleExcludeExpiredChange}
                 />
-                <label htmlFor="excludeExpired" className="text-[16px] ml-2 xl:text-[20px] text-[#4C4F52]">
+                <label htmlFor="excludeExpired" className="text-[16px] ml-2 xl:text-[18px] text-[#4C4F52]">
                   판매 종료 제외
                 </label>
               </div>
               <div className="relative">
                 <div className="flex items-center cursor-pointer">
-                  <p className="mx-2 text-[16px] xl:text-[20px] text-[#4C4F52]">{sortOption}</p>
+                  <p className="mx-2 text-[16px] xl:text-[18px] text-[#4C4F52]">{sortOption}</p>
                   <div
                     className="relative w-[20px] h-[20px] xl:w-[25px] xl:h-[25px]"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -136,7 +137,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                     <ul className="list-none w-[95px] xl:w-[111px] text-[#4C4F52] flex flex-col divide-y-2 divide-[#F4F4F4]">
                       <li>
                         <p
-                          className={`block w-full text-[16px] xl:text-[20px] px-3 py-1 cursor-pointer ${
+                          className={`block w-full text-[16px] xl:text-[18px] px-3 py-1 cursor-pointer ${
                             selectedOption === "최신순" ? "text-blue-500" : ""
                           }`}
                           onClick={() => handleSortOptionChange("최신순")}
@@ -146,7 +147,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                       </li>
                       <li>
                         <p
-                          className={`block w-full text-[16px] xl:text-[20px] px-3 py-1 cursor-pointer ${
+                          className={`block w-full text-[16px] xl:text-[18px] px-3 py-1 cursor-pointer ${
                             selectedOption === "오래된순" ? "text-blue-500" : ""
                           }`}
                           onClick={() => handleSortOptionChange("오래된순")}
@@ -156,7 +157,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                       </li>
                       <li>
                         <p
-                          className={`block w-full text-[16px] xl:text-[20px] px-3 py-1 cursor-pointer ${
+                          className={`block w-full text-[16px] xl:text-[18px] px-3 py-1 cursor-pointer ${
                             selectedOption === "마감임박순" ? "text-blue-500" : ""
                           }`}
                           onClick={() => handleSortOptionChange("마감임박순")}
@@ -171,7 +172,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
             </div>
             <div className="border-[#F4F4F4] border-[1px] w-full mt-3" />
             <div className="flex flex-col">
-              <p className="text-[16px] xl:text-[20px] text-[#4C4F52] ml-6 mt-4 ">총 {totalProducts}개</p>
+              <p className="text-[16px] xl:text-[18px] text-[#4C4F52] ml-3 mt-4 xl:mt-6 ">총 {totalProducts}개</p>
               <div className="flex flex-col items-center">
                 <div className="grid grid-cols-2 xl:grid-cols-4 gap-y-[36px] p-[17px] gap-x-4 xl:gap-x-8 xl:w-full">
                   {sortedProducts.map((product, index) => {

@@ -28,7 +28,7 @@ export default function Fail() {
           <Image src={fail} alt="결제실패 이미지" fill sizes="96px" priority className=" object-cover" />
         </div>
         <div className="bg-white p-8 rounded-lg text-center mb-[80px] items-center">
-          <h2 className="text-black text-[24px] font-bold m-2">주문을 완료하지 못했어요</h2>
+          <h2 className="text-black text-[20px] font-bold m-2">주문을 완료하지 못했어요</h2>
           <p className="text-[18px] text-[#4C4F52]">이용에 불편을 드려 죄송합니다</p>
 
           <div className="w-[300px] h-[110px] border border-[#F2F2F2] text-gray-800  flex flex-col rounded-2xl m-[24px] px-[16px] py-[12px]">

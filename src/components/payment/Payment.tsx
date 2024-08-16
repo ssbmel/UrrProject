@@ -52,11 +52,11 @@ export default function Payment() {
   return (
     <>
       <div className="xl:flex xl:flex-col xl:justify-center xl:items-center xl:pt-12 xl:pb-16 xl:bg-center xl:bg-cover xl:bg-[url('../../public/bgImg/PaymentBgImg.png')] xl:bg-no-repeat xl:bg-[background-size:cover] xl:bg-[background-position:center]">
-        <p className="hidden xl:block text-[28px] font-semibold pb-8">결제하기</p>
+        <p className="hidden xl:block text-[24px] font-semibold pb-8">결제하기</p>
         <div className="xl:flex gap-8">
           <div className="bg-[gray-100] flex justify-center xl:w-[376px]">
             <div className="w-full flex flex-col items-start gap-[8px] bg-white rounded-2xl text-[14px] xl:text-[18px] p-[16px]">
-              <p className="text-[20px] xl:text-[24px] font-semibold mb-[4px]">주문자 정보</p>
+              <p className="text-[20px]  font-semibold mb-[4px] xl:mb-4">주문자 정보</p>
               <p>
                 <span>주문자</span>
                 <span className="text-red-600"> *</span>
@@ -98,11 +98,11 @@ export default function Payment() {
               </button>
             </div>
           </div>
-          <div className="hidden xl:block mt-20 w-[430px] h-[401px] bg-white p-[44px] rounded-3xl shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)]">
+          <div className="hidden xl:block mt-20 w-[430px] h-[401px] bg-white px-[42px] py-[52px] rounded-3xl shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.25),_0px_0px_4px_0px_rgba(0,_0,_0,_0.08),_0px_0px_1px_0px_rgba(0,_0,_0,_0.08)]">
             <div className="flex flex-col gap-[28px]">
-              <p className="text-[24px] font-semibold">결제비용</p>
+              <p className="text-[20px] font-semibold">결제비용</p>
               {price > 0 && (
-                <div className="text-[20px] text-[#4C4F52]">
+                <div className="text-[18px] text-[#4C4F52]">
                   <div className="flex justify-between py-1">
                     <p>주문 금액</p>
                     <p>{price.toLocaleString()} 원</p>
@@ -115,13 +115,13 @@ export default function Payment() {
               )}
             </div>
             {totalAmount > 0 && (
-              <div className="flex justify-between text-[20px] py-[36px]">
+              <div className="flex justify-between text-[18px] pt-[46px] pb-[44px]">
                 <p>최종 결제 금액</p>
                 <p>{totalAmount.toLocaleString()} 원</p>
               </div>
             )}
             <button
-              className="w-full  h-[50px] rounded-md bg-primarynormal text-white mt-[20px] text-[20px]"
+              className="w-full h-[50px] rounded-md bg-primarynormal text-white  text-[20px]"
               onClick={handleSubmit}
             >
               구매하기

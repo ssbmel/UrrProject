@@ -1,5 +1,3 @@
-"use client";
-
 import ChatList from "@/components/chat/ChatList";
 
 const ChatlistPage = () => {

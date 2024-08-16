@@ -20,9 +20,12 @@ const config: Config = {
         primarylightness: "#E1EEFE",
 
         destructive: "#F03F33"
+      },
+      fontFamily: {
+        PretendardRegular: ["PretendardRegular"]
       }
     }
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [require("tailwind-scrollbar-hide")]
 };
 export default config;

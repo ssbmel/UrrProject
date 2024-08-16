@@ -4,8 +4,6 @@ import { useUserData } from "@/hooks/useUserData";
 import { createClient } from "../../../supabase/client";
 import { useRouter } from "next/navigation";
 import ChatStart from "../../../public/icon/chatstart.svg";
-import { useEffect } from "react";
-import { useAlertchatStore } from "@/zustand/alertchatStore";
 
 interface setDataType {
   owner_id: string;
@@ -15,7 +13,6 @@ export default function StartChat(props: setDataType) {
   const userdata = useUserData().data;
   const supabase = createClient();
   const router = useRouter();
-  const { setChannelList } = useAlertchatStore();
   const owner_id = props.owner_id;
 
   const checkOwnerChannel = async (): Promise<number | null> => {
@@ -63,9 +60,6 @@ export default function StartChat(props: setDataType) {
       })
     if (error)
       console.log(error)
-    else {
-      setChannelList({ channel_id,owner_id });
-    }
   }
 
   return (

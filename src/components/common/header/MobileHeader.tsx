@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import logo from "../../../../public/logo/title_logo.png";
+import Logo from "../../../../public/logo/title_logo.svg";
 import BackIcon from "../../../../public/icon/backIcon.svg";
 import SearchIcon from "../../../../public/icon/searchIcon.svg";
 import CartIcon from "../../../../public/icon/cartIcon.svg";
@@ -55,7 +55,7 @@ const MobileHeader = () => {
   if (HOME || ADMIN || MY_PAGE || PRODUCTS_LIST || CHATLIST || INFLUENCER) {
     leftIcon = (
       <Link href={"/"}>
-        <Image src={logo} alt="urr_logo" width={62} priority />
+        <Logo />
       </Link>
     );
   } else if (LOGIN) {

@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useMutation } from "@tanstack/react-query";
 import Rating from "./star/Rating";
 import Link from "next/link";
+import Button from "@/components/common/button/Button";
 
 export type ReviewImgGroup = { file: File | null; url: string };
 
@@ -174,14 +175,15 @@ const MyReview = () => {
   };
 
   const content = (
-    <>
-      <div key={orderData?.id} className={`w-full h-[${isDesktop ? "150px" : "100px"}] p-4 flex gap-3 ${isDesktop ? "mt-[42px]" : ""}`}>
-        <div className={`w-[${isDesktop ? "124px" : "70px"}] h-[${isDesktop ? "124px" : "70px"}] rounded-md relative`}>
+    <div className="xl:p-3">
+      <h1 className="hidden xl:block text-[20px] font-bold mt-[12px]">후기 작성</h1>
+      <div key={orderData?.id} className={`w-full h-[${isDesktop ? "150px" : "100px"}] p-4 flex gap-3 ${isDesktop ? "mt-[12px]" : ""}`}>
+        <div className={`w-[70px] xl:w-[124px] h-[${isDesktop ? "124px" : "70px"}] rounded-md relative`}>
           <Image
             src={orderData?.imgUrl || defaultImg}
             alt="상품이미지"
             fill
-            sizes={isDesktop ? "124px" : "70px"}
+            sizes="70px xl:w-[124px]"
             className="object-cover rounded-md"
           />
         </div>
@@ -196,15 +198,15 @@ const MyReview = () => {
       </div>
 
       <hr />
-      <div className="w-full py-4">
+      <div className="w-full py-6">
         <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
         <Rating value={rating} onChange={setRating} />
-        <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
+        <p className="text-center text-[#4C4F52] xl:text-[18px]">상품에 대한 전체적인 평점을 알려주세요</p>
       </div>
       <form className="w-full" onSubmit={onSubmit}>
-        <div className={`bg-[#E1EEFE] ${isDesktop ? "py-5 px-6" : "py-3 px-4"} rounded-[12px] mb-5`}>
+        <div className={`bg-[#E1EEFE] ${isDesktop ? "py-5 px-6" : "py-3 px-4"} rounded-[12px] mb-8 xl:mb-10`}>
           <p className={`font-bold mb-3 ${isDesktop ? "text-[20px]" : ""}`}>후기는 이렇게 작성해보세요!</p>
-          <p className={isDesktop ? "text-[16px]" : "text-[12px]"}>
+          <p className={isDesktop ? "text-[16px]" : "text-[14px]"}>
             제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
             <br />
             <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더 높일 수 있습니다
@@ -224,19 +226,20 @@ const MyReview = () => {
         {isDesktop ? (
           <div className="flex justify-center gap-5 my-4">
             <Link href={"/mypage"}>
-              <button className="w-[174px] h-[52px] border border-[#1A82FF] bg-[#FFFFFE] text-[#1A82FF] rounded-[8px]">
+              <button className="w-[174px] h-[52px] border border-[#0068E5] bg-[#FFFFFE] text-[#0068E5] rounded-[8px]
+                 hover:bg-[#F2F2F2] hover:text-[#004BB8] active:bg-[#F2F2F2] active:text-[#003E91] transition-all duration-200">
                 돌아가기
               </button>
             </Link>
-            <button className="w-[174px] h-[52px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px]">등록하기</button>
+            <Button>등록하기</Button>
           </div>
         ) : (
-          <button className="w-full h-[40px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
+          <button className="w-full h-[52px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center text-[18px]">
             등록하기
           </button>
         )}
       </form>
-    </>
+    </div>
   );
 
   return (

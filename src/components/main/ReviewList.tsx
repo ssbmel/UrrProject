@@ -7,13 +7,12 @@ import fullStar from "../../../public/icon/full_star.png";
 import halfStar from "../../../public/icon/half_star.png";
 import InfluencerIcon from "../../../public/icon/maininfluencer.svg";
 import Link from "next/link";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import "./style.css";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { createClient } from "../../../supabase/client";
 import { Review } from "../../../types/common";
+import 'swiper/css/navigation';
 
 function ReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
@@ -50,16 +49,16 @@ function ReviewList() {
           ) : (
             reviewData.map((review) => (
               <div key={review.id} className="flex w-full">
-                <div className="w-[100px] h-[100px] sm:w-[80px] sm:h-[80px] mr-2 flex-shrink-0">
+                <div className="w-[120px] h-[104px] mr-2 flex-shrink-0">
                   <Link href={`/products/detail/${review.product_id}`}>
-                    <div className="relative w-[100px] h-[100px]">
-                    <Image
-                      src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
-                      alt="img"
-                      fill
-                      sizes="120px"
-                      className="rounded-md object-cover"
-                    />
+                    <div className="relative w-[120px] h-[104px]">
+                      <Image
+                        src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
+                        alt="img"
+                        fill
+                        sizes="120px"
+                        className="rounded-md object-cover"
+                      />
                     </div>
                   </Link>
                 </div>
@@ -96,41 +95,41 @@ function ReviewList() {
 
       {/* Desktop Carousel */}
       <div className="hidden xl:block">
-      <Swiper
-          spaceBetween={10}
-          slidesPerView={4}
+        <Swiper
+          slidesPerView={3}
+          centeredSlides={false}
+          spaceBetween={30}
+          navigation={true}
+          modules={[Pagination, Navigation, Autoplay]}
+          speed={1500}
+          loop={false}
           autoplay={{
             delay: 1500,
-            disableOnInteraction: false,
+            disableOnInteraction: false
           }}
-          speed={1500} 
-          modules={[Autoplay]}
         >
           {reviewData.length === 0 ? (
             <p>후기가 없습니다.</p>
           ) : (
             reviewData.map((review) => (
               <SwiperSlide key={review.id}>
-                <div className="grid h-[380px] mx-auto border rounded-[20px] p-3 mr-8 shadow-sm">
+                <div className="grid w-[304px] h-[385px] mx-auto border rounded-[20px] p-3 shadow-sm">
                   <Link href={`/products/detail/${review.product_id}`}>
                     <div className="flex justify-center">
-
-                      <div className="w-[240px] h-[201px] relative">
+                      <div className="w-[276px] h-[201px] relative">
                         <Image
                           src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                           alt="img"
                           fill
-                          sizes="250px"
+                          sizes="276px"
                           className="rounded-md object-cover"
                         />
                       </div>
                     </div>
                   </Link>
-                  <div className="w-[250px] h-[200px] flex flex-col items-start">
-                    <div className="w-full flex justify-center">
+                  <div className="w-full h-[200px] mx-auto flex flex-col items-start">
+                    <div className="text-[#989C9F] gap-1 text-left">
                       <InfluencerIcon />
-                    </div>
-                    <div className="w-full text-[#989C9F] gap-1 text-left">
                       <p className="truncate xl:text-[16px] xl:mb-1">
                         {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
                       </p>
@@ -156,6 +155,9 @@ function ReviewList() {
               </SwiperSlide>
             ))
           )}
+          {/* Swiper가 기본으로 제공하는 네비게이션 버튼 요소 */}
+          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev"></div>
         </Swiper>
       </div>
     </div>

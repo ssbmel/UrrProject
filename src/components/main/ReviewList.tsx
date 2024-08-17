@@ -49,14 +49,14 @@ function ReviewList() {
           ) : (
             reviewData.map((review) => (
               <div key={review.id} className="flex w-full">
-                <div className="w-[120px] h-[104px] mr-2 flex-shrink-0">
+                <div className="w-[108px] h-[108px] mr-2 flex-shrink-0">
                   <Link href={`/products/detail/${review.product_id}`}>
-                    <div className="relative w-[120px] h-[104px]">
+                    <div className="relative w-[108px] h-[108px]">
                       <Image
                         src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                         alt="img"
                         fill
-                        sizes="120px"
+                        sizes="108px"
                         className="rounded-md object-cover"
                       />
                     </div>
@@ -64,30 +64,25 @@ function ReviewList() {
                 </div>
 
                 <div className="w-[60%] h-[104px] grid grid-rows-[auto,1fr,auto]">
-                  <div className="flex text-[#989C9F] gap-1">
-                    <div className="mt-[3px] flex-shrink-0">
-                      <InfluencerIcon />
-                    </div>
-                    <p className="truncate flex-1 mb-1">
-                      {review.inf_name} <span className="text-[#E7E8E9] font-semibold">|</span> {review.title}
-                    </p>
-                  </div>
-                  <p className="text-[#1B1C1D] font-medium line-clamp-2">{review.review_content}</p>
-                  <div className="self-end">
-                    <div className="flex">
-                      {Array(Math.floor(review.review_score!))
-                        .fill(1)
-                        .map((_, index) => (
-                          <div key={index} className="relative mr-[4px] w-[15px] h-[15px]">
-                            <Image src={fullStar.src} fill sizes="15px" alt="fullStar" className="object-cover" />
-                          </div>
-                        ))}
-                      {review.review_score! % 1 !== 0 && (
-                        <div className="relative mr-[4px] w-[15px] h-[15px]">
-                          <Image src={halfStar.src} fill sizes="15px" alt="halfStar" className="object-cover" />
+                  <div className="flex mb-1">
+                    {Array(Math.floor(review.review_score!))
+                      .fill(1)
+                      .map((_, index) => (
+                        <div key={index} className="relative mr-[4px] w-[15px] h-[15px]">
+                          <Image src={fullStar.src} fill sizes="15px" alt="fullStar" className="object-cover" />
                         </div>
-                      )}
-                    </div>
+                      ))}
+                    {review.review_score! % 1 !== 0 && (
+                      <div className="relative mr-[4px] w-[15px] h-[15px]">
+                        <Image src={halfStar.src} fill sizes="15px" alt="halfStar" className="object-cover" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-[#989C9F]">
+                    <p className="truncate flex-1">{review.title}</p>
+                    <p className="text-[#1B1C1D] font-medium line-clamp-2">{review.review_content}</p>
+                  </div>
+                  <div className="self-end">
                     <p className="text-xs text-gray-400 mt-1">
                       {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
                     </p>
@@ -122,7 +117,7 @@ function ReviewList() {
                 <div className="grid w-[304px] h-[385px] mx-auto border rounded-[20px] p-3 shadow-sm">
                   <Link href={`/products/detail/${review.product_id}`}>
                     <div className="flex justify-center">
-                      <div className="w-[276px] h-[201px] relative">
+                      <div className="w-[276px] h-[201px] relative mb-2">
                         <Image
                           src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
                           alt="img"
@@ -135,9 +130,9 @@ function ReviewList() {
                   </Link>
                   <div className="w-full h-[200px] mx-auto flex flex-col items-start">
                     <div className="text-[#989C9F] gap-1 text-left">
-                      <div className="mt-[3px] flex-shrink-0">
+                      {/* <div className="mt-[3px] flex-shrink-0">
                         <InfluencerIcon />
-                      </div>
+                      </div> */}
                       <p className="truncate xl:text-[16px] xl:mb-1">
                         {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
                       </p>
@@ -175,9 +170,6 @@ function ReviewList() {
               </SwiperSlide>
             ))
           )}
-          {/* Swiper가 기본으로 제공하는 네비게이션 버튼 요소 */}
-          <div className="swiper-button-next"></div>
-          <div className="swiper-button-prev"></div>
         </Swiper>
       </div>
     </div>

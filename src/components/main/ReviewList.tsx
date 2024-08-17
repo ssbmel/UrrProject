@@ -12,7 +12,7 @@ import "./style.css";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { createClient } from "../../../supabase/client";
 import { Review } from "../../../types/common";
-import 'swiper/css/navigation';
+import "swiper/css/navigation";
 
 function ReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
@@ -40,9 +40,9 @@ function ReviewList() {
   };
 
   return (
-    <div className="w-full py-8">
-      <h2 className="font-bold text-lg xl:text-[22px] xl:my-8 px-4">후기</h2>
-      <div className="xl:hidden p-4">
+    <div className="w-full py-[28px]">
+      <h2 className="font-bold text-lg xl:text-[22px] px-4 mb-[20px]">후기</h2>
+      <div className="xl:hidden px-4">
         <div className="grid gap-4 scrollbar" style={{ height: "400px", overflowY: "auto", overflowX: "hidden" }}>
           {reviewData.length === 0 ? (
             <p>후기가 없습니다.</p>
@@ -63,29 +63,35 @@ function ReviewList() {
                   </Link>
                 </div>
 
-                <div className="w-[60%]">
+                <div className="w-[60%] h-[104px] grid grid-rows-[auto,1fr,auto]">
                   <div className="flex text-[#989C9F] gap-1">
                     <div className="mt-[3px] flex-shrink-0">
                       <InfluencerIcon />
                     </div>
-                    <p className="truncate flex-1">
-                      {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
+                    <p className="truncate flex-1 mb-1">
+                      {review.inf_name} <span className="text-[#E7E8E9] font-semibold">|</span> {review.title}
                     </p>
                   </div>
-                  <p className="text-[#1B1C1D] font-medium mb-2 line-clamp-2">{review.review_content}</p>
-                  <div className="flex">
-                    {Array(Math.floor(review.review_score!))
-                      .fill(1)
-                      .map((_, index) => (
-                        <Image key={index} src={fullStar.src} width={20} height={20} alt="fullStar" />
-                      ))}
-                    {review.review_score! % 1 !== 0 && (
-                      <Image src={halfStar.src} width={20} height={20} alt="halfStar" />
-                    )}
+                  <p className="text-[#1B1C1D] font-medium line-clamp-2">{review.review_content}</p>
+                  <div className="self-end">
+                    <div className="flex">
+                      {Array(Math.floor(review.review_score!))
+                        .fill(1)
+                        .map((_, index) => (
+                          <div key={index} className="relative mr-[4px] w-[15px] h-[15px]">
+                            <Image src={fullStar.src} fill sizes="15px" alt="fullStar" className="object-cover" />
+                          </div>
+                        ))}
+                      {review.review_score! % 1 !== 0 && (
+                        <div className="relative mr-[4px] w-[15px] h-[15px]">
+                          <Image src={halfStar.src} fill sizes="15px" alt="halfStar" className="object-cover" />
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-400">
-                    {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
-                  </p>
                 </div>
               </div>
             ))
@@ -129,7 +135,9 @@ function ReviewList() {
                   </Link>
                   <div className="w-full h-[200px] mx-auto flex flex-col items-start">
                     <div className="text-[#989C9F] gap-1 text-left">
-                      <InfluencerIcon />
+                      <div className="mt-[3px] flex-shrink-0">
+                        <InfluencerIcon />
+                      </div>
                       <p className="truncate xl:text-[16px] xl:mb-1">
                         {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
                       </p>
@@ -137,19 +145,31 @@ function ReviewList() {
                     <p className="text-[#1B1C1D] font-medium mb-2 xl:text-[16px] xl:h-[25%] line-clamp-2 text-left">
                       {review.review_content}
                     </p>
-                    <div className="flex w-[20%]">
-                      {Array(Math.floor(review.review_score!))
-                        .fill(1)
-                        .map((_, index) => (
-                          <Image key={index} src={fullStar.src} width={20} height={20} alt="fullStar" />
-                        ))}
-                      {review.review_score! % 1 !== 0 && (
-                        <Image src={halfStar.src} width={20} height={20} alt="halfStar" />
-                      )}
+                    <div className="">
+                      <div className="flex gap-[4px]">
+                        {Array(Math.floor(review.review_score!))
+                          .fill(1)
+                          .map((_, index) => (
+                            <div key={index} className="relative mr-[4px]">
+                              <Image
+                                src={fullStar.src}
+                                width={20}
+                                height={20}
+                                alt="fullStar"
+                                className="object-cover"
+                              />
+                            </div>
+                          ))}
+                        {review.review_score! % 1 !== 0 && (
+                          <div className="relative mr-[4px]">
+                            <Image src={halfStar.src} width={20} height={20} alt="halfStar" className="object-cover" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-[14px] text-gray-400 text-left my-2">
+                        {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
+                      </p>
                     </div>
-                    <p className="text-[14px] text-gray-400 text-left my-2">
-                      {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
-                    </p>
                   </div>
                 </div>
               </SwiperSlide>

@@ -26,7 +26,7 @@ export type ProductList = {
 const MyReview = () => {
   const { data: user } = useUserData();
   const [orderData, setOrderData] = useState<ProductList | null>(null);
-  const [productsData, setProductsData] = useState<Product>();
+  const [productsData, setProductsData] = useState<Product | null>(null);
   const [reviewImages, setReviewImages] = useState<ReviewImgGroup[]>([]);
   const [uploadedReviewImages, setUploadedReviewImages] = useState("");
   const [rating, setRating] = useState<number>(0);
@@ -34,11 +34,25 @@ const MyReview = () => {
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const supabase = createClient();
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1280);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (user) {
       getOrderData();
+      getProductsData();
     }
   }, [user]);
 
@@ -65,14 +79,8 @@ const MyReview = () => {
       return result;
     });
     const matchedProduct = handledJsonData.find((value) => value.id === Ids.id);
-    setOrderData(matchedProduct)
+    setOrderData(matchedProduct);
   };
-
-  useEffect(() => {
-    if (user) {
-      getProductsData();
-    }
-  }, [user]);
 
   const getProductsData = async () => {
     if (!user || !user.id) {
@@ -84,7 +92,7 @@ const MyReview = () => {
     if (error) {
       console.error("Error fetching review data:", error);
     } else {
-      setProductsData(data.find((value) => value.id === Ids.id));
+      setProductsData(data.find((value) => value.id === Ids.id) || null);
     }
   };
 
@@ -123,13 +131,13 @@ const MyReview = () => {
     const response = await fetch("/api/product_review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     return response.json();
   };
 
   const { mutate: saveReviewMutation } = useMutation<Review, unknown, Review>({
-    mutationFn: (data) => saveReview(data)
+    mutationFn: (data) => saveReview(data),
   });
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,7 +147,7 @@ const MyReview = () => {
     }
     const reviewId = uuidv4();
     const reviewImagesId = await uploadImages(reviewId);
-    console.log(reviewImagesId);
+    const reviewContent = contentRef.current?.value.trim();
 
     const newReviewData: Review = {
       id: reviewId,
@@ -148,11 +156,11 @@ const MyReview = () => {
       user_nickname: user.nickname,
       review_score: rating,
       review_images: reviewImagesId,
-      review_content: contentRef.current?.value as string,
+      review_content: reviewContent as string,
       title: orderData?.name as string,
       inf_name: productsData?.nickname as string,
       payment_id: Ids.paymentId as string,
-      userId: user.id
+      userId: user.id,
     };
 
     const { data, error } = await supabase.from("product_review").insert([newReviewData]).select();
@@ -165,132 +173,83 @@ const MyReview = () => {
     }
   };
 
-  const handleClose = () => setIsOpen(false);
-
-  console.log();
-  
-
-  return (
-    <div>
-      <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">
-        <div key={orderData?.id} className="w-full h-[100px] p-4 flex gap-3">
-          <div className="w-[70px] h-[70px] rounded-md relative">
-            <Image
-              src={orderData?.imgUrl || defaultImg}
-              alt="상품이미지"
-              fill
-              sizes="70px"
-              className="object-cover rounded-md"
-            />
-          </div>
-          <div className="grid">
-            <p>{orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}</p>
-            <p className="text-[14px] text-[#989C9F]">{orderData && orderData.amount * orderData.quantity}원 구매</p>
-          </div>
-        </div>
-
-        <hr />
-        <div className="w-full py-4">
-          <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
-          <Rating value={rating} onChange={setRating} />
-          <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
-        </div>
-        <form className="w-full" onSubmit={onSubmit}>
-          <div className="bg-[#E1EEFE] py-3 px-4 rounded-[12px] mb-5">
-            <p className="font-bold mb-3">후기는 이렇게 작성해보세요!</p>
-            <p className="text-[12px]">
-              제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
-              <br />
-              <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를
-              더 높일 수 있습니다
-            </p>
-          </div>
-          <textarea
-            name="review-text"
-            className="resize-none border w-full h-[300px] rounded-md p-3"
-            placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
-            ref={contentRef}
-          ></textarea>
-          <ReviewImage
-            reviewImages={reviewImages}
-            setReviewImages={setReviewImages}
-            uploadedReviewImages={uploadedReviewImages}
+  const content = (
+    <>
+      <div key={orderData?.id} className={`w-full h-[${isDesktop ? "150px" : "100px"}] p-4 flex gap-3 ${isDesktop ? "mt-[42px]" : ""}`}>
+        <div className={`w-[${isDesktop ? "124px" : "70px"}] h-[${isDesktop ? "124px" : "70px"}] rounded-md relative`}>
+          <Image
+            src={orderData?.imgUrl || defaultImg}
+            alt="상품이미지"
+            fill
+            sizes={isDesktop ? "124px" : "70px"}
+            className="object-cover rounded-md"
           />
+        </div>
+        <div className="grid">
+          <p className={isDesktop ? "text-[18px]" : ""}>
+            {orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}
+          </p>
+          <p className={`text-[14px] text-[#989C9F] ${isDesktop ? "mt-auto" : ""}`}>
+            {orderData && orderData.amount * orderData.quantity}원 구매
+          </p>
+        </div>
+      </div>
+
+      <hr />
+      <div className="w-full py-4">
+        <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
+        <Rating value={rating} onChange={setRating} />
+        <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
+      </div>
+      <form className="w-full" onSubmit={onSubmit}>
+        <div className={`bg-[#E1EEFE] ${isDesktop ? "py-5 px-6" : "py-3 px-4"} rounded-[12px] mb-5`}>
+          <p className={`font-bold mb-3 ${isDesktop ? "text-[20px]" : ""}`}>후기는 이렇게 작성해보세요!</p>
+          <p className={isDesktop ? "text-[16px]" : "text-[12px]"}>
+            제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
+            <br />
+            <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더 높일 수 있습니다
+          </p>
+        </div>
+        <textarea
+          name="review-text"
+          className="resize-none border w-full h-[300px] rounded-md p-3"
+          placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
+          ref={contentRef}
+        ></textarea>
+        <ReviewImage
+          reviewImages={reviewImages}
+          setReviewImages={setReviewImages}
+          uploadedReviewImages={uploadedReviewImages}
+        />
+        {isDesktop ? (
+          <div className="flex justify-center gap-5 my-4">
+            <Link href={"/mypage"}>
+              <button className="w-[174px] h-[52px] border border-[#1A82FF] bg-[#FFFFFE] text-[#1A82FF] rounded-[8px]">
+                돌아가기
+              </button>
+            </Link>
+            <button className="w-[174px] h-[52px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px]">등록하기</button>
+          </div>
+        ) : (
           <button className="w-full h-[40px] mx-auto pl-[14px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px] text-center">
             등록하기
           </button>
-        </form>
-      </div>
+        )}
+      </form>
+    </>
+  );
 
-      <div className="hidden xl:block">
-        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-          <div className="relative p-4 w-[726px] bg-white rounded-lg shadow-lg">
-            <Link href={"/mypage"}>
-              <button onClick={handleClose} className="absolute top-4 right-4 text-xl font-bold">
-                &times;
-              </button>
-            </Link>
-
-            <div key={orderData?.id} className="w-full h-[150px] p-4 flex gap-3 mt-[42px]">
-              <div className="w-[124px] h-[124px] rounded-md relative">
-                <Image
-                  src={orderData?.imgUrl || defaultImg}
-                  alt="상품이미지"
-                  fill
-                  sizes="124px"
-                  className="object-cover rounded-md"
-                />
-              </div>
-              <div className="grid">
-                <p className="text-[18px]">
-                  {orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}
-                </p>
-                <p className="text-[14px] text-[#989C9F] mt-auto">
-                  {orderData && orderData.amount * orderData.quantity}원 구매
-                </p>
-              </div>
-            </div>
-
-            <hr />
-            <div className="w-full py-4">
-              <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
-              <Rating value={rating} onChange={setRating} />
-              <p className="text-center text-[#4C4F52]">상품에 대한 전체적인 평점을 알려주세요</p>
-            </div>
-            <form className="w-full" onSubmit={onSubmit}>
-              <div className="bg-[#E1EEFE] py-5 px-6 rounded-[12px] mb-5">
-                <p className="font-bold mb-3 text-[20px]">후기는 이렇게 작성해보세요!</p>
-                <p className="text-[16px]">
-                  제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을
-                  설명해주세요
-                  <br />
-                  <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한
-                  신뢰도를 더 높일 수 있습니다
-                </p>
-              </div>
-              <textarea
-                name="review-text"
-                className="resize-none border w-full h-[300px] rounded-md p-3"
-                placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
-                ref={contentRef}
-              ></textarea>
-              <ReviewImage
-                reviewImages={reviewImages}
-                setReviewImages={setReviewImages}
-                uploadedReviewImages={uploadedReviewImages}
-              />
-              <div className="flex justify-center gap-5 my-4">
-                <Link href={"/mypage"}>
-                  <button className="w-[174px] h-[52px] border border-[#1A82FF] bg-[#FFFFFE] text-[#1A82FF] rounded-[8px]">
-                    돌아가기
-                  </button>
-                </Link>
-                <button className="w-[174px] h-[52px] bg-[#1A82FF] text-[#FFFFFE] rounded-[8px]">등록하기</button>
-              </div>
-            </form>
-          </div>
+  return (
+    <div>
+      {!isDesktop ? (
+        <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">
+          {content}
         </div>
-      </div>
+      ) : (
+        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+          <div className="relative p-4 w-[726px] bg-white rounded-lg shadow-lg">{content}</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -34,6 +34,7 @@ const ModalComponent: React.FC = () => {
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
+          ariaHideApp={false}
           contentLabel="Influencer Subscription Modal"
           style={{
             content: {

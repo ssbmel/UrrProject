@@ -63,7 +63,7 @@ const MyReviewList = () => {
 
   return (
     <>
-      {reviewData ? (
+      {reviewData.length > 0 ? (
         <div>
           <ul>
             {reviewData.map((item) => (

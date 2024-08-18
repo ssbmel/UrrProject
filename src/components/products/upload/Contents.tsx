@@ -1,8 +1,8 @@
 "use client";
 
 import { RefObject } from "react";
-import ProductImgUpload from "./ProductImgUpload";
-import { DetailedImgGroup } from "./ProductUpload";
+import ProductImgUpload from "./UploadProductImg";
+import { DetailedImgGroup } from "./UploadProduct";
 
 interface ContentsProps {
   titleRef: RefObject<HTMLInputElement>;

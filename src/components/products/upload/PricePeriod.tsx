@@ -14,16 +14,34 @@ interface PricePeriodProps {
 const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, costRef, priceRef, productCountRef }) => {
   const today = new Date();
 
+  const formatNumberWithLocale = (value: string) => {
+    const cleanedValue = value.replace(/[^0-9]/g, "");
+    const numberValue = parseInt(cleanedValue, 10);
+    return isNaN(numberValue) ? "" : numberValue.toLocaleString();
+  };
+
+  const enforcePositiveValue = (e: React.FormEvent<HTMLInputElement>) => {
+    const input = e.currentTarget;
+    const formattedValue = formatNumberWithLocale(input.value);
+
+    input.value = formattedValue;
+  };
+
   const preventInvalidInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (["-", "+", "e", "E", "."].includes(e.key)) {
+    if (["e", "E", "+", "-"].includes(e.key)) {
       e.preventDefault();
     }
   };
 
-  const enforcePositiveValue = (e: React.FormEvent<HTMLInputElement>) => {
-    const input = e.target as HTMLInputElement;
-    if (input.value && parseFloat(input.value) < 0) {
-      input.value = Math.abs(parseFloat(input.value)).toString();
+  const validateDates = () => {
+    const startDate = startDateRef.current?.value;
+    const endDate = endDateRef.current?.value;
+
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+      alert("종료 날짜는 시작 날짜 이후여야 합니다.");
+      if (endDateRef.current) {
+        endDateRef.current.value = "";
+      }
     }
   };
 
@@ -45,13 +63,14 @@ const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, cos
           type="date"
           min={today.toISOString().substring(0, 10)}
           ref={endDateRef}
+          onChange={validateDates}
           className="w-[110px] border xl:w-[156px] xl:h-[27px]"
         />
       </div>
       <div className="my-5 mx-auto flex gap-2 items-center">
         <span className="whitespace-nowrap w-[70px] xl:w-[156px] xl:h-[27px] xl:text-[18px] text-[#4C4F52]">가격</span>
         <input
-          type="number"
+          type="text"
           className="w-[110px] border xl:w-[156px] xl:h-[27px]"
           placeholder="원가"
           ref={costRef}
@@ -60,8 +79,7 @@ const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, cos
         />
         <ArrowRight />
         <input
-          type="number"
-          min={0}
+          type="text"
           className="w-[110px] border xl:w-[156px] xl:h-[27px]"
           placeholder="판매가"
           ref={priceRef}
@@ -72,8 +90,7 @@ const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, cos
       <div className="mx-auto flex gap-2 items-center mb-5">
         <span className="whitespace-nowrap w-[70px] xl:w-[155px] xl:h-[27px] xl:text-[18px]">수량</span>
         <input
-          type="number"
-          min={0}
+          type="text"
           className="w-[110px] border xl:w-[156px] xl:h-[27px]"
           placeholder="상품 등록 수"
           ref={productCountRef}

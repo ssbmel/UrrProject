@@ -4,8 +4,7 @@ import { useUserData } from "@/hooks/useUserData";
 import Image from "next/image";
 import { createClient } from "../../../../supabase/client";
 import { useEffect, useRef, useState } from "react";
-import { OrderType, Product, Review } from "../../../../types/common";
-import ReviewImage from "./ReviewImage";
+import { Product, Review } from "../../../../types/common";
 import { useParams, useRouter } from "next/navigation";
 import defaultImg from "../../../../public/images/default.png";
 import { v4 as uuidv4 } from "uuid";
@@ -13,6 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import Rating from "./star/Rating";
 import Link from "next/link";
 import Button from "@/components/common/button/Button";
+import UploadReviewImage from "./UploadReviewImage";
 
 export type ReviewImgGroup = { file: File | null; url: string };
 
@@ -24,7 +24,7 @@ export type ProductList = {
   quantity: number;
 };
 
-const MyReview = () => {
+const WrittenMyReview = () => {
   const { data: user } = useUserData();
   const [orderData, setOrderData] = useState<ProductList | null>(null);
   const [productsData, setProductsData] = useState<Product | null>(null);
@@ -150,6 +150,22 @@ const MyReview = () => {
     const reviewImagesId = await uploadImages(reviewId);
     const reviewContent = contentRef.current?.value.trim();
 
+    if (!rating) {
+      alert("별점을 선택해 주세요.");
+      return;
+    }
+  
+    if (!reviewContent) {
+      alert("후기 내용을 입력해 주세요.");
+      return;
+    }
+  
+    if (!reviewImagesId) {
+      alert("후기 사진을 넣어주세요.");
+      return;
+    }
+
+
     const newReviewData: Review = {
       id: reviewId,
       created_at: new Date().toDateString(),
@@ -218,7 +234,7 @@ const MyReview = () => {
           placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
           ref={contentRef}
         ></textarea>
-        <ReviewImage
+        <UploadReviewImage
           reviewImages={reviewImages}
           setReviewImages={setReviewImages}
           uploadedReviewImages={uploadedReviewImages}
@@ -257,4 +273,4 @@ const MyReview = () => {
   );
 };
 
-export default MyReview;
+export default WrittenMyReview;

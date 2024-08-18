@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 
-function ProductUpload() {
+function UploadProduct() {
   const supabase = createClient();
   const [radioCheckedValue, setRadioCheckedValue] = useState<string>("");
   const startDateRef = useRef<HTMLInputElement>(null);
@@ -124,17 +124,22 @@ function ProductUpload() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
     if (!user) {
       return;
     }
+    
     const postId = uuidv4();
     const mainImgId = (await uploadMainImg(postId)) || uploadedMainImg;
     const detailImgId = await uploadDetailImages(postId);
-
+  
+    const startDate = startDateRef.current?.value;
+    const endDate = endDateRef.current?.value;
+    
     const productData: Product = {
       category: radioCheckedValue || "",
-      start: startDateRef.current?.value as string,
-      end: endDateRef.current?.value as string,
+      start: startDate as string,
+      end: endDate as string,
       cost: parseInt(costRef.current?.value || "0"),
       price: parseInt(priceRef.current?.value || "0"),
       product_count: parseInt(productCountRef.current?.value || "0"),
@@ -147,7 +152,7 @@ function ProductUpload() {
       id: id === "new" ? postId : id as string,
       nickname: user.nickname || ""
     };
-
+    
     if (
       !productData.category ||
       !productData.start ||
@@ -161,17 +166,12 @@ function ProductUpload() {
       alert("상품 정보를 입력해주세요.");
       return;
     }
-
+  
     const { data, error } = await supabase.from("products").upsert([productData]).select();
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert({
-        title: "상품등록 성공!",
-        text: "등록이 완료되었습니다.",
-        icon: "success",
-        width: "40%",
-      });
+      alert("등록이 완료되었습니다.");
       saveMutation(productData);
       router.push("/products/list");
     }
@@ -216,4 +216,4 @@ function ProductUpload() {
   );
 }
 
-export default ProductUpload;
+export default UploadProduct;

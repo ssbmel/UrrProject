@@ -14,7 +14,7 @@ import { createClient } from "../../../supabase/client";
 import { Review } from "../../../types/common";
 import "swiper/css/navigation";
 
-function ReviewList() {
+function MainReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
 
   const getReviewData = async () => {
@@ -176,4 +176,4 @@ function ReviewList() {
   );
 }
 
-export default ReviewList;
+export default MainReviewList;

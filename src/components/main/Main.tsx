@@ -7,8 +7,8 @@ import BestInfluencerList from "./BestInfluencerList";
 import "./style.css";
 import { Product, Review, User } from "../../../types/common";
 import LoadingUrr from "../common/loading/LoadingUrr";
-import ReviewList from "./ReviewList";
 import Banner from "./swiper/Banner";
+import MainReviewList from "./MainReviewList";
 
 
 function Main() {
@@ -75,7 +75,7 @@ function Main() {
         <hr className="w-full" />
         <BestProductsList productsList={productsList} ratingCount={ratingCount} />
         <BestInfluencerList infUser={infUser} />
-        <ReviewList />
+        <MainReviewList />
       </div>
     </>
   );

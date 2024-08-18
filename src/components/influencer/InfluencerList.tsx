@@ -47,7 +47,7 @@ function InfluencerList() {
       user_id: user.id,
       infuser_id: inf.id
     };
-    alert(`${inf.nickname}님을 구독하였습니다.`);
+    swal(`${inf.nickname}님을 구독하였습니다.`);
     subscribedMutation(newInfUser);
   };
 
@@ -72,7 +72,7 @@ function InfluencerList() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
-    alert("구독이 취소되었습니다.");
+    swal("구독이 취소되었습니다.");
     await getSubscribeData();
     return response.json();
   };

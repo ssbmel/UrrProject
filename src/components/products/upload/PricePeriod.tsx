@@ -2,6 +2,7 @@
 
 import { RefObject } from "react";
 import ArrowRight from "../../../../public/icon/arrowR.svg";
+import swal from "sweetalert";
 
 interface PricePeriodProps {
   startDateRef: RefObject<HTMLInputElement>;
@@ -38,7 +39,7 @@ const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, cos
     const endDate = endDateRef.current?.value;
 
     if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
-      alert("종료 날짜는 시작 날짜 이후여야 합니다.");
+      swal("종료 날짜는 시작 날짜 이후여야 합니다.");
       if (endDateRef.current) {
         endDateRef.current.value = "";
       }

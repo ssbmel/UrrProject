@@ -13,6 +13,7 @@ import Rating from "./star/Rating";
 import Link from "next/link";
 import Button from "@/components/common/button/Button";
 import UploadReviewImage from "./UploadReviewImage";
+import swal from "sweetalert";
 
 export type ReviewImgGroup = { file: File | null; url: string };
 
@@ -151,17 +152,17 @@ const WrittenMyReview = () => {
     const reviewContent = contentRef.current?.value.trim();
 
     if (!rating) {
-      alert("별점을 선택해 주세요.");
+      swal("별점을 선택해 주세요.");
       return;
     }
   
     if (!reviewContent) {
-      alert("후기 내용을 입력해 주세요.");
+      swal("후기 내용을 입력해 주세요.");
       return;
     }
   
     if (!reviewImagesId) {
-      alert("후기 사진을 넣어주세요.");
+      swal("후기 사진을 넣어주세요.");
       return;
     }
 
@@ -184,7 +185,7 @@ const WrittenMyReview = () => {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("후기가 등록되었습니다.");
+      swal("후기가 등록되었습니다.");
       saveReviewMutation(newReviewData);
       router.push("/mypage");
     }

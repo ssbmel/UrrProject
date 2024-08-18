@@ -4,6 +4,7 @@ import { getAddress } from "@/services/users/account/account.service";
 import { FormEvent, useRef, useState } from "react";
 import { Addr, PageData } from "../../../../types/addr.type";
 import AddrPagination from "./AddrPagination";
+import swal from "sweetalert";
 
 interface Props {
   address: string | string[];
@@ -37,7 +38,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
     e.preventDefault();
 
     if (keyword === "") {
-      alert("검색어를 입력해주세요");
+      swal("검색어를 입력해주세요");
       searchKeyword.current?.focus();
       return;
     }
@@ -52,7 +53,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
 
     if (common?.errorCode !== "0") {
       console.log(common);
-      alert(common?.errorMessage);
+      swal(common?.errorMessage);
       return;
     }
 
@@ -70,12 +71,12 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
 
   const goNextStep = () => {
     if (!zipNoRef.current!.value) {
-      alert("입력할 주소를 선택해주세요");
+      swal("입력할 주소를 선택해주세요");
       return;
     }
     if (step === 2) {
       if (!userAddrInsert.current!.value) {
-        alert("상세 주소를 입력해주세요");
+        swal("상세 주소를 입력해주세요");
         return;
       }
       userAddrRef.current!.value = userAddrInsert.current!.value;

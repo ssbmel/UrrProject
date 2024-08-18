@@ -7,7 +7,6 @@ import { createClient } from "../../../supabase/client";
 import { Review } from "../../../types/common";
 import defaultImg from "../../../public/images/default.png";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const MyReviewList = () => {
@@ -57,7 +56,11 @@ const MyReviewList = () => {
   });
 
   const handleDelete = async (review: Review) => {
-    if (!window.confirm("해당 리뷰를 삭제하시겠습니까?")) return;
+    const result = await swal("해당 리뷰를 삭제하시겠습니까?", {
+      buttons: ["아니오", "예"],
+    });
+  
+    if (!result) return;
     deleteReviewMutation(review);
   };
 

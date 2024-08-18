@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams, useRouter } from "next/navigation";
 import { useUserData } from "@/hooks/useUserData";
 import { useMutation } from "@tanstack/react-query";
+import swal from "sweetalert";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 
@@ -70,7 +71,7 @@ function UploadProduct() {
     const newFileName = `${uuidv4()}.${ext}`;
     const { data, error } = await supabase.storage.from("products").upload(`${postId}/mainImg/${newFileName}`, mainImg);
     if (error) {
-      console.log(`파일이 업로드 되지 않습니다.${error}`);
+      swal(`파일이 업로드 되지 않습니다.${error}`);
       return null;
     }
     const res = await supabase.storage.from("products").getPublicUrl(data.path);
@@ -90,7 +91,7 @@ function UploadProduct() {
         .from("products")
         .upload(`${postId}/detailImages/${newFileName}`, detail.file);
       if (error) {
-        console.log(`파일이 업로드 되지 않습니다.${error}`);
+        swal(`파일이 업로드 되지 않습니다.${error}`);
         return null;
       }
       const res = await supabase.storage.from("products").getPublicUrl(data.path);
@@ -152,7 +153,7 @@ function UploadProduct() {
       id: id === "new" ? postId : id as string,
       nickname: user.nickname || ""
     };
-    
+
     if (
       !productData.category ||
       !productData.start ||
@@ -163,7 +164,7 @@ function UploadProduct() {
       !productData.title ||
       !productData.text
     ) {
-      alert("상품 정보를 입력해주세요.");
+      swal("상품 정보를 입력해주세요.");
       return;
     }
   
@@ -171,7 +172,7 @@ function UploadProduct() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      alert("등록이 완료되었습니다.");
+      swal("등록이 완료되었습니다.");
       saveMutation(productData);
       router.push("/products/list");
     }

@@ -54,8 +54,23 @@ const InfSaleList = ({ user }: Props) => {
   });
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("해당 상품을 삭제하시겠습니까?")) return;
-    deleteMutation({ id });
+    swal({
+      title: "해당 상품을 삭제할까요?",
+      text: "삭제하면 다시 복구할 수 없습니다.",
+      icon: "warning",
+      buttons: [true, "Delete"],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        deleteMutation({ id });
+        swal("상품이 삭제되었습니다.", {
+          icon: "success",
+        });
+      } else {
+        swal("삭제가 취소되었습니다.");
+      }
+    });
   };
 
   return (

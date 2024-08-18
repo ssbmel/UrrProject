@@ -3,7 +3,7 @@ import { ReviewImgGroup } from "./WrittenMyReview";
 import Blackcamera from "../../../../public/icon/blackcamera.png";
 import AccentIcon from "../../../../public/icon/accentmark.svg";
 import Image from "next/image";
-
+import swal from "sweetalert";
 interface ReviewProps {
   reviewImages: ReviewImgGroup[];
   setReviewImages: React.Dispatch<React.SetStateAction<ReviewImgGroup[]>>;
@@ -35,7 +35,7 @@ const UploadReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImage
     setReviewImages((prevFiles) => {
       const totalFiles = prevFiles.length + newReviewImgGroups.length;
       if (totalFiles > 3) {
-        alert("사진은 최대 3장까지 업로드 가능합니다.");
+        swal("사진은 최대 3장까지 업로드 가능합니다.");
         return prevFiles;
       }
       return [...prevFiles, ...newReviewImgGroups];

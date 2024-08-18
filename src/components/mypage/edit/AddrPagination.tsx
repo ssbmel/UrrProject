@@ -2,6 +2,7 @@
 
 import { Addr, PageData } from "../../../../types/addr.type";
 import { getAddress } from "@/services/users/account/account.service";
+import swal from "sweetalert";
 
 interface Props {
   keyword: string | undefined;
@@ -16,14 +17,14 @@ const AddrPagination = ({ keyword, currentPage, setCurrentPage, pageData, setPag
   const pageHandler = async (e: React.FormEvent, keyword: string, currentPage: number) => {
     e.preventDefault();
     if (!keyword) {
-      alert("입력된 검색어가 없습니다.");
+      swal("입력된 검색어가 없습니다.");
       return;
     }
     setCurrentPage(currentPage);
     const { results } = await getAddress({ keyword, currentPage });
     const { common, juso: data } = results;
     if (common?.errorCode !== "0") {
-      alert(common?.errorMessage);
+      swal(common?.errorMessage);
     }
     setPageData(common);
     setData(data);

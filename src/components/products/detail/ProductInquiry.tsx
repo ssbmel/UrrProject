@@ -11,6 +11,7 @@ import lock from "../../../../public/icon/lock.png";
 import beforeCheck from "../../../../public/icon/checkBefore.png";
 import afterCheck from "../../../../public/icon/checkAfter.png";
 import swal from "sweetalert";
+import { useRouter } from "next/navigation";
 
 type NewComment = {
   content: string;

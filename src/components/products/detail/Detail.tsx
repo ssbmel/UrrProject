@@ -48,8 +48,8 @@ export default function Detail({ params }: detailProps) {
   }, [isLoading]);
 
   const getClassNames = (state: any) => {
-    return `w-[120px] xl:w-[182px] text-[16px] xl:text-[20px] px-3 py-4 flex justify-center items-center border-b-4 ${
-      compoState === state ? "border-blue-500 text-blue-500" : "border-gray-200"
+    return `w-[120px] z-20 xl:w-[182px] text-[16px] xl:text-[20px] px-3 py-4 flex justify-center items-center  border-b-4 ${
+      compoState === state ? "border-primarystrong text-primarystrong" : "border-gray-200"
     }`;
   };
 
@@ -128,9 +128,11 @@ export default function Detail({ params }: detailProps) {
                   <Image src={share} alt="공유하기" width={38} height={38} onClick={handleShare} />
                 </div>
               </div>
-              <p className="text-gray-300 line-through font-light">{cost.toLocaleString()}</p>
+              <p className="text-[#989C9F] line-through font-light">{cost.toLocaleString()}</p>
               <p className="my-1 text-[18px]">
-                <span className={`${isExpired ? "text-[#B2B5B8]" : "text-red-500"}`}>{discountPercentageInteger}%</span>
+                <span className={`font-semibold ${isExpired ? "text-[#B2B5B8]" : "text-[#F03F33]"}`}>
+                  {discountPercentageInteger}%
+                </span>
                 <span className={`ml-1 font-medium ${isExpired ? "text-[#B2B5B8]" : "text-[#1B1C1D]"}`}>
                   {price.toLocaleString()} 원
                 </span>
@@ -139,8 +141,8 @@ export default function Detail({ params }: detailProps) {
           </div>
 
           <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
-          <div className="p-4 flex flex-col items-center ">
-            <div className="mx-auto w-[343px] flex flex-col gap-[14px] my-2 text-[16px]">
+          <div className="mx-[16px] my-[12px] flex flex-col items-center ">
+            <div className="flex flex-col gap-[14px] text-[16px] font-light">
               <div className="flex">
                 <span className="w-[105px] text-[#4C4F52]">진행기간</span>
                 <span className="text-[#1B1C1D]">
@@ -163,7 +165,7 @@ export default function Detail({ params }: detailProps) {
                 </div>
               </div>
 
-              <div className="mx-auto w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 gap-[12px] px-[14px] py-[12px]">
+              <div className="mx-auto w-full h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 gap-[12px] px-[14px] py-[12px]">
                 <div className="text-[16px] font-semibold text-[#0051B2]">주문 전 확인해주세요!</div>
                 <div className="text-[14px] text-[#4C4F52]">{data?.text}</div>
               </div>
@@ -172,27 +174,30 @@ export default function Detail({ params }: detailProps) {
         </div>
         <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
         <div className="flex flex-col w-full mx-auto">
-          <div className="flex justify-center items-center">
-            <div
-              onClick={() => setCompoState("상품정보")}
-              className={getClassNames("상품정보")}
-              style={{ cursor: "pointer" }}
-            >
-              상품 정보
-            </div>
-            <div
-              onClick={() => setCompoState("상품후기")}
-              className={getClassNames("상품후기")}
-              style={{ cursor: "pointer" }}
-            >
-              상품 후기 ({review?.length})
-            </div>
-            <div
-              onClick={() => setCompoState("상품문의")}
-              className={getClassNames("상품문의")}
-              style={{ cursor: "pointer" }}
-            >
-              상품 문의
+          <div className=" relative">
+            <div className="flex justify-center items-center">
+              <div
+                onClick={() => setCompoState("상품정보")}
+                className={getClassNames("상품정보")}
+                style={{ cursor: "pointer" }}
+              >
+                상품 정보
+              </div>
+              <div
+                onClick={() => setCompoState("상품후기")}
+                className={getClassNames("상품후기")}
+                style={{ cursor: "pointer" }}
+              >
+                상품 후기 ({review?.length})
+              </div>
+              <div
+                onClick={() => setCompoState("상품문의")}
+                className={getClassNames("상품문의")}
+                style={{ cursor: "pointer" }}
+              >
+                상품 문의
+              </div>
+              <div className="absolute z-10  bottom-0 w-[100%] h-[4px] bg-[#E7E8E9]" />
             </div>
           </div>
           <div className="component w-full">
@@ -213,21 +218,19 @@ export default function Detail({ params }: detailProps) {
             )}
           </div>
         </div>
-        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-30 xl:hidden">
-          <div className="flex justify-center p-2">
-            <div>
-              <button
-                onClick={() => {
-                  if (!isExpired) setShowModal(true);
-                }}
-                className={`w-[375px] h-[52px] text-white text-[18px] rounded-md ${
-                  isExpired ? "bg-[#F2F2F2] text-[#bcbebf]  cursor-not-allowed" : "bg-[#1A82FF]"
-                }`}
-                disabled={isExpired}
-              >
-                {isExpired ? "판매 종료" : "구매하기"}
-              </button>
-            </div>
+        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-10 xl:hidden">
+          <div className="flex justify-center p-2 w-full">
+            <button
+              onClick={() => {
+                if (!isExpired) setShowModal(true);
+              }}
+              className={`w-[343px] h-[52px] text-white text-[18px] rounded-md ${
+                isExpired ? "bg-[#F2F2F2] text-[#bcbebf]  cursor-not-allowed" : "bg-[#1A82FF]"
+              }`}
+              disabled={isExpired}
+            >
+              {isExpired ? "판매 종료" : "구매하기"}
+            </button>
           </div>
         </div>
       </div>

@@ -10,8 +10,6 @@ import { WebHeader } from "@/components/common/header/WebHeader";
 import { usePathname } from "next/navigation";
 
 function ProviderLayout({ children }: PropsWithChildren) {
-
-
   const pathname = usePathname();
   const SIGN_UP = pathname === "/signup";
 
@@ -30,7 +28,6 @@ function ProviderLayout({ children }: PropsWithChildren) {
         <Footer />
       </main>
       <div className="xl:hidden fixed bottom-0 left-0 w-full">
-
         <BottomNav />
       </div>
     </QueryProvider>

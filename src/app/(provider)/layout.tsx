@@ -13,7 +13,6 @@ function ProviderLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const SIGN_UP = pathname === "/signup";
 
-
   return (
     <QueryProvider>
       <div className="xl:hidden">
@@ -22,12 +21,11 @@ function ProviderLayout({ children }: PropsWithChildren) {
       <div className="hidden xl:block">
         <WebHeader />
       </div>
-
       <main className={`grow overflow-auto mb-[${!SIGN_UP ? "93px" : "0px"}] xl:mb-0`}>
         <div>{children}</div>
         <Footer />
       </main>
-      <div className="xl:hidden fixed bottom-0 left-0 w-full">
+      <div className="xl:hidden z-40 fixed bottom-0 left-0 w-full">
         <BottomNav />
       </div>
     </QueryProvider>

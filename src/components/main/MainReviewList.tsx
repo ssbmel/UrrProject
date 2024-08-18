@@ -33,23 +33,22 @@ function MainReviewList() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const year = String(date.getFullYear()).slice(-2);
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
-    return `${year}.${month}.${day}`;
+    return `${month}.${day}`;
   };
 
   return (
     <div className="w-full py-[28px]">
       <h2 className="font-bold text-lg xl:text-[22px] px-4 mb-[20px]">후기</h2>
       <div className="xl:hidden px-4">
-        <div className="grid gap-4 scrollbar" style={{ height: "400px", overflowY: "auto", overflowX: "hidden" }}>
+        <div className="grid gap-3 scrollbar" style={{ height: "400px", overflowY: "auto", overflowX: "hidden" }}>
           {reviewData.length === 0 ? (
             <p>후기가 없습니다.</p>
           ) : (
             reviewData.map((review) => (
               <div key={review.id} className="flex w-full">
-                <div className="w-[108px] h-[108px] mr-2 flex-shrink-0">
+                <div className="w-[108px] h-[108px] mr-3 flex-shrink-0">
                   <Link href={`/products/detail/${review.product_id}`}>
                     <div className="relative w-[108px] h-[108px]">
                       <Image
@@ -64,7 +63,7 @@ function MainReviewList() {
                 </div>
 
                 <div className="w-[60%] h-[104px] grid grid-rows-[auto,1fr,auto]">
-                  <div className="flex mb-1">
+                  <div className="flex my-1">
                     {Array(Math.floor(review.review_score!))
                       .fill(1)
                       .map((_, index) => (

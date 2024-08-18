@@ -57,7 +57,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
                 src={inf.profile_url || defaultImg}
                 alt="인플루언서이미지"
                 fill
-                sizes="80px"
+                sizes="80px xl:w-[120px]"
                 className="gradient-border object-cover"
               />
             </div>

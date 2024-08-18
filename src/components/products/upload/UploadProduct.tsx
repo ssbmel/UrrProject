@@ -125,18 +125,18 @@ function UploadProduct() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!user) {
       return;
     }
-    
+
     const postId = uuidv4();
     const mainImgId = (await uploadMainImg(postId)) || uploadedMainImg;
     const detailImgId = await uploadDetailImages(postId);
-  
+
     const startDate = startDateRef.current?.value;
     const endDate = endDateRef.current?.value;
-    
+
     const productData: Product = {
       category: radioCheckedValue || "",
       start: startDate as string,
@@ -150,7 +150,7 @@ function UploadProduct() {
       main_img: mainImgId || "",
       user_id: user.id || "",
       created_at: new Date().toISOString(),
-      id: id === "new" ? postId : id as string,
+      id: id === "new" ? postId : (id as string),
       nickname: user.nickname || ""
     };
 
@@ -167,7 +167,7 @@ function UploadProduct() {
       swal("상품 정보를 입력해주세요.");
       return;
     }
-  
+
     const { data, error } = await supabase.from("products").upsert([productData]).select();
     if (error) {
       console.error("Error inserting data:", error);
@@ -180,20 +180,6 @@ function UploadProduct() {
 
   return (
     <form onSubmit={onSubmit}>
-       <div className="w-full bg-[#fffffe] flex justify-end xl:max-w-[1200px] xl:mx-auto">
-          <button
-            type="submit"
-            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3 xl:hidden"
-          >
-            {id === "new" ? "올리기" : "수정완료"}
-          </button>
-          <button
-            type="submit"
-            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[18px] rounded-lg py-[14px] px-[36px] font-semibold hidden xl:block"
-          >
-            {id === "new" ? "글 올리기" : "수정완료"}
-          </button>
-        </div>
       <div className="max-w-[1200px] mx-auto grid gap-2 bg-[#F4F4F4]">
         <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
@@ -202,7 +188,7 @@ function UploadProduct() {
           costRef={costRef}
           priceRef={priceRef}
           productCountRef={productCountRef}
-        /> 
+        />
         <Contents
           titleRef={titleRef}
           textRef={textRef}
@@ -211,7 +197,47 @@ function UploadProduct() {
           uploadedMainImg={uploadedMainImg}
           setMainImg={setMainImg}
         />
-       
+      </div>
+      <div className="max-w-[1200px] flex justify-center mb-5 mx-auto">
+        <button
+          type="submit"
+          className={`
+            bg-[#1A82FF]
+            text-[#FFFFFE]
+            border 
+            text-[18px] 
+            px-[10px] 
+            py-1 
+            rounded-md 
+            xl:hidden 
+            w-[342px] 
+            h-[52px]
+            hover:bg-[#0068E5]
+          `}
+        >
+          {id === "new" ? "글 올리기" : "수정완료"}
+        </button>
+        <button
+          type="submit"
+          className={`
+            bg-[#FFFFFF]
+            text-[#1A82FF]
+            border
+            border-[#1A82FF]
+            text-[18px] 
+            rounded-lg 
+            py-[14px] 
+            px-[36px] 
+            font-semibold 
+            hidden 
+            xl:block 
+            ml-auto
+            hover:bg-[#1A82FF]
+            hover:text-[#FFFFFE]
+          `}
+        >
+          {id === "new" ? "글 올리기" : "수정완료"}
+        </button>
       </div>
     </form>
   );

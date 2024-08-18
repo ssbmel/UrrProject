@@ -20,7 +20,7 @@ export async function PUT(request: NextRequest) {
     const { data, error } = await supabase.from("users").update(info).eq("id", info.id);
 
     if (error) {
-      return alert(`${error.message}`);
+      return console.log(`${error.message}`);
     }
     return NextResponse.json(data);
   } catch (error) {

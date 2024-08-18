@@ -27,7 +27,7 @@ function Category({ radioCheckedValue, setRadioCheckedValue }: CategoryProps) {
   return (
     <div className="">
       <details open className="w-full px-4 contents-box">
-      <h1 className="font-bold text-xl mb-5 hidden xl:block">카테고리 선택</h1>
+      <h1 className="font-bold text-xl mb-5 hidden xl:block xl:pt-8">카테고리 선택</h1>
         <summary className="font-bold text-xl xl:hidden">카테고리 선택</summary>
         <hr className="xl:hidden" />
         <div className="grid grid-cols-3 gap-3 pb-5 p-2 xl:flex xl:space-x-8 xl:mt-0">
@@ -37,10 +37,10 @@ function Category({ radioCheckedValue, setRadioCheckedValue }: CategoryProps) {
                 <input
                   type="radio"
                   name="radioCheckedList"
-                  value={c.name} // Use `name` for consistency
+                  value={c.title}
                   onChange={handleRadioChange}
                   className="mr-2 cursor-pointer text-[#1B1C1D]"
-                  checked={radioCheckedValue === c.name} // Check with `name`
+                  checked={radioCheckedValue === c.title}
                 />
                 {c.title}
               </label>

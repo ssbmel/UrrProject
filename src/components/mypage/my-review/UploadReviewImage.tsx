@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { ReviewImgGroup } from "./MyReview";
+import { ReviewImgGroup } from "./WrittenMyReview";
 import Blackcamera from "../../../../public/icon/blackcamera.png";
 import AccentIcon from "../../../../public/icon/accentmark.svg";
 import Image from "next/image";
-
+import swal from "sweetalert";
 interface ReviewProps {
   reviewImages: ReviewImgGroup[];
   setReviewImages: React.Dispatch<React.SetStateAction<ReviewImgGroup[]>>;
   uploadedReviewImages: string;
 }
 
-const ReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImages, uploadedReviewImages }) => {
+const UploadReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImages, uploadedReviewImages }) => {
   const [reviewImgUrls, setReviewImgUrls] = useState<ReviewImgGroup[]>([]);
 
   useEffect(() => {
@@ -118,4 +118,4 @@ const ReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImages, upl
   );
 };
 
-export default ReviewImage;
+export default UploadReviewImage;

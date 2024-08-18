@@ -3,6 +3,7 @@
 import { updateUserPassword } from "@/services/users/account/account.service";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, RefObject, useRef, useState } from "react";
+import swal from "sweetalert";
 
 const UpdatePw = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const UpdatePw = () => {
       return;
     }
 
-    alert("비밀번호가 정상적으로 변경되었습니다.");
+    swal("비밀번호가 정상적으로 변경되었습니다.");
 
     router.push("/mypage");
     return;

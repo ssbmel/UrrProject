@@ -24,7 +24,7 @@ const Login = () => {
     const password = passwordRef.current?.value;
 
     if (!email || !password) {
-      alert("이메일과 비밀번호를 입력해주세요.");
+      swal("이메일과 비밀번호를 입력해주세요.");
       return;
     }
     try {
@@ -33,7 +33,7 @@ const Login = () => {
       // router.replace("/mypage");
       // router.refresh();
     } catch (error) {
-      alert("아이디와 비빌번호를 확인해주세요.");
+      swal("아이디와 비빌번호를 확인해주세요.");
       console.log(error);
     }
   };

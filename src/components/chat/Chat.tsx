@@ -209,7 +209,7 @@ export default function Chat({ params }: detailProps) {
       nickname: nickname
     });
     if (error) {
-      console.log("채팅 보내기 실패"); //alert로 바꿀 것
+      swal("채팅 보내기 실패"); //alert로 바꿀 것
       console.log(error);
     }
     resizeHeight();

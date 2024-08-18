@@ -14,6 +14,7 @@ import DetailInflu from "./DetailInflu";
 import LoadingUrr from "@/components/common/loading/LoadingUrr";
 import useGetProductReview from "@/hooks/useGetProductReview";
 import WebpDetail from "./WebpDetail";
+import swal from "sweetalert";
 
 interface detailProps {
   params: { id: string };
@@ -71,7 +72,7 @@ export default function Detail({ params }: detailProps) {
     navigator.clipboard
       .writeText(url)
       .then(() => {
-        alert("URL이 클립보드에 복사되었습니다!");
+        swal("URL이 클립보드에 복사되었습니다!");
       })
       .catch((error) => {
         console.error("URL 복사 실패:", error);

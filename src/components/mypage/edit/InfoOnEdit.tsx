@@ -13,6 +13,7 @@ import { User } from "../../../../types/common";
 import { nicknameCheck } from "@/services/users/users.service";
 import { useRouter } from "next/navigation";
 import WriteIcon from "../../../../public/icon/writeIcon.svg";
+import swal from "sweetalert";
 
 interface Props {
   user: User;
@@ -174,7 +175,7 @@ const InfoOnEdit = ({ user }: Props) => {
 
     const data = await patchUserFromUserId(editUserData);
 
-    alert("개인정보가 업데이트되었습니다.");
+    swal("개인정보가 업데이트되었습니다.");
 
     router.push("/mypage");
   };

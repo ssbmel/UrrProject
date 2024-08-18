@@ -2,7 +2,6 @@
 
 import QueryProvider from "@/queries/QueryProvider";
 import { PropsWithChildren } from "react";
-import AlertMessage from "@/components/common/alert/AlertMessage";
 import BottomNav from "@/components/common/bottomnav/BottomNav";
 import Footer from "@/components/common/footer/Footer";
 import MobileHeader from "@/components/common/header/MobileHeader";
@@ -21,7 +20,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
       <div className="hidden xl:block">
         <WebHeader />
       </div>
-      <main style={{ marginBottom: !SIGN_UP ? "93px" : "0px" }} className="grow overflow-auto xl:mb-0">
+      <main className={`grow overflow-auto ${!SIGN_UP ? "mb-[93px]" : "mb-0"} xl:mb-0`}>
         <div>{children}</div>
         <Footer />
       </main>

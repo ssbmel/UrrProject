@@ -1,11 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import fail from "../../../public/images/orderFail.png";
 
 export default function Fail() {
-  const router = useRouter();
   const [queryParams, setQueryParams] = useState({ code: "", message: "" });
 
   useEffect(() => {
@@ -17,13 +15,9 @@ export default function Fail() {
 
   const { message } = queryParams;
 
-  // if (!code || !message) {
-  //   return <div className="flex justify-center items-center min-h-screen bg-gray-100">로딩 중...</div>;
-  // }
-
   return (
-    <div className="flex justify-center items-center w-full h-screen ">
-      <div className="flex flex-col justify-center items-center mb-[80px]">
+    <div className="flex justify-center items-center w-full  min-h-[calc(100vh-145px)] overflow-x-hidden ">
+      <div className="flex flex-col justify-center items-center">
         <div className="relative w-[96px] h-[142px]">
           <Image src={fail} alt="결제실패 이미지" fill sizes="96px" priority className=" object-cover" />
         </div>

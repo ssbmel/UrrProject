@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useGetProductDetail from "@/hooks/useGetProductDetail";
 import ReviewList from "./ReviewList";
 import ProductInquiry from "./ProductInquiry";
@@ -38,8 +38,20 @@ export default function Detail({ params }: detailProps) {
   const discountPercentage = ((cost - price) / cost) * 100;
   const discountPercentageInteger = Math.floor(discountPercentage);
 
+  const refForScroll = useRef<HTMLDivElement>(null);
+
   const endDate = data?.end;
   const isExpired = endDate && new Date(endDate) < new Date();
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      if (refForScroll.current) {
+        refForScroll.current.scrollIntoView();
+      }
+    };
+
+    setTimeout(scrollToTop, 500);
+  }, []);
 
   useEffect(() => {
     if (!isLoading) {
@@ -85,7 +97,7 @@ export default function Detail({ params }: detailProps) {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen xl:w-full ">
+      <div ref={refForScroll} className="flex flex-col min-h-screen xl:w-full ">
         <WebpDetail
           id={params.id}
           handleBuy={handleBuy}

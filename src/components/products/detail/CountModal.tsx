@@ -80,9 +80,9 @@ const CountModal = ({
         });
         const cart = await swal({
           title: "장바구니로 이동하시겠습니까?",
-          buttons: ["취소", "이동"],
+          buttons: ["취소", "이동"]
         });
-      
+
         if (cart) {
           router.push("/cart");
         }
@@ -130,9 +130,9 @@ const CountModal = ({
               <Image src={closeIcon} alt="Close" width={24} height={24} />
             </button>
             <h2 className="text-xl font-semibold flex-grow text-center my-4">주문 수량</h2>
-            <h2 className="text-lg font-semibold mb-8 ">{title}</h2>
+            <h2 className="text-lg font-normal my-8 ">{title}</h2>
             <div className="border-[#F4F4F4] border-[1px] w-full my-4" />
-            <div className="flex items-center justify-between my-4">
+            <div className="flex items-center justify-between mt-4 mb-8">
               <div className="flex items-center">
                 <p className="text-lg">{totalPrice.toLocaleString()} 원</p>
                 <p className="text-gray-300 line-through ml-2">{totalCost.toLocaleString()}</p>
@@ -166,7 +166,10 @@ const CountModal = ({
               </div>
 
               <Link href={"/payment"}>
-                <button className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md" onClick={handleBuy}>
+                <button
+                  className="w-[278px] h-[52px] text-[16px] text-white bg-[#1A82FF] rounded-md"
+                  onClick={handleBuy}
+                >
                   구매하기
                 </button>
               </Link>

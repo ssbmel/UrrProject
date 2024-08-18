@@ -154,7 +154,7 @@ export default function WebpDetail({
               </div>
 
               <div className=" mt-4 w-full flex flex-col py-4 px-8">
-                <div className="flex flex-col gap-[14px] my-2 text-[18px] ">
+                <div className="flex flex-col gap-[14px] my-2 text-[18px] font-light ">
                   <div className="flex">
                     <span className="w-[120px] text-[#4C4F52]">진행기간</span>
                     <span className="text-[#1B1C1D]">

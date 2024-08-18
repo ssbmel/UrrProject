@@ -83,7 +83,7 @@ function InfluencerList() {
   });
 
   return (
-    <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto" id="root">
+    <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
       <InfGuidModal/>
       <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>

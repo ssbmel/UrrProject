@@ -266,8 +266,8 @@ const WrittenMyReview = () => {
           {content}
         </div>
       ) : (
-        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-          <div className="relative p-4 w-[726px] bg-white rounded-lg shadow-lg">{content}</div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
+          <div className="relative p-4 w-[726px] h-[1243px] bg-white rounded-lg shadow-lg">{content}</div>
         </div>
       )}
     </div>

@@ -54,12 +54,12 @@ export default function AdminPage() {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full max-w-[375px] mx-auto">
         <h2 className="p-5 text-xl text-[#1B1C1D]">관리자 페이지</h2>
         <div className="bg-[#F4F4F4] h-2"></div>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 max-w-[375px] mx-auto">
         {isSuccess &&
           influencerApproveList?.map((inf: any, index: number) => {
             return (

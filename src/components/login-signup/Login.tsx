@@ -44,8 +44,8 @@ const Login = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: "http://localhost:3000/api/auth/callback"
-        // redirectTo: "https://urr-final.vercel.app/api/auth/callback"
+        // redirectTo: "http://localhost:3000/api/auth/callback"
+        redirectTo: "https://urr-final.vercel.app/api/auth/callback"
       }
     });
     if (error) {

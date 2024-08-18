@@ -120,8 +120,8 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
 
   return (
     <>
-      <div className="xl:flex xl:flex-col xl:items-center">
-        <div className="xl:w-[1000px]">
+      <div className="flex flex-col items-center">
+        <div className="w-[375px] xl:w-[1000px]">
           <div className="p-4">
             <p className="pb-3 pl-1 text-[16px] text-[#4C4F52]">문의 남기기</p>
             <form onSubmit={(e) => addCommentHandler(e)} className="flex flex-col space-y-2">

@@ -18,7 +18,7 @@ const Review = ({ props }: { props: ReviewProps }) => {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
   const formattedDate = formatDate(props.created_at);
   return (
-    <div className="w-[343px] xl:w-[1000px] py-6">
+    <div className="w-[375px] xl:w-[1000px] py-[16px] px-[12px] ">
       <div className="flex divide-x-2 my-2 xl:hidden">
         <div className="pr-2 text-[14px] text-[#1B1C1D] ">{props.user_nickname}</div>
         <div className="pl-2 text-blue-600 text-[14px] flex items-center">
@@ -44,7 +44,7 @@ const Review = ({ props }: { props: ReviewProps }) => {
         </div>
       </div>
       <div className="xl:flex">
-        <div className="flex gap-3 py-2 xl:w-[50%]">
+        <div className="flex gap-2 py-2 xl:w-[50%]">
           {props.review_images.map((value, index) => {
             return (
               <div key={index} className="relative w-[84px] h-[84px] xl:w-[146px] xl:h-[146px]">

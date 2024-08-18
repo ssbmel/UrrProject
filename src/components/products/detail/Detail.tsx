@@ -98,12 +98,12 @@ export default function Detail({ params }: detailProps) {
         <div className="xl:hidden">
           <div className="flex justify-center w-full relative">
             {data && (
-              <>
+              <div className="relative w-[375px] h-[375px] xl:w-[475px] xl:h-[475px]">
                 <Image
                   src={data?.main_img}
                   alt={data?.title}
-                  width={500}
-                  height={375}
+                  fill
+                  sizes="375px xl:475px"
                   priority
                   className={`rounded-md object-cover ${isExpired ? "opacity-50 " : ""}`}
                 />
@@ -112,9 +112,8 @@ export default function Detail({ params }: detailProps) {
                     <p className="text-[#FFFFFE] text-[20px] ">판매 종료</p>
                   </div>
                 )}
-              </>
+              </div>
             )}
-            <div></div>
           </div>
 
           <div>
@@ -139,8 +138,8 @@ export default function Detail({ params }: detailProps) {
           </div>
 
           <div className="border-[#F4F4F4] border-[6px] w-full mt-3" />
-          <div className="p-4 mx-auto w-[375px] flex flex-col items-center">
-            <div className="flex flex-col gap-[14px] my-2 text-[16px]">
+          <div className="p-4 flex flex-col items-center ">
+            <div className="mx-auto w-[343px] flex flex-col gap-[14px] my-2 text-[16px]">
               <div className="flex">
                 <span className="w-[105px] text-[#4C4F52]">진행기간</span>
                 <span className="text-[#1B1C1D]">
@@ -148,22 +147,22 @@ export default function Detail({ params }: detailProps) {
                 </span>
               </div>
               <div className="flex">
-                <span className="w-[105px] text-[#4C4F52]">배송 예정일</span>
-                <span className="text-[#1B1C1D]">08.21 순차적으로 출고</span>
+                <p className="w-[105px] text-[#4C4F52]">배송 예정일</p>
+                <p className="text-[#1B1C1D]">08.21 순차적으로 출고</p>
               </div>
               <div className="flex">
-                <span className="w-[105px] text-[#4C4F52]">택배사</span>
-                <span className="text-[#1B1C1D]">cj 대한통운</span>
+                <p className="w-[105px] text-[#4C4F52]">택배사</p>
+                <p className="text-[#1B1C1D]">cj 대한통운</p>
               </div>
               <div className="flex">
-                <span className="w-[105px] text-[#4C4F52]">배송비</span>
+                <p className="w-[105px] text-[#4C4F52]">배송비</p>
                 <div className="flex flex-col">
-                  <span className="text-[#1B1C1D]">3,000원</span>
-                  <span className="text-[14px] text-[#989C9F]">제주 5,000 원 / 도서산간 5,000 원</span>
+                  <p className="text-[#1B1C1D]">3,000원</p>
+                  <p className="text-[14px] text-[#989C9F]">제주 5,000 원 / 도서산간 5,000 원</p>
                 </div>
               </div>
 
-              <div className="w-[375px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 p-4 gap-[12px] px-[14px] py-[12px]">
+              <div className="mx-auto w-[343px] h-[124px] rounded-lg bg-[#E1EEFE] flex flex-col justify-center mt-5 gap-[12px] px-[14px] py-[12px]">
                 <div className="text-[16px] font-semibold text-[#0051B2]">주문 전 확인해주세요!</div>
                 <div className="text-[14px] text-[#4C4F52]">{data?.text}</div>
               </div>

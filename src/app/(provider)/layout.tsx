@@ -25,7 +25,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
         <div>{children}</div>
         <Footer />
       </main>
-      <div className="xl:hidden fixed bottom-0 left-0 w-full">
+      <div className="xl:hidden z-40 fixed bottom-0 left-0 w-full">
         <BottomNav />
       </div>
     </QueryProvider>

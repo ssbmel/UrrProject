@@ -15,21 +15,14 @@ interface PricePeriodProps {
 const PricePeriod: React.FC<PricePeriodProps> = ({ startDateRef, endDateRef, costRef, priceRef, productCountRef }) => {
   const today = new Date();
 
-  const formatNumberWithLocale = (value: string) => {
-    const cleanedValue = value.replace(/[^0-9]/g, "");
-    const numberValue = parseInt(cleanedValue, 10);
-    return isNaN(numberValue) ? "" : numberValue.toLocaleString();
-  };
-
   const enforcePositiveValue = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.currentTarget;
-    const formattedValue = formatNumberWithLocale(input.value);
-
-    input.value = formattedValue;
+    const cleanedValue = input.value.replace(/[^0-9.]/g, "");
+    input.value = cleanedValue;
   };
 
   const preventInvalidInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (["e", "E", "+", "-"].includes(e.key)) {
+    if (["e", "E", "+", "-", ","].includes(e.key)) {
       e.preventDefault();
     }
   };

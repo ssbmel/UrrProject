@@ -137,7 +137,7 @@ input {
 
 @media (max-width: 1280px) {
   .container {
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto; 
   }
 
@@ -162,4 +162,8 @@ input {
 
 .swal-title {
   font-size: 18px; /* 원하는 크기로 변경 */
+}
+
+.swal-text {
+  color: #1B1C1D;/* 원하는 크기로 변경 */
 }

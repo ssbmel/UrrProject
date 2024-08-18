@@ -47,9 +47,9 @@ function MainReviewList() {
             <p>후기가 없습니다.</p>
           ) : (
             reviewData.map((review) => (
-              <div key={review.id} className="flex w-full">
-                <div className="w-[108px] h-[108px] mr-3 flex-shrink-0">
-                  <Link href={`/products/detail/${review.product_id}`}>
+              <Link href={`/products/detail/${review.product_id}`}>
+                <div key={review.id} className="flex w-full">
+                  <div className="w-[108px] h-[108px] mr-3 flex-shrink-0">
                     <div className="relative w-[108px] h-[108px]">
                       <Image
                         src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
@@ -59,35 +59,35 @@ function MainReviewList() {
                         className="rounded-md object-cover"
                       />
                     </div>
-                  </Link>
-                </div>
+                  </div>
 
-                <div className="w-[60%] h-[104px] grid grid-rows-[auto,1fr,auto]">
-                  <div className="flex my-1">
-                    {Array(Math.floor(review.review_score!))
-                      .fill(1)
-                      .map((_, index) => (
-                        <div key={index} className="relative mr-[4px] w-[15px] h-[15px]">
-                          <Image src={fullStar.src} fill sizes="15px" alt="fullStar" className="object-cover" />
+                  <div className="w-[60%] h-[104px] grid grid-rows-[auto,1fr,auto]">
+                    <div className="flex my-1">
+                      {Array(Math.floor(review.review_score!))
+                        .fill(1)
+                        .map((_, index) => (
+                          <div key={index} className="relative mr-[4px] w-[15px] h-[15px]">
+                            <Image src={fullStar.src} fill sizes="15px" alt="fullStar" className="object-cover" />
+                          </div>
+                        ))}
+                      {review.review_score! % 1 !== 0 && (
+                        <div className="relative mr-[4px] w-[15px] h-[15px]">
+                          <Image src={halfStar.src} fill sizes="15px" alt="halfStar" className="object-cover" />
                         </div>
-                      ))}
-                    {review.review_score! % 1 !== 0 && (
-                      <div className="relative mr-[4px] w-[15px] h-[15px]">
-                        <Image src={halfStar.src} fill sizes="15px" alt="halfStar" className="object-cover" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-[#989C9F]">
-                    <p className="truncate flex-1">{review.title}</p>
-                    <p className="text-[#1B1C1D] font-medium line-clamp-2">{review.review_content}</p>
-                  </div>
-                  <div className="self-end">
-                    <p className="text-xs text-gray-400 mt-1">
-                      {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
-                    </p>
+                      )}
+                    </div>
+                    <div className="text-[#989C9F]">
+                      <p className="truncate flex-1">{review.title}</p>
+                      <p className="text-[#1B1C1D] font-medium line-clamp-2">{review.review_content}</p>
+                    </div>
+                    <div className="self-end">
+                      <p className="text-xs text-gray-400 mt-1">
+                        {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))
           )}
         </div>

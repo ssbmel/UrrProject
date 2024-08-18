@@ -192,7 +192,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           <div className="flex sticky bottom-0 mb-7">
             <button
               onClick={onSignUpHandler}
-              // disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
+              disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
               className={`${
                 isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm
                   ? "bg-primarynormal text-white"

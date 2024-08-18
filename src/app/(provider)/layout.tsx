@@ -2,7 +2,6 @@
 
 import QueryProvider from "@/queries/QueryProvider";
 import { PropsWithChildren } from "react";
-import AlertMessage from "@/components/common/alert/AlertMessage";
 import BottomNav from "@/components/common/bottomnav/BottomNav";
 import Footer from "@/components/common/footer/Footer";
 import MobileHeader from "@/components/common/header/MobileHeader";

@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "../../../../public/logo/title_logo.svg";
@@ -31,7 +31,6 @@ const MobileHeader = () => {
   const PAYMENT = pathname === "/payment";
   const CHATLIST = pathname === "/chatlist";
   const INFLUENCER = pathname === "/influencer";
-  // const PRODUCTS_DETAIL = pathname === `/products/detail/${id}`;
   const { setActiveMenu } = useMenuStore();
 
   const isInfluncer = () => {
@@ -94,17 +93,17 @@ const MobileHeader = () => {
         </Link>
       </>
     );
-  } else if (PRODUCTS_LIST || MY_PAGE || CHATLIST || INFLUENCER) {
-    rightIcon = (
-      <Link href={"/cart"}>
-        <CartIcon />
-      </Link>
-    );
   } else if (SIGN_UP || LOGIN || SEARCH || PAYMENT) {
     rightIcon = (
       <button onClick={isActiveMenu}>
         <XIcon />
       </button>
+    );
+  } else {
+    rightIcon = (
+      <Link href={"/cart"}>
+        <CartIcon />
+      </Link>
     );
   }
 

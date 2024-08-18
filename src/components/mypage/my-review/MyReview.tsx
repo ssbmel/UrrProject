@@ -181,7 +181,7 @@ const MyReview = () => {
             />
           </div>
           <div className="grid">
-            <p>{orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}</p>
+            <p>{orderData && [orderData?.name.split("]")[0] + "]", <br key="1" />, orderData?.name.split("]")[1]]}</p>
             <p className="text-[14px] text-[#989C9F]">{orderData && orderData.amount * orderData.quantity}원 구매</p>
           </div>
         </div>

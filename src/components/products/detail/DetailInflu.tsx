@@ -28,7 +28,7 @@ const DetailInflu = ({ userId }: { userId: string }) => {
     <>
       <div className="w-full h-[64px] py-[12px] px-[16px] xl:px-0 flex items-center justify-between">
         <div className="flex items-center">
-          <div className="relative w-[40px] h-[40px] m-2">
+          <div className="relative w-[40px] h-[40px]">
             {influ?.profile_url && (
               <Image
                 src={influ?.profile_url}

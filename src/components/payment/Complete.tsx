@@ -24,7 +24,6 @@ export default function Complete() {
   const paymentId = searchParams.get("paymentId");
   const { data: userData } = useUserData();
   const userId = userData?.id;
-  console.log(userId);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -75,7 +74,7 @@ export default function Complete() {
         <div className="flex flex-col mx-auto  xl:w-[1130px]">
           <div className="p-2 m-4 xl:my-4 xl:mx-2 xl:w-[450px]">
             <p className="mb-4 text-[18px] xl:text-[20px]">배송정보</p>
-            <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px] xl:w-[480px] xl:text-[18px]">
+            <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px] xl:grid-cols-[20%_80%] xl:w-[1132px] xl:text-[18px]">
               <div className="text-[#4C4F52]">주문자</div>
               <div>{products?.name}</div>
 

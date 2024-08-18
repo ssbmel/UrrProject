@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
 import Image from "next/image";
 import sendImg from "../../../public/bgImg/send.png";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root"); 
 
 const ModalComponent: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

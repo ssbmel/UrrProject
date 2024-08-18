@@ -18,10 +18,10 @@ const Review = ({ props }: { props: ReviewProps }) => {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
   const formattedDate = formatDate(props.created_at);
   return (
-    <div className="w-[343px] xl:w-[1000px] py-6">
-      <div className="flex divide-x-2 my-2 xl:hidden">
-        <div className="pr-2 text-[14px] text-[#1B1C1D] ">{props.user_nickname}</div>
-        <div className="pl-2 text-blue-600 text-[14px] flex items-center">
+    <div className="w-[375px] xl:w-[1000px] py-[16px] px-[12px] xl:py-[54px]">
+      <div className="flex items-center divide-x-2 my-2 xl:hidden">
+        <div className="pr-2 text-[14px] font-medium text-[#1B1C1D] ">{props.user_nickname}</div>
+        <div className="pl-2 gap-[4px] text-blue-600 text-[14px] flex items-center">
           {Array(fullStars)
             .fill(null)
             .map((_, index) => (
@@ -44,7 +44,7 @@ const Review = ({ props }: { props: ReviewProps }) => {
         </div>
       </div>
       <div className="xl:flex">
-        <div className="flex gap-3 py-2 xl:w-[50%]">
+        <div className="flex gap-2 py-2 xl:w-[50%] xl:gap-3">
           {props.review_images.map((value, index) => {
             return (
               <div key={index} className="relative w-[84px] h-[84px] xl:w-[146px] xl:h-[146px]">
@@ -60,10 +60,10 @@ const Review = ({ props }: { props: ReviewProps }) => {
             );
           })}
         </div>
-        <div className="xl:flex xl:flex-col">
+        <div className="xl:flex xl:flex-col py-2">
           <div className="hidden xl:flex xl:divide-x-2">
-            <div className="pr-2 text-[18px] text-[#1B1C1D] ">{props.user_nickname}</div>
-            <div className="pl-2 text-blue-600 text-[14px] flex items-center">
+            <div className="pr-2 text-[18px] font-medium text-[#1B1C1D] ">{props.user_nickname}</div>
+            <div className="pl-2 text-blue-600 gap-[4px] text-[14px] flex items-center">
               {Array(fullStars)
                 .fill(null)
                 .map((_, index) => (

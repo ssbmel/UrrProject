@@ -1,4 +1,5 @@
-import { ProductList } from "@/components/mypage/my-review/MyReview"
+import { ProductList } from "@/components/mypage/my-review/WrittenMyReview"
+
 
 export type Json =
   | string

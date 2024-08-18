@@ -1,35 +1,9 @@
-"use client";
-
-import AlertMessage from "@/components/common/alert/AlertMessage";
-import BottomNav from "@/components/common/bottomnav/BottomNav";
-import Footer from "@/components/common/footer/Footer";
-import MobileHeader from "@/components/common/header/MobileHeader";
-import { WebHeader } from "@/components/common/header/WebHeader";
-import { usePathname } from "next/navigation";
-
 import React, { PropsWithChildren } from "react";
 
 const Mainlayout = ({ children }: PropsWithChildren) => {
-  const pathname = usePathname();
-  const SIGN_UP = pathname === "/signup";
-
   return (
     <>
-    <div  className="container">
-      {children}
-      <div className="xl:hidden">
-        <MobileHeader />
-      </div>
-      <div className="hidden xl:block">
-        <WebHeader />
-      </div>
-      <main className={`grow overflow-auto mb-[${!SIGN_UP ? "93px" : "0px"}] xl:mb-0`}>
-        <div className="container">{children}</div>
-        <Footer />
-      </main>
-      <div className="xl:hidden fixed bottom-0 left-0 w-full">
-        <BottomNav />
-      </div>
+      <div className="container">{children}</div>
     </>
   );
 };

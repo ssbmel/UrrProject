@@ -38,6 +38,8 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState("최신순");
 
+  const menuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
@@ -94,6 +96,24 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
   const handleExcludeExpiredChange = () => {
     setExcludeExpired(!excludeExpired);
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   if (isLoading) {
     return <LoadingUrr />;
   }
@@ -102,7 +122,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
     <>
       <div className="flex flex-col items-center">
         <div className="xl:w-[1132px]">
-          <div className="flex justify-between pt-3 mx-2 items-center">
+          <div className="flex justify-between my-4 ml-[10px] mr-[16px] items-center">
             <div className="flex items-center cursor-pointer xl:pt-4 xl:pb-2">
               <Image
                 src={excludeExpired ? checkedImg : uncheckedImg}
@@ -112,11 +132,11 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                 className="mr-2"
                 onClick={handleExcludeExpiredChange}
               />
-              <label htmlFor="excludeExpired" className="text-[16px] ml-2 xl:text-[18px] text-[#4C4F52]">
+              <label htmlFor="excludeExpired" className="text-[16px] xl:text-[18px] text-[#4C4F52]">
                 판매 종료 제외
               </label>
             </div>
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               <div className="flex items-center cursor-pointer">
                 <p className="mx-2 text-[16px] xl:text-[18px] text-[#4C4F52]">{sortOption}</p>
                 <div
@@ -170,11 +190,11 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
               )}
             </div>
           </div>
-          <div className="border-[#F4F4F4] border-[1px] w-full mt-3" />
+          <div className="border-[#F4F4F4] border-[1px] w-full mt-4" />
           <div className="flex flex-col">
-            <p className="text-[16px] xl:text-[18px] text-[#4C4F52] ml-3 mt-4 xl:mt-6 ">총 {totalProducts}개</p>
+            <p className="text-[16px] xl:text-[18px] text-[#4C4F52] mx-4 mt-4 xl:mt-6 ">총 {totalProducts}개</p>
             <div className="flex flex-col items-center">
-              <div className="grid grid-cols-2 xl:grid-cols-4 gap-y-[36px] p-[17px] gap-x-4 xl:gap-x-8 xl:w-full">
+              <div className="grid grid-cols-2 xl:grid-cols-4 gap-y-[36px] p-4 gap-x-[11px] xl:gap-x-8 xl:w-full">
                 {sortedProducts.map((product, index) => {
                   const cost = parseFloat(product.cost);
                   const price = parseFloat(product.price);
@@ -184,7 +204,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                   return (
                     <div key={index}>
                       <Link href={`/products/detail/${product.id}`}>
-                        <div className="relative mx-auto w-[165px] h-[178px] xl:w-[262px] xl:h-[270px] cursor-pointer mb-2">
+                        <div className="relative mx-auto w-[165px] h-[178px] xl:w-[262px] xl:h-[270px] cursor-pointer mb-[8px]">
                           <Image
                             src={product.main_img}
                             alt={product.title}
@@ -200,21 +220,25 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                           )}
                         </div>
                       </Link>
-                      <div className={`ml-3 ${expired ? "text-[#B2B5B8]" : ""}`}>
+                      <div className={` ${expired ? "text-[#B2B5B8]" : ""}`}>
                         <p className="text-[#B2B5B8] text-[12px] xl:text-[16px]">{product.nickname}</p>
                         <p
-                          className={`text-sm xl:py-2 xl:text-[20px] truncate w-[165px] xl:w-[221px] ${
+                          className={`text-sm xl:py-2 xl:text-[20px] truncate w-[165px] xl:w-[255px] ${
                             expired ? "text-[#B2B5B8]" : "text-gray-600"
                           }`}
                         >
                           {product.title}
                         </p>
                         <div className="flex items-center">
-                          <p className={`text-sm xl:text-[18px] ${expired ? "text-[#B2B5B8]" : "text-red-500"}`}>
+                          <p
+                            className={`text-sm font-semibold xl:text-[18px] ${
+                              expired ? "text-[#B2B5B8]" : "text-[#F03F33]"
+                            }`}
+                          >
                             {discountRate}%
                           </p>
                           <p
-                            className={`text-md xl:text-[18px] font-bold ml-1 xl:ml-2 ${
+                            className={`text-md xl:text-[18px] font-medium ml-1 xl:ml-2 ${
                               expired ? "text-[#B2B5B8]" : ""
                             }`}
                           >

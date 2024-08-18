@@ -28,7 +28,7 @@ const Section = () => {
           </TabButton>
         ))}
       </TabList>
-      <hr className="xl:border-[1px] xl:block hidden" />
+      <hr className="xl:border-y-[2px] xl:block border-[#F4F4F4] hidden" />
       <div>{Tabs[active].content}</div>
     </div>
   );

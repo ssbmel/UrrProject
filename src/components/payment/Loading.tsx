@@ -50,7 +50,6 @@ const LoadingComponent = () => {
     if (code === "FAILURE_TYPE_PG") {
       router.push(`/payment/fail?message=${message}`);
     } else if (!code) {
-      // 성공 케이스
       if (paymentData) {
         paymentSupabase(paymentData);
         router.push(`/payment/complete?paymentId=${paymentId}`);

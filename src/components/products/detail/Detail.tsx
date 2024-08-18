@@ -218,7 +218,7 @@ export default function Detail({ params }: detailProps) {
             )}
           </div>
         </div>
-        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-10 xl:hidden">
+        <div className="paybar sticky bottom-0 bg-white left-0 w-full z-30 xl:hidden">
           <div className="flex justify-center p-2 w-full">
             <button
               onClick={() => {

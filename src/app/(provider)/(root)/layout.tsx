@@ -9,18 +9,8 @@ import React, { PropsWithChildren } from "react";
 const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
-      <div className="xl:hidden">
-        <MobileHeader />
-      </div>
-      <div className="hidden xl:block">
-        <WebHeader />
-      </div>
-      <main className="grow overflow-auto mb-[93px] xl:mb-0">
-        <div className="container">{children}</div>
-        <Footer />
-      </main>
-      <div className="xl:hidden fixed bottom-0 left-0 w-full">
-        <BottomNav />
+    <div  className="container">
+      {children}
       </div>
     </>
   );

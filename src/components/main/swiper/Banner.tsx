@@ -21,7 +21,7 @@ import minibanner5 from "../../../../public/bgImg/minibanner5.png";
 
 export default function Banner() {
   return (
-    <div className="banner-container">
+    <div className="banner-container ">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

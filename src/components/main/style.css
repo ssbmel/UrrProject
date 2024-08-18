@@ -18,3 +18,11 @@
 .scrollbar::-webkit-scrollbar-track {
   background: #ffffff; /*스크롤바 뒷 배경 색상*/
 }
+
+/*ReviewList swiper css*/
+
+html,
+body {
+  position: relative;
+}
+

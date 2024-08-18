@@ -7,10 +7,10 @@ const ReviewList = ({ id }: { id: string }) => {
   const { data } = useGetProductReview({ id });
 
   return (
-    <div className="divide-y flex flex-col items-center">
+    <div className="divide-y flex flex-col items-center" id="product-review-list">
       {data && data.length > 0 ? (
         data.map((value: any, index: number) => {
-          return <Review key={index} props={value} />;
+          return <Review key={index} props={value}/>;
         })
       ) : (
         <div className="flex justify-center items-center">

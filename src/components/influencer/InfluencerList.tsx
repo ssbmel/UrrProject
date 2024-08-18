@@ -12,7 +12,6 @@ import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
 import { getInfluencerData } from "@/services/users/influencer/influencer.service";
 import InfGuidModal from "./InfGuidModal";
-import swal from 'sweetalert';
 
 function InfluencerList() {
   const { data: user } = useUserData();

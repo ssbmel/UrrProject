@@ -10,6 +10,7 @@ import plusGray from "../../../../public/icon/plusGray.png";
 import plusBlue from "../../../../public/icon/plusBlue.png";
 import minGray from "../../../../public/icon/minGray.png";
 import minBlue from "../../../../public/icon/minBlue.png";
+import swal from "sweetalert";
 
 interface ModalProps {
   id: string;
@@ -64,7 +65,7 @@ const CountModal = ({
     const userCartItem = await userCartItems({ id, userId });
     if (userId) {
       if (userCartItem?.length !== 0) {
-        alert("이미 장바구니에 있습니다!");
+        swal("이미 장바구니에 있습니다!");
       } else {
         await addCartItems({
           user_id: userId,
@@ -77,13 +78,17 @@ const CountModal = ({
           end,
           cost
         });
-        const cart = confirm("장바구니로 이동하시겠습니까?");
-        if (cart === true) {
+        const cart = await swal({
+          title: "장바구니로 이동하시겠습니까?",
+          buttons: ["취소", "이동"]
+        });
+
+        if (cart) {
           router.push("/cart");
         }
       }
     } else {
-      alert("로그인이 필요합니다!");
+      swal("로그인이 필요합니다!");
       router.push("/login");
     }
   };
@@ -104,7 +109,7 @@ const CountModal = ({
   };
   return (
     <>
-      <div className="md:hidden">
+      <div className="xl:hidden">
         <div
           className={`fixed inset-0 bg-gray-600 bg-opacity-50 z-40 ${
             showModal ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -125,9 +130,9 @@ const CountModal = ({
               <Image src={closeIcon} alt="Close" width={24} height={24} />
             </button>
             <h2 className="text-xl font-semibold flex-grow text-center my-4">주문 수량</h2>
-            <h2 className="text-lg font-semibold mb-8 ">{title}</h2>
+            <h2 className="text-lg font-normal my-8 ">{title}</h2>
             <div className="border-[#F4F4F4] border-[1px] w-full my-4" />
-            <div className="flex items-center justify-between my-4">
+            <div className="flex items-center justify-between mt-4 mb-8">
               <div className="flex items-center">
                 <p className="text-lg">{totalPrice.toLocaleString()} 원</p>
                 <p className="text-gray-300 line-through ml-2">{totalCost.toLocaleString()}</p>
@@ -161,7 +166,10 @@ const CountModal = ({
               </div>
 
               <Link href={"/payment"}>
-                <button className="w-[278px] h-[52px] text-white bg-[#1A82FF] rounded-md" onClick={handleBuy}>
+                <button
+                  className="w-[278px] h-[52px] text-[16px] text-white bg-[#1A82FF] rounded-md"
+                  onClick={handleBuy}
+                >
                   구매하기
                 </button>
               </Link>

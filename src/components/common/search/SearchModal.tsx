@@ -17,8 +17,8 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
   const searchWordRef = useRef<HTMLInputElement>(null);
   const [filteringTitle, setFilteringTitle] = useState<Product[]>([]);
   const [keywords, setKeywords] = useState<Keyword[]>([]);
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
 
-  // 브라우저가 모두 렌더링된 상태에서 해당 함수를 실행할 수 있도록 작업
   useEffect(() => {
     if (typeof window !== "undefined") {
       const result = localStorage.getItem("keywords") || "[]";
@@ -50,6 +50,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
   // 상픔 title을 기준으로 한 검색기능
   const SearchProducts = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setHasSearched(true);
     const searchWord = searchWordRef.current?.value;
     const searchCache = localStorage.getItem("keywords");
 
@@ -89,8 +90,8 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
             />
           </button>
 
-          {filteringTitle.length > 0 ? (
-            <ul className="h-[100px]">
+          {filteringTitle?.length > 0 ? (
+            <ul className="h-[100px] bg-red">
               {filteringTitle.map((product) => (
                 <li key={product.id}>
                   <Link href={`/products/detail/${product.id}`}>
@@ -102,8 +103,11 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
               ))}
             </ul>
           ) : (
-            <div className="h-[100px]"></div>
+            <div className="h-[100px]">
+              {hasSearched && <div className=" text-center text-[#B2B5B8]">검색어와 일치하는 상품이 없습니다.</div>}
+            </div>
           )}
+
           <div>
             <div className="flex justify-between">
               <h2 className="text-xl mb-[18px]">최근 검색어</h2>
@@ -127,7 +131,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
                   </li>
                 ))
               ) : (
-                <div className="h-[100px]"></div>
+                <div className="h-[100px] text-[#B2B5B8]">최근 검색어가 없습니다.</div>
               )}
             </ul>
           </div>

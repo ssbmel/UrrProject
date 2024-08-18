@@ -19,10 +19,10 @@ export const bottomMenu = [
   },
   {
     id: 2,
-    link: "/mypage",
-    label: "마이페이지",
-    icon: <MypageIcon />,
-    blueIcon: <BlueMypage />
+    link: "/influencer",
+    label: "인플루언서",
+    icon: <InfluencerIcon />,
+    blueIcon: <BlueInfluencer />
   },
   {
     id: 3,
@@ -33,10 +33,10 @@ export const bottomMenu = [
   },
   {
     id: 4,
-    link: "/influencer",
-    label: "인플루언서",
-    icon: <InfluencerIcon />,
-    blueIcon: <BlueInfluencer />
+    link: "/mypage",
+    label: "마이페이지",
+    icon: <MypageIcon />,
+    blueIcon: <BlueMypage />
   },
   {
     id: 5,

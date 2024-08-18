@@ -4,6 +4,7 @@ import { updateUserPassword } from "@/services/users/account/account.service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, RefObject, useRef, useState } from "react";
+import swal from "sweetalert";
 import EyeIcon from "../../../../../../../public/icon/eye.svg";
 
 interface pwSecurity {
@@ -80,7 +81,7 @@ const UpdatePw = () => {
       return;
     }
 
-    alert("비밀번호가 정상적으로 변경되었습니다.");
+    swal("비밀번호가 정상적으로 변경되었습니다.");
 
     router.push("/mypage");
     return;

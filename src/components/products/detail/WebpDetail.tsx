@@ -12,6 +12,7 @@ import plusBlue from "../../../../public/icon/plusBlue.png";
 import minGray from "../../../../public/icon/minGray.png";
 import minBlue from "../../../../public/icon/minBlue.png";
 import { useState } from "react";
+import swal from "sweetalert";
 
 interface WebpDetailProps {
   id: string;
@@ -52,7 +53,7 @@ export default function WebpDetail({
     navigator.clipboard
       .writeText(url)
       .then(() => {
-        alert("URL이 클립보드에 복사되었습니다!");
+        swal("URL이 클립보드에 복사되었습니다!");
       })
       .catch((error) => {
         console.error("URL 복사 실패:", error);
@@ -63,7 +64,7 @@ export default function WebpDetail({
     const userCartItem = await userCartItems({ id, userId });
     if (userId) {
       if (userCartItem?.length !== 0) {
-        alert("이미 장바구니에 있습니다!");
+        swal("이미 장바구니에 있습니다!");
       } else {
         await addCartItems({
           user_id: userId,
@@ -82,7 +83,7 @@ export default function WebpDetail({
         }
       }
     } else {
-      alert("로그인이 필요합니다!");
+      swal("로그인이 필요합니다!");
       router.push("/login");
     }
   };
@@ -153,7 +154,7 @@ export default function WebpDetail({
               </div>
 
               <div className=" mt-4 w-full flex flex-col py-4 px-8">
-                <div className="flex flex-col gap-[14px] my-2 text-[18px] ">
+                <div className="flex flex-col gap-[14px] my-2 text-[18px] font-light ">
                   <div className="flex">
                     <span className="w-[120px] text-[#4C4F52]">진행기간</span>
                     <span className="text-[#1B1C1D]">

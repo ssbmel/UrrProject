@@ -116,11 +116,21 @@ function Cart() {
   };
 
   const CheckboxChangeHandler = (item: DataType) => {
+    let updatedCartItems;
     if (item.isChecked) {
-      removeItem(item);
+      updatedCartItems = allCartItems.map((cartItem) =>
+        cartItem.id === item.id ? { ...cartItem, isChecked: false } : cartItem
+      );
     } else {
-      addItems(item);
+      updatedCartItems = allCartItems.map((cartItem) =>
+        cartItem.id === item.id ? { ...cartItem, isChecked: true } : cartItem
+      );
     }
+
+    setAllCartItems(updatedCartItems);
+
+    const allItemsChecked = updatedCartItems.every((item) => item.isChecked);
+    setAllChecked(allItemsChecked);
   };
 
   /** 아이템 삭제 업데이트 */
@@ -150,7 +160,10 @@ function Cart() {
   /** 아이템 전체 삭제 */
   const allDeleteItem = async (userId: string) => {
     const supabase = createClient();
-    const isConfirmed = confirm("전체상품을 장바구니 목록에서 삭제하시겠습니까?");
+
+    const isConfirmed = await swal("전체상품을 장바구니 목록에서 삭제하시겠습니까?", {
+      buttons: ["아니오", "예"]
+    });
 
     if (!isConfirmed) {
       return;
@@ -165,70 +178,84 @@ function Cart() {
       removeAllItemFromState(userId);
     }
   };
-
   return (
-    <div className=" w-full xl:w-[1132px] xl:mx-auto p-4">
+    <div className="w-full xl:w-[1132px] xl:mx-auto p-4">
       <h2 className="hidden xl:block text-2xl font-bold text-center mb-[32px]">장바구니</h2>
-      <div className="flex justify-between items-center gap-2 pb-5 border-b-2 border-[#EAECEC]">
-        <label>
-          <input
-            type="checkbox"
-            readOnly
-            name="product-all"
-            className="mr-4"
-            checked={allChecked}
-            onClick={(e: any) => {
-              selectAllHandler(e.target.checked);
-            }}
-          />
-          전체상품
-        </label>
-        <button
-          onClick={() => {
-            allDeleteItem(userId);
-          }}
-          className=" text-primarynormal"
-        >
-          삭제
-        </button>
-      </div>
 
-      {allCartItems?.map((item: DataType) => (
-        <QuantityCount
-          key={item.id}
-          item={item}
-          CheckboxChangeHandler={CheckboxChangeHandler}
-          updateItemQuantity={updateItemQuantity}
-          removeItemFromState={removeItemFromState}
-          isFetching={isFetching}
-        />
-      ))}
+      {allCartItems.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-lg font-semibold">장바구니에 담긴 상품이 없습니다.</p>
+          <button
+            onClick={() => router.push("/products/list")}
+            className="mt-5 px-6 py-2 rounded-md bg-primarynormal text-white"
+          >
+            상품 보러가기
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="flex justify-between items-center gap-2 pb-5 border-b-2 border-[#EAECEC]">
+            <label>
+              <input
+                type="checkbox"
+                readOnly
+                name="product-all"
+                className="mr-4"
+                checked={allChecked}
+                onChange={(e) => {
+                  selectAllHandler(e.target.checked);
+                }}
+              />
+              전체상품
+            </label>
+            <button
+              onClick={() => {
+                allDeleteItem(userId);
+              }}
+              className="text-primarynormal"
+            >
+              삭제
+            </button>
+          </div>
 
-      <div className="flex flex-col w-full p-4">
-        <div className="flex justify-between mb-2">
-          <p>상품 금액</p>
-          <p>{`${getTotalAmount()?.toLocaleString()}원`}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p>상품 할인금액</p>
-          <p>{`-${getTotalDiscount()?.toLocaleString()}`}원</p>
-        </div>
-        <div className="flex justify-between">
-          <p>배송비</p>
-          <p>3,000원</p>
-        </div>
-        <hr className="my-5" />
-        <div className="flex justify-between mb-[45px] xl:mb-[112px]">
-          <p className="font-semibold">결제 예정 금액</p>
-          <p className="font-semibold">{(getTotalAmount() + 3000)?.toLocaleString()}원</p>
-        </div>
-        <button
-          onClick={handleBuy}
-          className="w-full xl:w-[268px] xl:mx-auto mt-4 py-2 rounded-md bg-[#1A82FF] text-white"
-        >
-          구매하기
-        </button>
-      </div>
+          {allCartItems.map((item: DataType) => (
+            <QuantityCount
+              key={item.id}
+              item={item}
+              CheckboxChangeHandler={CheckboxChangeHandler}
+              updateItemQuantity={updateItemQuantity}
+              removeItemFromState={removeItemFromState}
+              isFetching={isFetching}
+            />
+          ))}
+
+          <div className="flex flex-col w-full p-4">
+            <div className="flex justify-between mb-2">
+              <p>상품 금액</p>
+              <p>{`${getTotalAmount()?.toLocaleString()}원`}</p>
+            </div>
+            <div className="flex justify-between mb-2">
+              <p>상품 할인금액</p>
+              <p>{`-${getTotalDiscount()?.toLocaleString()}원`}</p>
+            </div>
+            <div className="flex justify-between">
+              <p>배송비</p>
+              <p>3,000원</p>
+            </div>
+            <hr className="my-5" />
+            <div className="flex justify-between mb-[45px] xl:mb-[112px]">
+              <p className="font-semibold">결제 예정 금액</p>
+              <p className="font-semibold">{(getTotalAmount() + 3000)?.toLocaleString()}원</p>
+            </div>
+            <button
+              onClick={handleBuy}
+              className="w-full xl:w-[268px] xl:mx-auto mt-4 py-2 rounded-md bg-[#1A82FF] text-white"
+            >
+              구매하기
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import DefaultImage from "../../../public/images/default.png";
 import RightArrowB from "../../../public/icon/rightArrowB.svg";
 import SettingIcon from "../../../public/icon/settingIcon.svg";
+import swal from "sweetalert";
 
 const UserCard = () => {
   const { data: user } = useUserData();
@@ -19,7 +20,7 @@ const UserCard = () => {
     }
     const status = await userLogout();
     if (status !== 200) {
-      alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
+      swal("로그아웃에 실패했습니다. 다시 시도해주세요.");
       return;
     }
     router.push("/");

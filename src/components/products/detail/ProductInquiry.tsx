@@ -10,6 +10,8 @@ import Image from "next/image";
 import lock from "../../../../public/icon/lock.png";
 import beforeCheck from "../../../../public/icon/checkBefore.png";
 import afterCheck from "../../../../public/icon/checkAfter.png";
+import swal from "sweetalert";
+import { useRouter } from "next/navigation";
 
 type NewComment = {
   content: string;
@@ -36,7 +38,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const editCommentRef = useRef<HTMLInputElement>(null);
   const { data: userId } = useUserData();
-
+  const router = useRouter();
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [isPrivate, setIsPrivate] = useState(false);
   const [commentValue, setCommentValue] = useState(""); // Track input value
@@ -58,10 +60,16 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
 
   const addCommentHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!userId) {
+      alert("상품 문의를 등록하시려면 로그인하세요");
+      return;
+    }
+
     const comment = commentRef.current?.value;
 
     if (!comment) {
-      alert("내용을 입력하세요!");
+      swal("내용을 입력하세요!");
       return;
     }
 
@@ -113,8 +121,8 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
 
   return (
     <>
-      <div className="xl:flex xl:flex-col xl:items-center">
-        <div className="xl:w-[1000px]">
+      <div className="flex flex-col items-center">
+        <div className="w-[375px] xl:w-[1000px]">
           <div className="p-4">
             <p className="pb-3 pl-1 text-[16px] text-[#4C4F52]">문의 남기기</p>
             <form onSubmit={(e) => addCommentHandler(e)} className="flex flex-col space-y-2">
@@ -185,13 +193,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
                     <p className="text-[#4C4F52] text-[14px] flex justify-center items-center">
                       {comment.private && userId?.id !== comment.user_id ? (
                         <>
-                          <Image
-                            src={lock} // Path to the lock icon image
-                            alt="Lock Icon"
-                            width={25} // Adjust width as needed
-                            height={20} // Adjust height as needed
-                            className="mr-2 inline"
-                          />
+                          <Image src={lock} alt="Lock Icon" width={25} height={25} className="mr-2 inline" />
                           비밀글입니다
                         </>
                       ) : (

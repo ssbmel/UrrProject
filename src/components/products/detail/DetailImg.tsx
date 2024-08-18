@@ -70,10 +70,10 @@ const DetailImg = ({ id }: { id: string }) => {
       {showMore && !isExpanded && (
         <button
           onClick={handleToggle}
-          className="absolute bottom-[calc(100%-480px)] left-1/2 transform -translate-x-1/2 w-[343px] h-[52px] bg-white text-[#1A82FF] rounded mt-4 cursor-pointer text-[14px] flex justify-center items-center xl:hidden"
+          className="absolute border-[1px] border-[#EAECEC)] bottom-[calc(100%-480px)] left-1/2 transform -translate-x-1/2 w-[343px] h-[52px] bg-white font-normal text-primarystrong rounded mt-4 cursor-pointer text-[14px] flex justify-center items-center xl:hidden"
         >
           상품정보 더보기
-          <Image src={more} alt="상품정보더보기" width={20} height={20} />
+          <Image src={more} alt="상품정보더보기" width={20} height={20} className="ml-2" />
         </button>
       )}
     </div>

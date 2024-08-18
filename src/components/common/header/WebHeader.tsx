@@ -36,7 +36,7 @@ export function WebHeader() {
       <header className="flex flex-row justify-between items-center h-[108px] w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[6%] py-[6px]">
         <ul className="flex flex-row items-center">
           <Link href={"/"}>
-            <Image src={Logo} alt="Urr logo" width={121} height={66} className="mr-[71px]" />
+            <Image src={Logo} alt="Urr logo" width={121} height={66} className="mr-[71px] priority" />
           </Link>
           <Link href={"/products/list"}>
             <li className="text-xl mr-10 cursor-pointer hover:text-primarystrong">Store</li>

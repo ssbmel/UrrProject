@@ -12,7 +12,7 @@ import { useUserData } from "@/hooks/useUserData";
 import Link from "next/link";
 import { getInfluencerData } from "@/services/users/influencer/influencer.service";
 import InfGuidModal from "./InfGuidModal";
-import swal from 'sweetalert';
+
 
 function InfluencerList() {
   const { data: user } = useUserData();
@@ -45,7 +45,7 @@ function InfluencerList() {
   const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: User) => {
     e.stopPropagation();
     const newInfUser: InfSubscribe = {
-      user_id: user.id,
+      user_id: user.id as string,
       infuser_id: inf.id
     };
     swal(`${inf.nickname}님을 구독하였습니다.`);

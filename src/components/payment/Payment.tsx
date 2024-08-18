@@ -3,6 +3,7 @@ import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import InfoOnEditAddress from "../mypage/edit/InfoOnEditAddress";
+import swal from "sweetalert";
 
 export default function Payment() {
   const paymentFunc = usePayment();
@@ -21,11 +22,11 @@ export default function Payment() {
     try {
       const phoneNumberRegex = /^\d+$/;
       if (!fullName || !phoneNumber || !address) {
-        alert("이름, 휴대폰 번호, 주소를 모두 입력해 주세요.");
+        swal("이름, 휴대폰 번호, 주소를 모두 입력해 주세요.");
         return;
       }
       if (!phoneNumberRegex.test(phoneNumber)) {
-        alert("휴대폰 번호는 숫자만 입력해야 합니다.");
+        swal("휴대폰 번호는 숫자만 입력해야 합니다.");
         return;
       }
 
@@ -42,21 +43,21 @@ export default function Payment() {
         });
 
         if (response?.paymentId) {
-          // alert("결제가 성공적으로 완료되었습니다.");
+          // swal("결제가 성공적으로 완료되었습니다.");
           router.push(`/payment/loading?paymentId=${response.paymentId}`);
         } else {
-          alert("결제 중 오류가 발생했습니다.");
+          swal("결제 중 오류가 발생했습니다.");
         }
       }
     } catch (error) {
-      alert("구매하시려면 로그인 해주세요");
+      swal("구매하시려면 로그인 해주세요");
       // router.push("/login");
     }
   };
 
   return (
     <>
-      <div className="xl:flex xl:flex-col xl:justify-center xl:items-center xl:pt-12 xl:pb-16 xl:bg-center xl:bg-cover xl:bg-[url('../../public/bgImg/PaymentBgImg.png')] xl:bg-no-repeat xl:bg-[background-size:cover] xl:bg-[background-position:center]">
+      <div className="w-[375px] xl:w-full mx-auto xl:mx-0 xl:flex xl:flex-col xl:justify-center xl:items-center xl:pt-12 xl:pb-16 xl:bg-center xl:bg-cover xl:bg-[url('../../public/bgImg/PaymentBgImg.png')] xl:bg-no-repeat ">
         <p className="hidden xl:block text-[24px] font-semibold pb-8">결제하기</p>
         <div className="xl:flex gap-8">
           <div className="bg-[gray-100] flex justify-center xl:w-[376px]">

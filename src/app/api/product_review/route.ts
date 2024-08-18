@@ -31,7 +31,7 @@ export async function DELETE(request: NextRequest) {
     const supabase = createClient();
     const { data, error } = await supabase.from("product_review").delete().eq("id", info.id);
     if (error) {
-      return alert(`${error.message}`);
+      return console.log(`${error.message}`);
     }
     return NextResponse.json(data);
   } catch (error) {

@@ -21,20 +21,20 @@ import minibanner5 from "../../../../public/bgImg/minibanner5.png";
 
 export default function Banner() {
   return (
-    <>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
+        speed={1500}
         autoplay={{
           delay: 2500,
-          disableOnInteraction: false
+          disableOnInteraction: true
         }}
         pagination={{
           clickable: true
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper xl:w-full xl:h-[800px] w-full h-[328px]"
+        loop={true}
       >
         <SwiperSlide>
           <div className="xl:w-full xl:h-[800px] relative">
@@ -46,10 +46,19 @@ export default function Banner() {
         </SwiperSlide>
         <SwiperSlide>
           <div className="xl:w-full xl:h-[800px] relative">
+          <Link href={"/products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
+           <div className="xl:w-full xl:h-[800px] relative">
             <Image src={banner2} alt="mainImg" fill sizes="1280px" priority className="object-contain" />
+            </div>
+          </Link>
           </div>
           <div className="w-full h-[328px] relative lg:hidden">
+          <Link href={"/products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
+          <div className="w-full h-[328px] relative lg:hidden">
             <Image src={minibanner2} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
+            </div>
+            </Link>
+
           </div>
         </SwiperSlide>
         <SwiperSlide>
@@ -81,6 +90,5 @@ export default function Banner() {
           </div>
         </SwiperSlide>
       </Swiper>
-    </>
   );
 }

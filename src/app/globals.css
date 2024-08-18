@@ -148,7 +148,7 @@ input {
   }
 }
 
-/* "예" 버튼 스타일 */
+/* "예" 버튼 스타일 */ 
 .swal-button--confirm {
   background-color: #1A82FF; /* "예" 버튼 색상 */
   color: white; /* 텍스트 색상 */

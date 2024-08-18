@@ -70,7 +70,7 @@ function Main() {
   return (
     <>
       <Banner />
-      <div className="flex flex-col items-center xl:items-stretch xl:w-[1200px] w-full mx-auto gap-2 xl:px-0 container">
+      <div className="container flex flex-col items-center xl:items-stretch xl:w-[1200px] w-full mx-auto gap-2 xl:px-0">
         <SubInfluencer infUser={infUser} />
         <hr className="w-full" />
         <BestProductsList productsList={productsList} ratingCount={ratingCount} />

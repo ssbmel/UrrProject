@@ -15,6 +15,8 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
 
   return (
     <>
+    <div  className="container">
+      {children}
       <div className="xl:hidden">
         <MobileHeader />
       </div>

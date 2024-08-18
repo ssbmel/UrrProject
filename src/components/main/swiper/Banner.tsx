@@ -13,11 +13,11 @@ import banner2 from "../../../../public/bgImg/banner2.png";
 import banner3 from "../../../../public/bgImg/banner3.png";
 import banner4 from "../../../../public/bgImg/banner4.png";
 import banner5 from "../../../../public/bgImg/banner5.png";
-import minibanner1 from "../../../../public/bgImg/minibanner1.png";
-import minibanner2 from "../../../../public/bgImg/minibanner2.png";
-import minibanner3 from "../../../../public/bgImg/minibanner3.png";
-import minibanner4 from "../../../../public/bgImg/minibanner4.png";
-import minibanner5 from "../../../../public/bgImg/minibanner5.png";
+import minibanner1 from "../../../../public/bgImg/minibanner1.jpg";
+import minibanner2 from "../../../../public/bgImg/minibanner2.jpg";
+import minibanner3 from "../../../../public/bgImg/minibanner3.jpg";
+import minibanner4 from "../../../../public/bgImg/minibanner4.jpg";
+import minibanner5 from "../../../../public/bgImg/minibanner5.jpg";
 
 export default function Banner() {
   return (

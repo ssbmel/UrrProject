@@ -24,7 +24,6 @@ export default function Complete() {
   const paymentId = searchParams.get("paymentId");
   const { data: userData } = useUserData();
   const userId = userData?.id;
-  console.log(userId);
 
   useEffect(() => {
     const getProducts = async () => {

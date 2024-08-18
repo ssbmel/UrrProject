@@ -193,13 +193,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
                     <p className="text-[#4C4F52] text-[14px] flex justify-center items-center">
                       {comment.private && userId?.id !== comment.user_id ? (
                         <>
-                          <Image
-                            src={lock} // Path to the lock icon image
-                            alt="Lock Icon"
-                            width={25} // Adjust width as needed
-                            height={20} // Adjust height as needed
-                            className="mr-2 inline"
-                          />
+                          <Image src={lock} alt="Lock Icon" width={25} height={25} className="mr-2 inline" />
                           비밀글입니다
                         </>
                       ) : (

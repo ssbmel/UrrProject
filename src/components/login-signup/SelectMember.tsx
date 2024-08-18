@@ -2,7 +2,7 @@
 
 import { StepType } from "@/app/(provider)/(root)/signup/page";
 import WebSignupBg1 from "../../../public/images/web_signup_bg1.svg";
-import { Dispatch, RefObject, SetStateAction } from "react";
+import { Dispatch, RefObject, SetStateAction, useEffect, useState } from "react";
 
 interface SelectMemberProps {
   setStep: Dispatch<SetStateAction<StepType>>;
@@ -12,6 +12,20 @@ interface SelectMemberProps {
 }
 
 export default function SelectMember({ setStep, confirmRef, setSelectUser, selectUser }: SelectMemberProps) {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  useEffect(() => {
+    if (confirmRef.current) {
+      setInputValue(confirmRef.current.value);
+    }
+  }, [confirmRef]);
+
+  const handleInputChange = () => {
+    if (confirmRef.current) {
+      setInputValue(confirmRef.current.value);
+    }
+  };
+
   const infNextSignUpPage = () => {
     if (!confirmRef.current?.value) {
       alert("정보를 입력하세요!");
@@ -54,6 +68,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
                   className="h-[51px] border border-[#D9D9D9] rounded-md indent-3 outline-none"
                   placeholder="링크 또는 계정 아이디"
                   ref={confirmRef}
+                  onChange={handleInputChange}
                 />
               </div>
             ) : (
@@ -88,8 +103,9 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
           <div className="pb-[28px] w-full">
             <button
               onClick={infNextSignUpPage}
+              // className="bg-[#F2F2F2] text-[#CDCFD0] w-full h-[47px] rounded-xl font-medium"
               className={`${
-                selectUser === "인플루언서" ? "bg-primarynormal text-white" : "bg-[#F2F2F2] text-[#CDCFD0]"
+                inputValue ? "bg-primarynormal text-white" : "bg-[#F2F2F2] text-[#CDCFD0]"
               } w-full h-[47px] rounded-xl font-medium`}
             >
               다음

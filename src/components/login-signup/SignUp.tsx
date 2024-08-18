@@ -97,7 +97,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailConfirmMessage("이메일 형식을 다시 확인해주세요!");
+      setEmailConfirmMessage("이메일 형식을 다시 확인해주세요");
       setIsEmailConfirm(false);
     } else {
       const overlapEmail = await emailCheck(emailCurrent);
@@ -153,7 +153,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           <WebSignupBg2 className="max-w-full max-h-full" />
         </div>
 
-        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[783px] w-[375px] mx-auto whitespace-nowrap pt-[58px]  p-4">
+        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[783px] w-[375px] mx-auto whitespace-nowrap pt-[58px] p-4">
           <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
           <form className="flex flex-col gap-9">
             <div>
@@ -163,6 +163,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
                 <p className={stLabel}>{nicknameConfirmMessage}</p>
               </label>
             </div>
+            {/* <p className="bg-[#F4F4F4] h-2"></p> 보류 */}
 
             <label className="flex flex-col">
               이메일

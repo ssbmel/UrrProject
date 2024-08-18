@@ -34,50 +34,54 @@ export default function AdminPage() {
     }
   }
 
-  const getInfluProfile = async (owner_id: string) : Promise<string | null> => {
-    const { data, error } = await supabase
-      .from('users')
-      .select('profile_url')
-      .eq('id', owner_id)
-      .single();
+  const getInfluProfile = async (owner_id: string): Promise<string | null> => {
+    const { data, error } = await supabase.from("users").select("profile_url").eq("id", owner_id).single();
     if (error) {
-      console.log(error)
+      console.log(error);
       return null;
-    }
-    else
-      return data.profile_url;
-  }
+    } else return data.profile_url;
+  };
 
   const createNewChatChannel = async (owner_id: string, nickname: string) => {
     const profile_url = await getInfluProfile(owner_id);
-    const { data, error } = await supabase
-      .from('chat_channels')
-      .insert({
-        owner_id: owner_id,
-        channel_name: nickname,
-        owner_profile_url: profile_url
-    })
-    if (error)
-      console.log(error)
-   
-  }
+    const { data, error } = await supabase.from("chat_channels").insert({
+      owner_id: owner_id,
+      channel_name: nickname,
+      owner_profile_url: profile_url
+    });
+    if (error) console.log(error);
+  };
 
   return (
     <>
-      <div className=" p-5 h-[700px] whitespace-nowrap">
-        <h2 className="text-xl mb-2">관리자 페이지</h2>
+      <div className="w-full">
+        <h2 className="p-5 text-xl text-[#1B1C1D]">관리자 페이지</h2>
+        <div className="bg-[#F4F4F4] h-2"></div>
+      </div>
+
+      <div className="p-4">
         {isSuccess &&
           influencerApproveList?.map((inf: any, index: number) => {
             return (
-              <div key={index} className="flex flex-col">
-                <div>닉네임: {inf.nickname} </div>
-                <div>확인 링크: {inf.account_link}</div>
+              <div key={index} className="grid grid-cols-[300px_auto] items-center border-b-2 border-[#F4F4F4]">
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <p className="w-[55px]">닉네임</p>
+                    <p>{inf.nickname}</p>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <p className="whitespace-nowrap">인증링크</p>
+                    <p className="break-words w-[225px]">{inf.account_link}</p>
+                  </div>
+                </div>
+
                 <button
                   onClick={() => {
                     influencerApproveHandler(inf.id);
-                    createNewChatChannel(inf.id, inf.nickname)
+                    createNewChatChannel(inf.id, inf.nickname);
                   }}
-                  className="w-10 bg-[#1A82FF] p-1 rounded-md ml-2"
+                  className="border border-primarynormal text-primarynormal"
                 >
                   승인
                 </button>

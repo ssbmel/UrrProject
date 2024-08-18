@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const supabase = createClient();
     const { data, error } = await supabase.from("subscribe").insert(info).select();
     if (error) {
-      return alert(`${error.message}`);
+      return console.log(`${error.message}`);
     }
     return NextResponse.json(data);
   } catch (error) {
@@ -37,7 +37,7 @@ export async function DELETE(request: NextRequest) {
     const { data, error } = await supabase.from("subscribe").delete().eq("user_id", info.user_id).eq("infuser_id", info.infuser_id);
 
     if (error) {
-      return alert(`${error.message}`);
+      return console.log(`${error.message}`);
     }
     return NextResponse.json(data);
   } catch (error) {

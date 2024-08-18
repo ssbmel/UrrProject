@@ -10,6 +10,7 @@ import Image from "next/image";
 import lock from "../../../../public/icon/lock.png";
 import beforeCheck from "../../../../public/icon/checkBefore.png";
 import afterCheck from "../../../../public/icon/checkAfter.png";
+import swal from "sweetalert";
 
 type NewComment = {
   content: string;
@@ -61,7 +62,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
     const comment = commentRef.current?.value;
 
     if (!comment) {
-      alert("내용을 입력하세요!");
+      swal("내용을 입력하세요!");
       return;
     }
 

@@ -28,7 +28,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
 
   const infNextSignUpPage = () => {
     if (!confirmRef.current?.value) {
-      alert("정보를 입력하세요!");
+      swal("정보를 입력하세요!");
     }
 
     if (confirmRef.current?.value) {

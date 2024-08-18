@@ -13,7 +13,7 @@ const UrrSignUp = () => {
 
   return (
     <>
-      <div className="absolute w-full">
+      <div className=" w-full">
         {step === "회원유형" && (
           <SelectMember
             setStep={setStep}

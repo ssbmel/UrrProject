@@ -40,7 +40,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
     const confirm = confirmRef;
 
     if (!email || !password || !nickname) {
-      alert("모든 항목을 입력해주세요!");
+      swal("모든 항목을 입력해주세요!");
       return;
     }
 
@@ -52,7 +52,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           await userSignUp({ email, password, nickname, confirm, selectUser, approve: false });
           setStep("완료");
         } catch (error) {
-          alert("회원가입 실패");
+          swal("회원가입 실패");
           console.log(error);
         }
       }
@@ -62,7 +62,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           const response = await userSignUp({ email, password, nickname, selectUser, approve: false });
           setStep("완료");
         } catch (error) {
-          alert("회원가입 실패");
+          swal("회원가입 실패");
           console.log(error);
         }
       }

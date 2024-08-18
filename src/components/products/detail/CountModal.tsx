@@ -10,6 +10,7 @@ import plusGray from "../../../../public/icon/plusGray.png";
 import plusBlue from "../../../../public/icon/plusBlue.png";
 import minGray from "../../../../public/icon/minGray.png";
 import minBlue from "../../../../public/icon/minBlue.png";
+import swal from "sweetalert";
 
 interface ModalProps {
   id: string;
@@ -64,7 +65,7 @@ const CountModal = ({
     const userCartItem = await userCartItems({ id, userId });
     if (userId) {
       if (userCartItem?.length !== 0) {
-        alert("이미 장바구니에 있습니다!");
+        swal("이미 장바구니에 있습니다!");
       } else {
         await addCartItems({
           user_id: userId,
@@ -77,13 +78,17 @@ const CountModal = ({
           end,
           cost
         });
-        const cart = confirm("장바구니로 이동하시겠습니까?");
-        if (cart === true) {
+        const cart = await swal({
+          title: "장바구니로 이동하시겠습니까?",
+          buttons: ["취소", "이동"],
+        });
+      
+        if (cart) {
           router.push("/cart");
         }
       }
     } else {
-      alert("로그인이 필요합니다!");
+      swal("로그인이 필요합니다!");
       router.push("/login");
     }
   };

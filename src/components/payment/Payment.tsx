@@ -3,6 +3,7 @@ import { useAddrStore } from "@/zustand/addrStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import InfoOnEditAddress from "../mypage/edit/InfoOnEditAddress";
+import swal from "sweetalert";
 
 export default function Payment() {
   const paymentFunc = usePayment();
@@ -21,11 +22,11 @@ export default function Payment() {
     try {
       const phoneNumberRegex = /^\d+$/;
       if (!fullName || !phoneNumber || !address) {
-        alert("이름, 휴대폰 번호, 주소를 모두 입력해 주세요.");
+        swal("이름, 휴대폰 번호, 주소를 모두 입력해 주세요.");
         return;
       }
       if (!phoneNumberRegex.test(phoneNumber)) {
-        alert("휴대폰 번호는 숫자만 입력해야 합니다.");
+        swal("휴대폰 번호는 숫자만 입력해야 합니다.");
         return;
       }
 
@@ -42,14 +43,14 @@ export default function Payment() {
         });
 
         if (response?.paymentId) {
-          // alert("결제가 성공적으로 완료되었습니다.");
+          // swal("결제가 성공적으로 완료되었습니다.");
           router.push(`/payment/loading?paymentId=${response.paymentId}`);
         } else {
-          alert("결제 중 오류가 발생했습니다.");
+          swal("결제 중 오류가 발생했습니다.");
         }
       }
     } catch (error) {
-      alert("구매하시려면 로그인 해주세요");
+      swal("구매하시려면 로그인 해주세요");
       // router.push("/login");
     }
   };

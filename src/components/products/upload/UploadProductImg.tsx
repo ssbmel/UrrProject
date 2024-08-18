@@ -2,10 +2,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { DetailedImgGroup } from "./ProductUpload";
+import { DetailedImgGroup } from "./UploadProduct";
 import AccentIcon from "../../../../public/icon/accentmark.svg";
 import camera from "../../../../public/bgImg/camera.png";
 import Image from "next/image";
+import swal from "sweetalert";
 
 interface ContentsProps {
   setDetailImg: React.Dispatch<React.SetStateAction<DetailedImgGroup[]>>;
@@ -14,7 +15,7 @@ interface ContentsProps {
   setMainImg: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-const ProductImgUpload: React.FC<ContentsProps> = ({
+const UploadProductImg: React.FC<ContentsProps> = ({
   setDetailImg,
   detailImg,
   uploadedMainImg,
@@ -162,4 +163,4 @@ const ProductImgUpload: React.FC<ContentsProps> = ({
   
 };
 
-export default ProductImgUpload;
+export default UploadProductImg;

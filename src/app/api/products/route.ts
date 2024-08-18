@@ -31,7 +31,7 @@ export async function PUT(request: NextRequest) {
     const supabase = createClient();
     const { data, error } = await supabase.from("products").update(info).eq("id", info.id);
     if (error) {
-      return alert(`${error.message}`);
+      return console.log(`${error.message}`);
     }
     return NextResponse.json(data);
     
@@ -46,7 +46,7 @@ export async function DELETE(request: NextRequest) {
     const supabase = createClient();
     const { data, error } = await supabase.from("products").delete().eq("id", info.id);
     if (error) {
-      return alert(`${error.message}`);
+      return console.log(`${error.message}`);
     }
     return NextResponse.json(data);
     

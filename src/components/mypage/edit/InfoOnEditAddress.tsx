@@ -151,7 +151,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
             }
           >
             <div>
-              <div className="flex xl:justify-between justify-center items-center py-[10px] px-[16px] xl:py-[42px] xl:px-[32px]">
+              <div className="flex xl:justify-between justify-center items-center py-[10px] px-[16px] xl:pt-[42px] xl:pb-[0] xl:px-[32px]">
                 <h2 className="text-[20px] font-[600]">주소 검색</h2>
                 <button
                   onClick={openAddressForm}
@@ -162,7 +162,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
               </div>
               <form
                 onSubmit={(e) => searchHandler(e, searchKeyword.current!.value, currentPage)}
-                className="xl:px-[32px] xl:py-[28px] px-[16px] py-[18px] flex flex-col justify-center gap-[8px]"
+                className="xl:px-[32px] xl:py-[20px] px-[16px] py-[18px] flex flex-col justify-center gap-[8px]"
               >
                 <p className="text-[18px] font-[500]">도로명 주소를 입력해주세요</p>
                 <div className="h-[51px] flex justify-between">
@@ -192,7 +192,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
                 {step === 1 ? (
                   <div className="flex flex-col justify-between">
                     {data ? (
-                      <ul className="overflow-y-auto min-h-[567px] w-[calc(100%-32px)] xl:w-[calc(100%-64px)] mx-[16px] xl:mx-[32px] flex flex-col bg-[#FFFFFE]">
+                      <ul className="overflow-y-auto h-[567px] xl:h-[243px] w-[calc(100%-32px)] xl:w-[calc(100%-64px)] mx-[16px] xl:mx-[32px] flex flex-col bg-[#FFFFFE]">
                         {data.length ? (
                           data.map((addr, idx) => (
                             <li key={addr?.bdMgtSn} onClick={() => selectAddr(addr)} className="border-b">
@@ -237,7 +237,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
                     />
                   </div>
                 ) : step === 2 ? (
-                  <div className="p-[16px] xl:px-[32px] flex flex-col gap-[16px] min-h-[340px]">
+                  <div className="p-[16px] xl:px-[32px] flex flex-col gap-[16px] min-h-[243px]">
                     <div className="flex flex-col gap-[8px]">
                       <span className="text-[14px]">{zipNostate}</span>
                       <div>
@@ -263,7 +263,7 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
                 )}
               </>
             </div>
-            <div className="flex justify-center py-[42px]">
+            <div className="flex justify-center pb-[42px]">
               <button
                 onClick={goNextStep}
                 disabled={

@@ -3,24 +3,16 @@
 import { updateUserPassword } from "@/services/users/account/account.service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, RefObject, useRef, useState } from "react";
+import React, { FormEvent, RefObject, useEffect, useRef, useState } from "react";
 import swal from "sweetalert";
 import EyeIcon from "../../../../../../../public/icon/eye.svg";
-
-interface pwSecurity {
-  level: number;
-  style: string;
-}
 
 const UpdatePw = () => {
   const router = useRouter();
   const password = useRef<HTMLInputElement>(null);
   const cnfPassword = useRef<HTMLInputElement>(null);
   const [pwState, setPwState] = useState<string>("");
-  const [pwSecurity, setPwSecurity] = useState<pwSecurity>({
-    level: 0,
-    style: "bg-transparent"
-  });
+  const [pwSecurity, setPwSecurity] = useState<string>("[&>*:nth-child(-n+0)]:bg-transparent");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
@@ -28,28 +20,19 @@ const UpdatePw = () => {
 
   const securityCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pw = e.target.value;
+    setPwState(pw);
+
     if (!passwordRegex.test(pw)) {
-      setPwSecurity({ level: 1, style: "bg-red-100" });
-      setPwState(pw);
-      return;
+      setPwSecurity("[&>*:nth-child(-n+1)]:bg-red-100");
     }
-
     if (pw.length < 12 && pw.length >= 8) {
-      setPwSecurity({ level: 2, style: "bg-primarylight" });
-      setPwState(pw);
-      return;
+      setPwSecurity("[&>*:nth-child(-n+2)]:bg-primarylight");
     }
-
     if (pw.length < 16 && pw.length >= 12) {
-      setPwSecurity({ level: 3, style: "bg-primarynormal" });
-      setPwState(pw);
-      return;
+      setPwSecurity("[&>*:nth-child(-n+3)]:bg-primarynormal");
     }
-
     if (pw.length < 20 && pw.length >= 16) {
-      setPwSecurity({ level: 4, style: "bg-primarystrong" });
-      setPwState(pw);
-      return;
+      setPwSecurity("[&>*:nth-child(-n+4)]:bg-primarystrong");
     }
   };
 
@@ -60,7 +43,7 @@ const UpdatePw = () => {
       return;
     }
 
-    if (!passwordRegex.test(password) && pwSecurity.level < 2) {
+    if (!passwordRegex.test(password)) {
       setErrorMsg("비밀번호는 숫자, 영문자, 특수문자 포함 8자리 이상이여야 합니다.");
       return;
     }
@@ -99,7 +82,7 @@ const UpdatePw = () => {
 
   return (
     <form
-      className="flex flex-col h-[calc(100vh)] xl:w-[440px] xl:h-[722px] xl:rounded-[12px] bg-[#FFFFFE] xl:mx-auto xl:my-[200px] xl:border xl:py-[42px] xl:px-[32px] justify-between px-[16px] py-[24px] xl:static w-full absolute top-0 left-0 z-50"
+      className="flex flex-col h-[calc(100vh)] xl:w-[440px] xl:h-[722px] xl:rounded-[12px] bg-[#FFFFFE] xl:mx-auto xl:border xl:py-[42px] xl:px-[32px] justify-between px-[16px] py-[24px] xl:static w-full absolute top-0 left-0 z-50"
       onSubmit={(e) => onSubmitHandler(e, password.current!.value, cnfPassword.current!.value)}
     >
       <div className="flex flex-col gap-[36px]">
@@ -147,7 +130,7 @@ const UpdatePw = () => {
         <div className="flex flex-col gap-[8px]">
           <p className="font-bold">비밀번호 안정성</p>
           <div className="h-[40px] rounded-[4px] flex justify-between items-center">
-            <ul className={`flex justify-between w-full [&>*:nth-child(-n+${pwSecurity?.level})]:${pwSecurity?.style}`}>
+            <ul className={`flex justify-between w-full ${pwSecurity}`}>
               <li className={securityDefault}>1</li>
               <li className={securityDefault}>2</li>
               <li className={securityDefault}>3</li>

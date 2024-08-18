@@ -188,9 +188,9 @@ const InfoOnEdit = ({ user }: Props) => {
   };
 
   return (
-    <div className="xl:mb-[87px] ">
+    <div className="xl:mb-[87px] relative">
       <h2 className="xl:block hidden xl:my-[51px] xl:text-center xl:text-[24px] xl:font-[600]">회원정보 수정</h2>
-      <div className="xl:flex xl:justify-center xl:relative">
+      <div className="xl:flex xl:justify-center">
         <section className="px-[25px] my-[20px] flex flex-col gap-[31px] xl:my-[82px] xl:px-[36px]">
           <div className="flex gap-[21px] items-center">
             <div className="relative">
@@ -253,12 +253,9 @@ const InfoOnEdit = ({ user }: Props) => {
               </div>
             </div>
           )}
-          <div className="bg-black w-[calc(50vw-2px)] indent-[-99999px] absolute left-0 top-[46%] h-25px bg-contain bg-[url('../../public/images/lineBg.png')] z-0 xl:block hidden">
-            배경무늬
-          </div>
         </section>
         <hr className="border-4 xl:hidden" />
-        <section className="xl:p-[42px] xl:shadow-md xl:rounded-[24px]">
+        <section className="xl:p-[42px] xl:shadow-md xl:rounded-[24px] ">
           <div className="p-[16px] py-[24px] flex flex-col gap-[20px] xl:py-0 xl:w-[430px]">
             <h3 className="xl:text-[20px] xl:font-[700] xl:block hidden">개인정보</h3>
             <div
@@ -361,9 +358,6 @@ const InfoOnEdit = ({ user }: Props) => {
             </div>
           </div>
         </section>
-        <div className="bg-black w-[calc(50vw-530px)] indent-[-99999px] absolute right-0 bottom-[40%] h-25px bg-contain bg-[url('../../public/images/lineBg.png')] xl:block hidden">
-          배경무늬
-        </div>
       </div>
     </div>
   );

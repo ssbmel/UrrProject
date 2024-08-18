@@ -47,8 +47,8 @@ function MainReviewList() {
             <p>후기가 없습니다.</p>
           ) : (
             reviewData.map((review) => (
-              <Link href={`/products/detail/${review.product_id}`}>
-                <div key={review.id} className="flex w-full">
+              <Link href={`/products/detail/${review.product_id}`} key={review.id}>
+                <div className="flex w-full">
                   <div className="w-[108px] h-[108px] mr-3 flex-shrink-0">
                     <div className="relative w-[108px] h-[108px]">
                       <Image
@@ -102,7 +102,7 @@ function MainReviewList() {
           navigation={true}
           modules={[Pagination, Navigation, Autoplay]}
           speed={1500}
-          loop={false}
+          loop={true}
           autoplay={{
             delay: 1500,
             disableOnInteraction: false

@@ -58,7 +58,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="xl:flex xl:flex-row">
+      <div className="xl:w-full xl:flex">
         <div className="hidden xl:block xl:bg-cover xl:bg-center">
           <WebLoginBg className="xl:max-w-full xl:max-h-full" />
         </div>

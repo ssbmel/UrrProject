@@ -150,8 +150,11 @@ function Cart() {
   /** 아이템 전체 삭제 */
   const allDeleteItem = async (userId: string) => {
     const supabase = createClient();
-    const isConfirmed = confirm("전체상품을 장바구니 목록에서 삭제하시겠습니까?");
-
+  
+    const isConfirmed = await swal("전체상품을 장바구니 목록에서 삭제하시겠습니까?", {
+      buttons: ["아니오", "예"],
+    });
+  
     if (!isConfirmed) {
       return;
     }

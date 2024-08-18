@@ -78,8 +78,12 @@ const CountModal = ({
           end,
           cost
         });
-        const cart = confirm("장바구니로 이동하시겠습니까?");
-        if (cart === true) {
+        const cart = await swal({
+          title: "장바구니로 이동하시겠습니까?",
+          buttons: ["취소", "이동"],
+        });
+      
+        if (cart) {
           router.push("/cart");
         }
       }

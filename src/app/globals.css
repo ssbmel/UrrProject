@@ -147,3 +147,19 @@ input {
     margin: 0;       /* 마진 초기화 */
   }
 }
+
+/* "예" 버튼 스타일 */
+.swal-button--confirm {
+  background-color: #1A82FF; /* "예" 버튼 색상 */
+  color: white; /* 텍스트 색상 */
+}
+
+/* "아니오" 버튼 스타일 */
+.swal-button--cancel {
+  background-color: #CDCFD0; /* "아니오" 버튼 색상 */
+  color: white; /* 텍스트 색상 */
+}
+
+.swal-title {
+  font-size: 18px; /* 원하는 크기로 변경 */
+}

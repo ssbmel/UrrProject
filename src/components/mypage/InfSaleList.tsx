@@ -58,8 +58,7 @@ const InfSaleList = ({ user }: Props) => {
       title: "해당 상품을 삭제할까요?",
       text: "삭제하면 다시 복구할 수 없습니다.",
       icon: "warning",
-      buttons: [true, "Delete"],
-      dangerMode: true,
+      buttons: ["취소", "삭제"]
     })
     .then((willDelete) => {
       if (willDelete) {

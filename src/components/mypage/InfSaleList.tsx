@@ -48,7 +48,7 @@ const InfSaleList = ({ user }: Props) => {
     mutationFn: (data) => deletePost(data),
     onSuccess: (success, variables) => {
       if (success) {
-        setItems((prevItems) => prevItems.filter(item => item.id !== variables.id));
+        setItems((prevItems) => prevItems.filter((item) => item.id !== variables.id));
       }
     }
   });
@@ -78,20 +78,23 @@ const InfSaleList = ({ user }: Props) => {
         <div>
           <ul>
             {items.map((item, index) => (
-              <li key={index} className="pt-[18px] pb-[18px] text-[14px] border-b flex flex-col gap-[18px]">
+              <li
+                key={index}
+                className="pb-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:pb-[36px] last:border-none"
+              >
                 <div className="flex justify-between items-center">
                   <div className="flex gap-[12px] items-center w-[calc(100%-80px)]">
-                    <div className="relative w-[56px] h-[56px]">
+                    <div className="relative w-[56px] h-[56px] xl:w-[100px] xl:h-[100px]">
                       <Image
                         src={item.main_img || ""}
                         alt={item.title || "product_main_img"}
-                        sizes="56px"
+                        sizes="56px xl:100px"
                         fill
                         priority
-                        className="bg-slate-300 rounded-[6px] object-cover"
+                        className="bg-slate-300 w-[56px] h-[56px] xl:w-[100px] xl:h-[100px] rounded-[6px] object-cover"
                       />
                     </div>
-                    <div className="flex flex-col w-[calc(100%-68px)]">
+                    <div className="flex flex-col w-[calc(100%-68px)] xl:text-[18px] font-[400] xl:gap-[33px]">
                       <div className="flex items-center w-full gap-[4px]">
                         <span className="whitespace-nowrap text-ellipsis overflow-hidden font-[400]">
                           {item.title?.split("]")[1]}
@@ -100,21 +103,32 @@ const InfSaleList = ({ user }: Props) => {
                           {new Date() > new Date(item.end) ? "종료" : "진행 중"}
                         </span>
                       </div>
-                      <p className="text-[12px] text-[#B2B5B8]">
+                      <p className="text-[12px] xl:text-[16px] text-[#B2B5B8]">
                         ~ {`${item.end.split("-")[0].slice(2)}.${item.end.split("-")[1]}.${item.end.split("-")[2]}`}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center xl:flex-col xl:gap-[8px] text-center">
                     {new Date() > new Date(item.end) ? null : (
-                      <Link href={`/products/upload/${item.id}`}>
-                        <button className="">
+                      <Link
+                        href={`/products/upload/${item.id}`}
+                        className="xl:w-[112px] xl:h-[44px] xl:py-[12px] xl:px-[28px] xl:border xl:border-[#EAECEC] xl:rounded-[8px] xl:hover:bg-primarylightness transition-colors"
+                      >
+                        <span className="xl:hidden">
                           <WriteIcon />
-                        </button>
+                        </span>
+                        <span className="text-[#0068E5] font-[600] hidden xl:block">수정하기</span>
                       </Link>
                     )}
-                    <button className="" type="button" onClick={() => handleDelete(item.id)}>
-                      <TrashCanIcon />
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(item.id)}
+                      className="xl:w-[112px] xl:h-[44px] xl:py-[12px] xl:px-[28px] xl:bg-[#EAECEC] xl:rounded-[8px] xl:hover:bg-red-100 transition-colors"
+                    >
+                      <span className="xl:hidden">
+                        <TrashCanIcon />
+                      </span>
+                      <span className="text-[#0068E5] font-[600] hidden xl:block">삭제하기</span>
                     </button>
                   </div>
                 </div>
@@ -132,7 +146,7 @@ const InfSaleList = ({ user }: Props) => {
               href="/products/upload/new"
               className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5]"
             >
-              상품 등록하러 가기
+              상품 등록하기
             </Link>
           </div>
         </Error>

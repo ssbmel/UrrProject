@@ -1,9 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import sendImg from "../../../public/bgImg/send.png";
 import Modal from "react-modal";
-
-Modal.setAppElement("#root"); 
 
 const ModalComponent: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -34,6 +34,7 @@ const ModalComponent: React.FC = () => {
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
+          ariaHideApp={false}
           contentLabel="Influencer Subscription Modal"
           style={{
             content: {

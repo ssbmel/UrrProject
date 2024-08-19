@@ -133,13 +133,13 @@ const WrittenMyReview = () => {
     const response = await fetch("/api/product_review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     return response.json();
   };
 
   const { mutate: saveReviewMutation } = useMutation<Review, unknown, Review>({
-    mutationFn: (data) => saveReview(data),
+    mutationFn: (data) => saveReview(data)
   });
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -155,17 +155,16 @@ const WrittenMyReview = () => {
       swal("별점을 선택해 주세요.");
       return;
     }
-  
+
     if (!reviewContent) {
       swal("후기 내용을 입력해 주세요.");
       return;
     }
-  
+
     if (!reviewImagesId) {
       swal("후기 사진을 넣어주세요.");
       return;
     }
-
 
     const newReviewData: Review = {
       id: reviewId,
@@ -178,7 +177,7 @@ const WrittenMyReview = () => {
       title: orderData?.name as string,
       inf_name: productsData?.nickname as string,
       payment_id: Ids.paymentId as string,
-      userId: user.id,
+      userId: user.id
     };
 
     const { data, error } = await supabase.from("product_review").insert([newReviewData]).select();
@@ -194,7 +193,10 @@ const WrittenMyReview = () => {
   const content = (
     <div className="xl:p-3">
       <h1 className="hidden xl:block text-[20px] font-bold mt-[12px]">후기 작성</h1>
-      <div key={orderData?.id} className={`w-full h-[${isDesktop ? "150px" : "100px"}] p-4 flex gap-3 ${isDesktop ? "mt-[12px]" : ""}`}>
+      <div
+        key={orderData?.id}
+        className={`w-full h-[${isDesktop ? "150px" : "100px"}] p-4 flex gap-3 ${isDesktop ? "mt-[12px]" : ""}`}
+      >
         <div className={`w-[70px] xl:w-[124px] h-[${isDesktop ? "124px" : "70px"}] rounded-md relative`}>
           <Image
             src={orderData?.imgUrl || defaultImg}
@@ -226,7 +228,8 @@ const WrittenMyReview = () => {
           <p className={isDesktop ? "text-[16px]" : "text-[14px]"}>
             제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
             <br />
-            <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더 높일 수 있습니다
+            <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더
+            높일 수 있습니다
           </p>
         </div>
         <textarea
@@ -243,8 +246,10 @@ const WrittenMyReview = () => {
         {isDesktop ? (
           <div className="flex justify-center gap-5 my-4">
             <Link href={"/mypage"}>
-              <button className="w-[174px] h-[52px] border border-[#0068E5] bg-[#FFFFFE] text-[#0068E5] rounded-[8px]
-                 hover:bg-[#F2F2F2] hover:text-[#004BB8] active:bg-[#F2F2F2] active:text-[#003E91] transition-all duration-200">
+              <button
+                className="w-[174px] h-[52px] border border-[#0068E5] bg-[#FFFFFE] text-[#0068E5] rounded-[8px]
+                 hover:bg-[#F2F2F2] hover:text-[#004BB8] active:bg-[#F2F2F2] active:text-[#003E91] transition-all duration-200"
+              >
                 돌아가기
               </button>
             </Link>
@@ -262,12 +267,12 @@ const WrittenMyReview = () => {
   return (
     <div>
       {!isDesktop ? (
-        <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">
-          {content}
-        </div>
+        <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">{content}</div>
       ) : (
-        <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
-          <div className="relative p-4 w-[726px] h-[1243px] bg-white rounded-lg shadow-lg">{content}</div>
+        <div className="xl:h-[calc(100vh-278px)] ">
+          <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
+            <div className="relative p-4 w-[726px] h-[1243px] bg-white rounded-lg shadow-lg">{content}</div>
+          </div>
         </div>
       )}
     </div>

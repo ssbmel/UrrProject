@@ -16,26 +16,39 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <li className="pt-[18px] pb-[18px] text-[12px] border-b flex flex-col gap-[18px]">
+    <li
+      className={
+        isOpen
+          ? "pt-[18px] pb-[18px] text-[12px] xl:text-[18px] border-b last:border-0 flex flex-col gap-[18px] text-[#0051B2]"
+          : "pt-[18px] pb-[18px] text-[12px] xl:text-[18px] border-b last:border-0 flex flex-col gap-[18px]"
+      }
+    >
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-[20px]">
-          <div className="w-[48px] h-[48px] relative rounded-[4px]">
+        <div className="flex items-center gap-[20px] xl:gap-[12px] xl:w-[220px]">
+          <div className="w-[48px] h-[48px] xl:w-[100px] xl:h-[100px] relative rounded-[4px]">
             <Link href={`/products/detail/${item?.id}`}>
               <Image
                 src={item?.imgUrl || ""}
                 alt="ordered_product_image"
                 fill
-                className="w-[48px] h-[48px] bg-slate-300 rounded-[4px] object-cover"
+                sizes="48px xl:100px"
+                className="w-[48px] h-[48px] xl:w-[100px] xl:h-[100px] bg-slate-300 rounded-[4px] object-cover"
               />
             </Link>
           </div>
-          <p className="truncate w-[110px]">{item?.name.split("] ")[1]}</p>
+          <p className="truncate w-[110px]" title={item?.name.includes("]") ? item?.name.split("]")[1] : item?.name}>
+            {item?.name.includes("]") ? item?.name.split("]")[1] : item?.name}
+          </p>
         </div>
-        <p className="font-[500]">{delivery}</p>
-        <p className="font-[500]">
+        <p className="xl:block xl:w-[142px] hidden font-[500] text-center">{item?.amount}</p>
+        <p className="xl:w-[142px] font-[500] text-center">{delivery}</p>
+        <p className="xl:w-[142px] font-[500] text-center">
           <span>{item?.amount.toLocaleString()}</span>원
         </p>
-        <button onClick={() => setIsOpen(!isOpen)} className="p-[9px]">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-[9px] xl:w-[142px] xl:flex xl:justify-center xl:items-center "
+        >
           {isOpen ? <TopArrowBlue /> : <BottomArrow />}
         </button>
       </div>

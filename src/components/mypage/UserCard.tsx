@@ -33,7 +33,7 @@ const UserCard = () => {
   const infUser = "absolute overflow-hidden border border-transparent p-[4px] object-cover gradient-border";
 
   return (
-    <div className="flex w-[375px] mx-auto gap-[12px] p-[16px] pb-[36px] xl:w-[1129px] xl:h-[201px] xl:mx-[auto] xl:shadow-md xl:p-[36px] xl:my-[48px] xl:rounded-[24px]">
+    <div className="flex gap-[12px] p-[16px] pb-[36px] xl:w-[1129px] xl:h-[201px] xl:mx-[auto] xl:shadow-md xl:p-[36px] xl:my-[48px] xl:rounded-[24px]">
       <div className="w-[80px] h-[80px] xl:w-[129px] xl:h-[129px] rounded-[16px] relative">
         <Image
           src={user?.profile_url || DefaultImage}
@@ -48,18 +48,24 @@ const UserCard = () => {
         <div>
           <div className="flex justify-between items-center">
             <p className="text-[20px] font-bold">{user?.nickname}</p>
-            <p className="text-[20px] flex justify-center items-center">
-              <Link href={"/mypage/edit"} className="flex justify-center items-center">
+            <p className="flex justify-center items-center">
+              <Link href={"/mypage/edit"} className="flex justify-center items-center xl:hidden">
                 <SettingIcon />
+              </Link>
+              <Link
+                href={"/mypage/edit"}
+                className="xl:flex hidden transition-colors hover:bg-primarylightness font-[600] text-[16px] w-[152px] h-[40px] px-[16px] py-[8px] justify-center items-center rounded-[6px] text-[#0068E5] border border-[#1A82FF]"
+              >
+                개인정보 수정하기
               </Link>
             </p>
           </div>
-          <p className="text-gray-300">{user?.email}</p>
+          <p className="text-gray-300 xl:text-[16px]">{user?.email}</p>
         </div>
         <p>
           <button className="flex items-center" onClick={logoutHandler}>
-            <span>로그아웃</span>
-            <span className="w-[20px] h-[20px] flex justify-center items-center">
+            <span className="xl:text-[16px]">로그아웃</span>
+            <span className="w-[20px] xl:w-[24px] h-[20px] xl:h-[24px] flex justify-center items-center">
               <RightArrowB />
             </span>
           </button>

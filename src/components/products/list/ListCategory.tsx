@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface ListCategoryProps {
   onSelectCategory: (category: string) => void;
@@ -9,6 +9,8 @@ interface ListCategoryProps {
 export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
 
   const categories = [
     { name: "전체", image: "/categories/전체.png" },
@@ -28,6 +30,13 @@ export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
 
     router.push(`?category=${category}`);
   };
+
+  useEffect(() => {
+    if (categoryParam) {
+      handleCategoryClick(categoryParam);
+    }
+  }, [categoryParam]);
+
   return (
     <div className="xl:flex xl:flex-col xl:items-center ">
       <p className="hidden xl:block xl:py-8 text-[24px] ">스토어</p>

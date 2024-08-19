@@ -82,7 +82,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
                   selectUser === "인플루언서"
                     ? "bg-primarynormal text-white xl:hidden"
                     : "text-primarystrong border border-[#1A82FF]"
-                } w-[166px] h-[88px] text-lg rounded-xl font-medium`}
+                } w-[166px] h-[88px] text-lg rounded-xl font-medium transition-colors hover:bg-primarylightness`}
               >
                 인플루언서
               </button>
@@ -93,7 +93,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
                   selectUser === "인플루언서"
                     ? "bg-[#F2F2F2] border border-[##DADDDD] text-[#CDCFD0] xl:hidden"
                     : "text-primarystrong border border-primarynormal"
-                } w-[166px] h-[88px] text-lg rounded-xl font-medium`}
+                } w-[166px] h-[88px] text-lg rounded-xl font-medium transition-colors hover:bg-primarylightness`}
               >
                 일반
               </button>

@@ -6,6 +6,5 @@ export const getOrderList = async (userId: string) => {
   if (error) {
     console.error("Error fetching order list in service.ts:", error);
   }
-  console.log(data);
   return data;
 };

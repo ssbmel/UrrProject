@@ -224,7 +224,7 @@ export default function WebpDetail({
                     <div>
                       <button
                         onClick={handleBuy}
-                        className={`w-[350px] h-[60px] text-white text-[20px] rounded-md ${
+                        className={`w-[350px] h-[63px] text-white text-[20px] rounded-md ${
                           isExpired ? "bg-[#F2F2F2] text-[#bcbebf]  cursor-not-allowed" : "bg-[#1A82FF]"
                         }`}
                         disabled={isExpired}

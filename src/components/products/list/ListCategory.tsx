@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ListCategoryProps {
   onSelectCategory: (category: string) => void;
@@ -7,6 +8,7 @@ interface ListCategoryProps {
 
 export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const router = useRouter();
 
   const categories = [
     { name: "전체", image: "/categories/전체.png" },
@@ -23,8 +25,9 @@ export default function ListCategory({ onSelectCategory }: ListCategoryProps) {
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
     onSelectCategory(category);
-  };
 
+    router.push(`?category=${category}`);
+  };
   return (
     <div className="xl:flex xl:flex-col xl:items-center ">
       <p className="hidden xl:block xl:py-8 text-[24px] ">스토어</p>

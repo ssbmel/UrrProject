@@ -195,12 +195,12 @@ const WrittenMyReview = () => {
     <div className="xl:p-3">
       <h1 className="hidden xl:block text-[18px] font-bold">후기 작성</h1>
       <div key={orderData?.id} className={`w-full h-[${isDesktop ? "100px" : "100px"}] py-3 flex gap-3 ${isDesktop ? "mt-[8px]" : ""} ${isDesktop ? "mb-[8px]" : ""}`}>
-        <div className={`w-[70px] xl:w-[80px] h-[${isDesktop ? "80px" : "70px"}] rounded-md relative`}>
+        <div className={`w-[80px] xl:w-[80px] h-[${isDesktop ? "80px" : "80px"}] rounded-md relative`}>
           <Image
             src={orderData?.imgUrl || defaultImg}
             alt="상품이미지"
             fill
-            sizes="70px xl:w-[80px]"
+            sizes="80px xl:w-[80px]"
             className="object-cover rounded-md"
           />
         </div>
@@ -221,16 +221,16 @@ const WrittenMyReview = () => {
       </div>
       <form className="w-full" onSubmit={onSubmit}>
         <div className={`bg-[#E1EEFE] ${isDesktop ? "py-4 px-5" : "py-3 px-4"} rounded-[12px] mb-6 xl:mb-6`}>
-          <p className={`font-bold mb-3 ${isDesktop ? "text-[18px]" : ""}`}>후기는 이렇게 작성해보세요!</p>
+          <p className={`font-bold mb-3 ${isDesktop ? "text-[18px]" : "text-[16px]"}`}>후기는 이렇게 작성해보세요!</p>
           <p className={isDesktop ? "text-[16px]" : "text-[14px]"}>
             제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
             <br />
-            <span className="font-semibold text-[14px]">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더 높일 수 있습니다
+            <span className="font-semibold text-[16px]">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더 높일 수 있습니다
           </p>
         </div>
         <textarea
           name="review-text"
-          className="resize-none border w-full h-[200px] rounded-md p-3"
+          className="resize-none border w-full h-[150px] rounded-md p-3 text-[16px]"
           placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
           ref={contentRef}
         ></textarea>
@@ -261,12 +261,12 @@ const WrittenMyReview = () => {
   return (
     <div>
       {!isDesktop ? (
-        <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">
+        <div className="w-full p-4 mx-auto xl:hidden">
           {content}
         </div>
       ) : (
         <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
-          <div className="relative p-4 w-[650px] h-auto bg-white rounded-lg shadow-lg">{content}</div>
+          <div className="relative p-4 w-[650px] h-auto bg-white rounded-lg shadow-lg overflow-y-auto">{content}</div>
         </div>
       )}
     </div>

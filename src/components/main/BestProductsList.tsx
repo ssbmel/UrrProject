@@ -34,7 +34,7 @@ function BestProductsList({ productsList, ratingCount }: { productsList: Product
         </Link>
       </div>
       <div className="w-full overflow-x-auto flex scrollbar xl:mb-10">
-        <div className="grid grid-flow-col gap-[18px] xl:gap-[48px] min-w-max">
+        <div className="flex gap-[18px] xl:gap-[48px] w-max">
           {sortedProducts.map((list) => {
             const cost = list.cost;
             const price = list.price;

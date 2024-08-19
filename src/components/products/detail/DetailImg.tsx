@@ -26,12 +26,12 @@ const DetailImg = ({ id }: { id: string }) => {
       }
     };
 
-    const timeoutId = setTimeout(checkShowMore, 100);
+    const timeoutId = setTimeout(checkShowMore, 500);
     return () => clearTimeout(timeoutId);
-  }, [images]);
+  }, [contentRef, images]);
 
   useEffect(() => {
-    setShowMore(false);
+    // setShowMore(false);
     setIsExpanded(false);
   }, [id]);
 
@@ -46,23 +46,25 @@ const DetailImg = ({ id }: { id: string }) => {
         className={`flex flex-col py-2 w-full transition-all duration-500 ease-in-out relative ${
           isExpanded ? "max-h-full" : "max-h-[500px] xl:max-h-full"
         } overflow-hidden`}
-        ref={contentRef}
+        // ref={contentRef}
       >
-        {images.map((value, index) => (
-          <div key={index} className="w-full relative flex flex-col items-center">
-            {value && (
-              <Image
-                src={value}
-                alt={`Image ${index}`}
-                width={500}
-                height={500}
-                sizes="(max-width: 768px) 100vw, (max-width: 1132px) 50vw, 33vw"
-                className="object-cover xl:w-[1000px] w-[500px]"
-                priority
-              />
-            )}
-          </div>
-        ))}
+        <div ref={contentRef}>
+          {images.map((value, index) => (
+            <div key={index} className="w-full relative flex flex-col items-center">
+              {value && (
+                <Image
+                  src={value}
+                  alt={`Image ${index}`}
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1132px) 50vw, 33vw"
+                  className="object-cover xl:w-[1000px] w-[500px]"
+                  priority
+                />
+              )}
+            </div>
+          ))}
+        </div>
         {!isExpanded && showMore && (
           <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent xl:hidden"></div>
         )}

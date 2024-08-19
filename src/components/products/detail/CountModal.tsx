@@ -121,7 +121,7 @@ const CountModal = ({
             showModal ? "translate-y-0" : "translate-y-full"
           }`}
         >
-          <div className="bg-white p-5 rounded-t-[40px] shadow-lg w-full max-w-md relative">
+          <div className="bg-white p-4 rounded-t-[40px] shadow-lg w-full max-w-md relative">
             <button
               className="absolute top-2 right-2 p-1 bg-white rounded-full"
               onClick={() => setShowModal(false)}

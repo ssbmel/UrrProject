@@ -53,6 +53,8 @@ export default function Chat({ params }: detailProps) {
   >([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false);
 
+  const isMobile = /Mobi/i.test(window.navigator.userAgent);
+
   const handleResizeHeight = () => {
     if (textarea.current && textareadiv.current) {
       if (textarea.current.scrollHeight >= 40 && textarea.current.scrollHeight <= 112) {

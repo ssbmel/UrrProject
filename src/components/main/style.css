@@ -1,7 +1,7 @@
 /* 스크롤바의 폭 너비 */
 .scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: 5px; /* Firefox */
   overflow-y: auto;
 }
 
@@ -25,4 +25,3 @@ html,
 body {
   position: relative;
 }
-

@@ -63,17 +63,17 @@ const UploadReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImage
 
   return (
     <div className="w-full p-2">
-      <div className="items-center gap-2">
-        <h3 className="font-bold text-lg pt-3 whitespace-nowrap">사진 첨부</h3>
-        <div className="flex my-2">
-          <div className="mt-[3px] mr-1">
+      <div className="gap-2 flex">
+        <h3 className="font-bold text-[18px] whitespace-nowrap">사진 첨부</h3>
+        <div className="flex mt-1">
+          <p className="mt-[3px] mr-1">
             <AccentIcon />
-          </div>
+          </p>
           <p className="mb-4 text-sm text-[#989C9F] whitespace-nowrap">사진은 최대 3장까지 업로드 가능합니다.</p>
         </div>
       </div>
       {!reviewImgUrls || reviewImgUrls.length === 0 ? (
-        <div className="w-[100px] h-[100px] border shadow-md rounded-md text-center flex flex-col items-center justify-center mb-5 cursor-pointer">
+        <div className="w-[120px] h-[100px] border shadow-md rounded-md text-center flex flex-col items-center justify-center mb-5 cursor-pointer">
           <label className="w-full h-full flex flex-col items-center justify-center">
             <div className="w-[38px] h-[38px] relative">
               <Image src={Blackcamera.src} alt="img" fill sizes="38px" className="w-full h-full object-cover" />

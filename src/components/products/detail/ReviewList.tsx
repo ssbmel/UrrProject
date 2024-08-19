@@ -23,10 +23,10 @@ const ReviewList = ({ id }: { id: string }) => {
         })
       ) : (
         <div className="flex flex-col justify-center items-center p-[105px] gap-[12px]">
-          <div className="relative w-[141px] h-[92px]">
-            <Image src={emptyReview} alt="빈 리뷰" fill sizes="141px" className="object-contain" />
+          <div className="relative w-[141px] h-[92px] xl:w-[200px] xl:h-[150px]">
+            <Image src={emptyReview} alt="빈 리뷰" fill sizes="141px xl:200px" className="object-contain" />
           </div>
-          <p className="py-2 text-[16px] text-[#4C4F52]">아직 상품 후기가 없습니다</p>
+          <p className="py-2 text-[16px] xl:text-[20px] text-[#4C4F52]">아직 상품 후기가 없습니다</p>
         </div>
       )}
     </div>

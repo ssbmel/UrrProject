@@ -8,6 +8,7 @@ import orderCom from "../../../public/icon/orderComplete.png";
 import { refundPayment } from "@/services/payment/payment.service";
 import { useUserData } from "@/hooks/useUserData";
 import { OrderType } from "../../../types/common";
+import LoadingUrr from "../common/loading/LoadingUrr";
 
 type productList = {
   id: string;
@@ -19,6 +20,7 @@ type productList = {
 
 export default function Complete() {
   const [products, setProducts] = useState<OrderType>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const supabase = createClient();
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
@@ -27,26 +29,36 @@ export default function Complete() {
 
   useEffect(() => {
     const getProducts = async () => {
-      if (paymentId) {
-        await refundPayment(paymentId);
-      } else {
-        console.error("PaymentId is null");
-      }
-
-      if (paymentId) {
-        const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
-        setProducts(data as OrderType);
-        const productList = (data?.product_list as productList[]) || [];
-        const productId = productList.map<string>((item) => item.id);
-        if (userId && productId) {
-          await supabase.from("cart").delete().eq("user_id", userId).in("product_id", productId);
+      setLoading(true);
+      try {
+        if (paymentId) {
+          await refundPayment(paymentId);
+        } else {
+          console.error("PaymentId is null");
         }
+
+        if (paymentId) {
+          const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
+          setProducts(data as OrderType);
+          const productList = (data?.product_list as productList[]) || [];
+          const productId = productList.map<string>((item) => item.id);
+          if (userId && productId) {
+            await supabase.from("cart").delete().eq("user_id", userId).in("product_id", productId);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getProducts();
   }, [paymentId, supabase, userId]);
 
+  if (loading) {
+    return <LoadingUrr />;
+  }
   return (
     <div className="w-100vw overflow-hidden">
       <div className="bg-white rounded-lg mb-[10px]">

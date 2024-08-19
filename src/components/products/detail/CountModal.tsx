@@ -162,7 +162,14 @@ const CountModal = ({
             </div>
             <div className="flex justify-between">
               <div>
-                <Image src={cart} alt="장바구니로고" width={52} height={52} onClick={addToCart} />
+                <Image
+                  src={cart}
+                  alt="장바구니로고"
+                  width={52}
+                  height={52}
+                  onClick={addToCart}
+                  className=" cursor-pointer"
+                />
               </div>
 
               <Link href={"/payment"}>

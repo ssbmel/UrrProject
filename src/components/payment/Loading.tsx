@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import loading from "../../../public/icon/loadingFrame.png";
 import dot from "../../../public/icon/loadingDot.png";
+import useGetSinglePayment from "@/hooks/useGetSinglePayment";
 
 const LoadingComponent = () => {
   const router = useRouter();
@@ -14,9 +15,9 @@ const LoadingComponent = () => {
   const paymentId = searchParams.get("paymentId");
   const message = searchParams.get("message") || "";
   const { paymentData, productList } = useAddrStore();
+  const { data: portonePaymentData } = useGetSinglePayment({ paymentId });
 
   const paymentSupabase = async (req: any) => {
-    console.log(productList);
     try {
       const res = await fetch("/api/payment", {
         method: "POST",
@@ -36,30 +37,27 @@ const LoadingComponent = () => {
           request: req.request
         })
       });
-      console.log(res);
       clearPaymentData();
 
       return res;
     } catch (error) {
       console.error(error);
-      alert("post 오류");
+      swal("post 오류");
     }
   };
 
   useEffect(() => {
-    if (code === "FAILURE_TYPE_PG") {
-      router.push(`/payment/fail?message=${message}`);
-    } else if (!code) {
-      if (paymentData) {
-        paymentSupabase(paymentData);
-        router.push(`/payment/complete?paymentId=${paymentId}`);
+    if (portonePaymentData) {
+      if (portonePaymentData.status === "FAILED") {
+        router.push(`/payment/fail?message=${message ? message : "알 수 없는 이유로 실패하였습니다."}`);
+      } else {
+        if (paymentData) {
+          paymentSupabase(paymentData);
+          router.push(`/payment/complete?paymentId=${paymentId}`);
+        }
       }
-    } else if (code === "PORTONE_ERROR") {
-      router.push(`/payment/fail?message=${message}`);
-    } else if (code === "PG_PROVIDER_ERROR") {
-      router.push(`/payment/fail?message=${message}`);
     }
-  }, [paymentData]);
+  }, [paymentData, portonePaymentData]);
 
   return (
     <>

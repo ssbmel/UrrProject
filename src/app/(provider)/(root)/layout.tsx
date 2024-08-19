@@ -10,6 +10,7 @@ const Mainlayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <div className={!isFullWidth ? `container` : undefined}>{children}</div>
+      {/* <main className={`grow overflow-auto ${!isFullWidth ? `container` : undefined}`}>{children}</main> */}
     </>
   );
 };

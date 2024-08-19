@@ -63,10 +63,10 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
             </div>
             <div className="flex flex-col w-[60%]">
               <div className="flex">
-                <p className="xl:text-[20px] font-medium truncate">
+                <p className="xl:text-[20px] font-medium truncate divide-x">
                   {inf.nickname}
                 </p>
-                <span className="mx-1 text-[#989C9F] font-semibold">|</span>
+                <span className="mx-1 text-[#989C9F] font-semibold xl:text-[20px]">|</span>
                 <p className="xl:text-[20px] font-medium">
                   {subscriptionCounts[inf.id] !== undefined
                     ? `${subscriptionCounts[inf.id]}명`

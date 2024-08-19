@@ -13,7 +13,6 @@ import Link from "next/link";
 import { getInfluencerData } from "@/services/users/influencer/influencer.service";
 import InfGuidModal from "./InfGuidModal";
 
-
 function InfluencerList() {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
@@ -84,7 +83,7 @@ function InfluencerList() {
 
   return (
     <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
-      <InfGuidModal/>
+      <InfGuidModal />
       <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {subscribeIds.length === 0 ? (

@@ -29,7 +29,7 @@
     "sharp": "^0.33.4",
     "supabase": ">=1.8.1",
     "sweetalert": "^2.1.2",
-    "swiper": "^11.1.5",
+    "swiper": "^11.1.9",
     "tailwind-scrollbar-hide": "^1.1.7",
     "uuidv4": "^6.2.13",
     "zustand": "^4.5.4"

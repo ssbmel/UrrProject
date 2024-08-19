@@ -33,6 +33,7 @@ const InfoOnEdit = ({ user }: Props) => {
   const [intro, setIntro] = useState<string | null>();
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const [isAble, setIsAble] = useState<boolean>(false);
 
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -50,6 +51,12 @@ const InfoOnEdit = ({ user }: Props) => {
       setIntro(user?.intro);
     }
   }, []);
+
+  useEffect(() => {
+    if (isAble === true) {
+      nicknameRef.current?.focus();
+    }
+  }, [isAble]);
 
   const changePasswordHandler = async () => {
     setIsClicked(true);
@@ -181,168 +188,178 @@ const InfoOnEdit = ({ user }: Props) => {
   };
 
   return (
-    <>
-      <section className="px-[25px] my-[20px] flex flex-col gap-[31px]">
-        <div className="flex gap-[21px] items-center">
-          <div className="relative">
-            {userImg && (
-              <div className="w-[100px] h-[100px] rounded-[16px] relative shadow-md">
-                <Image
-                  src={userImg || ""}
-                  alt="profile_image"
-                  sizes="100px"
-                  fill
-                  priority
-                  className="absolute rounded-[16px] overflow-hidden object-cover"
+    <div className="xl:mb-[87px] relative">
+      <h2 className="xl:block hidden xl:my-[51px] xl:text-center xl:text-[24px] xl:font-[600]">회원정보 수정</h2>
+      <div className="xl:flex xl:justify-center">
+        <section className="px-[25px] my-[20px] flex flex-col gap-[31px] xl:my-[82px] xl:px-[36px]">
+          <div className="flex gap-[21px] items-center">
+            <div className="relative">
+              {userImg && (
+                <div className="w-[100px] h-[100px] xl:w-[152px] xl:h-[152px] rounded-[16px] relative shadow-sm">
+                  <Image
+                    src={userImg || ""}
+                    alt="profile_image"
+                    sizes="100px xl:152px"
+                    fill
+                    priority
+                    className="absolute rounded-[16px] w-[100px] h-[100px] xl:w-[152px] xl:h-[152px] overflow-hidden object-cover"
+                  />
+                </div>
+              )}
+              <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full text-center border border-[#FFFFFE] bg-[#E1EEFE] bg-[url('../../public/icon/cameraIcon.png')] bg-no-repeat bg-center bg-[length:24px_24px] flex justify-center items-center">
+                <input
+                  onChange={(e) => handleImageChange(e)}
+                  type="file"
+                  accept="image/*"
+                  className="w-full h-full opacity-0 cursor-pointer file:cursor-pointer"
                 />
               </div>
-            )}
-            <div className="absolute bottom-[-7px] right-[-7px] w-[38px] h-[38px] rounded-full text-center border border-[#FFFFFE] bg-[#E1EEFE] bg-[url('../../public/icon/cameraIcon.png')] bg-no-repeat bg-center bg-[length:24px_24px] flex justify-center items-center">
-              <input
-                onChange={(e) => handleImageChange(e)}
-                type="file"
-                accept="image/*"
-                className="w-full h-full opacity-0 cursor-pointer file:cursor-pointer"
-              />
+            </div>
+            <div className="flex flex-col gap-[4px] w-full">
+              <h3 className="font-[600]">닉네임</h3>
+              <div className=" h-[38px] border-[#CDCFD0] flex justify-between items-center">
+                <input
+                  type="text"
+                  ref={nicknameRef}
+                  disabled={isAble === false}
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                  placeholder="닉네임"
+                  className="indent-[4px] border font-bold w-[calc(100%-52px)] h-[40px] py-[4px] px-[8px] rounded-[6px] disabled:bg-transparent disabled:text-[#CDCFD0]"
+                />
+                <button
+                  onClick={() => {
+                    setIsAble(!isAble);
+                  }}
+                  className="border rounded-[4px] transition-colors hover:bg-[#F2F2F2]"
+                >
+                  <WriteIcon color="#1B1C1D" />
+                </button>
+              </div>
             </div>
           </div>
-          <div className="flex flex-col gap-[4px] w-full">
-            <h3 className="font-[600]">닉네임</h3>
-            <div className=" h-[38px] border-[#CDCFD0] flex justify-between items-center">
+          {user?.approve === true && (
+            <div>
+              <div className="flex flex-col gap-[4px]">
+                <h3 className="font-[600]">한 줄 소개</h3>
+                <input
+                  type="text"
+                  maxLength={30}
+                  value={intro ?? ""}
+                  onChange={(e) => setIntro(e.target.value)}
+                  placeholder="한 줄 소개 (30자까지 입력 가능합니다.)"
+                  className="indent-[4px] border w-full h-[40px] py-[4px] px-[8px] rounded-[6px] disabled:bg-transparent disabled:text-[#CDCFD0]"
+                />
+              </div>
+            </div>
+          )}
+        </section>
+        <hr className="border-4 xl:hidden" />
+        <section className="xl:p-[42px] xl:shadow-md xl:rounded-[24px] ">
+          <div className="p-[16px] py-[24px] flex flex-col gap-[20px] xl:py-0 xl:w-[430px]">
+            <h3 className="xl:text-[20px] xl:font-[700] xl:block hidden">개인정보</h3>
+            <div
+              title="클릭해서 안내정보 닫기"
+              onClick={() => setIsOpen(false)}
+              className={
+                isOpen ? "text-[14px] rounded-[12px] p-[12px] bg-[#E1EEFE] tracking-[-0.05em] cursor-pointer" : "hidden"
+              }
+            >
+              <b>이름</b>, <b>전화번호</b>, <b>주소</b>는 배송시 필요한 정보이므로
+              <br />
+              입력해두시는 것을 권장드립니다.
+            </div>
+            <div className="flex flex-col gap-[8px]">
+              <p className="font-bold">이메일</p>
+              <input
+                className="rounded-[6px] border-[#EAECEC] p-[4px] pr-[8px] pl-[8px] indent-[4px] h-[51px] text-[#CDCFD0] bg-[#F2F2F2]"
+                type="email"
+                defaultValue={email || ""}
+                disabled
+              />
+            </div>
+            <div className="flex flex-col gap-[10px]">
+              <div className="flex items-center gap-[8px]">
+                <p className="font-bold">비밀번호</p>
+                <button
+                  onClick={changePasswordHandler}
+                  className="border px-[12px] py-[4px] text-[14px] rounded-[4px] text-[#0068E5] transition-colors hover:bg-[#E1EEFE]"
+                >
+                  변경하기
+                </button>
+              </div>
+              <div className="text-[12px] text-[#B2B5B8] font-[300] tracking-[-0.05em]">
+                {isClicked ? (
+                  <div className="text-[#2267CE] flex gap-[4px] items-start">
+                    <p className="align-top">ⓘ</p>
+                    <span>
+                      비밀번호 재설정 메일이 발송되었습니다.
+                      <br />
+                      메일을 받지 못하셨다면 ‘변경하기’ 버튼을 한 번 더 눌러주세요.
+                    </span>
+                  </div>
+                ) : (
+                  <div className="text-[#989C9F] flex gap-[4px]">
+                    <p>ⓘ</p>
+                    <span>
+                      비밀번호 변경을 원하시면 ‘변경하기’ 버튼을 눌러주세요.
+                      <br />
+                      가입하신 이메일로 비밀번호 재설정 링크 메일이 발송됩니다.
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col gap-[8px]">
+              <p className="font-bold">이름</p>
               <input
                 type="text"
-                ref={nicknameRef}
-                disabled={isAble === false}
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                placeholder="닉네임"
-                className="indent-[4px] border font-bold w-[calc(100%-52px)] h-[40px] py-[4px] px-[8px] rounded-[6px] disabled:bg-transparent disabled:text-[#CDCFD0]"
+                placeholder="이름을 입력해주세요"
+                value={name || ""}
+                onChange={(e) => setName(e.target.value)}
+                className="h-[40px] border border-[#EAECEC] rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
               />
+            </div>
+            <div className="flex flex-col gap-[8px]">
+              <p className="font-bold">전화번호</p>
+              <input
+                maxLength={13}
+                type="text"
+                placeholder="ex) 01X-XXXX-XXXX"
+                value={phonenum || ""}
+                onChange={(e) =>
+                  setPhonenum(
+                    e.target.value
+                      .replace(/[^0-9]/g, "")
+                      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+                      .replace(/(\-{1,2})$/g, "")
+                  )
+                }
+                className="h-[40px] border border-[#EAECEC] rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
+              />
+            </div>
+            <InfoOnEditAddress address={address ? address.split(",") : ""} setAddress={setAddress} />
+            <div className="flex flex-col gap-[20px]">
+              {errorMsg !== "" && <p className="text-[12px] text-[#F03F33] font-semibold">{`ⓘ ${errorMsg}`}</p>}
               <button
-                onClick={() => {
-                  setIsAble(true);
-                  nicknameRef.current!.focus();
-                }}
-                className="border rounded-[4px] transition-colors hover:bg-[#F2F2F2]"
+                onClick={(e) => updateHandler(e, profile)}
+                disabled={
+                  userImg === user.profile_url &&
+                  nickname === user.nickname &&
+                  address === user.address &&
+                  name === user.name &&
+                  phonenum === user.phonenum &&
+                  intro === user.intro
+                }
+                className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF] disabled:bg-[#F2F2F2] disabled:text-[#CDCFD0]"
               >
-                <WriteIcon color="#1B1C1D" />
+                완료
               </button>
             </div>
           </div>
-        </div>
-        {user?.approve === true && (
-          <div>
-            <div className="flex flex-col gap-[4px]">
-              <h3 className="font-[600]">한 줄 소개</h3>
-              <input
-                type="text"
-                maxLength={30}
-                value={intro ?? ""}
-                onChange={(e) => setIntro(e.target.value)}
-                placeholder="한 줄 소개 (30자까지 입력 가능합니다.)"
-                className="indent-[4px] border w-full h-[40px] py-[4px] px-[8px] rounded-[6px] disabled:bg-transparent disabled:text-[#CDCFD0]"
-              />
-            </div>
-          </div>
-        )}
-      </section>
-
-      <hr className="border-4" />
-      <section className="p-[16px] pt-[24px] pb-[24px] flex flex-col gap-[20px]">
-        <div className="text-[14px] rounded-[12px] py-[12px] px-[14px] bg-[#E1EEFE] tracking-[-0.05em]">
-          <b>이름</b>, <b>전화번호</b>, <b>주소</b>는 배송시 필요한 정보이므로
-          <br />
-          입력해두시는 것을 권장드립니다.
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <p className="font-bold">이메일</p>
-          <input
-            className="rounded-[6px] p-[4px] pr-[8px] pl-[8px] indent-[4px] h-[51px] text-[#CDCFD0] bg-[#F2F2F2]"
-            type="email"
-            defaultValue={email || ""}
-            disabled
-          />
-        </div>
-        <div className="flex flex-col gap-[10px]">
-          <div className="flex items-center gap-[8px]">
-            <p className="font-bold">비밀번호</p>
-            <button
-              onClick={changePasswordHandler}
-              className="border px-[12px] py-[4px] text-[14px] rounded-[4px] text-[#0068E5] transition-colors hover:bg-[#E1EEFE]"
-            >
-              변경하기
-            </button>
-          </div>
-          <div className="text-[12px] text-[#B2B5B8] font-[300] tracking-[-0.05em]">
-            {isClicked ? (
-              <div className="text-[#2267CE] flex gap-[4px] items-start">
-                <p className="align-top">ⓘ</p>
-                <span>
-                  비밀번호 재설정 메일이 발송되었습니다.
-                  <br />
-                  메일을 받지 못하셨다면 ‘변경하기’ 버튼을 한 번 더 눌러주세요.
-                </span>
-              </div>
-            ) : (
-              <div className="text-[#989C9F] flex gap-[4px]">
-                <p>ⓘ</p>
-                <span>
-                  비밀번호 변경을 원하시면 ‘변경하기’ 버튼을 눌러주세요.
-                  <br />
-                  가입하신 이메일로 비밀번호 재설정 링크 메일이 발송됩니다.
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <p className="font-bold">이름</p>
-          <input
-            type="text"
-            placeholder="이름을 입력해주세요"
-            value={name || ""}
-            onChange={(e) => setName(e.target.value)}
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
-          />
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <p className="font-bold">전화번호</p>
-          <input
-            maxLength={13}
-            type="text"
-            placeholder="ex) 01X-XXXX-XXXX"
-            value={phonenum || ""}
-            onChange={(e) =>
-              setPhonenum(
-                e.target.value
-                  .replace(/[^0-9]/g, "")
-                  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-                  .replace(/(\-{1,2})$/g, "")
-              )
-            }
-            className="h-[40px] border rounded-[4px] p-[4px] pr-[8px] pl-[8px] indent-[4px]"
-          />
-        </div>
-        <InfoOnEditAddress address={address ? address.split(",") : ""} setAddress={setAddress} />
-        <div className="flex flex-col gap-[20px]">
-          {errorMsg !== "" && <p className="text-[12px] text-[#F03F33] font-semibold">{`ⓘ ${errorMsg}`}</p>}
-          <button
-            onClick={(e) => updateHandler(e, profile)}
-            disabled={
-              userImg === user.profile_url &&
-              nickname === user.nickname &&
-              address === user.address &&
-              name === user.name &&
-              phonenum === user.phonenum &&
-              intro === user.intro
-            }
-            className="h-[52px] p-[14px] pr-[36px] pl-[36px] text-[#FFFFFE] rounded-[8px] bg-[#1A82FF] disabled:bg-[#F2F2F2] disabled:text-[#CDCFD0]"
-          >
-            완료
-          </button>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </div>
   );
 };
 

@@ -111,7 +111,7 @@ export default function Detail({ params }: detailProps) {
         <div className="xl:hidden">
           <div className="flex justify-center w-full relative">
             {data && (
-              <div className="relative w-[375px] h-[375px] xl:w-[475px] xl:h-[475px]">
+              <div className="relative w-full h-[375px] xl:w-[475px] xl:h-[475px]">
                 <Image
                   src={data?.main_img}
                   alt={data?.title}

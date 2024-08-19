@@ -52,21 +52,18 @@ export default function StartChat(props: setDataType) {
   };
 
   const createNewSubscribe = async (channel_id: number, user_id: string) => {
-    const { data, error } = await supabase
-      .from('chat_subscribe')
-      .insert({
-        channel_id: channel_id,
-        user_id: user_id
-      })
-    if (error)
-      console.log(error)
-  }
+    const { data, error } = await supabase.from("chat_subscribe").insert({
+      channel_id: channel_id,
+      user_id: user_id
+    });
+    if (error) console.log(error);
+  };
 
   return (
     <div>
       {userdata !== undefined ? (
         <button
-          className="flex cursor-pointer items-center gap-[4px] justify-center text-center w-[86px] h-[32px] text-[12px] rounded-[4px] text-primarystrong border-[1px] border-primarynormal rounded]"
+          className="flex cursor-pointer items-center gap-[4px] justify-center text-center w-[86px] h-[32px] text-[12px] text-primarystrong border-[1px] border-primarynormal rounded-[6px] transition-colors hover:bg-primarylightness"
           onClick={startChat}
         >
           <span className="font-[600]">채팅하기</span>

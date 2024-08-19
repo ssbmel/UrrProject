@@ -2,9 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../../supabase/client";
-import { useEffect, useState } from "react";
 
 const LoginUserData = async () => {
+  const userData = await getUserData();
+  if (!userData.session) {
+    return null;
+  }
   const response = await fetch("/api/auth/users");
   const data = response.json();
   return data;
@@ -17,21 +20,9 @@ const getUserData = async () => {
 };
 
 export const useUserData = () => {
-  const [sessionData, setSessionData] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchSessionData = async () => {
-      const data = await getUserData();
-      setSessionData(data.session);
-    };
-
-    fetchSessionData();
-  }, []);
-
   return useQuery({
     queryKey: ["userData"],
     queryFn: () => LoginUserData(),
-    enabled: !!sessionData,
     select: (data) => data?.userInfo.data
   });
 };

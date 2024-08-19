@@ -11,31 +11,33 @@ interface Props {
   sectionName: string;
 }
 
+/* 7개씩만 로드 */
+
 const SalesList = ({ products, sectionName }: Props) => {
   const outdateMask =
     "bg-[#3436378C] absolute w-full h-full z-10 rounded-[6px] flex justify-center items-center text-[#FFFFFE] text-[14px] font-[500]";
 
   return (
-    <div className="flex flex-col gap-[20px] pl-[16px] pr-[16px] pt-[32px] pb-[32px]">
+    <div className="flex flex-col gap-[20px] px-[16px] xl:px-0 py-[32px] xl:mx-auto xl:w-[1132px]">
       <div>
         <h2 className="text-[20px] font-bold">{sectionName === "진행중인 공구" ? "진행중인 공구" : "지나간 공구"}</h2>
       </div>
       {products.length > 0 ? (
-        <ul className="flex items-center gap-[12px] overflow-x-auto scrollbar-styled">
+        <ul className="flex items-center gap-[12px] xl:gap-[23px] overflow-x-auto xl:w-[1132px] xl:flex-wrap">
           {products?.map((product) => (
             <Link key={product?.id} href={`/products/detail/${product.id}`}>
-              <li className="flex flex-col gap-[8px] w-[88px]">
-                <div className="w-[88px] h-[96px] rounded-[6px] bg-slate-300 relative">
+              <li className="flex flex-col gap-[8px] xl:gap-[12px] w-[88px] xl:w-[142px]">
+                <div className="w-[88px] h-[96px] xl:w-[142px] xl:h-[148px] rounded-[6px] bg-slate-300 relative">
                   <div className={sectionName === "진행중인 공구" ? "hidden" : outdateMask}>
                     <p>판매 종료</p>
                   </div>
                   <Image
                     src={product?.main_img || ""}
                     alt={product?.title || "product_main_img"}
-                    sizes="88px"
+                    sizes="88px xl:148px"
                     fill
                     priority
-                    className="absolute rounded-[6px]"
+                    className="absolute rounded-[6px] xl:w-[142px] xl:h-[148px] "
                   />
                 </div>
                 <div>

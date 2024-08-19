@@ -28,7 +28,7 @@ const InfProfilePage = ({ params }: { params: { id: string } }) => {
   return (
     <>
       <IntroSection user={infUserData} />
-      <hr className="border-[4px] bg-[#F4F4F4]" />
+      <hr className="border-[4px] bg-[#F4F4F4] xl:hidden" />
       <SalesSection products={infProductData} />
     </>
   );

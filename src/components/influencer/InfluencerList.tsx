@@ -24,7 +24,7 @@ function InfluencerList() {
 
   const getSubscribeData = async () => {
     try {
-      if (!user) return null;
+      if (!user) return;
 
       const response = await fetch(`/api/subscribe?user_id=${user.id}`);
       if (!response.ok) {
@@ -43,26 +43,31 @@ function InfluencerList() {
   });
 
   useEffect(() => {
-    if (user) {
-      getSubscribeData();
-    }
-    setIsLoading(false)
+    const fetchData = async () => {
+      if (user) {
+        await getSubscribeData();
+      }
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, [user]);
 
-  const subscribedHandler = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, inf: User) => {
+  const subscribedHandler = (e: MouseEvent<HTMLButtonElement>, inf: User) => {
     e.stopPropagation();
     if (!user) {
-      swal("로그인을 먼저 진행해주세요.");
-      router.push("/login"); 
-      return;
+        swal("로그인을 먼저 진행해주세요.").then(() => {
+            router.push("/login");
+        });
+        return;
     }
     const newInfUser: InfSubscribe = {
-      user_id: user.id as string,
-      infuser_id: inf.id
+        user_id: user.id,
+        infuser_id: inf.id
     };
     swal(`${inf.nickname}님을 구독하였습니다.`);
     subscribedMutation(newInfUser);
-  };
+};
 
   const subscribedInfUser = async (data: InfSubscribe) => {
     const response = await fetch("/api/subscribe", {
@@ -79,15 +84,13 @@ function InfluencerList() {
   });
 
   const cancelSubscribedHandler = (inf: User) => {
-    if (!user) {
-      swal("로그인을 먼저 진행해주세요.");
-      return;
-    }
+    if (!user) return;
+
     cancelSubscribedMutation({
-      infuser_id: inf.id,
-      user_id: user.id
+        infuser_id: inf.id,
+        user_id: user.id
     });
-  };
+};
 
   const cancelSubscribedInfUser = async (data: InfSubscribe) => {
     if (!data.user_id || !data.infuser_id) return;
@@ -111,18 +114,18 @@ function InfluencerList() {
 
   return (
     <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
-      <InfGuidModal />
+      <InfGuidModal/>
       <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {!user ? (
-          <div className="flex flex-col items-center mx-auto h-[90px]">
-            <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px]">
-              로그인이 필요합니다.
+          <div className="flex h-[150px]">
+            <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px] mx-auto mt-[80px]">
+              로그인이 정보가 없습니다.
             </p>
           </div>
         ) : (
           subscribeIds.length === 0 ? (
-            <div className="flex flex-col items-center mx-auto h-[90px]">
+            <div className="flex flex-col items-center mx-auto">
               <div className="relative w-[150px] h-[100px] my-3 xl:mt-[48px] xl:mb-6">
                 <Image src={emptyImg} alt="empty" fill sizes="100px xl:w-[150px]" className="mx-auto my-5 object-cover" />
               </div>

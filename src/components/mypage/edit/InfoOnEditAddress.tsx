@@ -60,7 +60,6 @@ const InfoOnEditAddress = ({ address, setAddress, required }: Props) => {
     const { common, juso: data } = results;
 
     if (common?.errorCode !== "0") {
-      console.log(common);
       swal(common?.errorMessage);
       return;
     }

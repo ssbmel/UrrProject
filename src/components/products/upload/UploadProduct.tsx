@@ -15,7 +15,7 @@ import swal from "sweetalert";
 
 export type DetailedImgGroup = { file: File | null; url: string };
 
-function ProductUpload() {
+function UploadProduct() {
   const supabase = createClient();
   const [radioCheckedValue, setRadioCheckedValue] = useState<string>("");
   const startDateRef = useRef<HTMLInputElement>(null);
@@ -71,7 +71,7 @@ function ProductUpload() {
     const newFileName = `${uuidv4()}.${ext}`;
     const { data, error } = await supabase.storage.from("products").upload(`${postId}/mainImg/${newFileName}`, mainImg);
     if (error) {
-      console.log(`파일이 업로드 되지 않습니다.${error}`);
+      swal(`파일이 업로드 되지 않습니다.${error}`);
       return null;
     }
     const res = await supabase.storage.from("products").getPublicUrl(data.path);
@@ -91,7 +91,7 @@ function ProductUpload() {
         .from("products")
         .upload(`${postId}/detailImages/${newFileName}`, detail.file);
       if (error) {
-        console.log(`파일이 업로드 되지 않습니다.${error}`);
+        swal(`파일이 업로드 되지 않습니다.${error}`);
         return null;
       }
       const res = await supabase.storage.from("products").getPublicUrl(data.path);
@@ -125,28 +125,33 @@ function ProductUpload() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!user) {
       return;
     }
+
     const postId = uuidv4();
     const mainImgId = (await uploadMainImg(postId)) || uploadedMainImg;
     const detailImgId = await uploadDetailImages(postId);
 
+    const startDate = startDateRef.current?.value;
+    const endDate = endDateRef.current?.value;
+
     const productData: Product = {
-      category: radioCheckedValue || "", // Ensure category is a string
-      start: startDateRef.current?.value as string, // Use null if the value is an empty string
-      end: endDateRef.current?.value as string, // Use null if the value is an empty string
-      cost: parseInt(costRef.current?.value || "0"), // Ensure cost is a number
-      price: parseInt(priceRef.current?.value || "0"), // Ensure price is a number
-      product_count: parseInt(productCountRef.current?.value || "0"), // Ensure product_count is a number
-      title: titleRef.current?.value || "", // Ensure title is a string
-      text: textRef.current?.value || "", // Ensure text is a string
-      detail_img: detailImgId || [], // Ensure detail_img is an array of strings
-      main_img: mainImgId || "", // Ensure main_img is a string
-      user_id: user.id || "", // Ensure user_id is a string
+      category: radioCheckedValue || "",
+      start: startDate as string,
+      end: endDate as string,
+      cost: parseInt(costRef.current?.value || "0"),
+      price: parseInt(priceRef.current?.value || "0"),
+      product_count: parseInt(productCountRef.current?.value || "0"),
+      title: titleRef.current?.value || "",
+      text: textRef.current?.value || "",
+      detail_img: detailImgId || [],
+      main_img: mainImgId || "",
+      user_id: user.id || "",
       created_at: new Date().toISOString(),
-      id: id === "new" ? postId : id as string,  // Ensure id is a string
-      nickname: user.nickname || "" // Ensure nickname is a string
+      id: id === "new" ? postId : (id as string),
+      nickname: user.nickname || ""
     };
 
     if (
@@ -167,7 +172,7 @@ function ProductUpload() {
     if (error) {
       console.error("Error inserting data:", error);
     } else {
-      swal("상품등록 성공!", "등록이 완료되었습니다.", "success");
+      swal("등록이 완료되었습니다.");
       saveMutation(productData);
       router.push("/products/list");
     }
@@ -175,20 +180,6 @@ function ProductUpload() {
 
   return (
     <form onSubmit={onSubmit}>
-       <div className="w-full bg-[#fffffe] flex justify-end xl:max-w-[1200px] xl:mx-auto">
-          <button
-            type="submit"
-            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[14px] px-[10px] py-1 rounded-2xl my-3 mr-3 xl:hidden"
-          >
-            {id === "new" ? "올리기" : "수정완료"}
-          </button>
-          <button
-            type="submit"
-            className="bg-[#FFFFFE] text-[#0068E5] border border-[#1A82FF] text-[18px] rounded-lg py-[14px] px-[36px] font-semibold hidden xl:block"
-          >
-            {id === "new" ? "글 올리기" : "수정완료"}
-          </button>
-        </div>
       <div className="max-w-[1200px] mx-auto grid gap-2 bg-[#F4F4F4]">
         <Category radioCheckedValue={radioCheckedValue} setRadioCheckedValue={setRadioCheckedValue} />
         <PricePeriod
@@ -197,7 +188,7 @@ function ProductUpload() {
           costRef={costRef}
           priceRef={priceRef}
           productCountRef={productCountRef}
-        /> 
+        />
         <Contents
           titleRef={titleRef}
           textRef={textRef}
@@ -206,10 +197,50 @@ function ProductUpload() {
           uploadedMainImg={uploadedMainImg}
           setMainImg={setMainImg}
         />
-       
+      </div>
+      <div className="max-w-[1200px] flex justify-center mb-5 mx-auto">
+        <button
+          type="submit"
+          className={`
+            bg-[#1A82FF]
+            text-[#FFFFFE]
+            border 
+            text-[18px] 
+            px-[10px] 
+            py-1 
+            rounded-md 
+            xl:hidden 
+            w-[342px] 
+            h-[52px]
+            hover:bg-[#0068E5]
+          `}
+        >
+          {id === "new" ? "글 올리기" : "수정완료"}
+        </button>
+        <button
+          type="submit"
+          className={`
+            bg-[#FFFFFF]
+            text-[#1A82FF]
+            border
+            border-[#1A82FF]
+            text-[18px] 
+            rounded-lg 
+            py-[14px] 
+            px-[36px] 
+            font-semibold 
+            hidden 
+            xl:block 
+            ml-auto
+            hover:bg-[#1A82FF]
+            hover:text-[#FFFFFE]
+          `}
+        >
+          {id === "new" ? "글 올리기" : "수정완료"}
+        </button>
       </div>
     </form>
   );
 }
 
-export default ProductUpload;
+export default UploadProduct;

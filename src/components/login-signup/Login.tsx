@@ -8,6 +8,7 @@ import LoginBar from "../../../public/images/login_bar.png";
 import Kakao from "../../../public/logo/Logo_kakao.png";
 import WebLoginBg from "../../../public/images/web_login_bg.svg";
 import Link from "next/link";
+import swal from "sweetalert";
 import { createClient } from "../../../supabase/client";
 import { useRouter } from "next/navigation";
 
@@ -24,15 +25,16 @@ const Login = () => {
     const password = passwordRef.current?.value;
 
     if (!email || !password) {
-      alert("이메일과 비밀번호를 입력해주세요.");
+      swal("이메일과 비밀번호를 입력해주세요.");
       return;
     }
     try {
       const response = await userLogin({ email, password });
       window.location.href = "/mypage";
       // router.replace("/mypage");
+      // router.refresh();
     } catch (error) {
-      alert("아이디와 비빌번호를 확인해주세요.");
+      swal("아이디와 비빌번호를 확인해주세요.");
       console.log(error);
     }
   };
@@ -57,7 +59,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="xl:flex xl:flex-row">
+      <div className="xl:w-full xl:flex">
         <div className="hidden xl:block xl:bg-cover xl:bg-center">
           <WebLoginBg className="xl:max-w-full xl:max-h-full" />
         </div>

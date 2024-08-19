@@ -1,7 +1,7 @@
 /* 스크롤바의 폭 너비 */
 .scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: 5px; /* Firefox */
   overflow-y: auto;
 }
 
@@ -17,4 +17,11 @@
 
 .scrollbar::-webkit-scrollbar-track {
   background: #ffffff; /*스크롤바 뒷 배경 색상*/
+}
+
+/*ReviewList swiper css*/
+
+html,
+body {
+  position: relative;
 }

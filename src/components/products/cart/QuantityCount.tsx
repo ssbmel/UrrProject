@@ -32,7 +32,10 @@ const QuantityCount = ({
 
   const deleteItem = async (item: DataType) => {
     const supabase = createClient();
-    const isConfirmed = confirm("해당상품을 장바구니 목록에서 삭제하시겠습니까?");
+
+    const isConfirmed = await swal("해당상품을 장바구니 목록에서 삭제하시겠습니까?", {
+      buttons: ["취소", "삭제"]
+    });
 
     if (!isConfirmed) {
       return;
@@ -115,7 +118,7 @@ const QuantityCount = ({
                 alt="장바구니 상품 삭제 버튼"
                 width={16}
                 height={16}
-                className="absolute top-[22px] right-[11px]"
+                className="absolute top-[22px] right-[11px] cursor-pointer"
                 onClick={() => {
                   deleteItem(item);
                 }}

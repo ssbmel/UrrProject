@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
 import Image from "next/image";
 import sendImg from "../../../public/bgImg/send.png";
+import Modal from "react-modal";
 
 const ModalComponent: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -32,13 +34,14 @@ const ModalComponent: React.FC = () => {
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
+          ariaHideApp={false}
           contentLabel="Influencer Subscription Modal"
           style={{
             content: {
-              width: '90%', // 모바일을 고려해 너비를 퍼센트로 설정
-              maxWidth: '500px', // 최대 너비를 400px로 제한
-              height: 'auto', // 높이를 내용에 따라 자동 조절
-              maxHeight: '600px', // 최대 높이 600px
+              width: '90%',
+              maxWidth: '500px',
+              height: 'auto',
+              maxHeight: '600px',
               top: '50%',
               left: '50%',
               right: 'auto',
@@ -57,11 +60,11 @@ const ModalComponent: React.FC = () => {
             }
           }}
         >
-          <div className="relative w-[150px] h-[180px] xl:w-[300px] xl:h-[330px] mb-4">
+          <div className="relative w-[80px] h-[90px] xl:w-[150px] xl:h-[160px] mb-4">
             <Image 
               src={sendImg} 
               fill 
-              sizes="w-[150px] xl:w-[300px]" 
+              sizes="w-[80px] xl:w-[150px]" 
               alt="가이드" 
               className="object-cover rounded mx-auto" 
             />
@@ -69,34 +72,19 @@ const ModalComponent: React.FC = () => {
           <h2 style={{ textAlign: 'center', marginBottom: '10px' }} className="text-sm sm:text-base lg:text-lg xl:text-xl">
             인플루언서를 구독하고 메세지를 보내보세요!
           </h2>
-          <div style={{ textAlign: 'center' }}>
+          <div className="text-center">
             <button
               onClick={handleHideForToday}
-              style={{
-                marginRight: '10px',
-                padding: '10px 20px',
-                backgroundColor: '#f0f0f0',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-            >
+              className="mr-[10px] py-[8px] px-[12px] border-none bg-[#F2F2F2] text-[14px] xl:text-[18px] rounded-md">
               오늘은 그만보기
             </button>
             <button
               onClick={closeModal}
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#0070f3',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-            >
+              className="mr-[10px] py-[8px] px-[12px] border-none bg-[#4C4F52] text-[#fff] text-[14px] xl:text-[18px] rounded-md">
               닫기
             </button>
           </div>
+
         </Modal>
       )}
     </>

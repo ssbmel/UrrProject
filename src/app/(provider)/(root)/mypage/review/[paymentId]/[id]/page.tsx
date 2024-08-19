@@ -1,6 +1,6 @@
-import MyReview from "@/components/mypage/my-review/MyReview";
+import WrittenMyReview from "@/components/mypage/my-review/WrittenMyReview";
 
 function Review() {
-  return <MyReview/>;
+  return <WrittenMyReview/>;
 }
 export default Review

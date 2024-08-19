@@ -26,12 +26,12 @@ const DetailImg = ({ id }: { id: string }) => {
       }
     };
 
-    const timeoutId = setTimeout(checkShowMore, 100);
+    const timeoutId = setTimeout(checkShowMore, 500);
     return () => clearTimeout(timeoutId);
-  }, [images]);
+  }, [contentRef, images]);
 
   useEffect(() => {
-    setShowMore(false);
+    // setShowMore(false);
     setIsExpanded(false);
   }, [id]);
 
@@ -46,23 +46,25 @@ const DetailImg = ({ id }: { id: string }) => {
         className={`flex flex-col py-2 w-full transition-all duration-500 ease-in-out relative ${
           isExpanded ? "max-h-full" : "max-h-[500px] xl:max-h-full"
         } overflow-hidden`}
-        ref={contentRef}
+        // ref={contentRef}
       >
-        {images.map((value, index) => (
-          <div key={index} className="w-full relative flex flex-col items-center">
-            {value && (
-              <Image
-                src={value}
-                alt={`Image ${index}`}
-                width={500}
-                height={500}
-                sizes="(max-width: 768px) 100vw, (max-width: 1132px) 50vw, 33vw"
-                className="object-cover xl:w-[1000px] w-[500px]"
-                priority
-              />
-            )}
-          </div>
-        ))}
+        <div ref={contentRef}>
+          {images.map((value, index) => (
+            <div key={index} className="w-full relative flex flex-col items-center">
+              {value && (
+                <Image
+                  src={value}
+                  alt={`Image ${index}`}
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1132px) 50vw, 33vw"
+                  className="object-cover xl:w-[1000px] w-[500px]"
+                  priority
+                />
+              )}
+            </div>
+          ))}
+        </div>
         {!isExpanded && showMore && (
           <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent xl:hidden"></div>
         )}
@@ -70,10 +72,10 @@ const DetailImg = ({ id }: { id: string }) => {
       {showMore && !isExpanded && (
         <button
           onClick={handleToggle}
-          className="absolute bottom-[calc(100%-480px)] left-1/2 transform -translate-x-1/2 w-[343px] h-[52px] bg-white text-[#1A82FF] rounded mt-4 cursor-pointer text-[14px] flex justify-center items-center xl:hidden"
+          className="absolute border-[1px] border-[#EAECEC)] bottom-[calc(100%-480px)] left-1/2 transform -translate-x-1/2 w-[343px] h-[52px] bg-white font-normal text-primarystrong rounded mt-4 cursor-pointer text-[14px] flex justify-center items-center xl:hidden"
         >
           상품정보 더보기
-          <Image src={more} alt="상품정보더보기" width={20} height={20} />
+          <Image src={more} alt="상품정보더보기" width={20} height={20} className="ml-2" />
         </button>
       )}
     </div>

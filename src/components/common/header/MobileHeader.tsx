@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "../../../../public/logo/title_logo.svg";
@@ -11,6 +11,7 @@ import AddProductIcon from "../../../../public/icon/addProductIcon.svg";
 import { useState } from "react";
 import SearchModal from "../search/SearchModal";
 import { useUserData } from "@/hooks/useUserData";
+import { useMenuStore } from "@/zustand/MenuStore";
 
 const MobileHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -30,12 +31,18 @@ const MobileHeader = () => {
   const PAYMENT = pathname === "/payment";
   const CHATLIST = pathname === "/chatlist";
   const INFLUENCER = pathname === "/influencer";
+  const { setActiveMenu } = useMenuStore();
 
   const isInfluncer = () => {
-    if (user?.approve) {
+    if (user?.approve === true) {
       return true;
     }
     return false;
+  };
+
+  const isActiveMenu = () => {
+    setActiveMenu("/");
+    router.push("/");
   };
 
   // header 타이틀
@@ -86,16 +93,16 @@ const MobileHeader = () => {
         </Link>
       </>
     );
-  } else if (PRODUCTS_LIST || MY_PAGE || CHATLIST || INFLUENCER) {
+  } else if (SIGN_UP || LOGIN || SEARCH || PAYMENT) {
+    rightIcon = (
+      <button onClick={isActiveMenu}>
+        <XIcon />
+      </button>
+    );
+  } else {
     rightIcon = (
       <Link href={"/cart"}>
         <CartIcon />
-      </Link>
-    );
-  } else if (SIGN_UP || LOGIN || SEARCH || PAYMENT) {
-    rightIcon = (
-      <Link href={"/"}>
-        <XIcon />
       </Link>
     );
   }
@@ -117,7 +124,7 @@ const MobileHeader = () => {
 
   return (
     <>
-      <header className="flex flex-row justify-between items-center h-[52px] w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[5%] pt-[10px] pb-[6px]">
+      <header className="flex flex-row justify-between items-center h-[52px] w-full mx-auto shrink-0  bg-white z-50 px-[5%] pt-[10px] pb-[6px]">
         <div className="h-full min-w-[32px] p-[4px] flex justify-center items-center">{leftIcon}</div>
         <div className="font-semibold text-xl">{headerTitle}</div>
         <div className="flex gap-2 p-[4px]">{rightIcon}</div>

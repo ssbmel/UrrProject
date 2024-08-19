@@ -105,7 +105,7 @@ input {
   padding: 20px;
   border-radius: 0 0 20px 20px;
   width: 100%;
-  height: 42vh;
+  height: 350px;
   transform: translateY(-100%);
   transition: transform 0.3s ease-in-out;
 }
@@ -127,4 +127,44 @@ input {
   overflow-wrap: anywhere;
   word-break: break-all;
   white-space: pre-wrap;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  min-width: 360px;
+}
+
+@media (max-width: 1280px) {
+  .container {
+    width : 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .banner-container {
+    max-width: none; /* container의 max-width 무시 */
+    width: 100%; /* 전체 너비 */
+    margin: 0; /* 마진 초기화 */
+  }
+}
+
+/* "예" 버튼 스타일 */
+.swal-button--confirm {
+  background-color: #1a82ff; /* "예" 버튼 색상 */
+  color: white; /* 텍스트 색상 */
+}
+
+/* "아니오" 버튼 스타일 */
+.swal-button--cancel {
+  background-color: #cdcfd0; /* "아니오" 버튼 색상 */
+  color: white; /* 텍스트 색상 */
+}
+
+.swal-title {
+  font-size: 18px; /* 원하는 크기로 변경 */
+}
+
+.swal-text {
+  color: #1b1c1d; /* 원하는 크기로 변경 */
 }

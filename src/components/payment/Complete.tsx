@@ -8,6 +8,7 @@ import orderCom from "../../../public/icon/orderComplete.png";
 import { refundPayment } from "@/services/payment/payment.service";
 import { useUserData } from "@/hooks/useUserData";
 import { OrderType } from "../../../types/common";
+import LoadingUrr from "../common/loading/LoadingUrr";
 
 type productList = {
   id: string;
@@ -19,35 +20,45 @@ type productList = {
 
 export default function Complete() {
   const [products, setProducts] = useState<OrderType>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const supabase = createClient();
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
   const { data: userData } = useUserData();
   const userId = userData?.id;
-  console.log(userId);
 
   useEffect(() => {
     const getProducts = async () => {
-      if (paymentId) {
-        await refundPayment(paymentId);
-      } else {
-        console.error("PaymentId is null");
-      }
-
-      if (paymentId) {
-        const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
-        setProducts(data as OrderType);
-        const productList = (data?.product_list as productList[]) || [];
-        const productId = productList.map<string>((item) => item.id);
-        if (userId && productId) {
-          await supabase.from("cart").delete().eq("user_id", userId).in("product_id", productId);
+      setLoading(true);
+      try {
+        if (paymentId) {
+          await refundPayment(paymentId);
+        } else {
+          console.error("PaymentId is null");
         }
+
+        if (paymentId) {
+          const { data } = await supabase.from("order").select("*").eq("paymentId", paymentId).single();
+          setProducts(data as OrderType);
+          const productList = (data?.product_list as productList[]) || [];
+          const productId = productList.map<string>((item) => item.id);
+          if (userId && productId) {
+            await supabase.from("cart").delete().eq("user_id", userId).in("product_id", productId);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getProducts();
   }, [paymentId, supabase, userId]);
 
+  if (loading) {
+    return <LoadingUrr />;
+  }
   return (
     <div className="w-100vw overflow-hidden">
       <div className="bg-white rounded-lg mb-[10px]">
@@ -75,7 +86,7 @@ export default function Complete() {
         <div className="flex flex-col mx-auto  xl:w-[1130px]">
           <div className="p-2 m-4 xl:my-4 xl:mx-2 xl:w-[450px]">
             <p className="mb-4 text-[18px] xl:text-[20px]">배송정보</p>
-            <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px] xl:w-[480px] xl:text-[18px]">
+            <div className="grid grid-cols-[30%_70%] gap-y-5 gap-x-10 w-[343px] xl:grid-cols-[20%_80%] xl:w-[1132px] xl:text-[18px]">
               <div className="text-[#4C4F52]">주문자</div>
               <div>{products?.name}</div>
 

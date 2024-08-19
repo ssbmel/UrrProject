@@ -1,6 +1,6 @@
 "use client";
 
-import { userSignUp } from "@/services/users/users.service";
+import { emailCheck, userSignUp } from "@/services/users/users.service";
 import { Dispatch, SetStateAction, useState } from "react";
 import { nicknameCheck } from "@/services/users/users.service";
 import { StepType } from "@/app/(provider)/(root)/signup/page";
@@ -40,7 +40,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
     const confirm = confirmRef;
 
     if (!email || !password || !nickname) {
-      alert("모든 항목을 입력해주세요!");
+      swal("모든 항목을 입력해주세요!");
       return;
     }
 
@@ -52,7 +52,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           await userSignUp({ email, password, nickname, confirm, selectUser, approve: false });
           setStep("완료");
         } catch (error) {
-          alert("회원가입 실패");
+          swal("회원가입 실패");
           console.log(error);
         }
       }
@@ -62,7 +62,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           const response = await userSignUp({ email, password, nickname, selectUser, approve: false });
           setStep("완료");
         } catch (error) {
-          alert("회원가입 실패");
+          swal("회원가입 실패");
           console.log(error);
         }
       }
@@ -89,7 +89,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
   };
 
   // 이메일 유효성검사
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -97,11 +97,18 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailConfirmMessage("이메일 형식이 다시 확인해주세요!");
+      setEmailConfirmMessage("이메일 형식을 다시 확인해주세요");
       setIsEmailConfirm(false);
     } else {
-      setEmailConfirmMessage("");
-      setIsEmailConfirm(true);
+      const overlapEmail = await emailCheck(emailCurrent);
+
+      if (overlapEmail.length !== 0) {
+        setEmailConfirmMessage("이미 사용중인 이메일입니다");
+        setIsEmailConfirm(false);
+      } else {
+        setEmailConfirmMessage("");
+        setIsEmailConfirm(true);
+      }
     }
   };
 
@@ -146,7 +153,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           <WebSignupBg2 className="max-w-full max-h-full" />
         </div>
 
-        <div className="flex flex-col justify-between h-screen xl:h-[783px] w-[375px] mx-auto whitespace-nowrap pt-[58px]  p-4">
+        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[783px] w-[375px] mx-auto whitespace-nowrap pt-[58px] p-4">
           <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
           <form className="flex flex-col gap-9">
             <div>
@@ -156,6 +163,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
                 <p className={stLabel}>{nicknameConfirmMessage}</p>
               </label>
             </div>
+            {/* <p className="bg-[#F4F4F4] h-2"></p> 보류 */}
 
             <label className="flex flex-col">
               이메일
@@ -184,7 +192,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
           <div className="flex sticky bottom-0 mb-7">
             <button
               onClick={onSignUpHandler}
-              // disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
+              disabled={isSubmitting || !(isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm)}
               className={`${
                 isEmailConfirm && isNicknameConfirm && isPassword && isPasswordConfirm
                   ? "bg-primarynormal text-white"

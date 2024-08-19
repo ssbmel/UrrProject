@@ -117,7 +117,6 @@ const InfoOnEdit = ({ user }: Props) => {
     } else {
       const duplicateData = await nicknameCheck(nickname);
       if (duplicateData.length !== 0 && duplicateData[0]?.nickname !== user.nickname) {
-        console.log(duplicateData[0]?.nickname, user.nickname);
         setErrorMsg("이미 사용중인 닉네임입니다");
         return false;
       }

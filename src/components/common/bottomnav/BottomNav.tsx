@@ -14,7 +14,8 @@ export default function BottomNav() {
   if (
     (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) ||
     pathname.startsWith("/login") ||
-    pathname.startsWith("/signup")
+    pathname.startsWith("/signup") ||
+    pathname.startsWith("/products/detail")
   ) {
     return null;
   }

@@ -133,13 +133,13 @@ const WrittenMyReview = () => {
     const response = await fetch("/api/product_review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     return response.json();
   };
 
   const { mutate: saveReviewMutation } = useMutation<Review, unknown, Review>({
-    mutationFn: (data) => saveReview(data),
+    mutationFn: (data) => saveReview(data)
   });
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -155,17 +155,16 @@ const WrittenMyReview = () => {
       swal("별점을 선택해 주세요.");
       return;
     }
-  
+
     if (!reviewContent) {
       swal("후기 내용을 입력해 주세요.");
       return;
     }
-  
+
     if (!reviewImagesId) {
       swal("후기 사진을 넣어주세요.");
       return;
     }
-
 
     const newReviewData: Review = {
       id: reviewId,
@@ -178,7 +177,7 @@ const WrittenMyReview = () => {
       title: orderData?.name as string,
       inf_name: productsData?.nickname as string,
       payment_id: Ids.paymentId as string,
-      userId: user.id,
+      userId: user.id
     };
 
     const { data, error } = await supabase.from("product_review").insert([newReviewData]).select();
@@ -261,12 +260,12 @@ const WrittenMyReview = () => {
   return (
     <div>
       {!isDesktop ? (
-        <div className="w-full p-4 mx-auto xl:hidden">
-          {content}
-        </div>
+        <div className="w-full xl:w-[60%] p-4 mx-auto xl:hidden">{content}</div>
       ) : (
-        <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
-          <div className="relative p-4 w-[650px] h-auto bg-white rounded-lg shadow-lg overflow-y-auto">{content}</div>
+        <div className="xl:h-[calc(100vh-278px)] ">
+          <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
+            <div className="relative p-4 w-[650px] h-auto bg-white rounded-lg shadow-lg overflow-y-auto">{content}</div>
+          </div>
         </div>
       )}
     </div>

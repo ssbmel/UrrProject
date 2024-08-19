@@ -16,7 +16,6 @@ import LoadingUrr from "../common/loading/LoadingUrr";
 import swal from "sweetalert";
 import { useRouter } from "next/navigation";
 
-
 function InfluencerList() {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
@@ -112,7 +111,7 @@ function InfluencerList() {
 
   return (
     <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
-      <InfGuidModal/>
+      <InfGuidModal />
       <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {!user ? (

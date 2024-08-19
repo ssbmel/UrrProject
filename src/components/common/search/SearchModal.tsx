@@ -18,6 +18,7 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
   const [filteringTitle, setFilteringTitle] = useState<Product[]>([]);
   const [keywords, setKeywords] = useState<Keyword[]>([]);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
+  console.log(keywords);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -47,32 +48,38 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
     localStorage.removeItem("keywords");
   };
 
-  // 상픔 title을 기준으로 한 검색기능
-  const SearchProducts = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // 검색 기능
+  const searchProducts = async (searchWord: string) => {
     setHasSearched(true);
-    const searchWord = searchWordRef.current?.value;
-    const searchCache = localStorage.getItem("keywords");
+    const { productTitle } = await SearchProductTitleList(searchWord);
+    setFilteringTitle(productTitle);
+    addKeywordHandler(searchWord);
+  };
 
+  // 폼 제출 시 검색
+  const handleSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const searchWord = searchWordRef.current?.value;
     if (searchWord) {
-      const { productTitle } = await SearchProductTitleList(searchWord);
-      setFilteringTitle(productTitle);
-      addKeywordHandler(searchWord);
+      await searchProducts(searchWord);
       if (searchWordRef.current) {
         searchWordRef.current.value = "";
       }
     }
-    if (searchWord) {
-      if (searchCache?.includes(searchWord)) {
-        localStorage.setItem("keywords", JSON.stringify([...searchCache, searchWord]));
-      }
+  };
+
+  // 최근 검색어 클릭 시 검색
+  const handleKeywordClick = async (keyword: string) => {
+    if (searchWordRef.current) {
+      searchWordRef.current.value = keyword;
     }
+    await searchProducts(keyword);
   };
 
   return (
     <>
       <div className="flex flex-col items-center">
-        <form onSubmit={SearchProducts} className="relative">
+        <form onSubmit={handleSearchSubmit} className="relative">
           <div className="h-12 font-semibold text-xl text-center xl:hidden">검색</div>
           <input
             type="text"
@@ -125,7 +132,8 @@ export default function SearchModal({ closeModal }: { closeModal: () => void }) 
                 keywords.map((keyword) => (
                   <li
                     key={keyword.id}
-                    className="flex border border-[#1A82FF] text-[#0068E5] px-[6px] py-[3px] rounded-[14px] w-max mr-[16px]"
+                    onClick={() => handleKeywordClick(keyword.text)}
+                    className="flex border border-[#1A82FF] text-[#0068E5] px-[6px] py-[3px] rounded-[14px] w-max mr-[16px] cursor-pointer"
                   >
                     <p>{keyword.text}</p>
                   </li>

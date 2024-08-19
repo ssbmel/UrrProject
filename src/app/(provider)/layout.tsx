@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 
 function ProviderLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
-  const SIGN_UP = pathname === "/signup";
+  const MB = pathname === "/signup" || pathname.startsWith("/products/detail");
 
   return (
     <QueryProvider>
@@ -20,7 +20,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
       <div className="hidden xl:block">
         <WebHeader />
       </div>
-      <main className={`grow overflow-auto ${!SIGN_UP ? "mb-[93px]" : "mb-0"} xl:mb-0`}>
+      <main className={`grow overflow-auto ${!MB ? "mb-[93px]" : "mb-0"} xl:mb-0`}>
         <div>{children}</div>
         <Footer />
       </main>

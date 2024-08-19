@@ -8,6 +8,7 @@ import LoginBar from "../../../public/images/login_bar.png";
 import Kakao from "../../../public/logo/Logo_kakao.png";
 import WebLoginBg from "../../../public/images/web_login_bg.svg";
 import Link from "next/link";
+import swal from "sweetalert";
 import { createClient } from "../../../supabase/client";
 import { useRouter } from "next/navigation";
 

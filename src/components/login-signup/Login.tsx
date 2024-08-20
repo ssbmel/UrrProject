@@ -6,7 +6,7 @@ import Image from "next/image";
 import logo from "../../../public/logo/URR_logo.png";
 import LoginBar from "../../../public/images/login_bar.png";
 import Kakao from "../../../public/logo/Logo_kakao.png";
-import WebLoginBg from "../../../public/images/web_login_bg.svg";
+import WebLoginBg from "../../../public/images/web_login_bg.jpg";
 import Link from "next/link";
 import swal from "sweetalert";
 import { createClient } from "../../../supabase/client";
@@ -59,9 +59,9 @@ const Login = () => {
 
   return (
     <>
-      <div className="xl:w-full xl:flex">
-        <div className="hidden xl:block xl:bg-cover xl:bg-center">
-          <WebLoginBg className="xl:max-w-full xl:max-h-full" />
+      <div className="xl:min-w-[1280px] w-[100%] xl:flex">
+        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)",minHeight:700 }}>
+          <Image src={WebLoginBg} fill className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover" alt=""/>
         </div>
 
         <div className="flex flex-col h-[700px] w-[375px] mx-auto xl:justify-center p-4">

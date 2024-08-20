@@ -33,7 +33,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
   const sortedInfUser = infUser.sort((a, b) => (subscriptionCounts[b.id] || 0) - (subscriptionCounts[a.id] || 0));
 
   return (
-    <div className="mx-auto h-[433px] px-4 pt-6 bg-[url('../../public/bgImg/influencerImg.png')] xl:bg-[url('../../public/bgImg/bestInf.png')] xl:bg-center bg-cover bg-no-repeat flex flex-col xl:flex-row w-full xl:w-[1133px] xl:h-[572px] xl:justify-between">
+    <div className="mx-auto h-[433px] px-4 pt-6 bg-[url('../../public/bgImg/influencerImg.png')] xl:bg-[url('../../public/bgImg/bestInf.png')] xl:bg-center bg-cover bg-no-repeat flex flex-col xl:flex-row w-full xl:w-[1133px] xl:h-[572px] xl:justify-between xl:mb-[30px]">
       <div className="xl:w-[40%] flex flex-col justify-center xl:mb-auto xl:mt-[68px] xl:mr-[185px]">
         <div className="xl:justify-start xl:ml-[100px]">
           <h1 className="font-bold mt-[4px] text-xl text-white xl:text-[28px] whitespace-nowrap xl:text-[#020303] xl:mb-2">

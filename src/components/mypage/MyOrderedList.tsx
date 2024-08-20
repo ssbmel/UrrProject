@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Error from "../common/error/Error";
-import { useUserData } from "@/hooks/useUserData";
 import { Tables } from "../../../types/supabase";
 import MyOrderCompo from "./MyOrderCompo";
-import { getOrderList } from "@/services/order/order.service";
+import { getRangeOrderList } from "@/services/order/order.service";
 import More from "./More";
+import { PublicUser } from "../../../types/auth.type";
 
 export type orderType = Tables<"order"> | null;
 export type productListType = {
@@ -17,30 +17,33 @@ export type productListType = {
   quantity: number;
 };
 
-const MyOrderedList = () => {
+const MyOrderedList = ({ user }: { user: PublicUser }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [items, setItems] = useState<orderType[] | null>(null);
-  const { data: user } = useUserData();
 
   useEffect(() => {
     const fetchOrderList = async () => {
-      const data = await getOrderList(user.id);
+      const data = await getRangeOrderList(user?.id);
       setItems(data);
     };
 
     if (user?.id) {
       fetchOrderList();
     }
-  }, [user]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-[20px] p-[20px] xl:gap-[37px]">
       <div className="flex justify-between items-center">
         <h2 className="text-[20px] font-bold">주문 내역</h2>
-        <button onClick={() => setIsClicked(true)} className="transition-colors hover:text-primarynormal">
+        <button
+          onClick={() => setIsClicked(true)}
+          disabled={!(items && items.length > 0)}
+          className="transition-colors text-gray-400 hover:text-primarynormal disabled:hidden"
+        >
           더보기
         </button>
-        <More isClicked={isClicked} setIsClicked={setIsClicked} />
+        <More isClicked={isClicked} setIsClicked={setIsClicked} id={user.id} title="주문 내역" />
       </div>
       <div>
         {items && items.length > 0 ? (

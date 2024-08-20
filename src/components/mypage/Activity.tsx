@@ -3,16 +3,20 @@ import MyReviewList from "./MyReviewList";
 import { useUserData } from "@/hooks/useUserData";
 import InfSaleList from "./InfSaleList";
 import Link from "next/link";
+import LoadingUrr from "../common/loading/LoadingUrr";
 
 const Activity = () => {
-  const { data: user } = useUserData();
+  const data = useUserData();
+
+  const { data: user } = data;
+
+  if (data.isPending) {
+    return <LoadingUrr />;
+  }
 
   return (
     <div className="flex flex-col gap-[20px]">
-      <div className="flex flex-col gap-[20px] p-[20px] xl:gap-[37px]">
-        <h2 className="text-[20px] font-bold">리뷰 관리</h2>
-        <MyReviewList />
-      </div>
+      <MyReviewList user={user} />
       {user?.role === "인플루언서" && user?.approve === true ? (
         <>
           <hr className="border-4 border-[#F4F4F4]" />

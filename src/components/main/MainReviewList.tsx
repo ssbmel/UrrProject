@@ -10,9 +10,9 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./style.css";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { createClient } from "../../../supabase/client";
 import { Review } from "../../../types/common";
 import "swiper/css/navigation";
+import { createClient } from "../../../supabase/client";
 
 function MainReviewList() {
   const [reviewData, setReviewData] = useState<Review[]>([]);
@@ -28,7 +28,9 @@ function MainReviewList() {
   };
 
   useEffect(() => {
-    getReviewData();
+    if (reviewData) {
+      getReviewData();
+    }
   }, []);
 
   const formatDate = (dateString: string) => {

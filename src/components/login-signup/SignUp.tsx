@@ -150,12 +150,19 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
   return (
     <>
       <div className="xl:min-w-[1280px] w-[100%] xl:flex">
-        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)",minHeight:700 }}>
-          <Image src={WebSignupBg2} fill className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover" alt=""/>
+        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)", minHeight: 700 }}>
+          <Image
+            src={WebSignupBg2}
+            fill
+            sizes="50%"
+            priority
+            className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover"
+            alt=""
+          />
         </div>
 
-        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[700px] w-[375px] mx-auto whitespace-nowrap pt-[58px] p-4">
-          <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
+        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[700px] w-[375px] mx-auto whitespace-nowrap pt-[40px] p-4">
+          <h2 className="hidden xl:block text-[24px] font-bold text-center">회원가입</h2>
           <form className="flex flex-col gap-9">
             <div>
               <label className="flex flex-col">
@@ -164,7 +171,6 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
                 <p className={stLabel}>{nicknameConfirmMessage}</p>
               </label>
             </div>
-            {/* <p className="bg-[#F4F4F4] h-2"></p> 보류 */}
 
             <label className="flex flex-col">
               이메일

@@ -60,8 +60,15 @@ const Login = () => {
   return (
     <>
       <div className="xl:min-w-[1280px] w-[100%] xl:flex">
-        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)",minHeight:700 }}>
-          <Image src={WebLoginBg} fill className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover" alt=""/>
+        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)", minHeight: 700 }}>
+          <Image
+            src={WebLoginBg}
+            fill
+            sizes="50%"
+            priority
+            className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover"
+            alt=""
+          />
         </div>
 
         <div className="flex flex-col h-[700px] w-[375px] mx-auto xl:justify-center p-4">
@@ -84,7 +91,7 @@ const Login = () => {
           <div className="flex flex-col items-center h-[25%]">
             <div className="flex justify-center bg-[#FEDF32] w-full h-[50px] rounded-md mb-8 text-lg cursor-pointer">
               <div className="h-[20px] w-[20px] relative flex items-center my-auto mr-1">
-                <Image src={Kakao} alt="카카오톡 로고" layout="fill" objectFit="cover" />
+                <Image src={Kakao} alt="카카오톡 로고" fill sizes="134px" />
               </div>
               <button onClick={kakaoLoginHandler}>카카오 로그인</button>
             </div>

@@ -6,7 +6,7 @@ import SignupImg from "../../../public/images/signup_img.svg";
 export default function SuccessfulSignUp() {
   return (
     <>
-      <div className="fixed xl:static top-0 z-50 w-[100%] bg-[white] h-[783px]p-4 box-border">
+      <div className="fixed xl:static top-0 z-50 w-[100%] bg-[white] h-[783px] p-4 box-border">
         <div className="flex flex-col justify-center items-center h-[calc(100vh-50px)] xl:h-[calc(100vh-278px)] ">
           <SignupImg />
           <h3 className="text-lg mb-2 mt-8">우르르 회원가입을 환영합니다!</h3>

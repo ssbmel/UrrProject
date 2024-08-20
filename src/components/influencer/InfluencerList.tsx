@@ -22,6 +22,9 @@ function InfluencerList() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  console.log(user);
+  console.log(subscribeIds);
+
   const getSubscribeData = async () => {
     try {
       if (!user) return;
@@ -31,7 +34,8 @@ function InfluencerList() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setSubscribeIds(data.map((d: InfSubscribe) => d.infuser_id));
+      const otherData = data.map((d: InfSubscribe) => d.infuser_id);
+      setSubscribeIds(otherData.filter((d: InfSubscribe) => d !== user.id));
     } catch (error) {
       console.log("Failed to fetch subscription data:", error);
     }
@@ -56,18 +60,18 @@ function InfluencerList() {
   const subscribedHandler = (e: MouseEvent<HTMLButtonElement>, inf: User) => {
     e.stopPropagation();
     if (!user) {
-        swal("로그인을 먼저 진행해주세요.").then(() => {
-            router.push("/login");
-        });
-        return;
+      swal("로그인을 먼저 진행해주세요.").then(() => {
+        router.push("/login");
+      });
+      return;
     }
     const newInfUser: InfSubscribe = {
-        user_id: user.id,
-        infuser_id: inf.id
+      user_id: user.id,
+      infuser_id: inf.id
     };
     swal(`${inf.nickname}님을 구독하였습니다.`);
     subscribedMutation(newInfUser);
-};
+  };
 
   const subscribedInfUser = async (data: InfSubscribe) => {
     const response = await fetch("/api/subscribe", {
@@ -87,10 +91,10 @@ function InfluencerList() {
     if (!user) return;
 
     cancelSubscribedMutation({
-        infuser_id: inf.id,
-        user_id: user.id
+      infuser_id: inf.id,
+      user_id: user.id
     });
-};
+  };
 
   const cancelSubscribedInfUser = async (data: InfSubscribe) => {
     if (!data.user_id || !data.infuser_id) return;
@@ -114,60 +118,56 @@ function InfluencerList() {
 
   return (
     <div className="w-full xl:w-[1200px] bg-[#F4F4F4] mx-auto">
-      <InfGuidModal/>
+      <InfGuidModal />
       <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {!user ? (
-          <div className="flex h-[150px]">
+          <div className="flex h-[200px]">
             <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px] mx-auto mt-[80px]">
               로그인이 정보가 없습니다.
             </p>
           </div>
+        ) : subscribeIds.length === 0 ? (
+          <div className="flex flex-col items-center mx-auto">
+            <div className="relative w-[150px] h-[100px] my-3 xl:my-[26px]">
+              <Image src={emptyImg} alt="empty" fill sizes="100px xl:w-[150px]" className="mx-auto my-5 object-cover" />
+            </div>
+            <p className="text-[#4C4F52] text-[16px] my-6 xl:text-[18px]">현재 구독중인 인플루언서가 없습니다.</p>
+          </div>
         ) : (
-          subscribeIds.length === 0 ? (
-            <div className="flex flex-col items-center mx-auto">
-              <div className="relative w-[150px] h-[100px] my-3 xl:mt-[48px] xl:mb-6">
-                <Image src={emptyImg} alt="empty" fill sizes="100px xl:w-[150px]" className="mx-auto my-5 object-cover" />
-              </div>
-              <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px]">
-                현재 구독중인 인플루언서가 없습니다.
-              </p>
-            </div>
-          ) : (
-            <div className="w-auto flex overflow-x-auto mt-5 gap-3 scrollbar-hide p-2">
-              {infUser
-                ?.filter((inf) => subscribeIds.includes(inf.id))
-                .map((inf) => (
-                  <div className="grid text-center" key={inf.id}>
-                    <div className="relative w-[90px] h-[90px] mb-2 xl:w-[140px] xl:h-[140px]">
-                      <Link href={`influencer/profile/${inf.id}`}>
-                        <div className="relative w-[90px] h-[90px] xl:w-[140px] xl:h-[140px]">
-                          <Image
-                            src={inf.profile_url || defaultImg}
-                            alt="img"
-                            fill
-                            sizes="90px xl:w-[140px]"
-                            className="rounded-md object-cover gradient-border"
-                          />
-                        </div>
-                      </Link>
-                      <div className="absolute bottom-0.5 right-1">
-                        {subscribeIds.includes(inf.id) ? (
-                          <button onClick={() => cancelSubscribedHandler(inf)}>
-                            <FullHeartIcon />
-                          </button>
-                        ) : (
-                          <button onClick={(e) => subscribedHandler(e, inf)}>
-                            <EmptyHeartIcon />
-                          </button>
-                        )}
+          <div className="w-auto flex overflow-x-auto mt-5 gap-3 scrollbar-hide p-2">
+            {infUser
+              ?.filter((inf) => subscribeIds.includes(inf.id))
+              .map((inf) => (
+                <div className="grid text-center" key={inf.id}>
+                  <div className="relative w-[90px] h-[90px] mb-2 xl:w-[140px] xl:h-[140px] xl:mt-[10px]">
+                    <Link href={`influencer/profile/${inf.id}`}>
+                      <div className="relative w-[90px] h-[90px] xl:w-[140px] xl:h-[140px]">
+                        <Image
+                          src={inf.profile_url || defaultImg}
+                          alt="img"
+                          fill
+                          sizes="90px xl:w-[140px]"
+                          className="rounded-md object-cover gradient-border"
+                        />
                       </div>
+                    </Link>
+                    <div className="absolute bottom-0.5 right-1">
+                      {subscribeIds.includes(inf.id) ? (
+                        <button onClick={() => cancelSubscribedHandler(inf)}>
+                          <FullHeartIcon />
+                        </button>
+                      ) : (
+                        <button onClick={(e) => subscribedHandler(e, inf)}>
+                          <EmptyHeartIcon />
+                        </button>
+                      )}
                     </div>
-                    <p className="text-[14px] mb-2 xl:text-[16px]">{inf.nickname}</p>
                   </div>
-                ))}
-            </div>
-          )
+                  <p className="text-[14px] mb-2 xl:text-[16px]">{inf.nickname}</p>
+                </div>
+              ))}
+          </div>
         )}
       </div>
       <div className="w-full h-[70%] p-4 my-2 bg-[#FFFFFE]">
@@ -191,15 +191,16 @@ function InfluencerList() {
                   </div>
                 </Link>
                 <div className="absolute bottom-0.5 right-2">
-                  {subscribeIds.includes(inf.id) ? (
-                    <button onClick={() => cancelSubscribedHandler(inf)}>
-                      <FullHeartIcon />
-                    </button>
-                  ) : (
-                    <button onClick={(e) => subscribedHandler(e, inf)}>
-                      <EmptyHeartIcon />
-                    </button>
-                  )}
+                  {inf.id !== user?.id &&
+                    (subscribeIds.includes(inf.id) ? (
+                      <button onClick={() => cancelSubscribedHandler(inf)}>
+                        <FullHeartIcon />
+                      </button>
+                    ) : (
+                      <button onClick={(e) => subscribedHandler(e, inf)}>
+                        <EmptyHeartIcon />
+                      </button>
+                    ))}
                 </div>
               </div>
               <p className="text-[#4C4F52] mb-6 xl:text-[20px] whitespace-nowrap">{inf.nickname}</p>

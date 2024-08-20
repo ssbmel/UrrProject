@@ -9,7 +9,7 @@ import DetailImg from "./DetailImg";
 import share from "../../../../public/icon/share.png";
 import CountModal from "./CountModal";
 import { useAddrStore } from "@/zustand/addrStore";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import DetailInflu from "./DetailInflu";
 import LoadingUrr from "@/components/common/loading/LoadingUrr";
 import useGetProductReview from "@/hooks/useGetProductReview";
@@ -32,6 +32,7 @@ export default function Detail({ params }: detailProps) {
   const [quantity, setQuantity] = useState<number>(1);
   const { setProductList } = useAddrStore();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const cost = parseFloat(data?.cost);
   const price = parseFloat(data?.price);
@@ -58,6 +59,17 @@ export default function Detail({ params }: detailProps) {
       setLoading(false);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab === "review") {
+      setCompoState("상품후기");
+      const element = document.getElementById("reviewList");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [searchParams]);
 
   const getClassNames = (state: any) => {
     return `w-[120px] z-20 xl:w-[182px] text-[16px] xl:text-[20px] px-3 py-4 flex justify-center items-center  border-b-4 ${

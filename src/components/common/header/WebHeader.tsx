@@ -17,6 +17,7 @@ export function WebHeader() {
   const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isHoveringStore, setIsHoveringStore] = useState<boolean>(false);
 
   const { isChatModalOpen, setIsChatModalOpen } = useAlertchatStore();
 
@@ -27,6 +28,7 @@ export function WebHeader() {
       setIsChatModalOpen(true);
     }
   };
+
   useEffect(() => {
     setIsChatModalOpen(false);
   }, [pathname]);
@@ -39,7 +41,42 @@ export function WebHeader() {
             <Image src={Logo} alt="Urr logo" width={121} height={66} className="mr-[71px] priority" />
           </Link>
           <Link href={"/products/list"}>
-            <li className="text-xl mr-10 cursor-pointer hover:text-primarystrong">Store</li>
+            <li className="text-xl mr-10 cursor-pointer  relative" onMouseEnter={() => setIsHoveringStore(true)}>
+              <p className="hover:text-primarystrong">Store</p>
+              {isHoveringStore && (
+                <div
+                  className="fixed left-0 top-[108px] w-full h-[344px] hover: bg-white bg-opacity-90 z-40 "
+                  onMouseLeave={() => setIsHoveringStore(false)}
+                >
+                  <div className="ml-[286px] flex flex-col text-[18px] gap-[10px]">
+                    <Link href="/products/list?category=뷰티">
+                      <p className="hover:text-primarystrong">뷰티</p>
+                    </Link>
+                    <Link href="/products/list?category=패션/잡화">
+                      <p className="hover:text-primarystrong">패션잡화</p>
+                    </Link>
+                    <Link href="/products/list?category=식품">
+                      <p className="hover:text-primarystrong">식품</p>
+                    </Link>
+                    <Link href="/products/list?category=헬스건강">
+                      <p className="hover:text-primarystrong">헬스/건강</p>
+                    </Link>
+                    <Link href="/products/list?category=반려동물용품">
+                      <p className="hover:text-primarystrong">반려동물용품</p>
+                    </Link>
+                    <Link href="/products/list?category=생활용품">
+                      <p className="hover:text-primarystrong">생활용품</p>
+                    </Link>
+                    <Link href="/products/list?category=가전/디지털">
+                      <p className="hover:text-primarystrong">가전/디지털</p>
+                    </Link>
+                    <Link href="/products/list?category=취미/도서">
+                      <p className="hover:text-primarystrong">취미/도서</p>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </li>
           </Link>
           <Link href={"/influencer"}>
             <li className="text-xl cursor-pointer hover:text-primarystrong">Influencers</li>

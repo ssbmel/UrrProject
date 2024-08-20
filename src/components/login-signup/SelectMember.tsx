@@ -1,8 +1,9 @@
 "use client";
 
 import { StepType } from "@/app/(provider)/(root)/signup/page";
-import WebSignupBg1 from "../../../public/images/web_signup_bg1.svg";
+import WebSignupBg1 from "../../../public/images/web_signup_bg1.jpg";
 import { Dispatch, RefObject, SetStateAction, useEffect, useState } from "react";
+import Image from "next/image";
 
 interface SelectMemberProps {
   setStep: Dispatch<SetStateAction<StepType>>;
@@ -46,12 +47,19 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
 
   return (
     <>
-      <div className="xl:flex xl:flex-row">
-        <div className="hidden xl:flex xl:bg-cover xl:bg-center ">
-          <WebSignupBg1 className="xl:max-w-full xl:max-h-full" />
+      <div className="xl:min-w-[1280px] w-[100%] xl:flex">
+        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)", minHeight: 700 }}>
+          <Image
+            src={WebSignupBg1}
+            fill
+            sizes="50%"
+            priority
+            className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover"
+            alt=""
+          />
         </div>
 
-        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[783px] w-[375px] mx-auto p-4">
+        <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[700px] w-[375px] mx-auto p-4">
           <div>
             <h2 className="hidden xl:block text-[24px] font-bold text-center mb-[32px]">회원가입</h2>
             <div className="flex flex-col xl:items-center justify-center h-24">

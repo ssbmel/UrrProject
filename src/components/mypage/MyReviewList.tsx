@@ -72,21 +72,21 @@ const MyReviewList = () => {
             {reviewData.map((item) => (
               <li
                 key={item.id}
-                className="pb-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:pb-[36px] last:border-none"
+                className="py-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:py-[36px] last:border-none"
               >
                 <div className="flex justify-between items-center w-full">
                   <Link
                     href={`/products/detail/${item.product_id}`}
                     className="flex items-center w-[calc(100%-58px)] gap-[12px]"
                   >
-                    <div className="relative w-[68px] h-[68px] rounded-[6px]">
+                    <div className="relative w-[68px] h-[68px] xl:w-[98px] xl:h-[98px] rounded-[6px]">
                       <Image
                         src={
                           (Array.isArray(item.review_images) ? item.review_images[0] : item.review_images) || defaultImg
                         }
                         alt="product_review_image"
                         fill
-                        sizes="68px"
+                        sizes="68px xl:w-[98px]"
                         priority
                         className="bg-slate-300 rounded-[6px] object-cover"
                       />

@@ -73,7 +73,7 @@ const MyReviewList = ({ user }: { user: PublicUser }) => {
             {reviewData.map((item) => (
               <li
                 key={item.id}
-                className="pb-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:pb-[36px] last:border-none"
+                className="py-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:py-[36px] last:border-none"
               >
                 <div className="flex justify-between items-center w-full">
                   <Link

@@ -192,22 +192,19 @@ const WrittenMyReview = () => {
 
   const content = (
     <div className="xl:p-3">
-      <h1 className="hidden xl:block text-[20px] font-bold mt-[12px]">후기 작성</h1>
-      <div
-        key={orderData?.id}
-        className={`w-full h-[${isDesktop ? "150px" : "100px"}] p-4 flex gap-3 ${isDesktop ? "mt-[12px]" : ""}`}
-      >
-        <div className={`w-[70px] xl:w-[124px] h-[${isDesktop ? "124px" : "70px"}] rounded-md relative`}>
+      <h1 className="hidden xl:block text-[18px] font-bold">후기 작성</h1>
+      <div key={orderData?.id} className={`w-full h-[${isDesktop ? "100px" : "100px"}] py-3 flex gap-3 ${isDesktop ? "mt-[8px]" : ""} ${isDesktop ? "mb-[8px]" : ""}`}>
+        <div className={`w-[80px] xl:w-[80px] h-[${isDesktop ? "80px" : "80px"}] rounded-md relative`}>
           <Image
             src={orderData?.imgUrl || defaultImg}
             alt="상품이미지"
             fill
-            sizes="70px xl:w-[124px]"
+            sizes="80px xl:w-[80px]"
             className="object-cover rounded-md"
           />
         </div>
         <div className="grid">
-          <p className={isDesktop ? "text-[18px]" : ""}>
+          <p className={isDesktop ? "text-[16px]" : ""}>
             {orderData && [orderData?.name.split("] ")[0] + "]", <br key="1" />, orderData?.name.split("] ")[1]]}
           </p>
           <p className={`text-[14px] text-[#989C9F] ${isDesktop ? "mt-auto" : ""}`}>
@@ -215,7 +212,6 @@ const WrittenMyReview = () => {
           </p>
         </div>
       </div>
-
       <hr />
       <div className="w-full py-6">
         <p className="text-center text-xl text-[#1B1C1D] font-bold">상품은 어떠셨나요?</p>
@@ -223,18 +219,17 @@ const WrittenMyReview = () => {
         <p className="text-center text-[#4C4F52] xl:text-[18px]">상품에 대한 전체적인 평점을 알려주세요</p>
       </div>
       <form className="w-full" onSubmit={onSubmit}>
-        <div className={`bg-[#E1EEFE] ${isDesktop ? "py-5 px-6" : "py-3 px-4"} rounded-[12px] mb-8 xl:mb-10`}>
-          <p className={`font-bold mb-3 ${isDesktop ? "text-[20px]" : ""}`}>후기는 이렇게 작성해보세요!</p>
+        <div className={`bg-[#E1EEFE] ${isDesktop ? "py-4 px-5" : "py-3 px-4"} rounded-[12px] mb-6 xl:mb-6`}>
+          <p className={`font-bold mb-3 ${isDesktop ? "text-[18px]" : "text-[16px]"}`}>후기는 이렇게 작성해보세요!</p>
           <p className={isDesktop ? "text-[16px]" : "text-[14px]"}>
             제품에 대한 <span className="text-[#0051B2] font-semibold">사용감, 맛, 향, 첫인상</span> 등을 설명해주세요
             <br />
-            <span className="font-semibold">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더
-            높일 수 있습니다
+            <span className="font-semibold text-[16px]">사진</span>을 통해 상품에 대한 감상을 같이 작성하면, 후기에 대한 신뢰도를 더 높일 수 있습니다
           </p>
         </div>
         <textarea
           name="review-text"
-          className="resize-none border w-full h-[300px] rounded-md p-3"
+          className="resize-none border w-full h-[150px] rounded-md p-3 text-[16px]"
           placeholder="상품에 맞는 후기를 작성해주세요 (최소10자) 예) 식품-맛, 포장 상태 등"
           ref={contentRef}
         ></textarea>
@@ -244,12 +239,10 @@ const WrittenMyReview = () => {
           uploadedReviewImages={uploadedReviewImages}
         />
         {isDesktop ? (
-          <div className="flex justify-center gap-5 my-4">
+          <div className="flex justify-center gap-5 my-2">
             <Link href={"/mypage"}>
-              <button
-                className="w-[174px] h-[52px] border border-[#0068E5] bg-[#FFFFFE] text-[#0068E5] rounded-[8px]
-                 hover:bg-[#F2F2F2] hover:text-[#004BB8] active:bg-[#F2F2F2] active:text-[#003E91] transition-all duration-200"
-              >
+              <button className="w-[174px] h-[52px] border border-[#0068E5] bg-[#FFFFFE] text-[#0068E5] rounded-[8px]
+                 hover:bg-[#F2F2F2] hover:text-[#004BB8] active:bg-[#F2F2F2] active:text-[#003E91] transition-all duration-200 text-[18px]">
                 돌아가기
               </button>
             </Link>
@@ -260,7 +253,7 @@ const WrittenMyReview = () => {
             등록하기
           </button>
         )}
-      </form>
+      </form> 
     </div>
   );
 
@@ -271,7 +264,7 @@ const WrittenMyReview = () => {
       ) : (
         <div className="xl:h-[calc(100vh-278px)] ">
           <div className="fixed inset-0 z-50 flex items-center justify-center w-full bg-black bg-opacity-50">
-            <div className="relative p-4 w-[726px] h-[1243px] bg-white rounded-lg shadow-lg">{content}</div>
+            <div className="relative p-4 w-[650px] h-auto bg-white rounded-lg shadow-lg overflow-y-auto">{content}</div>
           </div>
         </div>
       )}

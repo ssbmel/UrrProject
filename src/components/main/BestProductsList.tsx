@@ -23,7 +23,7 @@ function BestProductsList({ productsList, ratingCount }: { productsList: Product
     .slice(0, 10);
 
   return (
-    <div className="w-full px-4 py-5">
+    <div className="w-full px-4 py-5 xl:mb-[30px]">
       <div className="flex items-center">
         <h2 className="font-bold text-xl mb-5 xl:text-[22px] xl:my-8">인기상품</h2>
         <Link className="ml-auto text-xs flex-end flex" href={"/products/list"}>
@@ -34,7 +34,7 @@ function BestProductsList({ productsList, ratingCount }: { productsList: Product
         </Link>
       </div>
       <div className="w-full overflow-x-auto flex scrollbar xl:mb-10">
-        <div className="grid grid-flow-col gap-[18px] xl:gap-[48px] min-w-max">
+        <div className="flex gap-[18px] xl:gap-[48px] w-max">
           {sortedProducts.map((list) => {
             const cost = list.cost;
             const price = list.price;

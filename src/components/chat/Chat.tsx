@@ -5,8 +5,10 @@ import { createClient } from "../../../supabase/client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import poly from "../../../public/images/chatpoly.png";
-import PlusIcon from "../../../public/icon/pluscontent.svg";
+import XIcon from "../../../public/icon/XIcon_Big.svg";
 import SendIcon from "../../../public/icon/sendmessage.svg";
+import swal from "sweetalert";
+import LoadingUrr from "../common/loading/LoadingUrr";
 
 interface detailProps {
   params: { id: string };
@@ -24,6 +26,7 @@ export default function Chat({ params }: detailProps) {
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
   const [message, setMessage] = useState<string | number | readonly string[] | undefined>("");
+  const [channelName, setChannelName] = useState<string>("");
   const [preMessages, setPreMessages] = useState<
     {
       message_id: number;
@@ -52,6 +55,9 @@ export default function Chat({ params }: detailProps) {
     }[]
   >([]);
   const [firstLoading, setFirstLoading] = useState<boolean>(false);
+  const [isMine, setIsMine] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
 
   const handleResizeHeight = () => {
     if (textarea.current && textareadiv.current) {
@@ -86,6 +92,7 @@ export default function Chat({ params }: detailProps) {
     const influ_id = await checkChannelOwner();
     if (influ_id === user_id) {
       //채널주
+      setIsMine(true);
       const last_time = await checkMyChannelLastTime();
       const { data, error } = await supabase
         .from("chat_messages")
@@ -212,19 +219,21 @@ export default function Chat({ params }: detailProps) {
       swal("채팅 보내기 실패"); //alert로 바꿀 것
       console.log(error);
     }
-    resizeHeight();
+    if (isMobile)
+      resizeHeight();
   };
 
   const checkChannelOwner = async (): Promise<String | null> => {
     const { data, error } = await supabase
       .from("chat_channels")
-      .select("owner_id")
+      .select("owner_id, channel_name")
       .eq("channel_id", channel_id)
       .single();
     if (error) {
       console.log(error);
       return null;
     } else {
+      setChannelName(data.channel_name);
       return data.owner_id;
     }
   };
@@ -363,6 +372,10 @@ export default function Chat({ params }: detailProps) {
     }
   };
 
+  useEffect(()=>{
+    setIsMobile(/Mobi/i.test(window.navigator.userAgent));
+  },[])
+
   useEffect(() => {
     if (userdata != undefined && channel_id != null) {
       getPreChatMessages();
@@ -395,180 +408,396 @@ export default function Chat({ params }: detailProps) {
   };
 
   return (
-    <div className="h-full w-[100vw] overflow-hidden flex flex-col xl:w-[375px] xl:mx-auto ">
-      <div
-        key={channel_id}
-        ref={scrollRef}
-        className="relative overflow-y-scroll h-[calc(100vh-124px)] bg-[#E1EEFE] grow"
-      >
-        <div ref={scrollPreRef}>
-          {preMessages?.map((preMessage) =>
-            preMessage.isMine ? (
-              <div key={preMessage.message_id} className="p-2">
-                <div className="flex flex-row-reverse relative">
-                  <Image
-                    src={poly}
-                    width={12.87}
-                    height={8}
-                    quality={100}
-                    className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
-                    alt="chatpoly"
-                  ></Image>
-                  <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
-                    {preMessage.content.message}
-                  </label>
-                  <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
-                    {preMessage.time.slice(11, 16)}
-                  </label>
-                </div>
-              </div>
-            ) : (
-              <div key={preMessage.message_id} className="p-2">
-                <div className="ml-3 mb-1">
-                  <label className="font-normal">{preMessage.nickname}</label>
-                </div>
-                <div className="flex flex-row">
-                  <Image
-                    src={poly}
-                    width={12.87}
-                    height={8}
-                    quality={100}
-                    className="absolute z-10 mt-[8px] ml-1"
-                    alt="chatpoly"
-                  ></Image>
-                  <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
-                    {preMessage.content.message}
-                  </label>
-                  <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
-                    {preMessage.time.slice(11, 16)}
-                  </label>
-                </div>
-              </div>
-            )
-          )}
+    <>
+      {!userdata || !preMessages || !newMessages || !receiveMessages ?
+        <div className="w-[100vw]">
+          <LoadingUrr />
         </div>
-        {newMessages.length !== 0 ? (
-          <div className="flex flex-row w-full h-[40px] items-center my-[30px]">
-            <div className="h-[2px] ml-[15px] w-full bg-[#B2B5B8]"></div>
-            <div className="mx-[10px] text-[#989C9F] flex-none w-[150px] h-[24px] font-normal text-[16px] text-center">
-              여기까지 읽었습니다
-            </div>
-            <div className="h-[2px] mr-[15px] w-full bg-[#B2B5B8]"></div>
-          </div>
-        ) : (
-          <></>
-        )}
-
-        {newMessages?.map((newMessage) =>
-          newMessage.isMine ? (
-            <div key={newMessage.message_id} className="p-2">
-              <div className="flex flex-row-reverse">
-                <Image
-                  src={poly}
-                  width={12.87}
-                  height={8}
-                  quality={100}
-                  className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
-                  alt="chatpoly"
-                ></Image>
-                <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
-                  {newMessage.content.message}
-                </label>
-                <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
-                  {newMessage.time.slice(11, 16)}
-                </label>
+        :
+        <div className="h-full w-[100vw] overflow-hidden flex flex-col">
+          {!isMobile &&
+            <div className="z-50 relative h-[68px] text-center justify-center shadow-[0px_1px_3px_-1px_rgba(0,0,0,0.3)]">
+              <div className="flex flex-row w-fit h-[26px] mt-[23px] mb-[19px] mx-auto justify-center content-center gap-1 items-center">
+                <div
+                  className={
+                    isMine
+                      ? "rounded-[16px] w-[43px] h-[22px] bg-gradient-to-br from-[#0068e5] to-[#9aec5b] text-center items-center"
+                      : "hidden"
+                  }
+                >
+                  <label className="rounded-[16px] text-white text-center text-[12px] font-medium align-[3px]">
+                    mine
+                  </label>
+                </div>
+                <label className="text-[#020303] font-semibold text-[20px]">{channelName}</label>
+              </div>
+              <div className="absolute top-4 bottom-3 right-3">
+                <XIcon />
               </div>
             </div>
-          ) : (
-            <div key={newMessage.message_id} className="p-2">
-              <div className="ml-3 mb-1">
-                <label className="font-normal">{newMessage.nickname}</label>
-              </div>
-              <div className="flex flex-row">
-                <Image
-                  src={poly}
-                  width={12.87}
-                  height={8}
-                  quality={100}
-                  className="absolute z-10 mt-[8px] ml-1"
-                  alt="chatpoly"
-                ></Image>
-                <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
-                  {newMessage.content.message}
-                </label>
-                <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
-                  {newMessage.time.slice(11, 16)}
-                </label>
-              </div>
-            </div>
-          )
-        )}
-
-        {receiveMessages?.map((newMessage) =>
-          newMessage.isMine ? (
-            <div key={newMessage.message_id} className="p-2">
-              <div className="flex flex-row-reverse">
-                <Image
-                  src={poly}
-                  width={12.87}
-                  height={8}
-                  quality={100}
-                  className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
-                  alt="chatpoly"
-                ></Image>
-                <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
-                  {newMessage.content.message}
-                </label>
-                <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
-                  {newMessage.time.slice(11, 16)}
-                </label>
-              </div>
-            </div>
-          ) : (
-            <div key={newMessage.message_id} className="p-2">
-              <div className="ml-3 mb-1">
-                <label className="font-normal">{newMessage.nickname}</label>
-              </div>
-              <div className="flex flex-row">
-                <Image
-                  src={poly}
-                  width={12.87}
-                  height={8}
-                  quality={100}
-                  className="absolute z-10 mt-[8px] ml-1"
-                  alt="chatpoly"
-                ></Image>
-                <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
-                  {newMessage.content.message}
-                </label>
-                <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
-                  {newMessage.time.slice(11, 16)}
-                </label>
-              </div>
-            </div>
-          )
-        )}
-      </div>
-      <div ref={textareadiv} className="flex flex-row w-full h-[40px] bottom-0 shrink-0 mt-2 mb-6 px-4">
-        <textarea
-          onKeyDown={pressEnter}
-          className="xl:scrollbar-hide resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
-          value={message}
-          onChange={handleTextarea}
-          ref={textarea}
-          onInput={handleResizeHeight}
-        ></textarea>
-        <SendIcon
-          onClick={
-            message != ""
-              ? () => {
-                  sendChatMessage();
-                  setMessage("");
-                }
-              : () => {}
           }
-        ></SendIcon>
-      </div>
-    </div>
+          {!isMobile ?
+            <div
+              key={channel_id}
+              ref={scrollRef}
+              className="relative overflow-y-scroll h-[calc(100vh-244px)] bg-[#E1EEFE] grow"
+            >
+              <div ref={scrollPreRef}>
+                {preMessages?.map((preMessage) =>
+                  preMessage.isMine ? (
+                    <div key={preMessage.message_id} className="p-2">
+                      <div className="flex flex-row-reverse">
+                        <Image
+                          src={poly}
+                          width={12.87}
+                          height={8}
+                          quality={100}
+                          className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
+                          alt="chatpoly"
+                        ></Image>
+                        <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                          {preMessage.content.message}
+                        </label>
+                        <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
+                          {preMessage.time.slice(11, 16)}
+                        </label>
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={preMessage.message_id} className="p-2">
+                      <div className="ml-3 mb-1">
+                        <label className="font-normal">{preMessage.nickname}</label>
+                      </div>
+                      <div className="flex flex-row">
+                        <Image
+                          src={poly}
+                          width={12.87}
+                          height={8}
+                          quality={100}
+                          className="absolute z-10 mt-[8px] ml-1"
+                          alt="chatpoly"
+                        ></Image>
+                        <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                          {preMessage.content.message}
+                        </label>
+                        <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
+                          {preMessage.time.slice(11, 16)}
+                        </label>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+              {newMessages.length !== 0 ? (
+                <div className="flex flex-row w-full h-[40px] items-center my-[30px]">
+                  <div className="h-[2px] ml-[15px] w-full bg-[#B2B5B8]"></div>
+                  <div className="mx-[10px] text-[#989C9F] flex-none w-[150px] h-[24px] font-normal text-[16px] text-center">
+                    여기까지 읽었습니다
+                  </div>
+                  <div className="h-[2px] mr-[15px] w-full bg-[#B2B5B8]"></div>
+                </div>
+              ) : (
+                <></>
+              )}
+
+              {newMessages?.map((newMessage) =>
+                newMessage.isMine ? (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="flex flex-row-reverse">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="ml-3 mb-1">
+                      <label className="font-normal">{newMessage.nickname}</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute z-10 mt-[8px] ml-1"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                )
+              )}
+
+              {receiveMessages?.map((newMessage) =>
+                newMessage.isMine ? (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="flex flex-row-reverse">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="ml-3 mb-1">
+                      <label className="font-normal">{newMessage.nickname}</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute z-10 mt-[8px] ml-1"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+            :
+            <div
+              key={channel_id}
+              ref={scrollRef}
+              className="relative overflow-y-scroll h-[calc(100vh-124px)] bg-[#E1EEFE] grow"
+            >
+              <div ref={scrollPreRef}>
+                {preMessages?.map((preMessage) =>
+                  preMessage.isMine ? (
+                    <div key={preMessage.message_id} className="p-2">
+                      <div className="flex flex-row-reverse">
+                        <Image
+                          src={poly}
+                          width={12.87}
+                          height={8}
+                          quality={100}
+                          className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
+                          alt="chatpoly"
+                        ></Image>
+                        <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                          {preMessage.content.message}
+                        </label>
+                        <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
+                          {preMessage.time.slice(11, 16)}
+                        </label>
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={preMessage.message_id} className="p-2">
+                      <div className="ml-3 mb-1">
+                        <label className="font-normal">{preMessage.nickname}</label>
+                      </div>
+                      <div className="flex flex-row">
+                        <Image
+                          src={poly}
+                          width={12.87}
+                          height={8}
+                          quality={100}
+                          className="absolute z-10 mt-[8px] ml-1"
+                          alt="chatpoly"
+                        ></Image>
+                        <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                          {preMessage.content.message}
+                        </label>
+                        <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
+                          {preMessage.time.slice(11, 16)}
+                        </label>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+              {newMessages.length !== 0 ? (
+                <div className="flex flex-row w-full h-[40px] items-center my-[30px]">
+                  <div className="h-[2px] ml-[15px] w-full bg-[#B2B5B8]"></div>
+                  <div className="mx-[10px] text-[#989C9F] flex-none w-[150px] h-[24px] font-normal text-[16px] text-center">
+                    여기까지 읽었습니다
+                  </div>
+                  <div className="h-[2px] mr-[15px] w-full bg-[#B2B5B8]"></div>
+                </div>
+              ) : (
+                <></>
+              )}
+
+              {newMessages?.map((newMessage) =>
+                newMessage.isMine ? (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="flex flex-row-reverse">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="ml-3 mb-1">
+                      <label className="font-normal">{newMessage.nickname}</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute z-10 mt-[8px] ml-1"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                )
+              )}
+
+              {receiveMessages?.map((newMessage) =>
+                newMessage.isMine ? (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="flex flex-row-reverse">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute mr-1 z-10 mt-[8px] -scale-x-100"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 mr-[15px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto mr-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={newMessage.message_id} className="p-2">
+                    <div className="ml-3 mb-1">
+                      <label className="font-normal">{newMessage.nickname}</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <Image
+                        src={poly}
+                        width={12.87}
+                        height={8}
+                        quality={100}
+                        className="absolute z-10 mt-[8px] ml-1"
+                        alt="chatpoly"
+                      ></Image>
+                      <label className="z-0 chat text-[16px] font-light bg-white border-[1.5px] border-solid border-primaryheavy rounded p-2 ml-[14.9px] mb-2 max-w-[246px]">
+                        {newMessage.content.message}
+                      </label>
+                      <label className="text-[12px] font-normal mb-2 mt-auto ml-[4px] text-[#989C9F]">
+                        {newMessage.time.slice(11, 16)}
+                      </label>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          }
+          {!isMobile ?
+            <div ref={textareadiv} className="z-50 flex flex-col w-full h-[176px] shrink-0 bottom-0 shadow-[0px_-0.5px_3px_-1px_rgba(205,207,208,1)]">
+              <div className="h-[116px]">
+                <textarea
+                  onKeyDown={pressEnter}
+                  className="h-[96px] w-[376px] mt-3 mx-4 mb-2 resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 border border-[#EAECEC]"
+                  value={message}
+                  onChange={handleTextarea}
+                  ref={textarea}
+                ></textarea>
+              </div>
+              <div className="h-[60px] shadow-[0px_-0.5px_3px_-1px_rgba(205,207,208,1)]">
+                <button
+                  className={
+                    message != ""
+                      ? "border border-primarynormal rounded-s mt-2 ml-[332px] w-[60px] h-[32px] font-semibold text-[12px] text-primarystrong"
+                      : "border border-[#EAECEC] rounded-s mt-2 ml-[332px] w-[60px] h-[32px] font-semibold text-[12px] text-[#CDCFD0]"
+                  }
+                  onClick={
+                    message != ""
+                      ? () => {
+                        sendChatMessage();
+                        setMessage("");
+                      }
+                      : () => { }
+                  }
+                >보내기</button>
+              </div>
+            </div>
+            :
+            <div ref={textareadiv} className="flex flex-row w-full h-[40px] bottom-0 shrink-0 mt-2 mb-6 px-4">
+              <textarea
+                onKeyDown={pressEnter}
+                className="xl:scrollbar-hide resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
+                value={message}
+                onChange={handleTextarea}
+                ref={textarea}
+                onInput={handleResizeHeight}
+              ></textarea>
+              <SendIcon
+                onClick={
+                  message != ""
+                    ? () => {
+                      sendChatMessage();
+                      setMessage("");
+                    }
+                    : () => { }
+                }
+              ></SendIcon>
+            </div>
+          }
+        </div>
+      }
+    </>
   );
 }

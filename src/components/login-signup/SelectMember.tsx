@@ -48,8 +48,15 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
   return (
     <>
       <div className="xl:min-w-[1280px] w-[100%] xl:flex">
-        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)",minHeight:700 }}>
-          <Image src={WebSignupBg1} fill className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover" alt=""/>
+        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)", minHeight: 700 }}>
+          <Image
+            src={WebSignupBg1}
+            fill
+            sizes="50%"
+            priority
+            className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover"
+            alt=""
+          />
         </div>
 
         <div className="flex flex-col justify-between h-[calc(100vh-52px)] xl:h-[700px] w-[375px] mx-auto p-4">

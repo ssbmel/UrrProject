@@ -156,7 +156,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
                       alt="정렬 아이콘"
                       fill
                       sizes="20px"
-                      className="object-cover"
+                      className="object-cover cursor-pointer"
                     />
                   </div>
 

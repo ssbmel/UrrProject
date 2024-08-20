@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAlertchatStore } from "@/zustand/alertchatStore";
 import Link from "next/link";
+import LoadingUrr from "../common/loading/LoadingUrr";
 
 export default function ChatList() {
   const userdata = useUserData().data;
@@ -40,6 +41,7 @@ export default function ChatList() {
   const { setIsChatModalOpen, setIsAlert } = useAlertchatStore();
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setIsMobile(/Mobi/i.test(window.navigator.userAgent));
@@ -161,6 +163,7 @@ export default function ChatList() {
       );
       setChatListData(channelListDatas);
     }
+    setIsLoading(true);
   };
 
   const getlastMessage = async (
@@ -315,128 +318,137 @@ export default function ChatList() {
   }, [myChannelIdList]);
 
   return (
-    <div className="mt-[6px] flex flex-col xl:mx-2 xl:my-3">
-      {myChannel != undefined ? (
-        <div className="">
-          <p className="w-[343px] xl:w-[285px] mx-auto font-bold text-[20px] xl:px-3 mb-[12px]">나의 채팅방</p>
-          <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col justify-center">
-            <div
-              onClick={
-                innerWidth < 1280
-                  ? () => clickChat(myChannel.channel_id)
-                  : () => openWindow(myChannel.channel_id, myChannel.channel_name)
-              }
-            >
-              <div
-                key={myChannel.channel_id}
-                className={
-                  myChannel != null
-                    ? "w-[343px] xl:w-[285px] xl:px-3 xl:py-2 h-[73px] relative flex flex-row items-center"
-                    : "hidden"
-                }
-              >
-                <div className="relative flex-none w-[68px] h-[68px] xl:w-[60px] xl:y-[60px]">
-                  {myChannel.owner_profile_url && (
-                    <Image
-                      fill
-                      priority={true}
-                      src={myChannel.owner_profile_url}
-                      alt="owner profile"
-                      className="object-cover rounded-[6px]"
-                    />
-                  )}
-                </div>
-                <div className="w-[255px] xl:w-[193px] flex flex-col ml-[8px] mr-[12px] xl:mr-0">
-                  <div className="flex flex-row items-center h-[27px]">
-                    <label className="truncate text-[18px] font-medium">{myChannel.channel_name}</label>
-                    <label
-                      className={
-                        myChannel.countMessages > 0
-                          ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-gradient-to-br from-[#0068e5] to-[#9aec5b] text-center text-[14px] font-medium"
-                          : "hidden"
-                      }
-                    >
-                      {myChannel.countMessages < 100 ? `${myChannel.countMessages}` : `99+`}
-                    </label>
-                  </div>
-                  <label className="truncate text-[16px] font-light">{myChannel.message}</label>
-                  <label className="text-[12px] font-normal text-[#989C9F]">{myChannel?.created_at}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mt-[20px] h-2 w-auto bg-[#F4F4F4]" />
-          <p className="w-[343px] xl:w-[285px] mx-auto font-bold text-[20px] xl:px-3 mt-[20px] mb-[-2px]">
-            내가 참여한 채팅방
-          </p>
-        </div>
-      ) : (
-        <></>
-      )}
+    <>
+      {isLoading ?
+        <div className="mt-[6px] flex flex-col xl:mx-2 xl:my-3">
 
-      {(myChannel == null && chatListData.length == 0) &&
-        <div className={isMobile ? "h-[calc(100vh-180px)] flex justify-center items-center text-[#989C9F]" : "h-[345px] text-[#989C9F] flex justify-center items-center"}>
-          <label className="">인플루언서와 채팅을 시작해 보세요!</label>
-        </div>
-      }
-
-      {(myChannel !== null && chatListData.length == 0) &&
-        <div className={isMobile ? "h-[calc(100vh-371px)] flex justify-center items-center text-[#989C9F]" : "h-[154px] text-[#989C9F] flex justify-center items-center"}>
-          <label className="">인플루언서와 채팅을 시작해 보세요!</label>
-        </div>
-      }
-
-      <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col divide-y-2 divide-[#F4F4F4] justify-center">
-        {chatListData != undefined ? (
-          chatListData.map((channel) => (
-            <div key={channel?.channel_id} className="">
-              {channel != undefined ? (
+          {myChannel != undefined ? (
+            <div className="">
+              <p className="w-[343px] xl:w-[285px] mx-auto font-bold text-[20px] xl:px-3 mb-[12px]">나의 채팅방</p>
+              <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col justify-center">
                 <div
                   onClick={
                     innerWidth < 1280
-                      ? () => clickChat(channel.channel_id)
-                      : () => openWindow(channel.channel_id, channel.channel_name)
+                      ? () => clickChat(myChannel.channel_id)
+                      : () => openWindow(myChannel.channel_id, myChannel.channel_name)
                   }
                 >
-                  <div className="w-[343px] xl:w-[285px] h-[73px] my-[18px] xl:px-3 xl:py-2 xl:my-2 relative flex flex-row items-center">
+                  <div
+                    key={myChannel.channel_id}
+                    className={
+                      myChannel != null
+                        ? "w-[343px] xl:w-[285px] xl:px-3 xl:py-2 h-[73px] relative flex flex-row items-center"
+                        : "hidden"
+                    }
+                  >
                     <div className="relative flex-none w-[68px] h-[68px] xl:w-[60px] xl:y-[60px]">
-                      {channel?.owner_profile_url && (
+                      {myChannel.owner_profile_url && (
                         <Image
                           fill
                           priority={true}
-                          src={channel.owner_profile_url}
+                          src={myChannel.owner_profile_url}
                           alt="owner profile"
                           className="object-cover rounded-[6px]"
                         />
                       )}
                     </div>
-                    <div className="w-[255px] xl:w-[193px] flex flex-col ml-[8px] mr-[12px]">
+                    <div className="w-[255px] xl:w-[193px] flex flex-col ml-[8px] mr-[12px] xl:mr-0">
                       <div className="flex flex-row items-center h-[27px]">
-                        <label className="truncate text-[18px] font-medium">{channel.channel_name}</label>
+                        <label className="truncate text-[18px] font-medium">{myChannel.channel_name}</label>
                         <label
                           className={
-                            channel.countMessages > 0
-                              ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-[#FF5E5E] text-center text-[14px] font-medium"
+                            myChannel.countMessages > 0
+                              ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-gradient-to-br from-[#0068e5] to-[#9aec5b] text-center text-[14px] font-medium"
                               : "hidden"
                           }
                         >
-                          {channel.countMessages < 100 ? `${channel.countMessages}` : `99+`}
+                          {myChannel.countMessages < 100 ? `${myChannel.countMessages}` : `99+`}
                         </label>
                       </div>
-                      <label className="truncate text-[16px] font-light">{channel.message}</label>
-                      <label className="text-[12px] font-normal text-[#989C9F]">{channel?.created_at}</label>
+                      <label className="truncate text-[16px] font-light">{myChannel.message}</label>
+                      <label className="text-[12px] font-normal text-[#989C9F]">{myChannel?.created_at}</label>
                     </div>
                   </div>
                 </div>
-              ) : (
-                <></>
-              )}
+              </div>
+              <div className="mt-[20px] h-2 w-auto bg-[#F4F4F4]" />
+              <p className="w-[343px] xl:w-[285px] mx-auto font-bold text-[20px] xl:px-3 mt-[20px] mb-[-2px]">
+                내가 참여한 채팅방
+              </p>
             </div>
-          ))
-        ) : (
-          <></>
-        )}
-      </div>
-    </div>
+          ) : (
+            <></>
+          )}
+
+          {(myChannel == null && chatListData.length == 0) &&
+            <div className={isMobile ? "h-[calc(100vh-180px)] flex justify-center items-center text-[#989C9F]" : "h-[345px] text-[#989C9F] flex justify-center items-center"}>
+              <label className="">인플루언서와 채팅을 시작해 보세요!</label>
+            </div>
+          }
+
+          {(myChannel !== null && chatListData.length == 0) &&
+            <div className={isMobile ? "h-[calc(100vh-371px)] flex justify-center items-center text-[#989C9F]" : "h-[154px] text-[#989C9F] flex justify-center items-center"}>
+              <label className="">인플루언서와 채팅을 시작해 보세요!</label>
+            </div>
+          }
+
+          <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col divide-y-2 divide-[#F4F4F4] justify-center">
+            {chatListData != undefined ? (
+              chatListData.map((channel) => (
+                <div key={channel?.channel_id} className="">
+                  {channel != undefined ? (
+                    <div
+                      onClick={
+                        innerWidth < 1280
+                          ? () => clickChat(channel.channel_id)
+                          : () => openWindow(channel.channel_id, channel.channel_name)
+                      }
+                    >
+                      <div className="w-[343px] xl:w-[285px] h-[73px] my-[18px] xl:px-3 xl:py-2 xl:my-2 relative flex flex-row items-center">
+                        <div className="relative flex-none w-[68px] h-[68px] xl:w-[60px] xl:y-[60px]">
+                          {channel?.owner_profile_url && (
+                            <Image
+                              fill
+                              priority={true}
+                              src={channel.owner_profile_url}
+                              alt="owner profile"
+                              className="object-cover rounded-[6px]"
+                            />
+                          )}
+                        </div>
+                        <div className="w-[255px] xl:w-[193px] flex flex-col ml-[8px] mr-[12px]">
+                          <div className="flex flex-row items-center h-[27px]">
+                            <label className="truncate text-[18px] font-medium">{channel.channel_name}</label>
+                            <label
+                              className={
+                                channel.countMessages > 0
+                                  ? "ml-[7px] rounded-[14px] text-white w-[36px] h-[20px] bg-[#FF5E5E] text-center text-[14px] font-medium"
+                                  : "hidden"
+                              }
+                            >
+                              {channel.countMessages < 100 ? `${channel.countMessages}` : `99+`}
+                            </label>
+                          </div>
+                          <label className="truncate text-[16px] font-light">{channel.message}</label>
+                          <label className="text-[12px] font-normal text-[#989C9F]">{channel?.created_at}</label>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+        :
+        <div className={!isMobile ? "h-[345px]" : ""}>
+          <LoadingUrr />
+        </div>
+      }
+    </>
   );
 }

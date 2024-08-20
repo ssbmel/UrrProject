@@ -57,6 +57,7 @@ export default function Chat({ params }: detailProps) {
   const [firstLoading, setFirstLoading] = useState<boolean>(false);
   const [isMine, setIsMine] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
   const handleResizeHeight = () => {
@@ -195,6 +196,8 @@ export default function Chat({ params }: detailProps) {
       updateMySubLastTime();
     }
     setFirstLoading(false);
+    setIsLoading(true);
+
   };
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -372,9 +375,9 @@ export default function Chat({ params }: detailProps) {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsMobile(/Mobi/i.test(window.navigator.userAgent));
-  },[])
+  }, [])
 
   useEffect(() => {
     if (userdata != undefined && channel_id != null) {
@@ -409,7 +412,7 @@ export default function Chat({ params }: detailProps) {
 
   return (
     <>
-      {!userdata || !preMessages || !newMessages || !receiveMessages ?
+      {!isLoading ?
         <div className="w-[100vw]">
           <LoadingUrr />
         </div>

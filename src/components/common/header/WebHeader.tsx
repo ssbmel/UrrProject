@@ -12,11 +12,8 @@ import Link from "next/link";
 import ChatList from "@/components/chat/ChatList";
 import { useAlertchatStore } from "@/zustand/alertchatStore";
 import { usePathname } from "next/navigation";
-import { useUserData } from "@/hooks/useUserData";
-import swal from "sweetalert";
 
 export function WebHeader() {
-  const userdata = useUserData().data;
   const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -25,17 +22,11 @@ export function WebHeader() {
   const { isChatModalOpen, setIsChatModalOpen } = useAlertchatStore();
 
   const handleChatButton = () => {
-    if(userdata == undefined){
-      swal("로그인이 필요한 서비스입니다")
-      return null;
-    }
-      
-
     if (isChatModalOpen) {
-        setIsChatModalOpen(false);
-      } else {
-        setIsChatModalOpen(true);
-      }
+      setIsChatModalOpen(false);
+    } else {
+      setIsChatModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -121,7 +112,7 @@ export function WebHeader() {
           </div>
 
           {isChatModalOpen && (
-            <div className="border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] bg-white justify-center">
+            <div className="border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] shadow-2xl bg-white justify-center">
               <ChatList />
             </div>
           )}

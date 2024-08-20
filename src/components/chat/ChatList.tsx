@@ -345,7 +345,7 @@ export default function ChatList() {
                       {myChannel.owner_profile_url && (
                         <Image
                           fill
-                          priority={true}
+                          sizes="68px xl:60px"
                           src={myChannel.owner_profile_url}
                           alt="owner profile"
                           className="object-cover rounded-[6px]"
@@ -409,7 +409,7 @@ export default function ChatList() {
                           {channel?.owner_profile_url && (
                             <Image
                               fill
-                              priority={true}
+                              sizes="68px xl:60px"
                               src={channel.owner_profile_url}
                               alt="owner profile"
                               className="object-cover rounded-[6px]"

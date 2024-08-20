@@ -16,14 +16,14 @@ export default function ChatList() {
   const [chatListData, setChatListData] = useState<
     (
       | {
-          channel_id: number;
-          channel_name: string | null;
-          owner_id: string;
-          owner_profile_url: string | null;
-          created_at: string;
-          message: string | null;
-          countMessages: number;
-        }
+        channel_id: number;
+        channel_name: string | null;
+        owner_id: string;
+        owner_profile_url: string | null;
+        created_at: string;
+        message: string | null;
+        countMessages: number;
+      }
       | undefined
     )[]
   >([]);
@@ -38,6 +38,13 @@ export default function ChatList() {
   } | null>(null);
   const [myChannelIdList, setMyChannelIdList] = useState<number[]>([]);
   const { setIsChatModalOpen, setIsAlert } = useAlertchatStore();
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMobile(/Mobi/i.test(window.navigator.userAgent));
+  }, [])
+
 
   const getMyChannel = async () => {
     //나의 채팅 채널 불러오기
@@ -291,7 +298,7 @@ export default function ChatList() {
   const openWindow = (channel_id: number, channel_name: string | null) => {
     const id = channel_id.toString();
     setIsChatModalOpen(false);
-    window.open(`/chatlist/[${id}]`, "_blank", "popup=yes,width=375,height=812,resizable=0,location=no");
+    window.open(`/chatlist/[${id}]`, "_blank", "popup=yes,width=408,height=812");
   };
 
   useEffect(() => {
@@ -366,6 +373,18 @@ export default function ChatList() {
       ) : (
         <></>
       )}
+
+      {(myChannel == null && chatListData.length == 0) &&
+        <div className={isMobile ? "h-[calc(100vh-180px)] flex justify-center items-center text-[#989C9F]" : "h-[345px] text-[#989C9F] flex justify-center items-center"}>
+          <label className="">인플루언서와 채팅을 시작해 보세요!</label>
+        </div>
+      }
+
+      {(myChannel !== null && chatListData.length == 0) &&
+        <div className={isMobile ? "h-[calc(100vh-371px)] flex justify-center items-center text-[#989C9F]" : "h-[154px] text-[#989C9F] flex justify-center items-center"}>
+          <label className="">인플루언서와 채팅을 시작해 보세요!</label>
+        </div>
+      }
 
       <div className="w-[343px] xl:w-[285px] mx-auto flex flex-col divide-y-2 divide-[#F4F4F4] justify-center">
         {chatListData != undefined ? (

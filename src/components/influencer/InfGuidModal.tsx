@@ -60,7 +60,7 @@ const ModalComponent: React.FC = () => {
             }
           }}
         >
-          <div className="relative w-[80px] h-[90px] xl:w-[150px] xl:h-[160px] mb-4">
+          <div className="relative w-[80px] h-[90px] xl:w-[150px] xl:h-[160px] mb-4 xl:mb-10">
             <Image 
               src={sendImg} 
               fill 
@@ -69,18 +69,18 @@ const ModalComponent: React.FC = () => {
               className="object-cover rounded mx-auto" 
             />
           </div>
-          <h2 style={{ textAlign: 'center', marginBottom: '10px' }} className="text-sm sm:text-base lg:text-lg xl:text-xl">
+          <h2 className="text-sm sm:text-base lg:text-lg xl:text-xl text-center my-4">
             인플루언서를 구독하고 메세지를 보내보세요!
           </h2>
           <div className="text-center">
             <button
               onClick={handleHideForToday}
-              className="mr-[10px] py-[8px] px-[12px] border-none bg-[#F2F2F2] text-[14px] xl:text-[18px] rounded-md">
+              className="mr-3 px-3 py-2 rounded-sm border-none bg-[#F2F2F2] text-[14px] xl:text-[18px]">
               오늘은 그만보기
             </button>
             <button
               onClick={closeModal}
-              className="mr-[10px] py-[8px] px-[12px] border-none bg-[#4C4F52] text-[#fff] text-[14px] xl:text-[18px] rounded-md">
+              className="mr-3 px-3 py-2 rounded-sm border-none bg-[#4C4F52] text-[#fff] text-[14px] xl:text-[18px]">
               닫기
             </button>
           </div>

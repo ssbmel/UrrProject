@@ -39,7 +39,7 @@ function MainReviewList() {
   };
 
   return (
-    <div className="w-full py-[28px]">
+    <div className="w-full py-[28px] xl:mb-[100px]">
       <h2 className="font-bold text-lg xl:text-[22px] px-4 mb-[20px]">후기</h2>
       <div className="xl:hidden px-4">
         <div className="grid gap-3 scrollbar" style={{ height: "400px", overflowY: "auto", overflowX: "hidden" }}>
@@ -47,7 +47,7 @@ function MainReviewList() {
             <p>후기가 없습니다.</p>
           ) : (
             reviewData.map((review) => (
-              <Link href={`/products/detail/${review.product_id}`} key={review.id}>
+              <Link href={`/products/detail/${review.product_id}?review=list`} key={review.id}>
                 <div className="flex w-full">
                   <div className="w-[108px] h-[108px] mr-3 flex-shrink-0">
                     <div className="relative w-[108px] h-[108px]">
@@ -92,8 +92,6 @@ function MainReviewList() {
           )}
         </div>
       </div>
-
-      {/* Desktop Carousel */}
       <div className="hidden xl:block">
         <Swiper
           slidesPerView={3}
@@ -129,9 +127,6 @@ function MainReviewList() {
                   </Link>
                   <div className="w-full h-[200px] mx-auto flex flex-col items-start">
                     <div className="text-[#989C9F] gap-1 text-left">
-                      {/* <div className="mt-[3px] flex-shrink-0">
-                        <InfluencerIcon />
-                      </div> */}
                       <p className="truncate xl:text-[16px] xl:mb-1">
                         {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
                       </p>

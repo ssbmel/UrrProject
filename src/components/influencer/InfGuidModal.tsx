@@ -10,23 +10,35 @@ const ModalComponent: React.FC = () => {
   const [hideForToday, setHideForToday] = useState(false);
 
   useEffect(() => {
-    const isHiddenForToday = localStorage.getItem('hideModalForToday');
-    if (!isHiddenForToday) {
-      setModalIsOpen(true);
-    } else {
-      setHideForToday(true);
+    const hideModalData = localStorage.getItem('hideModalForToday');
+    
+    if (hideModalData) {
+      const { hideUntil } = JSON.parse(hideModalData);
+      const now = new Date();
+  
+      if (now < new Date(hideUntil)) {
+        setHideForToday(true);
+        return;
+      }
     }
+  
+    setModalIsOpen(true);
   }, []);
-
+  
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
+  
   const handleHideForToday = () => {
-    localStorage.setItem('hideModalForToday', 'true');
+    const now = new Date();
+    const hideUntil = new Date(now);
+    hideUntil.setDate(now.getDate() + 1);
+  
+    localStorage.setItem('hideModalForToday', JSON.stringify({ hideUntil }));
     setHideForToday(true);
     closeModal();
   };
+  
 
   return (
     <>

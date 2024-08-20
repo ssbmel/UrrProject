@@ -5,7 +5,6 @@ import defaultImg from "../../../public/images/default.png";
 import { useEffect, useState } from "react";
 import fullStar from "../../../public/icon/full_star.png";
 import halfStar from "../../../public/icon/half_star.png";
-import InfluencerIcon from "../../../public/icon/maininfluencer.svg";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./style.css";
@@ -98,7 +97,7 @@ function MainReviewList() {
         <Swiper
           slidesPerView={3}
           centeredSlides={false}
-          spaceBetween={30}
+          spaceBetween={10}
           navigation={true}
           modules={[Pagination, Navigation, Autoplay]}
           speed={1500}
@@ -126,22 +125,11 @@ function MainReviewList() {
                         />
                       </div>
                     </div>
-                  </Link>
-                  <div className="w-full h-[200px] mx-auto flex flex-col items-start">
-                    <div className="text-[#989C9F] gap-1 text-left">
-                      <p className="truncate xl:text-[16px] xl:mb-1">
-                        {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
-                      </p>
-                    </div>
-                    <p className="text-[#1B1C1D] font-medium mb-2 xl:text-[16px] xl:h-[25%] line-clamp-2 text-left">
-                      {review.review_content}
-                    </p>
-                    <div className="">
-                      <div className="flex gap-[4px]">
+                    <div className="flex gap-[4px] mb-2">
                         {Array(Math.floor(review.review_score!))
                           .fill(1)
                           .map((_, index) => (
-                            <div key={index} className="relative mr-[4px]">
+                            <div key={index} className="relative mr-[4px] w-[20px] h-[20px]">
                               <Image
                                 src={fullStar.src}
                                 width={20}
@@ -152,11 +140,23 @@ function MainReviewList() {
                             </div>
                           ))}
                         {review.review_score! % 1 !== 0 && (
-                          <div className="relative mr-[4px]">
+                          <div className="relative mr-[4px] w-[20px] h-[20px]">
                             <Image src={halfStar.src} width={20} height={20} alt="halfStar" className="object-cover" />
                           </div>
                         )}
                       </div>
+                  </Link>
+                  <div className="w-full h-[200px] mx-auto flex flex-col items-start">
+                    <div className="text-[#989C9F] gap-1 text-left">
+                      <p className="truncate xl:text-[16px] xl:mb-1 w-[276px]">
+                        {review.inf_name} <span className="text-[#E7E8E9]">|</span> {review.title}
+                      </p>
+                    </div>
+                    <p className="text-[#1B1C1D] font-medium mb-2 xl:text-[16px] xl:h-[25%] line-clamp-2 text-left">
+                      {review.review_content}
+                    </p>
+                    <div className="">
+                     
                       <p className="text-[14px] text-gray-400 text-left my-2">
                         {review.user_nickname} <span className="text-[#E7E8E9]">|</span> {formatDate(review.created_at)}
                       </p>

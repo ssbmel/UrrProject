@@ -68,7 +68,7 @@ function Main() {
   }
 
   return (
-    <>
+    <div className="w-full xl:min-h-[calc(100vh-278px)">
       <Banner />
       <div className="container flex flex-col items-center xl:items-stretch xl:w-[1200px] w-full mx-auto gap-2 xl:px-0">
         <SubInfluencer infUser={infUser} />
@@ -77,7 +77,7 @@ function Main() {
         <BestInfluencerList infUser={infUser} />
         <MainReviewList />
       </div>
-    </>
+    </div>
   );
   
   

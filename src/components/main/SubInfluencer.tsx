@@ -50,7 +50,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
         ) : (
           <div className="w-full flex overflow-x-auto gap-[18px] xl:gap-5 scrollbar-hide">
             {infUser
-              ?.filter((inf) => subscribeIds.includes(inf.id))
+              ?.filter((inf) => subscribeIds.includes(inf.id) && inf.id !== user?.id) 
               .map((inf) => (
                 <div
                   key={inf.id}

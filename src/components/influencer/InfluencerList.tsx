@@ -22,9 +22,6 @@ function InfluencerList() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  console.log(user);
-  console.log(subscribeIds);
-
   const getSubscribeData = async () => {
     try {
       if (!user) return;

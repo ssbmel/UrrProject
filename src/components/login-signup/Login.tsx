@@ -60,13 +60,13 @@ const Login = () => {
   return (
     <>
       <div className="xl:min-w-[1280px] w-[100%] xl:flex">
-        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 278px)", minHeight: 700 }}>
+        <div className="xl:w-[50%] hidden xl:block relative" style={{ height: "calc(100vh - 318px)", minHeight: 700 }}>
           <Image
             src={WebLoginBg}
             fill
             sizes="50%"
             priority
-            className="xl:w-full xl:min-h-[calc(100vh - 278px)] h-[100%] object-cover"
+            className="xl:w-full xl:min-h-[calc(100vh - 318px)] h-[100%] object-cover"
             alt=""
           />
         </div>

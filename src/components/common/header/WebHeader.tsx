@@ -45,7 +45,7 @@ export function WebHeader() {
               <p className="hover:text-primarystrong">Store</p>
               {isHoveringStore && (
                 <div
-                  className="fixed left-0 top-[108px] w-full h-[344px] hover: bg-white bg-opacity-80 z-40 "
+                  className="fixed left-0 top-[108px] w-full h-[344px] hover: bg-white bg-opacity-90 z-40 "
                   onMouseLeave={() => setIsHoveringStore(false)}
                 >
                   <div className="ml-[286px] flex flex-col text-[18px] gap-[10px]">

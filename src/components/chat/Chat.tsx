@@ -22,7 +22,6 @@ export default function Chat({ params }: detailProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollPreRef = useRef<HTMLDivElement>(null);
   const textarea = useRef<HTMLTextAreaElement>(null);
-  const textareadiv = useRef<HTMLDivElement>(null);
 
   //const [content, setContent] = useState<{ message : string } | null>(null)
   const [message, setMessage] = useState<string | number | readonly string[] | undefined>("");
@@ -57,21 +56,21 @@ export default function Chat({ params }: detailProps) {
   const [firstLoading, setFirstLoading] = useState<boolean>(false);
   const [isMine, setIsMine] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
   const handleResizeHeight = () => {
-    if (textarea.current && textareadiv.current) {
+    if (textarea.current) {
       if (textarea.current.scrollHeight >= 40 && textarea.current.scrollHeight <= 112) {
         textarea.current.style.height = textarea.current.scrollHeight + "px";
-        textareadiv.current.style.height = textarea.current.scrollHeight + "px";
+        //textarea.current.style.marginBottom = "8px";
       }
     }
   };
 
   const resizeHeight = () => {
-    if (textarea.current && textareadiv.current) {
+    if (textarea.current) {
       textarea.current.style.height = "40px";
-      textareadiv.current.style.height = "40px";
     }
   };
 
@@ -195,6 +194,8 @@ export default function Chat({ params }: detailProps) {
       updateMySubLastTime();
     }
     setFirstLoading(false);
+    setIsLoading(true);
+
   };
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -372,9 +373,9 @@ export default function Chat({ params }: detailProps) {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsMobile(/Mobi/i.test(window.navigator.userAgent));
-  },[])
+  }, [])
 
   useEffect(() => {
     if (userdata != undefined && channel_id != null) {
@@ -409,7 +410,7 @@ export default function Chat({ params }: detailProps) {
 
   return (
     <>
-      {!userdata || !preMessages || !newMessages || !receiveMessages ?
+      {!isLoading ?
         <div className="w-[100vw]">
           <LoadingUrr />
         </div>
@@ -746,14 +747,13 @@ export default function Chat({ params }: detailProps) {
             </div>
           }
           {!isMobile ?
-            <div ref={textareadiv} className="z-50 flex flex-col w-full h-[176px] shrink-0 bottom-0 shadow-[0px_-0.5px_3px_-1px_rgba(205,207,208,1)]">
+            <div className="z-50 flex flex-col w-full h-[176px] shrink-0 bottom-0 shadow-[0px_-0.5px_3px_-1px_rgba(205,207,208,1)]">
               <div className="h-[116px]">
                 <textarea
                   onKeyDown={pressEnter}
                   className="h-[96px] w-[376px] mt-3 mx-4 mb-2 resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 border border-[#EAECEC]"
                   value={message}
                   onChange={handleTextarea}
-                  ref={textarea}
                 ></textarea>
               </div>
               <div className="h-[60px] shadow-[0px_-0.5px_3px_-1px_rgba(205,207,208,1)]">
@@ -775,10 +775,10 @@ export default function Chat({ params }: detailProps) {
               </div>
             </div>
             :
-            <div ref={textareadiv} className="flex flex-row w-full h-[40px] bottom-0 shrink-0 mt-2 mb-6 px-4">
+            <div className="flex flex-row w-full h-[72px] bottom-0 shrink-0 pt-2 pb-6 px-4">
               <textarea
                 onKeyDown={pressEnter}
-                className="xl:scrollbar-hide resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
+                className="z-50 resize-none flex-1 overflow-auto focus:outline-none rounded-[6px] text-[16px] font-medium py-2 px-3 h-[40px] w-auto border border-[#EAECEC]"
                 value={message}
                 onChange={handleTextarea}
                 ref={textarea}

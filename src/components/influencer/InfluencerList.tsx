@@ -118,7 +118,7 @@ function InfluencerList() {
       <div className="w-full h-[30%] p-4 bg-[#FFFFFE]">
         <h1 className="font-bold text-lg">내가 구독중인 인플루언서</h1>
         {!user ? (
-          <div className="flex h-[150px]">
+          <div className="flex h-[200px]">
             <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px] mx-auto mt-[80px]">
               로그인이 정보가 없습니다.
             </p>
@@ -126,10 +126,10 @@ function InfluencerList() {
         ) : (
           subscribeIds.length === 0 ? (
             <div className="flex flex-col items-center mx-auto">
-              <div className="relative w-[150px] h-[100px] my-3 xl:mt-[48px] xl:mb-6">
+              <div className="relative w-[150px] h-[100px] my-3 xl:my-[26px]">
                 <Image src={emptyImg} alt="empty" fill sizes="100px xl:w-[150px]" className="mx-auto my-5 object-cover" />
               </div>
-              <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px]">
+              <p className="text-[#4C4F52] text-[16px] my-6 xl:text-[18px]">
                 현재 구독중인 인플루언서가 없습니다.
               </p>
             </div>
@@ -139,7 +139,7 @@ function InfluencerList() {
                 ?.filter((inf) => subscribeIds.includes(inf.id))
                 .map((inf) => (
                   <div className="grid text-center" key={inf.id}>
-                    <div className="relative w-[90px] h-[90px] mb-2 xl:w-[140px] xl:h-[140px]">
+                    <div className="relative w-[90px] h-[90px] mb-2 xl:w-[140px] xl:h-[140px] xl:mt-[10px]">
                       <Link href={`influencer/profile/${inf.id}`}>
                         <div className="relative w-[90px] h-[90px] xl:w-[140px] xl:h-[140px]">
                           <Image

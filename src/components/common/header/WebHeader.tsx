@@ -12,11 +12,8 @@ import Link from "next/link";
 import ChatList from "@/components/chat/ChatList";
 import { useAlertchatStore } from "@/zustand/alertchatStore";
 import { usePathname } from "next/navigation";
-import { useUserData } from "@/hooks/useUserData";
-import swal from "sweetalert";
 
 export function WebHeader() {
-  const userdata = useUserData().data;
   const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -25,17 +22,11 @@ export function WebHeader() {
   const { isChatModalOpen, setIsChatModalOpen } = useAlertchatStore();
 
   const handleChatButton = () => {
-    if(userdata == undefined){
-      swal("로그인이 필요한 서비스입니다")
-      return null;
-    }
-      
-
     if (isChatModalOpen) {
-        setIsChatModalOpen(false);
-      } else {
-        setIsChatModalOpen(true);
-      }
+      setIsChatModalOpen(false);
+    } else {
+      setIsChatModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -49,44 +40,46 @@ export function WebHeader() {
           <Link href={"/"}>
             <Image src={Logo} alt="Urr logo" width={121} height={66} className="mr-[71px] priority" />
           </Link>
-          <Link href={"/products/list"}>
-            <li className="text-xl mr-10 cursor-pointer  relative" onMouseEnter={() => setIsHoveringStore(true)}>
+          <li className="text-xl mr-10 cursor-pointer  relative" onMouseEnter={() => setIsHoveringStore(true)}>
+            <Link href={"/products/list"}>
               <p className="hover:text-primarystrong">Store</p>
-              {isHoveringStore && (
+            </Link>
+            {isHoveringStore && (
+              <div className="fixed flex left-0 top-[108px] w-full h-[344px] px-[6%] hover: bg-white z-40 shadow-lg ">
+                <div className="w-[192px]" />
                 <div
-                  className="fixed left-0 top-[108px] w-full h-[344px] hover: bg-white bg-opacity-90 z-40 "
+                  className="w-[104px]  flex flex-col text-[18px] gap-[10px]"
                   onMouseLeave={() => setIsHoveringStore(false)}
                 >
-                  <div className="ml-[286px] flex flex-col text-[18px] gap-[10px]">
-                    <Link href="/products/list?category=뷰티">
-                      <p className="hover:text-primarystrong">뷰티</p>
-                    </Link>
-                    <Link href="/products/list?category=패션/잡화">
-                      <p className="hover:text-primarystrong">패션잡화</p>
-                    </Link>
-                    <Link href="/products/list?category=식품">
-                      <p className="hover:text-primarystrong">식품</p>
-                    </Link>
-                    <Link href="/products/list?category=헬스건강">
-                      <p className="hover:text-primarystrong">헬스/건강</p>
-                    </Link>
-                    <Link href="/products/list?category=반려동물용품">
-                      <p className="hover:text-primarystrong">반려동물용품</p>
-                    </Link>
-                    <Link href="/products/list?category=생활용품">
-                      <p className="hover:text-primarystrong">생활용품</p>
-                    </Link>
-                    <Link href="/products/list?category=가전/디지털">
-                      <p className="hover:text-primarystrong">가전/디지털</p>
-                    </Link>
-                    <Link href="/products/list?category=취미/도서">
-                      <p className="hover:text-primarystrong">취미/도서</p>
-                    </Link>
-                  </div>
+                  <Link href="/products/list?category=뷰티">
+                    <p className="hover:text-primarystrong">뷰티</p>
+                  </Link>
+                  <Link href="/products/list?category=패션/잡화">
+                    <p className="hover:text-primarystrong">패션잡화</p>
+                  </Link>
+                  <Link href="/products/list?category=식품">
+                    <p className="hover:text-primarystrong">식품</p>
+                  </Link>
+                  <Link href="/products/list?category=헬스건강">
+                    <p className="hover:text-primarystrong">헬스/건강</p>
+                  </Link>
+                  <Link href="/products/list?category=반려동물용품">
+                    <p className="hover:text-primarystrong">반려동물용품</p>
+                  </Link>
+                  <Link href="/products/list?category=생활용품">
+                    <p className="hover:text-primarystrong">생활용품</p>
+                  </Link>
+                  <Link href="/products/list?category=가전/디지털">
+                    <p className="hover:text-primarystrong">가전/디지털</p>
+                  </Link>
+                  <Link href="/products/list?category=취미/도서">
+                    <p className="hover:text-primarystrong">취미/도서</p>
+                  </Link>
                 </div>
-              )}
-            </li>
-          </Link>
+              </div>
+            )}
+          </li>
+
           <Link href={"/influencer"}>
             <li className="text-xl cursor-pointer hover:text-primarystrong">Influencers</li>
           </Link>
@@ -119,7 +112,7 @@ export function WebHeader() {
           </div>
 
           {isChatModalOpen && (
-            <div className="border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] bg-white justify-center">
+            <div className="border-4 rounded-lg border-primaryheavy overflow-y-auto scrollbar-hide fixed z-50 top-[88px] right-[84px] w-[301px] h-[380px] shadow-2xl bg-white justify-center">
               <ChatList />
             </div>
           )}

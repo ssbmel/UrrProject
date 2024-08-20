@@ -8,7 +8,7 @@ import SearchIcon from "../../../../public/icon/searchIcon.svg";
 import CartIcon from "../../../../public/icon/cartIcon.svg";
 import XIcon from "../../../../public/icon/XIcon.svg";
 import AddProductIcon from "../../../../public/icon/addProductIcon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchModal from "../search/SearchModal";
 import { useUserData } from "@/hooks/useUserData";
 import { useMenuStore } from "@/zustand/MenuStore";
@@ -20,6 +20,8 @@ const MobileHeader = () => {
   const router = useRouter();
   const { data: user } = useUserData();
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
   const LOGIN = pathname === "/login";
@@ -120,6 +122,14 @@ const MobileHeader = () => {
         </>
       );
     }
+  }
+
+  useEffect(()=>{
+    setIsMobile(/Mobi/i.test(window.navigator.userAgent));
+  },[])
+
+  if (!isMobile && (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3)) {
+    return null;
   }
 
   return (

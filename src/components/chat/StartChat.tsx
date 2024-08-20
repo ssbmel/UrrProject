@@ -14,6 +14,7 @@ export default function StartChat(props: setDataType) {
   const supabase = createClient();
   const router = useRouter();
   const owner_id = props.owner_id;
+  const isMobile = /Mobi/i.test(window.navigator.userAgent);
 
   const checkOwnerChannel = async (): Promise<number | null> => {
     const { data, error } = await supabase
@@ -48,7 +49,12 @@ export default function StartChat(props: setDataType) {
         createNewSubscribe(channel_id, user_id);
       }
     }
-    router.push(`/chatlist/[${channel_id}]`);
+    if (isMobile) {
+      router.push(`/chatlist/[${channel_id}]`);
+    } else {
+      window.open(`/chatlist/[${channel_id}]`, "_blank", "popup=yes,width=408,height=812");
+    }
+
   };
 
   const createNewSubscribe = async (channel_id: number, user_id: string) => {

@@ -7,7 +7,7 @@ export default function SuccessfulSignUp() {
   return (
     <>
       <div className="fixed xl:static top-0 z-50 w-[100%] bg-[white] h-[700px] p-4 box-border">
-        <div className="flex flex-col justify-center items-center h-[calc(100vh-50px)] xl:h-[calc(100vh-278px)] ">
+        <div className="flex flex-col justify-center items-center h-[calc(100vh-50px)] xl:h-[calc(100vh-318px)] ">
           <SignupImg />
           <h3 className="text-lg mb-2 mt-8">우르르 회원가입을 환영합니다!</h3>
           <p className="text-sm text-[#4C4F52]">회원 정보는 마이페이지에서 변경 가능합니다.</p>

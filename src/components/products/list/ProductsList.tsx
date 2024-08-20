@@ -133,7 +133,7 @@ export default function ProductsList({ selectedCategory }: ProductsListProps) {
                 onClick={handleExcludeExpiredChange}
               />
               <label htmlFor="excludeExpired" className="text-[16px] xl:text-[18px] text-[#4C4F52]">
-                판매 종료 제외
+                판매중인 상품만 보기
               </label>
             </div>
             <div className="relative" ref={menuRef}>

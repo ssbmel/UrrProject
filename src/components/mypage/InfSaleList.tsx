@@ -59,12 +59,11 @@ const InfSaleList = ({ user }: Props) => {
       text: "삭제하면 다시 복구할 수 없습니다.",
       icon: "warning",
       buttons: ["취소", "삭제"]
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
         deleteMutation({ id });
         swal("상품이 삭제되었습니다.", {
-          icon: "success",
+          icon: "success"
         });
       } else {
         swal("삭제가 취소되었습니다.");
@@ -80,10 +79,10 @@ const InfSaleList = ({ user }: Props) => {
             {items.map((item, index) => (
               <li
                 key={index}
-                className="pb-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:pb-[36px] last:border-none"
+                className="text-[14px] border-b flex flex-col last:border-none"
               >
                 <div className="flex justify-between items-center">
-                  <div className="flex gap-[12px] items-center w-[calc(100%-80px)]">
+                  <div className="flex gap-[12px] items-center w-[calc(100%-80px)] xl:my-[36px]">
                     <div className="relative w-[56px] h-[56px] xl:w-[100px] xl:h-[100px]">
                       <Image
                         src={item.main_img || ""}
@@ -144,7 +143,7 @@ const InfSaleList = ({ user }: Props) => {
             </div>
             <Link
               href="/products/upload/new"
-              className="border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5]"
+              className="xl:hidden border p-[7px] pr-[14px] pl-[14px] text-[14px] rounded-[4px] text-[#0068E5]"
             >
               상품 등록하기
             </Link>

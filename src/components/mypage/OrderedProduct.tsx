@@ -50,7 +50,7 @@ const OrderedProduct = ({ id, paymentId, delivery }: { id: string; paymentId: st
             className={
               delivery === "배송완료"
                 ? "flex items-center gap-[4px] xl:absolute xl:top-0 xl:right-0 xl:h-full xl:bg-[#FFFFFE] xl:border-l xl:rounded-r-[12px] xl:w-[212px] xl:justify-center xl:flex-col-reverse xl:gap-[14px] xl:hover:bg-gray-50 xl:transition-colors"
-                : "flex items-center gap-[4px] xl:hidden"
+                : "items-center gap-[4px] hidden"
             }
           >
             <span className={delivery === "배송완료" ? "text-[#0068E5] xl:text-[18px] font-[600]" : "text-[#4C4F52]"}>

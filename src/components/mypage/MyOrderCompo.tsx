@@ -26,13 +26,17 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-[20px] xl:gap-[12px] xl:w-[220px]">
           <div className="w-[48px] h-[48px] xl:w-[100px] xl:h-[100px] relative rounded-[4px]">
-            <Link href={`/products/detail/${item?.id}`}>
+            <Link
+              href={`/products/detail/${item?.id}`}
+              className="relative w-[48px] h-[48px] xl:w-[100px] xl:h-[100px] block"
+            >
               <Image
                 src={item?.imgUrl || ""}
                 alt="ordered_product_image"
                 fill
+                priority
                 sizes="48px xl:100px"
-                className="w-[48px] h-[48px] xl:w-[100px] xl:h-[100px] bg-slate-300 rounded-[4px] object-cover"
+                className="w-[48px] h-[48px] xl:w-[100px] xl:h-[100px] bg-slate-300 absolute rounded-[4px] object-cover"
               />
             </Link>
           </div>
@@ -40,7 +44,7 @@ const MyOrderCompo: React.FC<MyOrderCompoType> = ({ item, delivery, paymentId })
             {item?.name.includes("]") ? item?.name.split("]")[1] : item?.name}
           </p>
         </div>
-        <p className="xl:block xl:w-[142px] hidden font-[500] text-center">{item?.amount}</p>
+        <p className="xl:block xl:w-[142px] hidden font-[500] text-center">{item?.quantity}</p>
         <p className="xl:w-[142px] font-[500] text-center">{delivery}</p>
         <p className="xl:w-[142px] font-[500] text-center">
           <span>{item?.amount.toLocaleString()}</span>원

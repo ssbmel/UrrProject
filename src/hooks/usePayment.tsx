@@ -10,8 +10,8 @@ import { ProductList } from "../../types/addr.type";
 interface paymentType {
   fullName: string;
   orderCount: number;
-  orderName: string; // 주문상품 이름
-  price: number; // 전체 가격
+  orderName: string;
+  price: number;
   address: string;
   phoneNumber: string;
   productList: ProductList[];
@@ -24,14 +24,14 @@ const usePayment = () => {
 
   const makePayment = useCallback(
     async (req: paymentType) => {
-      const paymentId = uuid(); // 주문 번호 uuid 고유값, primary key
+      const paymentId = uuid();
       const email = data.email;
       const customerId = data.id;
 
       setPaymentData({
         fullName: req.fullName,
         userId: customerId,
-        orderCount: req.orderCount, // 고칠것 수량
+        orderCount: req.orderCount,
         price: req.price,
         orderName: req.orderName,
         address: req.address,
@@ -41,9 +41,8 @@ const usePayment = () => {
       });
 
       const response = await PortOne.requestPayment({
-        // Store ID 설정
         storeId: "store-094c2470-d0a2-4f20-b350-87b98f1e345c",
-        // 채널 키 설정
+
         channelKey: "channel-key-bcf487fd-75d7-4863-977c-cf468a354a86",
         paymentId,
         customer: {
@@ -55,7 +54,7 @@ const usePayment = () => {
         orderName: req.orderName,
         totalAmount: req.price + 3000,
         currency: "CURRENCY_KRW",
-        products: req.productList, // 상품 목록
+        products: req.productList,
         payMethod: "CARD",
         redirectUrl: "https://urr-final.vercel.app/payment/loading"
       });

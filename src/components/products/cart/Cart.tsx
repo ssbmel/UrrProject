@@ -179,7 +179,7 @@ function Cart() {
     }
   };
   return (
-    <div className="w-full xl:w-[1132px] xl:h-[calc(100vh-278px)] xl:mx-auto p-4">
+    <div className="w-full xl:w-[1132px] xl:h-[calc(100vh-318px)] xl:mx-auto p-4">
       <h2 className="hidden xl:block text-2xl font-bold text-center mb-[32px]">장바구니</h2>
 
       {allCartItems.length === 0 ? (

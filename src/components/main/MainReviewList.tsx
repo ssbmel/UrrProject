@@ -49,7 +49,7 @@ function MainReviewList() {
             <p>후기가 없습니다.</p>
           ) : (
             reviewData.map((review) => (
-              <Link href={`/products/detail/${review.product_id}?review=list`} key={review.id}>
+              <Link href={`/products/detail/${review.product_id}?tab=review`} key={review.id}>
                 <div className="flex w-full">
                   <div className="w-[108px] h-[108px] mr-3 flex-shrink-0">
                     <div className="relative w-[108px] h-[108px]">
@@ -114,7 +114,7 @@ function MainReviewList() {
             reviewData.map((review) => (
               <SwiperSlide key={review.id}>
                 <div className="grid w-[304px] h-[385px] mx-auto border rounded-[20px] p-3 shadow-sm">
-                  <Link href={`/products/detail/${review.product_id}`}>
+                  <Link href={`/products/detail/${review.product_id}?tab=review`}>
                     <div className="flex justify-center">
                       <div className="w-[276px] h-[201px] relative mb-2">
                         <Image

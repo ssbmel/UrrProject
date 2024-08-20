@@ -79,10 +79,10 @@ const InfSaleList = ({ user }: Props) => {
             {items.map((item, index) => (
               <li
                 key={index}
-                className="pb-[18px] text-[14px] border-b flex flex-col gap-[18px] xl:pb-[36px] last:border-none"
+                className="text-[14px] border-b flex flex-col last:border-none"
               >
                 <div className="flex justify-between items-center">
-                  <div className="flex gap-[12px] items-center w-[calc(100%-80px)]">
+                  <div className="flex gap-[12px] items-center w-[calc(100%-80px)] xl:my-[36px]">
                     <div className="relative w-[56px] h-[56px] xl:w-[100px] xl:h-[100px]">
                       <Image
                         src={item.main_img || ""}

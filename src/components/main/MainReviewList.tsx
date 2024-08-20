@@ -145,7 +145,7 @@ function MainReviewList() {
                           </div>
                         )}
                       </div>
-                  </Link>
+                  
                   <div className="w-full h-[200px] mx-auto flex flex-col items-start">
                     <div className="text-[#989C9F] gap-1 text-left">
                       <p className="truncate xl:text-[16px] xl:mb-1 w-[276px]">
@@ -162,6 +162,7 @@ function MainReviewList() {
                       </p>
                     </div>
                   </div>
+                </Link>
                 </div>
               </SwiperSlide>
             ))

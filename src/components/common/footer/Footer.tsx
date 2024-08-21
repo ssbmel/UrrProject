@@ -14,18 +14,19 @@ const Footer = () => {
 
   return (
     <div className="relative w-full h-[210px] hidden xl:block">
-      {/* Background Image */}
+      <div className="relative xl:w-[full] h-[210px] xl:block">
       <Image
         src={backgroundImage}
         alt="Footer Background"
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        fill
+        sizes="xl:w-[1920px]"
         priority
+        className="object-cover"
       />
+      </div>
       
       {/* Content */}
-      <div className="absolute left-[10%] top-1/2 transform -translate-y-1/2 text-[14px] z-10">
+      <div className="absolute left-[10%] top-1/2 transform text-[14px] z-10">
         <ul className="flex gap-3">
           <li className="text-[#4C4F52] w-[50px]">서비스명</li>
           <li className="text-[#1B1C1D] font-medium">Urr</li> 
@@ -39,12 +40,11 @@ const Footer = () => {
           <li className="text-[#1B1C1D] font-medium">김예진</li>
         </ul>
       </div>
-      <div className="absolute right-[5%] top-1/2 transform -translate-y-1/2 text-right text-[14px] z-10">
+      <div className="absolute right-[10%] top-1/2 transform text-right text-[14px] z-10">
         <Link
           href={"https://github.com/URR-A-4/URR-final"}
           className="flex items-center justify-end mb-2"
           target="_blank"
-          rel="noopener noreferrer"
         >
           <div className="w-[20px] h-[20px] relative mr-1">
             <Image

@@ -27,7 +27,7 @@ const LoadingComponent = () => {
         body: JSON.stringify({
           name: req.fullName,
           userId: req.userId,
-          orderCount: req.orderCount, // 고칠것 수량
+          orderCount: req.orderCount,
           paymentId: paymentId,
           price: req.price,
           orderName: req.orderName,

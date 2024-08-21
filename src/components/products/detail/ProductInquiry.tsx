@@ -41,7 +41,7 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
   const router = useRouter();
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [isPrivate, setIsPrivate] = useState(false);
-  const [commentValue, setCommentValue] = useState(""); // Track input value
+  const [commentValue, setCommentValue] = useState("");
 
   const { data: commentList } = useProductComment(id, restart);
 
@@ -85,10 +85,9 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
       commentRef.current.value = "";
     }
     setIsPrivate(false);
-    setCommentValue(""); // Reset input value
+    setCommentValue("");
   };
 
-  // 댓글 수정
   const { mutate: updateMutation } = useMutation({
     mutationFn: updateComment,
     onSuccess: () => {
@@ -102,7 +101,6 @@ export default function ProductInquiry({ id, restart, setRestart }: StateType) {
     updateMutation({ content: editComment, id: id });
   };
 
-  // 댓글 삭제
   const { mutate: deleteMutation } = useMutation({
     mutationFn: (id: string) => deleteComment(id),
     onSuccess: () => {

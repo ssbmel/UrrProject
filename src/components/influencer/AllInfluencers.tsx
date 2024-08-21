@@ -16,7 +16,7 @@ import LoadingUrr from "../common/loading/LoadingUrr";
 import swal from "sweetalert";
 import { useRouter } from "next/navigation";
 
-function InfluencerList() {
+function AllInfluencers() {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +54,7 @@ function InfluencerList() {
     fetchData();
   }, [user]);
 
-  const subscribedHandler = (e: MouseEvent<HTMLButtonElement>, inf: User) => {
+  const subscribeHandler = (e: MouseEvent<HTMLButtonElement>, inf: User) => {
     e.stopPropagation();
     if (!user) {
       swal("로그인을 먼저 진행해주세요.").then(() => {
@@ -84,7 +84,7 @@ function InfluencerList() {
     mutationFn: (data) => subscribedInfUser(data)
   });
 
-  const cancelSubscribedHandler = (inf: User) => {
+  const cancelSubscribeHandler = (inf: User) => {
     if (!user) return;
 
     cancelSubscribedMutation({
@@ -151,11 +151,11 @@ function InfluencerList() {
                     </Link>
                     <div className="absolute bottom-0.5 right-1">
                       {subscribeIds.includes(inf.id) ? (
-                        <button onClick={() => cancelSubscribedHandler(inf)}>
+                        <button onClick={() => cancelSubscribeHandler(inf)}>
                           <FullHeartIcon />
                         </button>
                       ) : (
-                        <button onClick={(e) => subscribedHandler(e, inf)}>
+                        <button onClick={(e) => subscribeHandler(e, inf)}>
                           <EmptyHeartIcon />
                         </button>
                       )}
@@ -190,11 +190,11 @@ function InfluencerList() {
                 <div className="absolute bottom-0.5 right-2">
                   {inf.id !== user?.id &&
                     (subscribeIds.includes(inf.id) ? (
-                      <button onClick={() => cancelSubscribedHandler(inf)}>
+                      <button onClick={() => cancelSubscribeHandler(inf)}>
                         <FullHeartIcon />
                       </button>
                     ) : (
-                      <button onClick={(e) => subscribedHandler(e, inf)}>
+                      <button onClick={(e) => subscribeHandler(e, inf)}>
                         <EmptyHeartIcon />
                       </button>
                     ))}
@@ -209,4 +209,4 @@ function InfluencerList() {
   );
 }
 
-export default InfluencerList;
+export default AllInfluencers;

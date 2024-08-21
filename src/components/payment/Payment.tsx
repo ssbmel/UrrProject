@@ -34,8 +34,8 @@ export default function Payment() {
         const response = await paymentFunc({
           fullName: fullName,
           orderCount: 2,
-          orderName: "sample test", // 주문상품 이름
-          price: price, // 상품 전체 가격
+          orderName: "sample test",
+          price: price,
           address,
           phoneNumber: phoneNumber,
           productList: productList,
@@ -43,7 +43,7 @@ export default function Payment() {
         });
 
         if (response?.paymentId) {
-          // swal("결제가 성공적으로 완료되었습니다.");
+          swal("결제가 성공적으로 완료되었습니다.");
           router.push(`/payment/loading?paymentId=${response.paymentId}`);
         } else {
           swal("결제 중 오류가 발생했습니다.");
@@ -51,7 +51,6 @@ export default function Payment() {
       }
     } catch (error) {
       swal("구매하시려면 로그인 해주세요");
-      // router.push("/login");
     }
   };
 

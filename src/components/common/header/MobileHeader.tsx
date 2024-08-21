@@ -21,7 +21,7 @@ const MobileHeader = () => {
   const { data: user } = useUserData();
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  
+
   const HOME = pathname === "/";
   const ADMIN = pathname === "/admin";
   const LOGIN = pathname === "/login";
@@ -109,26 +109,24 @@ const MobileHeader = () => {
     );
   }
 
-  if (MY_PAGE) {
-    if (() => isInfluncer()) {
-      rightIcon = (
-        <>
-          <Link href={"/products/upload/new"}>
-            <AddProductIcon />
-          </Link>
-          <Link href={"/cart"}>
-            <CartIcon />
-          </Link>
-        </>
-      );
-    }
+  if (MY_PAGE && isInfluncer()) {
+    rightIcon = (
+      <>
+        <Link href={"/products/upload/new"}>
+          <AddProductIcon />
+        </Link>
+        <Link href={"/cart"}>
+          <CartIcon />
+        </Link>
+      </>
+    );
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsMobile(/Mobi/i.test(window.navigator.userAgent));
-  },[])
+  }, []);
 
-  if (!isMobile && (pathname.startsWith("/chatlist/") && pathname.split("/").length === 3)) {
+  if (!isMobile && pathname.startsWith("/chatlist/") && pathname.split("/").length === 3) {
     return null;
   }
 

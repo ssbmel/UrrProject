@@ -34,8 +34,8 @@ export default function Payment() {
         const response = await paymentFunc({
           fullName: fullName,
           orderCount: 2,
-          orderName: "sample test", // 주문상품 이름
-          price: price, // 상품 전체 가격
+          orderName: "sample test",
+          price: price,
           address,
           phoneNumber: phoneNumber,
           productList: productList,
@@ -51,7 +51,6 @@ export default function Payment() {
       }
     } catch (error) {
       swal("구매하시려면 로그인 해주세요");
-      // router.push("/login");
     }
   };
 

@@ -433,7 +433,12 @@ export default function Chat({ params }: detailProps) {
                 <label className="text-[#020303] font-semibold text-[20px]">{channelName}</label>
               </div>
               <div className="absolute top-4 bottom-3 right-3">
-                <XIcon />
+                <XIcon
+                  onClick={
+                    ()=>{
+                      window.close();
+                    }
+                  }></XIcon>
               </div>
             </div>
           }

@@ -1,8 +1,8 @@
-import InfluencerList from "@/components/influencer/InfluencerList";
+import AllInfluencers from "@/components/influencer/AllInfluencers";
 
 const page = () => {
   return (
-      <InfluencerList />
+      <AllInfluencers />
   );
 };
 

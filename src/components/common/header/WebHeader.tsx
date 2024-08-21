@@ -35,22 +35,19 @@ export function WebHeader() {
 
   return (
     <>
-      <header className="flex flex-row justify-between items-center h-[108px] w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[6%] py-[6px]">
+      <header className="flex flex-row justify-between items-center h-[108px] w-full mx-auto shrink-0 sticky top-0 bg-white z-50 px-[6%] py-[6px] ">
         <ul className="flex flex-row items-center">
           <Link href={"/"}>
             <Image src={Logo} alt="Urr logo" width={121} height={66} className="mr-[71px] priority" />
           </Link>
-          <li className="text-xl mr-10 cursor-pointer  relative" onMouseEnter={() => setIsHoveringStore(true)}>
+          <li className="text-xl mr-10 cursor-pointer  relative">
             <Link href={"/products/list"}>
               <p className="hover:text-primarystrong">Store</p>
             </Link>
-            {isHoveringStore && (
+            {/* {isHoveringStore && (
               <div className="fixed flex left-0 top-[108px] w-full h-[344px] px-[6%] hover: bg-white z-40 shadow-lg ">
                 <div className="w-[192px]" />
-                <div
-                  className="w-[104px]  flex flex-col text-[18px] gap-[10px]"
-                  onMouseLeave={() => setIsHoveringStore(false)}
-                >
+                <div className="w-[104px]  flex flex-col text-[18px] gap-[10px]">
                   <Link href="/products/list?category=뷰티">
                     <p className="hover:text-primarystrong">뷰티</p>
                   </Link>
@@ -77,7 +74,7 @@ export function WebHeader() {
                   </Link>
                 </div>
               </div>
-            )}
+            )} */}
           </li>
 
           <Link href={"/influencer"}>

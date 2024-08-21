@@ -23,12 +23,12 @@ const Footer = () => {
         objectPosition="center"
         priority
       />
-      
+
       {/* Content */}
       <div className="absolute left-[10%] top-1/2 transform -translate-y-1/2 text-[14px] z-10">
         <ul className="flex gap-3">
           <li className="text-[#4C4F52] w-[50px]">서비스명</li>
-          <li className="text-[#1B1C1D] font-medium">Urr</li> 
+          <li className="text-[#1B1C1D] font-medium">Urr</li>
         </ul>
         <ul className="flex gap-3">
           <li className="text-[#4C4F52] w-[50px]">개발자</li>
@@ -41,19 +41,13 @@ const Footer = () => {
       </div>
       <div className="absolute right-[5%] top-1/2 transform -translate-y-1/2 text-right text-[14px] z-10">
         <Link
-          href={"https://github.com/URR-A-4/URR-final"}
+          href={"https://github.com/URR-A-4"}
           className="flex items-center justify-end mb-2"
           target="_blank"
           rel="noopener noreferrer"
         >
           <div className="w-[20px] h-[20px] relative mr-1">
-            <Image
-              src={github}
-              alt="github"
-              fill
-              sizes="20px"
-              className="object-cover"
-            />
+            <Image src={github} alt="github" fill sizes="20px" className="object-cover" />
           </div>
           <p className="text-[#1B1C1D] font-medium text-[16px]">Urr Github</p>
         </Link>

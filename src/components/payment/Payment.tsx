@@ -43,7 +43,7 @@ export default function Payment() {
         });
 
         if (response?.paymentId) {
-          swal("결제가 성공적으로 완료되었습니다.");
+          // swal("결제가 성공적으로 완료되었습니다.");
           router.push(`/payment/loading?paymentId=${response.paymentId}`);
         } else {
           swal("결제 중 오류가 발생했습니다.");

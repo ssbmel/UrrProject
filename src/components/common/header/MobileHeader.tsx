@@ -109,10 +109,9 @@ const MobileHeader = () => {
     );
   }
 
-  if (MY_PAGE) {
-    if (isInfluncer()) {
-      rightIcon = (
-        <>
+  if (MY_PAGE && isInfluncer()) {
+    rightIcon = (
+      <>
         <Link href={"/products/upload/new"}>
           <AddProductIcon />
         </Link>
@@ -120,16 +119,7 @@ const MobileHeader = () => {
           <CartIcon />
         </Link>
       </>
-      );
-    } else{
-    rightIcon = (
-      <>
-        <Link href={"/cart"}>
-          <CartIcon />
-        </Link>
-      </>
     );
-  }
   }
 
   useEffect(() => {

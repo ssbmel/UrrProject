@@ -1,5 +1,5 @@
 
-<img src="../Profile/images/urr-Brochure-image 1.png"  width="100%" height="500"/>
+<img src="./ReadMeImages/urr-Brochure-image 1.png"  width="100%" height="500"/>
 
 <div align="center">
 
@@ -37,7 +37,7 @@
 
 ## 시스템 아키텍쳐
 <div align="center">
-    <img src="../Profile/images/urr.png"  width="500" height="400"/>
+    <img src="./ReadMeImages/urr.png"  width="500" height="400"/>
 </div>
 
 
@@ -53,8 +53,8 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/login2.png"  width="350" height="400"/>
-<img src="../Profile/images/login1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/login2.png"  width="350" height="400"/>
+<img src="./ReadMeImages/login1.png"  width="650" height="400"/>
 
  <br>
 </div>
@@ -68,8 +68,8 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/main1.png"  width="350" height="400"/>
-<img src="../Profile/images/main1-1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/main1.png"  width="350" height="400"/>
+<img src="./ReadMeImages/main1-1.png"  width="650" height="400"/>
 
  <br>
 </div>
@@ -82,16 +82,16 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/store1-1.png"  width="350" height="400"/>
-<img src="../Profile/images/store1.png"  width="650" height="400"/>
-<img src="../Profile/images/store2-2.png"  width="350" height="450"/>
-<img src="../Profile/images/store2.png"  width="650" height="450"/>
-<img src="../Profile/images/store3-3.png"  width="350" height="450"/>
-<img src="../Profile/images/store3.png"  width="650" height="450"/>
-<img src="../Profile/images/store4-4.png"  width="350" height="450"/>
-<img src="../Profile/images/store4.png"  width="650" height="450"/>
-<img src="../Profile/images/store5-5.png"  width="350" height="450"/>
-<img src="../Profile/images/store5.png"  width="650" height="450"/>
+<img src="./ReadMeImages/store1-1.png"  width="350" height="400"/>
+<img src="./ReadMeImages/store1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/store2-2.png"  width="350" height="450"/>
+<img src="./ReadMeImages/store2.png"  width="650" height="450"/>
+<img src="./ReadMeImages/store3-3.png"  width="350" height="450"/>
+<img src="./ReadMeImages/store3.png"  width="650" height="450"/>
+<img src="./ReadMeImages/store4-4.png"  width="350" height="450"/>
+<img src="./ReadMeImages/store4.png"  width="650" height="450"/>
+<img src="./ReadMeImages/store5-5.png"  width="350" height="450"/>
+<img src="./ReadMeImages/store5.png"  width="650" height="450"/>
  <br>
 </div>
 </details>
@@ -103,8 +103,8 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/inf1.png"  width="350" height="400"/>
-<img src="../Profile/images/inf1-1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/inf1.png"  width="350" height="400"/>
+<img src="./ReadMeImages/inf1-1.png"  width="650" height="400"/>
 
  <br>
 </div>
@@ -117,8 +117,8 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/chat1.png"  width="350" height="400"/>
-<img src="../Profile/images/chat1-1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/chat1.png"  width="350" height="400"/>
+<img src="./ReadMeImages/chat1-1.png"  width="650" height="400"/>
 
  <br>
 </div>
@@ -132,12 +132,12 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/my1.png"  width="350" height="400"/>
-<img src="../Profile/images/my1-1.png"  width="650" height="400"/>
-<img src="../Profile/images/my2.png"  width="350" height="400"/>
-<img src="../Profile/images/my2-2.png"  width="650" height="400"/>
-<img src="../Profile/images/my3.png"  width="350" height="400"/>
-<img src="../Profile/images/my3-3.png"  width="650" height="400"/>
+<img src="./ReadMeImages/my1.png"  width="350" height="400"/>
+<img src="./ReadMeImages/my1-1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/my2.png"  width="350" height="400"/>
+<img src="./ReadMeImages/my2-2.png"  width="650" height="400"/>
+<img src="./ReadMeImages/my3.png"  width="350" height="400"/>
+<img src="./ReadMeImages/my3-3.png"  width="650" height="400"/>
 
  <br>
 </div>
@@ -150,8 +150,8 @@
 <summary>미리보기</summary>
 <div markdown="1">
 
-<img src="../Profile/images/search1-1.png"  width="350" height="400"/>
-<img src="../Profile/images/search1.png"  width="650" height="400"/>
+<img src="./ReadMeImages/search1-1.png"  width="350" height="400"/>
+<img src="./ReadMeImages/search1.png"  width="650" height="400"/>
 
  <br>
 </div>

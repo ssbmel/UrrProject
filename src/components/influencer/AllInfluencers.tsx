@@ -22,10 +22,19 @@ function AllInfluencers() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        await getSubscribeData();
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
   const getSubscribeData = async () => {
     try {
-      if (!user) return;
-
       const response = await fetch(`/api/subscribe?user_id=${user.id}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -43,18 +52,7 @@ function AllInfluencers() {
     queryFn: () => getInfluencerData()
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user) {
-        await getSubscribeData();
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [user]);
-
-  const subscribeHandler = (e: MouseEvent<HTMLButtonElement>, inf: User) => {
+  const subscribeHandler = async (e: MouseEvent<HTMLButtonElement>, inf: User) => {
     e.stopPropagation();
     if (!user) {
       swal("로그인을 먼저 진행해주세요.").then(() => {
@@ -66,8 +64,9 @@ function AllInfluencers() {
       user_id: user.id,
       infuser_id: inf.id
     };
+    setSubscribeIds((prev) => [...prev, inf.id]);
+    await subscribedMutation(newInfUser);
     swal(`${inf.nickname}님을 구독하였습니다.`);
-    subscribedMutation(newInfUser);
   };
 
   const subscribedInfUser = async (data: InfSubscribe) => {
@@ -84,13 +83,15 @@ function AllInfluencers() {
     mutationFn: (data) => subscribedInfUser(data)
   });
 
-  const cancelSubscribeHandler = (inf: User) => {
+  const cancelSubscribeHandler = async (inf: User) => {
     if (!user) return;
 
-    cancelSubscribedMutation({
+    setSubscribeIds((prev) => prev.filter((id) => id !== inf.id));
+    await cancelSubscribedMutation({
       infuser_id: inf.id,
       user_id: user.id
     });
+    swal("구독이 취소되었습니다.");
   };
 
   const cancelSubscribedInfUser = async (data: InfSubscribe) => {
@@ -121,7 +122,7 @@ function AllInfluencers() {
         {!user ? (
           <div className="flex h-[200px]">
             <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px] mx-auto mt-[80px]">
-              로그인이 정보가 없습니다.
+              로그인 정보가 없습니다.
             </p>
           </div>
         ) : subscribeIds.length === 0 ? (

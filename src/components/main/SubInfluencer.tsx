@@ -12,12 +12,17 @@ import Link from "next/link";
 function SubInfluencer({ infUser }: { infUser: User[] }) {
   const { data: user } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      getSubscribeData();
-    }
-    return;
+    const fetchData = async () => {
+      if (user) {
+        await getSubscribeData();
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, [user]);
 
   const getSubscribeData = async () => {
@@ -35,6 +40,14 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
     }
   };
 
+  if (isLoading) {
+    return (
+      <p className="text-[#4C4F52] text-[16px] h-[300px] mx-auto flex items-center whitespace-nowrap">
+        로딩 중입니다.
+      </p>
+    );
+  }
+
   return (
     <div className="w-full h-[220px] xl:h-auto px-4 py-[26px]">
       <h2 className="font-bold text-xl mb-5 xl:text-[22px] xl:my-[26px]">내가 구독한 인플루언서</h2>
@@ -50,7 +63,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
         ) : (
           <div className="w-full flex overflow-x-auto gap-[18px] xl:gap-5 scrollbar-hide">
             {infUser
-              ?.filter((inf) => subscribeIds.includes(inf.id) && inf.id !== user?.id) 
+              ?.filter((inf) => subscribeIds.includes(inf.id) && inf.id !== user?.id)
               .map((inf) => (
                 <div
                   key={inf.id}

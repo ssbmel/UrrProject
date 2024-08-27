@@ -37,8 +37,8 @@ export default function Banner() {
       loop={true}
     >
       <SwiperSlide>
-        <div className="xl:w-full xl:h-[800px] relative">
-          <Image src={banner1} alt="mainImg" fill sizes="1920px" priority className="object-contain" />
+        <div className="xl:w-full xl:h-[900px] relative">
+          <Image src={banner1} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-contain" />
         </div>
         <div className="w-full h-[328px] relative xl:hidden">
           <Image src={minibanner1} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
@@ -48,8 +48,8 @@ export default function Banner() {
       <SwiperSlide>
         <div className="xl:w-full relative">
           <Link href={"/products/detail/a291eb38-cdd7-4a97-87d0-314cec358b1f"}>
-            <div className="xl:w-full xl:h-[800px] relative">
-              <Image src={banner2} alt="mainImg" fill sizes="1920px" priority className="object-contain" />
+            <div className="xl:w-full xl:h-[900px] relative">
+              <Image src={banner2} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-contain" />
             </div>
           </Link>
         </div>
@@ -64,8 +64,8 @@ export default function Banner() {
       </SwiperSlide>
 
       <SwiperSlide>
-        <div className="xl:w-full xl:h-[800px] relative">
-          <Image src={banner3} alt="mainImg" fill sizes="1920px" priority className="object-contain" />
+        <div className="xl:w-full xl:h-[900px] relative">
+          <Image src={banner3} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-contain" />
         </div>
         <div className="w-full h-[328px] relative xl:hidden">
           <Image src={minibanner3} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
@@ -73,8 +73,8 @@ export default function Banner() {
       </SwiperSlide>
 
       <SwiperSlide>
-        <div className="xl:w-full xl:h-[800px] relative">
-          <Image src={banner4} alt="mainImg" fill sizes="1920px" priority className="object-contain" />
+        <div className="xl:w-full xl:h-[900px] relative">
+          <Image src={banner4} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-contain" />
         </div>
         <div className="w-full h-[328px] relative xl:hidden">
           <Image src={minibanner4} alt="mainImg" fill sizes="375px 328px" className="object-contain" />
@@ -84,8 +84,8 @@ export default function Banner() {
       <SwiperSlide>
         <div className="xl:w-full relative">
           <Link href={"/influencer"}>
-            <div className="xl:w-full xl:h-[800px] relative">
-              <Image src={banner5} alt="mainImg" fill sizes="1920px" priority className="object-contain" />
+            <div className="xl:w-full xl:h-[900px] relative">
+              <Image src={banner5} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-contain" />
             </div>
           </Link>
         </div>

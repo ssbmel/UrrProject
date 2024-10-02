@@ -36,14 +36,6 @@ body {
   display: none;
 }
 
-
-.swiper-pagination-bullet, 
-.swiper-pagination-bullet-active {
-  width: 25px;
-  height: 5px;
-  border-radius: 10%;
-}
-
 .image-container {
   position: relative;
   width: 100%;

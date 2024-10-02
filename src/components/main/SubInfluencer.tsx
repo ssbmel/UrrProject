@@ -40,7 +40,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
     }
   };
 
-  if (isLoading) {
+  if (user && isLoading) {
     return (
       <p className="text-[#4C4F52] text-[16px] h-[300px] mx-auto flex items-center whitespace-nowrap">
         로딩 중입니다.
@@ -54,7 +54,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
       <div className="flex flex-row overflow-x-auto flex-nowrap scrollbar">
         {!user ? (
           <p className="text-[#4C4F52] text-[16px] h-[142px] mx-auto flex items-center whitespace-nowrap">
-            로그인 정보가 없습니다.
+            로그인이 필요합니다.
           </p>
         ) : subscribeIds.length === 0 ? (
           <p className="text-[#4C4F52] text-[16px] h-[142px] mx-auto flex items-center whitespace-nowrap">

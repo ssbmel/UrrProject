@@ -110,7 +110,7 @@ function AllInfluencers() {
     mutationFn: (data) => cancelSubscribedInfUser(data)
   });
 
-  if (isLoading) {
+  if (user && isLoading) {
     return <LoadingUrr />;
   }
 
@@ -122,7 +122,7 @@ function AllInfluencers() {
         {!user ? (
           <div className="flex h-[200px]">
             <p className="text-[#4C4F52] text-[16px] my-5 xl:text-[18px] xl:mb-[52px] mx-auto mt-[80px]">
-              로그인 정보가 없습니다.
+              로그인이 필요합니다.
             </p>
           </div>
         ) : subscribeIds.length === 0 ? (

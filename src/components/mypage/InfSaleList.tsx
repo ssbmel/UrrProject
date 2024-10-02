@@ -108,7 +108,6 @@ const InfSaleList = ({ user }: Props) => {
                     </div>
                   </div>
                   <div className="flex items-center xl:flex-col xl:gap-[8px] text-center">
-                    {new Date() > new Date(item.end) ? null : (
                       <Link
                         href={`/products/upload/${item.id}`}
                         className="xl:w-[112px] xl:h-[44px] xl:py-[12px] xl:px-[28px] xl:border xl:border-[#EAECEC] xl:rounded-[8px] xl:hover:bg-primarylightness transition-colors"
@@ -118,7 +117,6 @@ const InfSaleList = ({ user }: Props) => {
                         </span>
                         <span className="text-[#0068E5] font-[600] hidden xl:block">수정하기</span>
                       </Link>
-                    )}
                     <button
                       type="button"
                       onClick={() => handleDelete(item.id)}

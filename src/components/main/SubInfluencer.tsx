@@ -20,8 +20,8 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
         await getSubscribeData();
         setIsLoading(false);
       }
+      setIsLoading(false);
     };
-
     fetchData();
   }, [user]);
 
@@ -40,7 +40,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
     }
   };
 
-  if (user && isLoading) {
+  if (isLoading) {
     return (
       <p className="text-[#4C4F52] text-[16px] h-[300px] mx-auto flex items-center whitespace-nowrap">
         로딩 중입니다.

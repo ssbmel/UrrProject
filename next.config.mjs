@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         hostname: "fikdisavtipodbzfiafd.supabase.co"
@@ -22,7 +21,8 @@ const nextConfig = {
       {
         hostname: "t1.kakaocdn.net"
       }
-    ]
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
   webpack: (config) => {
     config.module.rules.push({

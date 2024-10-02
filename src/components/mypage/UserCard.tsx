@@ -15,14 +15,26 @@ const UserCard = () => {
   const router = useRouter();
 
   const logoutHandler = async () => {
-    if (!confirm("로그아웃 하시겠습니까?")) {
+    const isConfirmed = await swal({ 
+      text: "로그아웃 하시겠습니까?",
+      buttons: ["취소", "로그아웃"],
+      dangerMode: true,
+    });
+  
+    if (!isConfirmed) {
       return;
     }
+  
     const status = await userLogout();
+  
     if (status !== 200) {
-      swal("로그아웃에 실패했습니다. 다시 시도해주세요.");
+      await swal({
+        text: "로그아웃에 실패했습니다. 다시 시도해주세요.",
+        buttons: ["확인"],
+      });
       return;
     }
+  
     router.push("/");
     location.reload();
     return;

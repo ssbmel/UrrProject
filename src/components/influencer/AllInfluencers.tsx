@@ -27,7 +27,7 @@ function AllInfluencers() {
       if (user) {
         await getSubscribeData();
         setIsLoading(false);
-      }
+      } setIsLoading(false);
     };
 
     fetchData();
@@ -110,7 +110,7 @@ function AllInfluencers() {
     mutationFn: (data) => cancelSubscribedInfUser(data)
   });
 
-  if (user && isLoading) {
+  if (isLoading) {
     return <LoadingUrr />;
   }
 

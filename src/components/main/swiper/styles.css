@@ -41,7 +41,7 @@ body {
 .swiper-pagination-bullet-active {
   width: 25px;
   height: 5px;
-  border-radius: 15%;
+  border-radius: 10%;
 }
 
 .image-container {

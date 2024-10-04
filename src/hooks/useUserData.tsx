@@ -9,7 +9,7 @@ const LoginUserData = async () => {
     return null;
   }
   const response = await fetch("/api/auth/users");
-  const data = response.json();
+  const data = await response.json();
   return data;
 };
 
@@ -22,7 +22,8 @@ const getUserData = async () => {
 export const useUserData = () => {
   return useQuery({
     queryKey: ["userData"],
-    queryFn: () => LoginUserData(),
-    select: (data) => data?.userInfo.data
+    queryFn: LoginUserData,
+    select: (data) => data?.userInfo?.data,
+    retry: false,
   });
 };

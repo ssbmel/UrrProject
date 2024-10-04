@@ -17,19 +17,19 @@ import swal from "sweetalert";
 import { useRouter } from "next/navigation";
 
 function AllInfluencers() {
-  const { data: user } = useUserData();
+  const { data: user, isLoading} = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(true); 
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (user) {
+      if(user) {
         await getSubscribeData();
-        setIsLoading(false);
-      } setIsLoading(false);
+        setIsFetching(false);
+      }
     };
-
+        
     fetchData();
   }, [user]);
 
@@ -84,8 +84,6 @@ function AllInfluencers() {
   });
 
   const cancelSubscribeHandler = async (inf: User) => {
-    if (!user) return;
-
     setSubscribeIds((prev) => prev.filter((id) => id !== inf.id));
     await cancelSubscribedMutation({
       infuser_id: inf.id,
@@ -125,7 +123,7 @@ function AllInfluencers() {
               로그인이 필요합니다.
             </p>
           </div>
-        ) : subscribeIds.length === 0 ? (
+        ) : !isFetching && subscribeIds.length === 0 ? (
           <div className="flex flex-col items-center mx-auto">
             <div className="relative w-[150px] h-[100px] my-3 xl:my-[26px]">
               <Image src={emptyImg} alt="empty" fill sizes="100px xl:w-[150px]" className="mx-auto my-5 object-cover" />

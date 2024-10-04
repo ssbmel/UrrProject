@@ -10,17 +10,16 @@ import FullHeartIcon from "../../../public/icon/fullheart.svg";
 import Link from "next/link";
 
 function SubInfluencer({ infUser }: { infUser: User[] }) {
-  const { data: user } = useUserData();
+  const { data: user, isLoading, isError } = useUserData();
   const [subscribeIds, setSubscribeIds] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(true); 
 
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
         await getSubscribeData();
-        setIsLoading(false);
+        setIsFetching(false);
       }
-      setIsLoading(false);
     };
     fetchData();
   }, [user]);
@@ -52,11 +51,11 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
     <div className="w-full h-[220px] xl:h-auto px-4 py-[26px]">
       <h2 className="font-bold text-xl mb-5 xl:text-[22px] xl:my-[26px]">내가 구독한 인플루언서</h2>
       <div className="flex flex-row overflow-x-auto flex-nowrap scrollbar">
-        {!user ? (
+        {isError || !user ? (
           <p className="text-[#4C4F52] text-[16px] h-[142px] mx-auto flex items-center whitespace-nowrap">
             로그인이 필요합니다.
           </p>
-        ) : subscribeIds.length === 0 ? (
+        ) : !isFetching && subscribeIds.length === 0 ? (
           <p className="text-[#4C4F52] text-[16px] h-[142px] mx-auto flex items-center whitespace-nowrap">
             구독중인 인플루언서가 없습니다.
           </p>

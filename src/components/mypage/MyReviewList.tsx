@@ -10,12 +10,19 @@ import Link from "next/link";
 import MoreReview from "./my-review/MoreReview";
 import { PublicUser } from "../../../types/auth.type";
 import { deleteReview } from "@/services/review/review.service";
+import swal from "sweetalert";
 
 const MyReviewList = ({ user }: { user: PublicUser }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState<Review[]>([]);
 
   const supabase = createClient();
+
+  useEffect(() => {
+    if (user?.id) {
+      getReviewData();
+    }
+  }, [reviewData]);
 
   const getReviewData = async () => {
     if (!user || !user.id) {
@@ -30,12 +37,6 @@ const MyReviewList = ({ user }: { user: PublicUser }) => {
     }
   };
 
-  useEffect(() => {
-    if (user?.id) {
-      getReviewData();
-    }
-  }, [user]);
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toISOString().substring(0, 10);
@@ -49,9 +50,9 @@ const MyReviewList = ({ user }: { user: PublicUser }) => {
     const result = await swal("해당 리뷰를 삭제하시겠습니까?", {
       buttons: ["아니오", "예"]
     });
-
-    if (!result) return;
     deleteReviewMutation(review);
+    if (!result) return;
+
   };
 
   return (

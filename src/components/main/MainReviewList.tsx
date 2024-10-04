@@ -93,7 +93,7 @@ function MainReviewList() {
           )}
         </div>
       </div>
-      <div className="hidden xl:block">
+      <div className="w-full h-auto hidden xl:block">
         <Swiper
           slidesPerView={3}
           centeredSlides={false}
@@ -122,6 +122,7 @@ function MainReviewList() {
                           fill
                           sizes="276px"
                           className="rounded-md object-cover"
+                          priority
                         />
                       </div>
                     </div>

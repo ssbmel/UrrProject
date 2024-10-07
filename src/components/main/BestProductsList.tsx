@@ -5,9 +5,11 @@ import Image from "next/image";
 import { Product, Review } from "../../../types/common";
 import defaultImg from "../../../public/images/default.png";
 import MiniRightArrowIcon from "../../../public/icon/minirightarrow.svg";
+import { useMemo } from "react";
 
 function BestProductsList({ productsList, ratingCount }: { productsList: Product[]; ratingCount: Review[] }) {
-  const productsWithFiveStarReviews = productsList.map((product) => {
+  const productsWithFiveStarReviews = useMemo(()=>{
+    return productsList.map((product) => {
     const fiveStarReviews = ratingCount.filter(
       (review) => review.product_id === product.id && review.review_score === 5
     ).length;
@@ -17,10 +19,17 @@ function BestProductsList({ productsList, ratingCount }: { productsList: Product
     };
   });
 
-  const sortedProducts = productsWithFiveStarReviews
-    .filter((product) => product.fiveStarReviews > 0)
-    .sort((a, b) => b.fiveStarReviews - a.fiveStarReviews)
-    .slice(0, 10);
+  },[productsList, ratingCount]) 
+  
+  
+
+  const sortedProducts = useMemo(()=>{
+    return productsWithFiveStarReviews
+      .filter((product) => product.fiveStarReviews > 0)
+      .sort((a, b) => b.fiveStarReviews - a.fiveStarReviews)
+      .slice(0, 10);
+},[productsWithFiveStarReviews]) 
+  
 
   return (
     <div className="w-full px-4 py-5 xl:mb-[30px]">

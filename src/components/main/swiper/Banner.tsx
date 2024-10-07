@@ -33,33 +33,49 @@ export default function Banner() {
     >
       <SwiperSlide>
         <div className="xl:w-full xl:h-[900px] relative">
-          <Image src={banner1} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-cover" />
+          <Image
+            src={banner1}
+            alt="banner1"
+            fill
+            sizes="(min-width:768px) 50vw 100vw"
+            priority
+            className="object-cover"
+          />
         </div>
-        <div className="w-full h-[328px] relative xl:hidden">
-          <Image src={minibanner1} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide>
-        <div className="xl:w-full relative">
-            <div className="xl:w-full xl:h-[900px] relative">
-              <Image src={banner2} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-cover" />
-            </div>
-        </div>
-
-        <div className="w-full relative xl:hidden">
-            <div className="w-full h-[328px] relative xl:hidden">
-              <Image src={minibanner2} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
-            </div>
+        <div className="w-full h-[328px] relative block xl:hidden">
+          <Image src={minibanner1} alt="minibanner1" fill sizes="375px" className="object-cover" />
         </div>
       </SwiperSlide>
 
       <SwiperSlide>
         <div className="xl:w-full xl:h-[900px] relative">
-          <Image src={banner3} alt="mainImg" fill sizes="(min-width:768px) 50vw 100vw" priority className="object-cover" />
+          <Image
+            src={banner2}
+            alt="banner2"
+            fill
+            sizes="(min-width:768px) 50vw 100vw"
+            priority
+            className="object-cover"
+          />
         </div>
-        <div className="w-full h-[328px] relative xl:hidden">
-          <Image src={minibanner3} alt="mainImg" fill sizes="375px 328px" className="object-cover" />
+        <div className="w-full h-[328px] relative block xl:hidden">
+          <Image src={minibanner2} alt="minibanner2" fill sizes="375px" className="object-cover" />
+        </div>
+      </SwiperSlide>
+
+      <SwiperSlide>
+        <div className="xl:w-full xl:h-[900px] relative">
+          <Image
+            src={banner3}
+            alt="banner3"
+            fill
+            sizes="(min-width:768px) 50vw 100vw"
+            priority
+            className="object-cover"
+          />
+        </div>
+        <div className="w-full h-[328px] relative block xl:hidden">
+          <Image src={minibanner3} alt="minibanner3" fill sizes="375px" className="object-cover" />
         </div>
       </SwiperSlide>
     </Swiper>

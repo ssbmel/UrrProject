@@ -21,7 +21,7 @@ function ProviderLayout({ children }: PropsWithChildren) {
         <WebHeader />
       </div>
       <main className={`grow overflow-auto ${!MB ? "mb-[93px]" : "mb-0"} xl:mb-0`}>
-        <div>{children}</div>
+        <div className="">{children}</div>
         <Footer />
       </main>
       <div className="xl:hidden z-40 fixed bottom-0 left-0 w-full">

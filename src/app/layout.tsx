@@ -13,7 +13,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "URR",
+  title: "모든 공구상품을 한번에 URR",
   description: "인플루언서와 소통하고 공구상품을 구매해보세요!",
   openGraph: {
     images: "/main.png"

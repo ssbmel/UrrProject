@@ -32,7 +32,7 @@ function BestInfluencerList({ infUser }: { infUser: User[] }) {
 
   const sortedInfUser = useMemo(()=>{
     return infUser.sort((a, b) => (subscriptionCounts[b.id] || 0) - (subscriptionCounts[a.id] || 0));
-  },[infUser]) 
+  },[subscriptionCounts, infUser]) 
 
   return (
     <div className="mx-auto h-[433px] px-4 pt-6 bg-[url('../../public/bgImg/influencerImg.png')] xl:bg-[url('../../public/bgImg/bestInf.png')] xl:bg-center bg-cover bg-no-repeat flex flex-col xl:flex-row w-full xl:w-[1133px] xl:h-[572px] xl:justify-between xl:mb-[30px]">

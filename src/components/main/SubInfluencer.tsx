@@ -72,7 +72,7 @@ function SubInfluencer({ infUser }: { infUser: User[] }) {
                     <div className="relative w-[85px] h-[85px] xl:w-[150px] xl:h-[150px] mb-2">
                       <Image
                         src={inf.profile_url || defaultImg}
-                        alt="img"
+                        alt="profileImg"
                         fill
                         sizes="85px xl:150px"
                         className="rounded-md object-cover gradient-border"

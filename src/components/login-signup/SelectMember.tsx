@@ -55,7 +55,7 @@ export default function SelectMember({ setStep, confirmRef, setSelectUser, selec
             sizes="50%"
             priority
             className="xl:w-full xl:min-h-[calc(100vh - 318px)] h-[100%] object-cover"
-            alt=""
+            alt="WebSignupBg1"
           />
         </div>
 

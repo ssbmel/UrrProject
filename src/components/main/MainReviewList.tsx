@@ -54,9 +54,9 @@ function MainReviewList() {
                     <div className="relative w-[108px] h-[108px]">
                       <Image
                         src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
-                        alt="img"
+                        alt="reviewImg"
                         fill
-                        sizes="108px"
+                        sizes="108px" 
                         className="rounded-md object-cover"
                       />
                     </div>
@@ -118,7 +118,7 @@ function MainReviewList() {
                       <div className="w-[276px] h-[201px] relative mb-2">
                         <Image
                           src={Array.isArray(review.review_images) ? review.review_images[0] : defaultImg}
-                          alt="img"
+                          alt="reviewImg"
                           fill
                           sizes="276px"
                           className="rounded-md object-cover"

@@ -52,7 +52,7 @@ function BestProductsList({ productsList, ratingCount }: { productsList: Product
                   <div className="relative w-[121px] h-[131px] xl:w-[200px] xl:h-[214px] mb-2">
                     <Image
                       src={list.main_img || defaultImg}
-                      alt="img"
+                      alt="productImg"
                       fill
                       sizes="121px xl:200px"
                       className="rounded-md object-cover"

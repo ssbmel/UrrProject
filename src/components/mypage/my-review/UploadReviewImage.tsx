@@ -76,7 +76,7 @@ const UploadReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImage
         <div className="w-[100px] h-[100px] xl:w-[120px] border shadow-md rounded-md text-center flex flex-col items-center justify-center mb-5 cursor-pointer">
           <label className="w-full h-full flex flex-col items-center justify-center">
             <div className="w-[38px] h-[38px] relative">
-              <Image src={Blackcamera.src} alt="img" fill sizes="38px" className="w-full h-full object-cover" />
+              <Image src={Blackcamera.src} alt="camera" fill sizes="38px" className="w-full h-full object-cover" />
             </div>
             <span className="text-sm">사진</span>
             <input type="file" multiple accept="image/*" id="files" onChange={readReviewImages} className="hidden" />
@@ -87,7 +87,7 @@ const UploadReviewImage: React.FC<ReviewProps> = ({ reviewImages, setReviewImage
           <div className="w-[100px] h-[100px] xl:w-[120px] border shadow-md rounded-md text-center flex flex-col items-center justify-center mb-5 cursor-pointer flex-shrink-0  mr-4">
             <label className="w-full h-full flex flex-col items-center justify-center">
               <div className="w-[38px] h-[38px] relative">
-                <Image src={Blackcamera.src} alt="img" fill sizes="38px" className="w-full h-full object-cover" />
+                <Image src={Blackcamera.src} alt="camera" fill sizes="38px" className="w-full h-full object-cover" />
               </div>
               <span className="text-sm">사진</span>
               <input type="file" multiple accept="image/*" id="files" onChange={readReviewImages} className="hidden" />

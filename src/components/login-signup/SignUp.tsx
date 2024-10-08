@@ -157,7 +157,7 @@ export default function SignUp({ confirmRef, selectUser, setStep }: SignUpProps)
             sizes="50%"
             priority
             className="xl:w-full xl:min-h-[calc(100vh - 318px)] h-[100%] object-cover"
-            alt=""
+            alt="WebSignupBg2"
           />
         </div>
 

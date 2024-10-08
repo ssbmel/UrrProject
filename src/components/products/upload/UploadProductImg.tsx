@@ -95,7 +95,7 @@ const UploadProductImg: React.FC<ContentsProps> = ({
             htmlFor="file"
             className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center cursor-pointer xl:w-[364px] mb-5"
           >
-            <Image src={camera} alt="img" width={50} className="mb-2" />
+            <Image src={camera} alt="camera" width={50} className="mb-2" />
             <p>파일 첨부하기</p>
           </label>
         ) : (
@@ -126,7 +126,7 @@ const UploadProductImg: React.FC<ContentsProps> = ({
             htmlFor="files"
             className="w-full border h-[241px] shadow-md rounded-md text-center flex flex-col items-center justify-center cursor-pointer xl:w-[364px] mb-5"
           >
-            <Image src={camera} alt="img" width={50} className="mb-2" />
+            <Image src={camera} alt="camera" width={50} className="mb-2" />
             <p>파일 첨부하기</p>
           </label>
         ) : (

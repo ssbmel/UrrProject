@@ -141,7 +141,7 @@ function AllInfluencers() {
                       <div className="relative w-[90px] h-[90px] xl:w-[140px] xl:h-[140px]">
                         <Image
                           src={inf.profile_url || defaultImg}
-                          alt="img"
+                          alt="infProfile"
                           fill
                           sizes="90px xl:w-[140px]"
                           className="rounded-md object-cover gradient-border"
@@ -179,7 +179,7 @@ function AllInfluencers() {
                   <div className="relative w-[106px] h-[106px] xl:w-[207px] xl:h-[207px]">
                     <Image
                       src={inf.profile_url || defaultImg}
-                      alt="img"
+                      alt="infProfile"
                       fill
                       sizes="106px xl:w-[207px]"
                       className="rounded-md object-cover gradient-border"

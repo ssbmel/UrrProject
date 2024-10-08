@@ -142,7 +142,7 @@ const UploadProductImg: React.FC<ContentsProps> = ({
                     ✖︎
                   </button>
                   <label htmlFor="files" className="cursor-pointer">
-                    <img src={item.url} alt="img" width="100%" className="mb-5" />
+                    <img src={item.url} alt="상품상세이미지" width="100%" className="mb-5" />
                   </label>
                 </div>
               ))}

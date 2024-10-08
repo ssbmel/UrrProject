@@ -9,7 +9,7 @@ import { useMemo } from "react";
 
 function BestProductsList({ productsList, ratingCount }: { productsList: Product[]; ratingCount: Review[] }) {
   const productsWithFiveStarReviews = useMemo(() => {
-    return productsList.map((product) => {
+    return productsList?.map((product) => {
       const fiveStarReviews = ratingCount.filter(
         (review) => review.product_id === product.id && review.review_score === 5
       ).length;
